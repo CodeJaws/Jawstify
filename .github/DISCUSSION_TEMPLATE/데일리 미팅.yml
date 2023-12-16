@@ -1,0 +1,31 @@
+body:
+  - type: textarea
+    attributes:
+      label: 🔫 어제 한 일
+      placeholder: 어제는 무엇을 했나요?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: ⚔️ 회의내용
+      placeholder: 회의 내용을 적어주세요.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 🪓 오늘 할일
+      placeholder: 오늘 해야할 일을 작성합니다.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 💎 TMI
+      placeholder: TMI 적어주세요.
+
+  - type: textarea
+    attributes:
+      label: 🪚 특이사항
+      placeholder: 특이사항을 적어주세요.

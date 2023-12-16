@@ -1,0 +1,17 @@
+name: "🟣 Refactor"
+description: "리팩토링 템플릿"
+title: "[Refactor] "
+labels: "refactor"
+body:
+  - type: textarea
+    attributes:
+      label: ♻️ 이유
+      description: 리팩토링을 진행한 이유를 설명해주세요.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: ✅ 수정
+      description: 수정한 부분을 적어주세요.
+    validations:
+      required: true
