@@ -3,10 +3,6 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { COLORS } from '@/styles/palettes'
 import Image from 'next/image'
-import eyeOn from '@/public/assets/images/eyeon.svg'
-import eyeOff from '@/public/assets/images/eyeoff.svg'
-import { isEmailFormatValid, isPwdFormatValid } from '@/utils/validation'
-import { EMAIL_ERROR, PWD_ERROR } from '@/constants/Input'
 
 interface Props {
   isError: boolean
@@ -15,33 +11,29 @@ interface Props {
   label?: string
   inputValue?: string
   type?: string
+  isNecessary?: boolean
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
-function Input({ isError: error, placeholder, errorMessage = '', label = '', inputValue, onChange }: Props) {
+function ModalInput({
+  isError: error,
+  placeholder,
+  errorMessage = '',
+  label = '',
+  inputValue,
+  isNecessary,
+  onChange,
+}: Props) {
   const [errorMsg, setErrorMsg] = useState('')
   const [isNoVal, setIsNoVal] = useState<boolean>(false)
-  const [isVisible, setIsVisible] = useState(true)
   const [value, setValue] = useState('')
-
-  const isPassword = label.includes('비밀번호')
-  const isEmail = label === '로그인'
-
-  const handleVisibility = () => setIsVisible((prev) => !prev)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
     !value ? setIsNoVal(true) : setIsNoVal(false)
-    handleErrorState(e.target.value, isPassword)
+    // handleErrorState(e.target.value, isPassword)
   }
 
-  const handleErrorState = (inputValue: string, isPassword: boolean) => {
-    if (isPassword) {
-      isPwdFormatValid(inputValue) ? setErrorMsg('') : setErrorMsg(PWD_ERROR.FORMAT_ERROR)
-      console.log(isPwdFormatValid(inputValue))
-    } else if (isEmail) {
-      isEmailFormatValid(inputValue) ? setErrorMsg('') : setErrorMsg(EMAIL_ERROR.FORMAT_ERROR)
-    }
-  }
+  const handleErrorState = (inputValue: string, isPassword: boolean) => {}
 
   const handleBlur = () => {
     !value ? setIsNoVal(true) : setIsNoVal(false)
@@ -49,26 +41,24 @@ function Input({ isError: error, placeholder, errorMessage = '', label = '', inp
 
   return (
     <StyledInputContainer>
-      <StyledLabel>{label}</StyledLabel>
+      <StyledLabel>
+        {label}
+        {isNecessary && <VioletStar>*</VioletStar>}
+      </StyledLabel>
       <StyledInput
-        type={isVisible ? 'text' : 'password'}
+        type="text"
         error={isNoVal || Boolean(errorMsg)}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      {isPassword && (
-        <StyledButton onClick={handleVisibility} type="button">
-          <StyledImage src={isVisible ? eyeOn : eyeOff} width={24} height={24} alt="비밀번호 숨기기" />
-        </StyledButton>
-      )}
       {(isNoVal || errorMsg) && <StyledErrorText>{errorMsg || '값을 입력해 주세요'}</StyledErrorText>}
     </StyledInputContainer>
   )
 }
 
-export default Input
+export default ModalInput
 
 const StyledInputContainer = styled.div`
   width: 100%;
@@ -103,6 +93,7 @@ const StyledInput = styled.input<{ error: boolean }>`
 const StyledLabel = styled.h5`
   color: ${COLORS.BLACK_200};
   margin-bottom: 8px;
+  display: flex;
   ${fontStyle(18, 500)};
 `
 
@@ -112,14 +103,8 @@ const StyledErrorText = styled.p`
   ${fontStyle(14, 400)};
 `
 
-const StyledImage = styled(Image)`
-  border: none;
-`
-
-const StyledButton = styled.button`
-  position: absolute;
-  right: 16px;
-  top: 41px;
-  border: none;
-  background: none;
+const VioletStar = styled.span`
+  color: ${COLORS.VIOLET};
+  margin-left: 3px;
+  ${fontStyle(18, 500)};
 `
