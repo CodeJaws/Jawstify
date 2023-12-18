@@ -60,4 +60,9 @@ const StyledImageWrapper = styled.div`
   flex-shrink: 0;
   border-radius: 100%;
   overflow: hidden;
+
+  ${onMobile} {
+    width: 34px;
+    height: 34px;
+  }
 `
