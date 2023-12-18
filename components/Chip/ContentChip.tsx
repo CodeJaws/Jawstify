@@ -1,4 +1,5 @@
 import { BACK_END, MAX_LEVEL, NORMAL, PROJECT } from '@/constants/Chip';
+import { COLORS } from '@/styles/palettes';
 import { selectSize } from '@/utils/selectFontSize';
 import styled from 'styled-components';
 
@@ -12,28 +13,28 @@ function ContentChip({ size, content }: ChipProps) {
     switch (content) {
       case PROJECT:
         return {
-          color: '#D58D49',
-          background: '#F9EEE3',
+          color: `${COLORS.ORANGE_D5}`,
+          background: `${COLORS.ORANGE_F9}`,
         };
       case NORMAL:
         return {
-          color: '#86D549',
-          background: '#E7F7DB',
+          color: `${COLORS.GREEN_86}`,
+          background: `${COLORS.GREEN_E7}`,
         };
       case BACK_END:
         return {
-          color: '#D549B6',
-          background: '#F7DBF0',
+          color: `${COLORS.PINK_D5}`,
+          background: `${COLORS.PINK_DB}`,
         };
       case MAX_LEVEL:
         return {
-          color: '#4981D5',
-          background: '#DBE6F7',
+          color: `${COLORS.BLUE_49}`,
+          background: `${COLORS.BLUE_F7}`,
         };
       default:
         return {
-          color: '#fff',
-          background: '#000',
+          color: `${COLORS.WHITE}`,
+          background: `${COLORS.BLACK_300}`,
         };
     }
   };

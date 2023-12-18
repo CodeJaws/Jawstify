@@ -1,4 +1,5 @@
 import Add from '@/public/assets/icons/Add.svg';
+import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import { styled } from 'styled-components';
 
@@ -28,14 +29,12 @@ function AddChip({ size }: AddChipProps) {
 export default AddChip;
 
 const StyledContainer = styled.button<{ size: number }>`
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
   padding: 3px;
   border-radius: 4px;
-  background-color: #f1effd;
-  border: 0;
-  cursor: pointer;
+  background-color: ${COLORS.VIOLET_LIGHT};
 `;

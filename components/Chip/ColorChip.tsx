@@ -1,19 +1,20 @@
+import Blue from '@/public/assets/icons/BlueEllipse.svg';
 import Check from '@/public/assets/icons/Check.svg';
 import Green from '@/public/assets/icons/GreenEllipse.svg';
 import Orange from '@/public/assets/icons/OrangeEllipse.svg';
 import Pink from '@/public/assets/icons/PinkEllipse.svg';
 import Purple from '@/public/assets/icons/PurpleEllipse.svg';
-import SkyBlue from '@/public/assets/icons/SkyBlueEllipse.svg';
+import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
 const ColorEllipse = [
-  { src: Green, alt: '녹색 원' },
-  { src: Purple, alt: '보라색 원' },
-  { src: Orange, alt: '오렌지 원' },
-  { src: SkyBlue, alt: '하늘색 원' },
-  { src: Pink, alt: '핑크색 원' },
+  { src: Green, alt: '녹색 원', color: COLORS.GREEN },
+  { src: Purple, alt: '보라색 원', color: COLORS.PURPLE },
+  { src: Orange, alt: '오렌지 원', color: COLORS.ORANGE },
+  { src: Blue, alt: '하늘색 원', color: COLORS.BLUE },
+  { src: Pink, alt: '핑크색 원', color: COLORS.PINK },
 ];
 
 function ColorChip() {
@@ -45,7 +46,6 @@ const StyledContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-  all: unset;
   position: relative;
   display: flex;
   justify-content: center;

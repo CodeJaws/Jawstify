@@ -1,4 +1,5 @@
 import Ellipse from '@/public/assets/icons/ChipEllipse.svg';
+import { COLORS } from '@/styles/palettes';
 import { selectSize } from '@/utils/selectFontSize';
 import Image from 'next/image';
 import { styled } from 'styled-components';
@@ -28,6 +29,6 @@ const StyledContainer = styled.div<{ fontSize: number }>`
   padding: 4px 8px;
   border-radius: 11px;
   font-size: ${(props) => props.fontSize}px;
-  color: #5534da;
-  background-color: #f1effd;
+  color: ${COLORS.VIOLET};
+  background-color: ${COLORS.VIOLET_LIGHT};
 `;

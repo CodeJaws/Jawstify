@@ -1,3 +1,4 @@
+import { COLORS } from '@/styles/palettes';
 import { styled } from 'styled-components';
 
 interface CountChipProps {
@@ -17,6 +18,6 @@ const StyledContainer = styled.div`
   padding: 3px 6px;
   border-radius: 4px;
   font-size: 12px;
-  color: #787486;
-  background-color: #eeeeee;
+  color: ${COLORS.GRAY_50};
+  background-color: ${COLORS.GRAY_20};
 `;
