@@ -2,13 +2,12 @@ import styled from 'styled-components'
 
 interface ButtonProps {
   active: boolean
-  size: string
 }
 
-function LoginButton({ active, size }: ButtonProps) {
+function LoginButton({ active }: ButtonProps) {
   return (
     <>
-      <StyledButton disabled={active ? false : true} $active={active} $size={size}>
+      <StyledButton disabled={active ? false : true} $active={active}>
         로그인
       </StyledButton>
     </>
@@ -17,11 +16,11 @@ function LoginButton({ active, size }: ButtonProps) {
 
 export default LoginButton
 
-const StyledButton = styled.button<{ $active: boolean; $size: string }>`
+const StyledButton = styled.button<{ $active: boolean }>`
   border: none;
   cursor: pointer;
   display: flex;
-  width: ${({ $size }) => ($size === 'large' ? '520px' : '351px')};
+  width: '520px';
   height: 50px;
   justify-content: center;
   align-items: center;
@@ -33,4 +32,8 @@ const StyledButton = styled.button<{ $active: boolean; $size: string }>`
   color: var(--white, #fff);
   font-size: 18px;
   font-weight: 500;
+
+  @media (width) {
+    width: '351px';
+  }
 `

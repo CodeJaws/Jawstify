@@ -1,14 +1,10 @@
 import styled from 'styled-components'
 
-interface ExpressButtonProps {
-  size: string
-}
-
-function ExpressButton({ size }: ExpressButtonProps) {
+function ExpressButton() {
   return (
     <Div>
-      <AcceptButton $size={size}>수락</AcceptButton>
-      <RejectButton $size={size}>거절</RejectButton>
+      <AcceptButton>수락</AcceptButton>
+      <RejectButton>거절</RejectButton>
     </Div>
   )
 }
@@ -20,27 +16,43 @@ const Div = styled.div`
   gap: 10px;
 `
 
-const AcceptButton = styled.button<{ $size: string }>`
+const AcceptButton = styled.button`
   border: none;
   cursor: pointer;
   display: flex;
-  width: ${({ $size }) => ($size === 'desktop' ? '84px' : $size === 'tablet' ? '72px' : '109px')};
-  height: ${({ $size }) => ($size === 'desktop' ? '32px' : $size === 'tablet' ? '30px' : '28px')};
+  width: '84px';
+  height: '32px';
   justify-content: center;
   align-items: center;
   gap: 10px;
   border-radius: 4px;
   background: #5534da;
   color: #fff;
-  font-size: 14px;
+  font-size: '14px';
   font-weight: 500;
+
+  @media (width) {
+    width: 84px;
+    height: 32px;
+  }
+
+  @media (width) {
+    width: 72px;
+    height: 30pxl;
+  }
+
+  @media (width) {
+    width: 109px;
+    height: 28px;
+    font-size: 1.2rem;
+  }
 `
-const RejectButton = styled.button<{ $size: string }>`
+const RejectButton = styled.button`
   border: none;
   cursor: pointer;
   display: flex;
-  width: ${({ $size }) => ($size === 'desktop' ? '84px' : $size === 'tablet' ? '72px' : '109px')};
-  height: ${({ $size }) => ($size === 'desktop' ? '32px' : $size === 'tablet' ? '30px' : '28px')};
+  width: '84px';
+  height: '32px';
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -48,6 +60,22 @@ const RejectButton = styled.button<{ $size: string }>`
   border: 1px solid #d9d9d9;
   background: #fff;
   color: #5534da;
-  font-size: 14px;
+  font-size: '14px';
   font-weight: 500;
+
+  @media (width) {
+    width: 84px;
+    height: 32px;
+  }
+
+  @media (width) {
+    width: 72px;
+    height: 30pxl;
+  }
+
+  @media (width) {
+    width: 109px;
+    height: 28px;
+    font-size: 12px;
+  }
 `

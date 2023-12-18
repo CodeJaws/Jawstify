@@ -1,9 +1,9 @@
-import ExpressButton from '@/components/common/Button/ExpressButton'
+import DeleteButton from '@/components/common/Button/DeleteButton'
 
 function ButtonPage() {
   return (
     <>
-      <ExpressButton size={'mibile'} />
+      <DeleteButton />
     </>
   )
 }
