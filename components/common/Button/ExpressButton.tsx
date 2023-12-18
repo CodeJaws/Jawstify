@@ -46,8 +46,8 @@ const RejectButton = styled.button`
   border: none;
   cursor: pointer;
   display: flex;
-  width: '84px';
-  height: '32px';
+  width: 84px;
+  height: 32px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -55,22 +55,17 @@ const RejectButton = styled.button`
   border: 1px solid #d9d9d9;
   background: #fff;
   color: #5534da;
-  font-size: '14px';
+  font-size: 14px;
   font-weight: 500;
 
-  @media (width) {
-    width: 84px;
-    height: 32px;
-  }
-
-  @media (width) {
+  ${onTablet} {
     width: 72px;
     height: 30pxl;
   }
 
-  @media (width) {
+  ${onMobile} {
     width: 109px;
     height: 28px;
-    font-size: 12px;
+    font-size: 1.2rem;
   }
 `

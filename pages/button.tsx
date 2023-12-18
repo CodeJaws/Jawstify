@@ -1,3 +1,4 @@
+import BeBridgeButton from '@/components/common/Button/BeBridgeButton'
 import ColumnPlusButton from '@/components/common/Button/ColumnPlusButton'
 import DashBoardDeleteButton from '@/components/common/Button/DashBoardDeleteButton'
 import DeleteButton from '@/components/common/Button/DeleteButton'
@@ -17,6 +18,7 @@ function ButtonPage() {
       <PlusButton />
       <DashBoardDeleteButton />
       <NewDashBoardButton />
+      <BeBridgeButton />
     </Div>
   )
 }
