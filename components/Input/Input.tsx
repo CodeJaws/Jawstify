@@ -14,7 +14,7 @@ interface Props {
 }
 function Input({ isError: error, placeholder, errorMessage = '', label = '로그인', inputValue, onChange }: Props) {
   const [isNoVal, setIsNoVal] = useState<boolean>(false)
-  const [isVisible, setIsVisible] = useState(label === '비밀번호')
+  const [isVisible, setIsVisible] = useState(false)
   const [value, setValue] = useState('')
 
   const handleVisibility = () => setIsVisible((prev) => !prev)
