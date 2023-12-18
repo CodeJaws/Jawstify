@@ -14,6 +14,7 @@ import { COLORS } from '@/styles/palettes'
 
 interface DashboardNavbarProps {
   isMyDashboard: boolean
+  createdByMe: boolean
   title: string
 }
 
@@ -76,9 +77,10 @@ const DEFAULT_MEMBERS = [
 /**
  * 대시보드의 Navbar Component
  * @param {boolean} isMyDashboard 자신의 대시보드(내 대시보드)인지 확인
+ * @param {boolean} createdByMe 자신이 작성한 대시보드인지 확인
  * @param {string} title 대시보드 이름
  */
-function DashboardNavbar({ isMyDashboard, title }: DashboardNavbarProps) {
+function DashboardNavbar({ isMyDashboard, title, createdByMe }: DashboardNavbarProps) {
   const item = DEFAULT_ITEMS
 
   const dashboardTitle = isMyDashboard ? '내 대시보드' : title
@@ -87,15 +89,18 @@ function DashboardNavbar({ isMyDashboard, title }: DashboardNavbarProps) {
     <StyledContainer $isMyDashboard={isMyDashboard}>
       <StyledTitleContainer>
         <h3>{dashboardTitle}</h3>
-        {!isMyDashboard && <Image width={21} height={16} src={crown} alt="본인 계정" />}
+        {!isMyDashboard && createdByMe && <Image width={21} height={16} src={crown} alt="본인 계정" />}
       </StyledTitleContainer>
       <StyledWrapper>
         {!isMyDashboard ? (
           <>
             <StyledButtonWrapper>
-              <Button imageUrl={setting} altText="관리">
-                관리
-              </Button>
+              {createdByMe && (
+                <Button imageUrl={setting} altText="관리">
+                  관리
+                </Button>
+              )}
+
               <Button imageUrl={invite} altText="초대하기">
                 초대하기
               </Button>
@@ -150,12 +155,12 @@ const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
 
   ${onTablet} {
     ${StyledTitleContainer} {
-      display: none;
+      display: ${({ $isMyDashboard }) => ($isMyDashboard === false ? 'none' : 'block')};
     }
   }
   ${onMobile} {
     ${StyledTitleContainer} {
-      display: none;
+      display: ${({ $isMyDashboard }) => ($isMyDashboard === false ? 'none' : 'block')};
     }
   }
 `
