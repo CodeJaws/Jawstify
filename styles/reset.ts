@@ -40,9 +40,7 @@ export const reset = css`
   }
 
   button {
-    border: 0;
-    background: transparent;
-    padding: unset;
+    all: unset;
     cursor: pointer;
   }
 
