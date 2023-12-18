@@ -9,16 +9,33 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
+interface ColorChipProps {
+  size: string;
+}
+
 const ColorEllipse = [
-  { src: Green, alt: '녹색 원', color: COLORS.GREEN },
-  { src: Purple, alt: '보라색 원', color: COLORS.PURPLE },
-  { src: Orange, alt: '오렌지 원', color: COLORS.ORANGE },
-  { src: Blue, alt: '하늘색 원', color: COLORS.BLUE },
-  { src: Pink, alt: '핑크색 원', color: COLORS.PINK },
+  { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN },
+  { id: 1, src: Purple, alt: '보라색 원', color: COLORS.PURPLE },
+  { id: 2, src: Orange, alt: '오렌지 원', color: COLORS.ORANGE },
+  { id: 3, src: Blue, alt: '하늘색 원', color: COLORS.BLUE },
+  { id: 4, src: Pink, alt: '핑크색 원', color: COLORS.PINK },
 ];
 
-function ColorChip() {
+function ColorChip({ size }: ColorChipProps) {
   const [selectedColor, setSelectedColor] = useState(0);
+
+  const selectSize = (size: string) => {
+    switch (size) {
+      case 'large':
+        return 30;
+      case 'small':
+        return 28;
+      default:
+        return 30;
+    }
+  };
+
+  const divSize = selectSize(size);
 
   const toggleSelectedColor = (index: number) => {
     setSelectedColor((prevSelectedColor) => (prevSelectedColor === index ? -1 : index));
@@ -26,10 +43,10 @@ function ColorChip() {
 
   return (
     <StyledContainer>
-      {ColorEllipse.map((val, index) => (
-        <StyledButton key={index} onClick={() => toggleSelectedColor(index)}>
-          {selectedColor === index && <StyledCheckImage src={Check} alt="체크" />}
-          <Image width={30} height={30} src={val.src} alt={val.alt} />
+      {ColorEllipse.map((val) => (
+        <StyledButton key={val.id} onClick={() => toggleSelectedColor(val.id)}>
+          {selectedColor === val.id && <StyledCheckImage src={Check} alt="체크" />}
+          <Image width={divSize} height={divSize} src={val.src} alt={val.alt} />
         </StyledButton>
       ))}
     </StyledContainer>
