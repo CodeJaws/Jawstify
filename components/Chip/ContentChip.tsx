@@ -5,7 +5,7 @@ interface ChipProps {
   content: string;
 }
 
-function Chip({ content }: ChipProps) {
+function ContentChip({ content }: ChipProps) {
   const getColor = (content: string) => {
     switch (content) {
       case PROJECT:
@@ -43,7 +43,7 @@ function Chip({ content }: ChipProps) {
   );
 }
 
-export default Chip;
+export default ContentChip;
 
 const StyledContainer = styled.div<{ color: string; background: string }>`
   display: inline-block;
