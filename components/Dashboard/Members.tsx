@@ -51,13 +51,13 @@ const StyledContainer = styled.div<{ $cnt: number }>`
   align-items: center;
   margin-left: 40px;
   ${onPc} {
-    width: ${(props) => (props.$cnt >= 5 ? '140' : (props.$cnt - 1) * 1.6 + 3)}px;
+    width: ${(props) => (props.$cnt >= 5 ? '140' : (props.$cnt - 1) * 26 + 32)}px;
   }
   ${onTablet} {
-    width: ${(props) => (props.$cnt >= 2 ? '80' : (props.$cnt - 1) * 1.6 + 3)}px;
+    width: ${(props) => (props.$cnt > 2 ? '80' : (props.$cnt - 1) * 26 + 24)}px;
   }
   ${onMobile} {
-    width: ${(props) => (props.$cnt >= 2 ? '68' : (props.$cnt - 1) * 1.6 + 3)}px;
+    width: ${(props) => (props.$cnt > 2 ? '68' : (props.$cnt - 1) * 26 + 12)}px;
   }
 `
 
@@ -68,7 +68,7 @@ const StyledImageContainer = styled.div<{ $idx: number; $isLast: boolean }>`
   position: absolute;
   width: 38px;
   height: 38px;
-  left: ${(props) => props.$idx * 2.6}rem;
+  left: ${(props) => props.$idx * 26}px;
 
   background-color: ${(props) => (props.$isLast ? '#F4D7DA' : 'transparent')};
 
