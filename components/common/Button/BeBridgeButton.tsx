@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import greenCircle from '@/public/assets/icons/greenCircle.svg'
 import crownImage from '@/public/assets/icons/crownImage.svg'
-import arrowImage from '@/public/assets/icons/arrow.svg'
+import rightArrowImage from '@/public/assets/icons/rightArrow.svg'
 import Image from 'next/image'
 import { onTablet, onMobile } from '@/styles/mediaQuery'
 
@@ -17,7 +17,7 @@ function BeBridgeButton() {
               <CrownImage src={crownImage} alt="왕관" />
             </Div2>
           </Div>
-          <ArrowImage src={arrowImage} alt="화살표" />
+          <ArrowImage src={rightArrowImage} alt="화살표" />
         </Wrapper>
       </StyledButton>
     </>

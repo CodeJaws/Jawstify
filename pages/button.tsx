@@ -6,6 +6,7 @@ import ExpressButton from '@/components/common/Button/ExpressButton'
 import LoginButton from '@/components/common/Button/LoginButton'
 import NewDashBoardButton from '@/components/common/Button/NewDashBoardButton'
 import PlusButton from '@/components/common/Button/PlusButton'
+import LeftRightButton from '@/components/common/Button/LeftRightButton'
 import styled from 'styled-components'
 
 function ButtonPage() {
@@ -17,6 +18,7 @@ function ButtonPage() {
       <ColumnPlusButton />
       <PlusButton />
       <DashBoardDeleteButton />
+      <LeftRightButton />
       <NewDashBoardButton />
       <BeBridgeButton />
     </Div>
