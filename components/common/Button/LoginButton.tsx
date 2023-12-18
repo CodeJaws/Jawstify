@@ -5,7 +5,7 @@ interface ButtonProps {
   size: string
 }
 
-export default function LoginButton({ active, size }: ButtonProps) {
+function LoginButton({ active, size }: ButtonProps) {
   return (
     <>
       <StyledButton disabled={active ? false : true} $active={active} $size={size}>
@@ -14,6 +14,8 @@ export default function LoginButton({ active, size }: ButtonProps) {
     </>
   )
 }
+
+export default LoginButton
 
 const StyledButton = styled.button<{ $active: boolean; $size: string }>`
   border: none;
