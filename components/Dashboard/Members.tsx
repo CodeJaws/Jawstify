@@ -7,13 +7,13 @@ import useDeviceType from '@/hooks/useDeviceType'
 
 interface MembersProps {
   members: {
-    imgUrl: string
+    profileImageUrl: string
     id: number
   }[]
 }
 
 /** 보여주는 프로필 이미지 목록 생성 - 추후에 들어오는 props값만 수정하면 됩니다. */
-const makeNewMembers = (members: { imgUrl: string; id: number }[], deviceType: string) => {
+const makeNewMembers = (members: { profileImageUrl: string; id: number }[], deviceType: string) => {
   if (deviceType === 'pc') return members.slice(0, Math.min(members.length, 4))
   return members.slice(0, Math.min(members.length, 2))
 }
@@ -30,7 +30,7 @@ function Members({ members }: MembersProps) {
     <StyledContainer $cnt={members.length}>
       {showMembers.map((member, idx) => (
         <StyledImageContainer key={member.id} $idx={idx} $isLast={false}>
-          <Image fill src={member.imgUrl} alt="프로필" />
+          <Image fill src={member.profileImageUrl} alt="프로필" />
         </StyledImageContainer>
       ))}
 

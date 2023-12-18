@@ -7,19 +7,20 @@ import { COLORS } from '@/styles/palettes'
 
 interface ProfileProps {
   item: {
-    name: string
-    imgUrl: string
+    id: number
+    nickname: string
+    profileImageUrl: string
   }
 }
 
 function Profile({ item }: ProfileProps) {
-  const { name, imgUrl } = item
+  const { nickname, profileImageUrl } = item
   return (
     <StyledContainer>
       <StyledImageWrapper>
-        <Image fill src={imgUrl} alt="프로필" />
+        <Image fill src={profileImageUrl} alt="프로필" />
       </StyledImageWrapper>
-      <p>{name}</p>
+      <p>{nickname}</p>
     </StyledContainer>
   )
 }
