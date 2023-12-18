@@ -81,7 +81,7 @@ const StyledImageContainer = styled.div<{ $idx: number; $isLast: boolean }>`
     ${fontStyle(16, 500)}
   }
 
-  @media screen and (max-width: 375px) {
+  ${onMobile} {
     width: 34px;
     height: 34px;
   }
