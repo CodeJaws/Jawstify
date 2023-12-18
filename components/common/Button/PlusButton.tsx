@@ -3,18 +3,17 @@ import styled from 'styled-components'
 import { onTablet, onMobile } from '@/styles/mediaQuery'
 import plusImage from '@/public/assets/icons/plusImage.svg'
 
-function ColumnPlusButton() {
+function PlusButton() {
   return (
     <>
       <StyledButton>
-        새로운 칼럼 추가하기
-        <PlusImage src={plusImage} alt="plus이미지" />
+        <PlusImage src={plusImage} alt="Plus이미지" />
       </StyledButton>
     </>
   )
 }
 
-export default ColumnPlusButton
+export default PlusButton
 
 const StyledButton = styled.button`
   box-sizing: border-box;
@@ -22,26 +21,20 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  width: 354px;
-  height: 70px;
-  border-radius: 8px;
+  width: 314px;
+  height: 40px;
+  border-radius: 6px;
   border: 1px solid #d9d9d9;
   background: #fff;
-  color: #333236;
-  font-size: 18px;
-  font-weight: 700;
-
   ${onTablet} {
     width: 544px;
-    height: 70px;
   }
   ${onMobile} {
-    font-size: 16px;
     width: 284px;
-    height: 60px;
+    height: 32px;
   }
 `
+
 const PlusImage = styled(Image)`
   width: 16px;
   height: 16px;

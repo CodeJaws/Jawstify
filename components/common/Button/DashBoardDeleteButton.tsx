@@ -1,33 +1,34 @@
 import styled from 'styled-components'
 import { onMobile } from '@/styles/mediaQuery'
 
-function DeleteButton() {
+function DashBoardDeleteButton() {
   return (
     <>
-      <StyledButton>삭제</StyledButton>
+      <StyledButton>대시보드 삭제하기</StyledButton>
     </>
   )
 }
 
-export default DeleteButton
+export default DashBoardDeleteButton
 
 const StyledButton = styled.button`
   box-sizing: border-box;
   display: flex;
-  width: 84px;
-  height: 32px;
+  width: 320px;
+  height: 62px;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  gap: 10px;
+  border-radius: 8px;
   border: 1px solid #d9d9d9;
-  background: #fff;
-  color: #5534da;
-  font-size: 1.4rem;
+  background: #fafafa;
+  color: #333236;
+  font-size: 18px;
   font-weight: 500;
 
   ${onMobile} {
-    width: 52px;
-    height: 28px;
-    font-size: 1.2rem;
+    font-size: 16px;
+    width: 284px;
+    height: 52px;
   }
 `

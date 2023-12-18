@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { onMobile } from '@/styles/mediaQuery'
 
 interface ButtonProps {
   active: boolean
@@ -17,10 +18,9 @@ function LoginButton({ active }: ButtonProps) {
 export default LoginButton
 
 const StyledButton = styled.button<{ $active: boolean }>`
-  border: none;
-  cursor: pointer;
+  box-sizing: border-box;
   display: flex;
-  width: '520px';
+  width: 520px;
   height: 50px;
   justify-content: center;
   align-items: center;
@@ -33,7 +33,7 @@ const StyledButton = styled.button<{ $active: boolean }>`
   font-size: 18px;
   font-weight: 500;
 
-  @media (width) {
-    width: '351px';
+  ${onMobile} {
+    width: 351px;
   }
 `
