@@ -1,11 +1,13 @@
 import { BACK_END, MAX_LEVEL, NORMAL, PROJECT } from '@/constants/Chip';
+import { selectSize } from '@/utils/selectFontSize';
 import styled from 'styled-components';
 
 interface ChipProps {
+  size: string;
   content: string;
 }
 
-function ContentChip({ content }: ChipProps) {
+function ContentChip({ size, content }: ChipProps) {
   const getColor = (content: string) => {
     switch (content) {
       case PROJECT:
@@ -35,9 +37,10 @@ function ContentChip({ content }: ChipProps) {
         };
     }
   };
+  const fontSize = selectSize(size);
   const { color, background } = getColor(content);
   return (
-    <StyledContainer color={color} background={background}>
+    <StyledContainer fontSize={fontSize} color={color} background={background}>
       {content}
     </StyledContainer>
   );
@@ -45,14 +48,13 @@ function ContentChip({ content }: ChipProps) {
 
 export default ContentChip;
 
-const StyledContainer = styled.div<{ color: string; background: string }>`
-  display: inline-block;
+const StyledContainer = styled.div<{ fontSize: number; color: string; background: string }>`
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   padding: 4px 6px;
   border-radius: 4px;
-  font-size: 12px;
-
+  font-size: ${(props) => props.fontSize}px;
   color: ${(props) => props.color};
   background: ${(props) => props.background};
 `;
