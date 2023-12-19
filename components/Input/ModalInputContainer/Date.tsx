@@ -3,6 +3,14 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { COLORS } from '@/styles/palettes'
 import Image from 'next/image'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { BaseSingleInputFieldProps } from '@mui/x-date-pickers'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import dayjs, { Dayjs } from 'dayjs'
+// import DateTimePicker from 'react-datetime-picker'
+
+import { DEFAULT_PLACEHOLDER } from '@/constants/Input'
 
 const INPUT_TYPE = {
   COMMENT: '댓글',
@@ -10,6 +18,10 @@ const INPUT_TYPE = {
   DATE: '마감일',
   TAG: '태그',
 }
+
+type ValuePiece = Date | null
+
+type Value = ValuePiece | [ValuePiece, ValuePiece]
 
 interface Props {
   isError: boolean
@@ -21,7 +33,7 @@ interface Props {
   isNecessary?: boolean
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
-function ModalInput({
+function DatePicker({
   isError: error,
   placeholder,
   errorMessage = '',
@@ -33,6 +45,8 @@ function ModalInput({
   const [errorMsg, setErrorMsg] = useState('')
   const [isNoVal, setIsNoVal] = useState<boolean>(false)
   const [value, setValue] = useState('')
+  const [date, setDate] = useState<Value>(new Date())
+  const [dates, setDates] = useState<Dayjs | null>()
 
   const isComment = label === '댓글'
   const isTitle = label === '제목'
@@ -57,20 +71,34 @@ function ModalInput({
         {label}
         {isNecessary && <VioletStar>*</VioletStar>}
       </StyledLabel>
-      <StyledInput
-        type="text"
-        error={isNoVal || Boolean(errorMsg)}
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
-      {(isNoVal || errorMsg) && <StyledErrorText>{errorMsg || '값을 입력해 주세요'}</StyledErrorText>}
+
+      {/* <DateTimePicker onChange={setDate} value={date} /> */}
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DateTimePicker
+          sx={{
+            '.MuiInputBase-root': {
+              border: 'null',
+              outline: 'none',
+            },
+            width: 1,
+            border: 1,
+            borderRadius: '8px',
+          }}
+          value={dates}
+          // label={DEFAULT_PLACEHOLDER.DATE}
+          disablePast
+          closeOnSelect
+          format="YYYY.MM.DD hh:mm a"
+          // slotProps={{ textField: { InputLabelProps: { shrink: false } } }}
+          onChange={(newValue: Dayjs | null) => setDates(newValue)}
+        />
+        {(isNoVal || errorMsg) && <StyledErrorText>{errorMsg || '값을 입력해 주세요'}</StyledErrorText>}
+      </LocalizationProvider>
     </StyledInputContainer>
   )
 }
 
-export default ModalInput
+export default DatePicker
 
 const StyledInputContainer = styled.div`
   width: 100%;
@@ -101,7 +129,9 @@ const StyledInput = styled.input<{ error: boolean }>`
       background-color: #000;
     `}
 `
-
+const StyledDatePicker = styled.div`
+  width: 100%;
+`
 const StyledLabel = styled.h5`
   color: ${COLORS.BLACK_200};
   margin-bottom: 8px;

@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { COLORS } from '@/styles/palettes'
 import Image from 'next/image'
+import { DEFAULT_PLACEHOLDER } from '@/constants/Input'
 
 const INPUT_TYPE = {
   COMMENT: '댓글',
@@ -13,23 +14,14 @@ const INPUT_TYPE = {
 
 interface Props {
   isError: boolean
-  placeholder?: string
   errorMessage?: string
   label?: string
   inputValue?: string
   type?: string
   isNecessary?: boolean
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
 }
-function ModalInput({
-  isError: error,
-  placeholder,
-  errorMessage = '',
-  label = '',
-  inputValue,
-  isNecessary,
-  onChange,
-}: Props) {
+function ModalInput({ isError: error, errorMessage = '', label = '', inputValue, isNecessary, onChange }: Props) {
   const [errorMsg, setErrorMsg] = useState('')
   const [isNoVal, setIsNoVal] = useState<boolean>(false)
   const [value, setValue] = useState('')
@@ -39,7 +31,7 @@ function ModalInput({
   const isDate = label === '마감일'
   const isTag = label === '태그'
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value)
     !value ? setIsNoVal(true) : setIsNoVal(false)
     // handleErrorState(e.target.value, isPassword)
@@ -58,9 +50,8 @@ function ModalInput({
         {isNecessary && <VioletStar>*</VioletStar>}
       </StyledLabel>
       <StyledInput
-        type="text"
         error={isNoVal || Boolean(errorMsg)}
-        placeholder={placeholder}
+        placeholder={DEFAULT_PLACEHOLDER.COMMENT}
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
@@ -77,8 +68,9 @@ const StyledInputContainer = styled.div`
   position: relative;
 `
 
-const StyledInput = styled.input<{ error: boolean }>`
+const StyledInput = styled.textarea<{ error: boolean }>`
   width: 100%;
+  height: 110px;
   padding: 15px 16px;
   border-radius: 8px;
   border: 1px solid ${({ error }) => (error ? COLORS.RED : COLORS.BLACK_200)};
