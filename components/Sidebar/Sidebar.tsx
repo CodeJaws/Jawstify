@@ -13,13 +13,13 @@ import DashboardGroup from './DashboardGroup';
 const DEFAULT_DASHBOARDS = [
   {
     id: 1,
-    name: '비브리지',
+    name: '비브리지asdasdasdasdasdasdasd',
     color: 'green',
     createdByMe: true,
   },
   {
     id: 2,
-    name: '비브리지',
+    name: '비브리지asd',
     color: 'purple',
     createdByMe: true,
   },
@@ -70,7 +70,6 @@ const StyledContainer = styled.div`
   flex-shrink: 0;
   background: ${COLORS.WHITE_FF};
   border: 1px solid ${COLORS.GRAY_D9};
-
   ${onPc} {
     width: 300px;
   }
@@ -123,11 +122,12 @@ const StyledTitleWrapper = styled.div`
   }
 
   ${onPc} {
-    margin: 59.93px 24px 0px;
+    margin: 59.93px 24px 18px;
   }
 
   ${onTablet} {
-    margin: 59.93px 30px 0 24px;
+    margin: 59.93px 30px 18px 24px;
+    width: 116px;
   }
 
   ${onMobile} {
