@@ -19,6 +19,6 @@ const StyledContainer = styled.div`
   padding: 3px 6px;
   border-radius: 4px;
   font-size: 12px;
-  color: ${COLORS.GRAY_50};
-  background-color: ${COLORS.GRAY_20};
+  color: ${COLORS.GRAY_78};
+  background-color: ${COLORS.GRAY_EE};
 `;

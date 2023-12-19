@@ -33,8 +33,8 @@ function ContentChip({ content }: ChipProps) {
         };
       default:
         return {
-          color: `${COLORS.WHITE}`,
-          background: `${COLORS.BLACK_300}`,
+          color: `${COLORS.WHITE_FF}`,
+          background: `${COLORS.BLACK_17}`,
         };
     }
   };
