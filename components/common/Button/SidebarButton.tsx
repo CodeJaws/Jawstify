@@ -1,11 +1,11 @@
-import styled from 'styled-components'
-import greenCircle from '@/public/assets/icons/greenCircle.svg'
-import crown from '@/public/assets/icons/crown.svg'
-import rightPage from '@/public/assets/icons/rightPage.svg'
-import Image from 'next/image'
-import { onTablet, onMobile } from '@/styles/mediaQuery'
-import { fontStyle } from '@/styles/fontStyle'
-import { COLORS } from '@/styles/palettes'
+import styled from 'styled-components';
+import greenCircle from '@/public/assets/icons/greenCircle.svg';
+import crown from '@/public/assets/icons/crown.svg';
+import rightPage from '@/public/assets/icons/rightPage.svg';
+import Image from 'next/image';
+import { onTablet, onMobile } from '@/styles/mediaQuery';
+import { fontStyle } from '@/styles/fontStyle';
+import { COLORS } from '@/styles/palettes';
 
 function SidebarButton() {
   return (
@@ -23,10 +23,10 @@ function SidebarButton() {
         </StyledWrapper>
       </StyledButton>
     </>
-  )
+  );
 }
 
-export default SidebarButton
+export default SidebarButton;
 
 const StyledButton = styled.button`
   width: 332px;
@@ -36,9 +36,9 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY_30};
-  background: ${COLORS.WHITE};
-  color: ${COLORS.BLACK_200};
+  border: 1px solid ${COLORS.GRAY_D9};
+  background: ${COLORS.WHITE_FF};
+  color: ${COLORS.BLACK_33};
   ${fontStyle(16, 600)};
 
   ${onTablet} {
@@ -50,7 +50,7 @@ const StyledButton = styled.button`
     height: 58px;
     font-size: 1.4rem;
   }
-`
+`;
 const StyledWrapper = styled.div`
   width: 292px;
   display: flex;
@@ -63,19 +63,19 @@ const StyledWrapper = styled.div`
   ${onMobile} {
     width: 220px;
   }
-`
+`;
 
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-`
+`;
 const StyledInDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
-`
+`;
 const CrownImage = styled(Image)`
   width: 20px;
   height: 16px;
@@ -87,12 +87,12 @@ const CrownImage = styled(Image)`
     width: 15px;
     height: 12px;
   }
-`
+`;
 const StyledCircleImage = styled(Image)`
   width: 8px;
   height: 8px;
-`
+`;
 const StyledPageImage = styled(Image)`
   width: 18px;
   height: 18px;
-`
+`;

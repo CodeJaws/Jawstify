@@ -1,9 +1,9 @@
-import Image from 'next/image'
-import styled from 'styled-components'
-import { onTablet, onMobile } from '@/styles/mediaQuery'
-import plus from '@/public/assets/icons/plus.svg'
-import { fontStyle } from '@/styles/fontStyle'
-import { COLORS } from '@/styles/palettes'
+import Image from 'next/image';
+import styled from 'styled-components';
+import { onTablet, onMobile } from '@/styles/mediaQuery';
+import plus from '@/public/assets/icons/plus.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { COLORS } from '@/styles/palettes';
 
 function DashBoardAddButton() {
   return (
@@ -12,10 +12,10 @@ function DashBoardAddButton() {
         새로운 대시보드 <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>
     </>
-  )
+  );
 }
 
-export default DashBoardAddButton
+export default DashBoardAddButton;
 
 const StyledButton = styled.button`
   width: 332px;
@@ -26,9 +26,9 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 12px;
   border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY_30};
-  background: ${COLORS.WHITE};
-  color: ${COLORS.BLACK_200};
+  border: 1px solid ${COLORS.GRAY_D9};
+  background: ${COLORS.WHITE_FF};
+  color: ${COLORS.BLACK_33};
   ${fontStyle(16, 600)};
 
   ${onTablet} {
@@ -40,7 +40,7 @@ const StyledButton = styled.button`
     width: 260px;
     height: 58px;
   }
-`
+`;
 
 const StyledPlusImage = styled(Image)`
   width: 16px;
@@ -50,4 +50,4 @@ const StyledPlusImage = styled(Image)`
     width: 14.5px;
     height: 14.5px;
   }
-`
+`;

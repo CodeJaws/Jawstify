@@ -1,9 +1,9 @@
-import Image from 'next/image'
-import styled from 'styled-components'
-import { onTablet, onMobile } from '@/styles/mediaQuery'
-import plus from '@/public/assets/icons/plus.svg'
-import { fontStyle } from '@/styles/fontStyle'
-import { COLORS } from '@/styles/palettes'
+import Image from 'next/image';
+import styled from 'styled-components';
+import { onTablet, onMobile } from '@/styles/mediaQuery';
+import plus from '@/public/assets/icons/plus.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { COLORS } from '@/styles/palettes';
 
 function ColumnAddButton() {
   return (
@@ -13,10 +13,10 @@ function ColumnAddButton() {
         <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>
     </>
-  )
+  );
 }
 
-export default ColumnAddButton
+export default ColumnAddButton;
 
 const StyledButton = styled.button`
   width: 354px;
@@ -27,9 +27,9 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 12px;
   border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY_30};
-  background: ${COLORS.WHITE};
-  color: ${COLORS.BLACK_200};
+  border: 1px solid ${COLORS.GRAY_D9};
+  background: ${COLORS.WHITE_FF};
+  color: ${COLORS.BLACK_33};
   ${fontStyle(18, 700)};
 
   ${onTablet} {
@@ -41,7 +41,7 @@ const StyledButton = styled.button`
     height: 60px;
     font-size: 1.6rem;
   }
-`
+`;
 const StyledPlusImage = styled(Image)`
   width: 16px;
   height: 16px;
@@ -50,4 +50,4 @@ const StyledPlusImage = styled(Image)`
     width: 14.5px;
     height: 14.5px;
   }
-`
+`;
