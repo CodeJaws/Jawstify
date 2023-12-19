@@ -16,4 +16,12 @@ export const COLORS = {
   ORANGE: '#FFA500',
   BLUE: '#76A5EA',
   PINK: '#E876EA',
-}
+  ORANGE_D5: '#D58D49',
+  ORANGE_F9: '#F9EEE3',
+  GREEN_86: '#86D549',
+  GREEN_E7: '#E7F7DB',
+  BLUE_49: '#4981D5',
+  BLUE_F7: '#DBE6F7',
+  PINK_D5: '#D549B6',
+  PINK_DB: '#F7DBF0',
+};
