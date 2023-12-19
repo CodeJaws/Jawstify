@@ -1,24 +1,24 @@
-import Image from 'next/image'
-import styled from 'styled-components'
+import Image from 'next/image';
+import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle'
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery'
-import useDeviceType from '@/hooks/useDeviceType'
-import { createSlicedMembers } from '@/utils/createSlicedMembers'
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+import useDeviceType from '@/hooks/useDeviceType';
+import { createSlicedMembers } from '@/utils/createSlicedMembers';
 
 interface MembersProps {
   members: {
-    profileImageUrl: string
-    id: number
-  }[]
+    profileImageUrl: string;
+    id: number;
+  }[];
 }
 
 function Members({ members }: MembersProps) {
-  const deviceType = useDeviceType()
-  let showMembers = createSlicedMembers({ members, deviceType })
-  const checkMemberLength = (deviceType === 'pc' && members.length > 4) || (deviceType !== 'pc' && members.length > 2)
+  const deviceType = useDeviceType();
+  let showMembers = createSlicedMembers({ members, deviceType });
+  const checkMemberLength = (deviceType === 'pc' && members.length > 4) || (deviceType !== 'pc' && members.length > 2);
 
-  if (members.length === 0) return null
+  if (members.length === 0) return null;
   return (
     <StyledContainer $cnt={members.length}>
       {showMembers.map((member, idx) => (
@@ -33,10 +33,10 @@ function Members({ members }: MembersProps) {
         </StyledImageContainer>
       )}
     </StyledContainer>
-  )
+  );
 }
 
-export default Members
+export default Members;
 
 const StyledContainer = styled.div<{ $cnt: number }>`
   position: relative;
@@ -52,7 +52,7 @@ const StyledContainer = styled.div<{ $cnt: number }>`
   ${onMobile} {
     width: ${(props) => (props.$cnt > 2 ? '68' : (props.$cnt - 1) * 26 + 12)}px;
   }
-`
+`;
 
 const StyledImageContainer = styled.div<{ $idx: number; $isLast: boolean }>`
   overflow: hidden;
@@ -78,4 +78,4 @@ const StyledImageContainer = styled.div<{ $idx: number; $isLast: boolean }>`
     width: 34px;
     height: 34px;
   }
-`
+`;

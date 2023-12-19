@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import setting from '@/public/assets/icons/setting.svg';
-import invite from '@/public/assets/icons/AddBox.svg';
+import invite from '@/public/assets/icons/invite.svg';
 import crown from '@/public/assets/icons/crown.svg';
 
 import Button from './Button';
@@ -118,7 +118,7 @@ const StyledTitleContainer = styled.div`
   align-items: center;
 
   h3 {
-    color: ${COLORS.BLACK_200};
+    color: ${COLORS.BLACK_33};
     ${fontStyle(20, 700)}
   }
 `;
