@@ -1,18 +1,16 @@
 import Ellipse from '@/public/assets/icons/ChipEllipse.svg';
+import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { selectSize } from '@/utils/selectFontSize';
 import Image from 'next/image';
 import { styled } from 'styled-components';
 
 interface StatusChipProps {
-  size: string;
   content: string;
 }
 
-function StatusChip({ size, content }: StatusChipProps) {
-  const fontSize = selectSize(size);
+function StatusChip({ content }: StatusChipProps) {
   return (
-    <StyledContainer fontSize={fontSize}>
+    <StyledContainer>
       <Image width={6} height={6} src={Ellipse} alt="동그라미" />
       {content}
     </StyledContainer>
@@ -21,14 +19,18 @@ function StatusChip({ size, content }: StatusChipProps) {
 
 export default StatusChip;
 
-const StyledContainer = styled.div<{ fontSize: number }>`
+const StyledContainer = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
   gap: 6px;
   padding: 4px 8px;
   border-radius: 11px;
-  font-size: ${(props) => props.fontSize}px;
+  font-size: 1.2rem;
   color: ${COLORS.VIOLET};
   background-color: ${COLORS.VIOLET_LIGHT};
+
+  ${onMobile} {
+    font-size: 1rem;
+  }
 `;

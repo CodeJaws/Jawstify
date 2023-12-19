@@ -4,14 +4,11 @@ import Green from '@/public/assets/icons/GreenEllipse.svg';
 import Orange from '@/public/assets/icons/OrangeEllipse.svg';
 import Pink from '@/public/assets/icons/PinkEllipse.svg';
 import Purple from '@/public/assets/icons/PurpleEllipse.svg';
+import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import { useState } from 'react';
 import { styled } from 'styled-components';
-
-interface ColorChipProps {
-  size: string;
-}
 
 const ColorEllipse = [
   { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN },
@@ -21,21 +18,8 @@ const ColorEllipse = [
   { id: 4, src: Pink, alt: '핑크색 원', color: COLORS.PINK },
 ];
 
-function ColorChip({ size }: ColorChipProps) {
+function ColorChip() {
   const [selectedColor, setSelectedColor] = useState(0);
-
-  const selectSize = (size: string) => {
-    switch (size) {
-      case 'large':
-        return 30;
-      case 'small':
-        return 28;
-      default:
-        return 30;
-    }
-  };
-
-  const divSize = selectSize(size);
 
   const toggleSelectedColor = (index: number) => {
     setSelectedColor((prevSelectedColor) => (prevSelectedColor === index ? -1 : index));
@@ -46,7 +30,7 @@ function ColorChip({ size }: ColorChipProps) {
       {ColorEllipse.map((val) => (
         <StyledButton key={val.id} onClick={() => toggleSelectedColor(val.id)}>
           {selectedColor === val.id && <StyledCheckImage src={Check} alt="체크" />}
-          <Image width={divSize} height={divSize} src={val.src} alt={val.alt} />
+          <StyledImage width={30} height={30} src={val.src} alt={val.alt} />
         </StyledButton>
       ))}
     </StyledContainer>
@@ -71,4 +55,11 @@ const StyledButton = styled.button`
 
 const StyledCheckImage = styled(Image)`
   position: absolute;
+`;
+
+const StyledImage = styled(Image)`
+  ${onMobile} {
+    width: 28px;
+    height: 28px;
+  }
 `;

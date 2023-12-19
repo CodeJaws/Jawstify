@@ -1,40 +1,38 @@
 import Add from '@/public/assets/icons/Add.svg';
+import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import { styled } from 'styled-components';
 
-interface AddChipProps {
-  size: string;
-}
-
-function AddChip({ size }: AddChipProps) {
-  const selectSize = (size: string) => {
-    switch (size) {
-      case 'large':
-        return { imgSize: 16, divSize: 22 };
-      case 'small':
-        return { imgSize: 14, divSize: 20 };
-      default:
-        return { imgSize: 16, divSize: 22 };
-    }
-  };
-  const { imgSize, divSize } = selectSize(size);
+function AddChip() {
   return (
-    <StyledContainer size={divSize}>
-      <Image width={imgSize} height={imgSize} src={Add} alt="추가 버튼" />
+    <StyledContainer>
+      <StyledImage width={16} height={16} src={Add} alt="추가 버튼" />
     </StyledContainer>
   );
 }
 
 export default AddChip;
 
-const StyledContainer = styled.button<{ size: number }>`
+const StyledContainer = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
+  width: 22px;
+  height: 22px;
   padding: 3px;
   border-radius: 4px;
   background-color: ${COLORS.VIOLET_LIGHT};
+
+  ${onMobile} {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+const StyledImage = styled(Image)`
+  ${onMobile} {
+    width: 16px;
+    height: 14px;
+  }
 `;
