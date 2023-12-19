@@ -7,10 +7,10 @@ import { onMobile } from '@/styles/mediaQuery'
 function LeftRightButton() {
   return (
     <Div>
-      <StyledArrowButton $direction={'left'} disabled>
+      <StyledArrowButton $direction={'left'}>
         <ArrowImage src={leftArrow} alt="왼쪽화살표" />
       </StyledArrowButton>
-      <StyledArrowButton $direction={'right'} disabled>
+      <StyledArrowButton $direction={'right'}>
         <ArrowImage src={rightArrow} alt="오른쪽화살표" />
       </StyledArrowButton>
     </Div>
@@ -42,6 +42,7 @@ const StyledArrowButton = styled.button<{ $direction: string }>`
 `
 
 const ArrowImage = styled(Image)`
+  color: white;
   width: 16px;
   height: 16px;
 `
