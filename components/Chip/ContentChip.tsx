@@ -24,12 +24,12 @@ function ContentChip({ content }: ChipProps) {
       case BACK_END:
         return {
           color: `${COLORS.PINK_D5}`,
-          background: `${COLORS.PINK_DB}`,
+          background: `${COLORS.PINK_F7}`,
         };
       case MAX_LEVEL:
         return {
           color: `${COLORS.BLUE_49}`,
-          background: `${COLORS.BLUE_F7}`,
+          background: `${COLORS.BLUE_DB}`,
         };
       default:
         return {

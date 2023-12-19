@@ -20,8 +20,8 @@ export const COLORS = {
   GREEN_E7: '#E7F7DB',
   BLUE_76: '#76A5EA',
   BLUE_49: '#4981D5',
-  BLUE_F7: '#DBE6F7',
+  BLUE_DB: '#DBE6F7',
   PINK_E8: '#E876EA',
   PINK_D5: '#D549B6',
-  PINK_DB: '#F7DBF0',
+  PINK_F7: '#F7DBF0',
 };
