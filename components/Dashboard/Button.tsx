@@ -23,11 +23,12 @@ function Button({ imageUrl, children, altText }: ButtonProps) {
 
 export default Button
 
-// 열심히 하자
+const StyledImage = styled(Image)`
+  width: 20px;
+  height: 20px;
+`
 
-const StyledImage = styled(Image)``
-
-const StyledButton = styled.div`
+const StyledButton = styled.button`
   width: max-content;
   flex-shrink: 0;
   display: flex;
@@ -35,9 +36,7 @@ const StyledButton = styled.div`
   align-items: center;
   gap: 8px;
   padding: 0 16px;
-
   border-radius: 8px;
-
   border: 1px solid ${COLORS.GRAY_30};
   background: ${COLORS.WHITE};
 
@@ -47,6 +46,7 @@ const StyledButton = styled.div`
     ${onPc} {
       ${fontStyle(16, 500)}
     }
+
     ${onTablet} {
       text-align: center;
       ${fontStyle(14, 500)}
@@ -63,12 +63,13 @@ const StyledButton = styled.div`
   }
 
   ${onPc} {
-    /* width: 88px; */
     height: 40px;
   }
+
   ${onTablet} {
     height: 36px;
   }
+
   ${onMobile} {
     height: 30px;
     padding: 0 12px;
