@@ -68,8 +68,8 @@ const StyledContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   flex-shrink: 0;
-  background: ${COLORS.WHITE};
-  border: 1px solid ${COLORS.GRAY_30};
+  background: ${COLORS.WHITE_FF};
+  border: 1px solid ${COLORS.GRAY_D9};
 
   ${onPc} {
     width: 300px;
@@ -112,7 +112,7 @@ const StyledTitleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   h3 {
-    color: ${COLORS.GRAY_50};
+    color: ${COLORS.GRAY_78};
     ${fontStyle(12, 700)};
   }
 
