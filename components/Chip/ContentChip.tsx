@@ -1,6 +1,7 @@
 import { BACK_END, MAX_LEVEL, NORMAL, PROJECT } from '@/constants/Chip';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import styled from 'styled-components';
 
 interface ChipProps {

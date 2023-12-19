@@ -6,6 +6,7 @@ import Pink from '@/public/assets/icons/PinkEllipse.svg';
 import Purple from '@/public/assets/icons/PurpleEllipse.svg';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import { useState } from 'react';
 import { styled } from 'styled-components';

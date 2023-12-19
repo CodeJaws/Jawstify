@@ -1,8 +1,9 @@
 import Ellipse from '@/public/assets/icons/ChipEllipse.svg';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import Image from 'next/image';
 import { styled } from 'styled-components';
+
+import Image from 'next/image';
 
 interface StatusChipProps {
   content: string;

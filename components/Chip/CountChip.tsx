@@ -1,4 +1,5 @@
 import { COLORS } from '@/styles/palettes';
+
 import { styled } from 'styled-components';
 
 interface CountChipProps {
