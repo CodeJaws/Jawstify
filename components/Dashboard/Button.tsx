@@ -1,15 +1,15 @@
-import Image from 'next/image'
-import { ReactNode } from 'react'
-import styled from 'styled-components'
+import Image from 'next/image';
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle'
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery'
-import { COLORS } from '@/styles/palettes'
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 
 interface ButtonProps {
-  imageUrl: string
-  children: ReactNode
-  altText: string
+  imageUrl: string;
+  children: ReactNode;
+  altText: string;
 }
 
 function Button({ imageUrl, children, altText }: ButtonProps) {
@@ -18,15 +18,15 @@ function Button({ imageUrl, children, altText }: ButtonProps) {
       <StyledImage src={imageUrl} alt={altText} />
       <p>{children}</p>
     </StyledButton>
-  )
+  );
 }
 
-export default Button
+export default Button;
 
 const StyledImage = styled(Image)`
   width: 20px;
   height: 20px;
-`
+`;
 
 const StyledButton = styled.button`
   width: max-content;
@@ -37,11 +37,11 @@ const StyledButton = styled.button`
   gap: 8px;
   padding: 0 16px;
   border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY_30};
-  background: ${COLORS.WHITE};
+  border: 1px solid ${COLORS.GRAY_D9};
+  background: ${COLORS.WHITE_FF};
 
   p {
-    color: ${COLORS.GRAY_50};
+    color: ${COLORS.GRAY_78};
 
     ${onPc} {
       ${fontStyle(16, 500)}
@@ -77,4 +77,4 @@ const StyledButton = styled.button`
       display: none;
     }
   }
-`
+`;

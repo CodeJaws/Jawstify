@@ -23,7 +23,7 @@ const StyledContainer = styled.button`
   height: 22px;
   padding: 3px;
   border-radius: 4px;
-  background-color: ${COLORS.VIOLET_LIGHT};
+  background-color: ${COLORS.VIOLET_F1};
 
   ${onMobile} {
     width: 20px;

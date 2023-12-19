@@ -28,8 +28,8 @@ const StyledContainer = styled.div`
   padding: 4px 8px;
   border-radius: 11px;
   font-size: 1.2rem;
-  color: ${COLORS.VIOLET};
-  background-color: ${COLORS.VIOLET_LIGHT};
+  color: ${COLORS.VIOLET_55};
+  background-color: ${COLORS.VIOLET_F1};
 
   ${onMobile} {
     font-size: 1rem;
