@@ -1,48 +1,48 @@
 import Image from 'next/image'
 import styled from 'styled-components'
 import { onTablet, onMobile } from '@/styles/mediaQuery'
-import plusImage from '@/public/assets/icons/plusImage.svg'
+import plus from '@/public/assets/icons/plus.svg'
+import { fontStyle } from '@/styles/fontStyle'
+import { COLORS } from '@/styles/palettes'
 
-function ColumnPlusButton() {
+function ColumnAddButton() {
   return (
     <>
       <StyledButton>
         새로운 칼럼 추가하기
-        <PlusImage src={plusImage} alt="plus이미지" />
+        <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>
     </>
   )
 }
 
-export default ColumnPlusButton
+export default ColumnAddButton
 
 const StyledButton = styled.button`
-  box-sizing: border-box;
+  width: 354px;
+  height: 70px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
-  width: 354px;
-  height: 70px;
   border-radius: 8px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
-  color: #333236;
-  font-size: 18px;
-  font-weight: 700;
+  border: 1px solid ${COLORS.GRAY_30};
+  background: ${COLORS.WHITE};
+  color: ${COLORS.BLACK_200};
+  ${fontStyle(18, 700)};
 
   ${onTablet} {
     width: 544px;
     height: 70px;
   }
   ${onMobile} {
-    font-size: 16px;
     width: 284px;
     height: 60px;
+    font-size: 1.6rem;
   }
 `
-const PlusImage = styled(Image)`
+const StyledPlusImage = styled(Image)`
   width: 16px;
   height: 16px;
 

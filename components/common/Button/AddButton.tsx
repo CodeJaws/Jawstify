@@ -1,31 +1,31 @@
 import Image from 'next/image'
 import styled from 'styled-components'
 import { onTablet, onMobile } from '@/styles/mediaQuery'
-import plusImage from '@/public/assets/icons/plusImage.svg'
+import plus from '@/public/assets/icons/plus.svg'
+import { COLORS } from '@/styles/palettes'
 
-function PlusButton() {
+function AddButton() {
   return (
     <>
       <StyledButton>
-        <PlusImage src={plusImage} alt="Plus이미지" />
+        <StyledPlusImage src={plus} alt="Plus이미지" />
       </StyledButton>
     </>
   )
 }
 
-export default PlusButton
+export default AddButton
 
 const StyledButton = styled.button`
-  box-sizing: border-box;
+  width: 314px;
+  height: 40px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 314px;
-  height: 40px;
   border-radius: 6px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
+  border: 1px solid ${COLORS.GRAY_30};
+  background: ${COLORS.WHITE};
   ${onTablet} {
     width: 544px;
   }
@@ -35,7 +35,7 @@ const StyledButton = styled.button`
   }
 `
 
-const PlusImage = styled(Image)`
+const StyledPlusImage = styled(Image)`
   width: 16px;
   height: 16px;
 

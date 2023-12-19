@@ -1,35 +1,35 @@
 import Image from 'next/image'
 import styled from 'styled-components'
 import { onTablet, onMobile } from '@/styles/mediaQuery'
-import plusImage from '@/public/assets/icons/plusImage.svg'
+import plus from '@/public/assets/icons/plus.svg'
+import { fontStyle } from '@/styles/fontStyle'
+import { COLORS } from '@/styles/palettes'
 
-function NewDashBoardButton() {
+function DashBoardAddButton() {
   return (
     <>
       <StyledButton>
-        새로운 대시보드 <PlusImage src={plusImage} alt="plus이미지" />
+        새로운 대시보드 <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>
     </>
   )
 }
 
-export default NewDashBoardButton
+export default DashBoardAddButton
 
 const StyledButton = styled.button`
-  box-sizing: border-box;
+  width: 332px;
+  height: 70px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
-  width: 332px;
-  height: 70px;
   border-radius: 8px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
-  color: #333236;
-  font-size: 16px;
-  font-weight: 600;
+  border: 1px solid ${COLORS.GRAY_30};
+  background: ${COLORS.WHITE};
+  color: ${COLORS.BLACK_200};
+  ${fontStyle(16, 600)};
 
   ${onTablet} {
     width: 247px;
@@ -42,7 +42,7 @@ const StyledButton = styled.button`
   }
 `
 
-const PlusImage = styled(Image)`
+const StyledPlusImage = styled(Image)`
   width: 16px;
   height: 16px;
 
