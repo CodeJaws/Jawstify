@@ -31,7 +31,7 @@ function DropDown() {
 
 export default DropDown;
 
-const StyledContainer = styled.div<{ isPressed: any }>`
+const StyledContainer = styled.div<{ isPressed: boolean }>`
   position: relative;
   width: 217px;
   height: 48px;
