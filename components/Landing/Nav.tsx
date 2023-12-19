@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { COLORS } from '@/styles/palettes'
 import { onPc, onTablet } from '@/styles/mediaQuery'
+import { fontStyle } from '@/styles/fontStyle'
 
 function Nav() {
   return (
@@ -72,5 +73,5 @@ const LinkButton = styled.div`
   gap: 20px;
   color: ${COLORS.BLACK_300};
   font-family: Pretendard;
-  font-size: 1.4rem;
+  ${fontStyle(14, 400)};
 `
