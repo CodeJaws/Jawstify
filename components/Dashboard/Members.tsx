@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { fontStyle } from '@/styles/fontStyle'
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery'
 import useDeviceType from '@/hooks/useDeviceType'
+import { createSlicedMembers } from '@/utils/createSlicedMembers'
 
 interface MembersProps {
   members: {
@@ -12,20 +13,12 @@ interface MembersProps {
   }[]
 }
 
-/** 보여주는 프로필 이미지 목록 생성 - 추후에 들어오는 props값만 수정하면 됩니다. */
-const makeNewMembers = (members: { profileImageUrl: string; id: number }[], deviceType: string) => {
-  if (deviceType === 'pc') return members.slice(0, Math.min(members.length, 4))
-  return members.slice(0, Math.min(members.length, 2))
-}
-
 function Members({ members }: MembersProps) {
   const deviceType = useDeviceType()
-
-  let showMembers = makeNewMembers(members, deviceType)
-
+  let showMembers = createSlicedMembers({ members, deviceType })
   const checkMemberLength = (deviceType === 'pc' && members.length > 4) || (deviceType !== 'pc' && members.length > 2)
 
-  if (members.length === 0) return null // member 없을 시
+  if (members.length === 0) return null
   return (
     <StyledContainer $cnt={members.length}>
       {showMembers.map((member, idx) => (
