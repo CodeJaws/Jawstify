@@ -1,8 +1,9 @@
-import Input from '@/components/Input/ModalInput'
-import ModalInput from '@/components/Input/ModalInput'
-import Comment from '@/components/Input/ModalInputContainer/Comment'
-import DatePicker from '@/components/Input/ModalInputContainer/Date'
-import Date from '@/components/Input/ModalInputContainer/Date'
+import Input from '@/components/Input/ModalInput';
+import ModalInput from '@/components/Input/ModalInput';
+import Comment from '@/components/Input/ModalInputContainer/Comment';
+import DatePicker from '@/components/Input/ModalInputContainer/Date';
+import Date from '@/components/Input/ModalInputContainer/Date';
+import Tag from '@/components/Input/ModalInputContainer/Tag';
 
 function Landing() {
   return (
@@ -12,8 +13,9 @@ function Landing() {
       <Input label="로그인"></Input>
       <Comment label="댓글" />
       <DatePicker />
+      <Tag></Tag>
     </div>
-  )
+  );
 }
 
-export default Landing
+export default Landing;
