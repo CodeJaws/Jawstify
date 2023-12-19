@@ -1,5 +1,11 @@
+import Nav from '@/components/Landing/Nav'
+
 function Landing() {
-  return <div>Landing page</div>
+  return (
+    <>
+      <Nav />
+    </>
+  )
 }
 
 export default Landing
