@@ -12,11 +12,11 @@ import { useState } from 'react';
 import { styled } from 'styled-components';
 
 const ColorEllipse = [
-  { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN },
-  { id: 1, src: Purple, alt: '보라색 원', color: COLORS.PURPLE },
-  { id: 2, src: Orange, alt: '오렌지 원', color: COLORS.ORANGE },
-  { id: 3, src: Blue, alt: '하늘색 원', color: COLORS.BLUE },
-  { id: 4, src: Pink, alt: '핑크색 원', color: COLORS.PINK },
+  { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN_7A },
+  { id: 1, src: Purple, alt: '보라색 원', color: COLORS.PURPLE_76 },
+  { id: 2, src: Orange, alt: '오렌지 원', color: COLORS.ORANGE_FF },
+  { id: 3, src: Blue, alt: '하늘색 원', color: COLORS.BLUE_76 },
+  { id: 4, src: Pink, alt: '핑크색 원', color: COLORS.PINK_E8 },
 ];
 
 function ColorChip() {
