@@ -16,10 +16,6 @@ const useCheckWindowWidthSize = () => {
 
 /** Window 가로 사이즈를 통해 deviceType('pc', 'tablet', 'mobile') 반환 */
 const useDeviceType = () => {
-  // mobile, tablet, desktop
-  // 최소 1024px : desktop
-  // 최소 768px ~ 최대 1024px : tablet
-  // 최대 768px : mobile
   const width = useCheckWindowWidthSize()
   let deviceType
   if (width >= 1024) {
