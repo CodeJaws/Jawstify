@@ -7,7 +7,7 @@ import { onTablet, onMobile } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 
-function SidebarButton() {
+function DashBoardButton() {
   return (
     <>
       <StyledButton>
@@ -26,7 +26,7 @@ function SidebarButton() {
   );
 }
 
-export default SidebarButton;
+export default DashBoardButton;
 
 const StyledButton = styled.button`
   width: 332px;

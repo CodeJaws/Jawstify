@@ -26,6 +26,7 @@ const StyledButton = styled.button`
   border-radius: 6px;
   border: 1px solid ${COLORS.GRAY_D9};
   background: ${COLORS.WHITE_FF};
+
   ${onTablet} {
     width: 544px;
   }
