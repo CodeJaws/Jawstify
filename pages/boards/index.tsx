@@ -1,5 +1,5 @@
 function Boards() {
-  return <div>Boards page</div>
+  return <div>Boards page</div>;
 }
 
-export default Boards
+export default Boards;
