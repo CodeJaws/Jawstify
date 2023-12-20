@@ -52,9 +52,9 @@ const StyledContainer = styled.div<{ isOpen: boolean }>`
   left: 0;
   width: 217px;
   height: 118px;
-  border: 1px solid ${COLORS.GRAY_30};
+  border: 1px solid ${COLORS.GRAY_D9};
   border-radius: 6px;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.WHITE_FF};
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
   padding: 13px 8px;
 `;

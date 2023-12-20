@@ -39,9 +39,9 @@ const StyledContainer = styled.div<{ isPressed: boolean }>`
   position: relative;
   width: 217px;
   height: 48px;
-  border: 1px solid ${({ isPressed }) => (isPressed ? COLORS.VIOLET : COLORS.GRAY_30)};
+  border: 1px solid ${({ isPressed }) => (isPressed ? COLORS.VIOLET_55 : COLORS.GRAY_D9)};
   border-radius: 6px;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.WHITE_FF};
   padding: 0 10px;
 `;
 

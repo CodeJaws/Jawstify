@@ -23,5 +23,5 @@ const StyledContainer = styled.div`
 
 const StyledLabel = styled.label`
   ${fontStyle(18, 500)}
-  color: ${COLORS.BLACK_200};
+  color: ${COLORS.BLACK_33};
 `;
