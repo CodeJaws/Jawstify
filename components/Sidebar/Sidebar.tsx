@@ -13,33 +13,9 @@ import DashboardGroup from './DashboardGroup';
 const DEFAULT_DASHBOARDS = [
   {
     id: 1,
-    name: '비브리지asdasdasdasdasdasdasd',
-    color: 'green',
-    createdByMe: true,
-  },
-  {
-    id: 2,
-    name: '비브리지asd',
-    color: 'purple',
-    createdByMe: true,
-  },
-  {
-    id: 3,
-    name: '3분기 계획',
-    color: 'orange',
-    createdByMe: false,
-  },
-  {
-    id: 4,
-    name: '회의록',
-    color: 'blue',
-    createdByMe: false,
-  },
-  {
-    id: 5,
     name: '중요 문서함',
     color: 'pink',
-    createdByMe: false,
+    createdByMe: true,
   },
 ];
 
