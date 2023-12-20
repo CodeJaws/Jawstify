@@ -33,6 +33,14 @@ export default Nav
 const StyledLandingHeaderContainer = styled.div`
   width: 100%;
   padding: 22px 24px;
+
+  ${onTablet} {
+    padding: 26px 40px;
+  }
+
+  ${onPc} {
+    padding: 26px 80px;
+  }
 `
 
 const StyledLandingHeaderInner = styled.div`
@@ -51,6 +59,11 @@ const LogoImageWrapper = styled.div`
   position: relative;
   width: 24px;
   height: 27px;
+
+  ${onTablet} {
+    width: 28px;
+    height: 33px;
+  }
 `
 
 const LogoTextWrapper = styled.div`
@@ -74,4 +87,12 @@ const LinkButton = styled.div`
   color: ${COLORS.BLACK_300};
   font-family: Pretendard;
   ${fontStyle(14, 400)};
+
+  ${onTablet} {
+    ${fontStyle(16, 400)};
+  }
+
+  ${onPc} {
+    ${fontStyle(16, 400)};
+  }
 `
