@@ -6,7 +6,8 @@ import { COLORS } from '@/styles/palettes';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import crown from '@/public/assets/icons/crown.svg';
 
-/** Page 작성 시 맞는 Type으로 수정해야 하는 부분입니다. */
+/**
+ * Page 작성 시 맞는 Type으로 수정해야 하는 부분입니다. */
 interface DashboardGroupProps {
   group: {
     id: number;
@@ -67,12 +68,17 @@ const StyledDashboardGroupContainer = styled.div`
 const StyledImage = styled(Image)`
   position: absolute;
   transform: rotate(-45deg);
-  left: 27px;
-  top: 8px;
+  left: 2.5px;
+  top: 10px;
 
   ${onTablet} {
-    left: 25px;
-    top: 8px;
+    left: 0.3px;
+    top: 10px;
+  }
+
+  ${onMobile} {
+    left: 6px;
+    top: 27px;
   }
 `;
 
@@ -124,11 +130,12 @@ const StyledDashboardContainer = styled.div<{ $isActive: boolean }>`
   }
 
   ${onMobile} {
-    ${StyledImage} {
-      display: none;
-    }
     justify-content: center;
     background: transparent;
+
+    &:hover {
+      background: transparent;
+    }
   }
 `;
 
