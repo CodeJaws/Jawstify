@@ -16,35 +16,22 @@ export const PWD_CHECK_ERROR = {
 
 export const DEFAULT_PLACEHOLDER = {
   EMAIL: '이메일을 입력해 주세요',
-  PWD: '비밀번호를 입력해 주세요',
+  PWD: '8자 이상 입력해 주세요',
+  PWD_CHECK: '비밀번호를 한번 더 입력해 주세요',
   COMMENT: '댓글 작성하기',
-  TITLE: '제목을 입력해 주세요',
   DATE: '날짜를 입력해 주세요',
   TAG: '입력 후 Enter',
-
-  SIGNUP: {
-    NICKNAME: '닉네임을 입력해 주세요',
-    PWD: '8자 이상 입력해 주세요',
-    PWD_CHECK: '비밀번호를 한번 더 입력해 주세요',
-  },
-};
-
-export const INPUT_TYPE = {
-  EMAIL: 'email',
-  PWD: 'pwd',
-  PWD_CHECK: 'pwd_check',
+  NICKNAME: '닉네임을 입력해 주세요',
 };
 
 // <-- Modal Input -->
-const TAG_DATA = ['프로젝트', '일반', '백엔드', '상'].map((item) => ({
-  label: item,
-  value: item,
-  color: Math.random() > 0.5 ? 'Owner' : 'Guest',
-}));
-
-const TAG_COLOR = [
+export const TAG_COLOR = [
   [COLORS.ORANGE_F9, COLORS.ORANGE_D5],
   [COLORS.GREEN_E7, COLORS.GREEN_86],
-  [COLORS.PINK_DB, COLORS.PINK_D5],
-  [COLORS.BLUE],
+  [COLORS.PINK_F7, COLORS.PINK_D5],
+  [COLORS.BLUE_DB, COLORS.BLUE_49],
 ];
+export const TAG_DATA = [].map((item) => ({
+  value: item,
+  label: item,
+}));
