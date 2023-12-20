@@ -21,7 +21,7 @@ function DropDown() {
   };
 
   return (
-    <StyledContainer isPressed={isOpen} onBlur={handleBlur}>
+    <StyledContainer $isPressed={isOpen} onBlur={handleBlur}>
       <StyledWrapper>
         <StatusChip content={status} />
         <button onClick={openMenu}>
@@ -35,11 +35,11 @@ function DropDown() {
 
 export default DropDown;
 
-const StyledContainer = styled.div<{ isPressed: boolean }>`
+const StyledContainer = styled.div<{ $isPressed: boolean }>`
   position: relative;
   width: 217px;
   height: 48px;
-  border: 1px solid ${({ isPressed }) => (isPressed ? COLORS.VIOLET_55 : COLORS.GRAY_D9)};
+  border: 1px solid ${({ $isPressed }) => ($isPressed ? COLORS.VIOLET_55 : COLORS.GRAY_D9)};
   border-radius: 6px;
   background: ${COLORS.WHITE_FF};
   padding: 0 10px;

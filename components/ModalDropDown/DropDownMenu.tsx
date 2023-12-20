@@ -28,7 +28,7 @@ function DropDownMenu({ isOpen, setIsOpen, setStatus }: DropDownMenuProps) {
   };
 
   return (
-    <StyledContainer isOpen={isOpen}>
+    <StyledContainer $isOpen={isOpen}>
       <StyledWrapper>
         <StyledInWrapper>
           {PROGRESS_STATUS.map((val) => (
@@ -45,8 +45,8 @@ function DropDownMenu({ isOpen, setIsOpen, setStatus }: DropDownMenuProps) {
 
 export default DropDownMenu;
 
-const StyledContainer = styled.div<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+const StyledContainer = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'block' : 'none')};
   position: absolute;
   top: 50px;
   left: 0;
