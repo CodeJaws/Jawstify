@@ -8,29 +8,32 @@ import { styled } from 'styled-components';
 
 interface DropDownMenuProps {
   isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   setStatus: Dispatch<SetStateAction<string>>;
 }
 
-const Status = [
+const PROGRESS_STATUS = [
   { id: 0, content: 'To Do' },
   { id: 1, content: 'On Progress' },
   { id: 2, content: 'Done' },
 ];
 
-function DropDownMenu({ isOpen, setStatus }: DropDownMenuProps) {
+function DropDownMenu({ isOpen, setIsOpen, setStatus }: DropDownMenuProps) {
   const [isCheck, setIsCheck] = useState(0);
+
   const handleCheck = (id: number, content: string) => {
     setIsCheck(id);
     setStatus(content);
+    setIsOpen((prev) => !prev);
   };
 
   return (
     <StyledContainer isOpen={isOpen}>
       <StyledWrapper>
         <StyledInWrapper>
-          {Status.map((val) => (
-            <StyledButton key={val.id} onClick={() => handleCheck(val.id, val.content)}>
-              {isCheck === val.id ? <Image src={Check} alt="체크 이미지" /> : <StyledBlank />}
+          {PROGRESS_STATUS.map((val) => (
+            <StyledButton key={val.id} onMouseDown={() => handleCheck(val.id, val.content)}>
+              {isCheck === val.id ? <Image width={22} height={22} src={Check} alt="체크 이미지" /> : <StyledBlank />}
               <StatusChip content={val.content} />
             </StyledButton>
           ))}
@@ -56,7 +59,7 @@ const StyledContainer = styled.div<{ isOpen: boolean }>`
   padding: 13px 8px;
 `;
 
-const StyledWrapper = styled.button`
+const StyledWrapper = styled.div`
   display: flex;
   gap: 6px;
 `;

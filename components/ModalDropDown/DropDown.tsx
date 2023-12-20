@@ -12,19 +12,23 @@ function DropDown() {
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState(TO_DO);
 
-  const handleButton = () => {
+  const openMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const handleBlur = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <StyledContainer isPressed={isOpen}>
+    <StyledContainer isPressed={isOpen} onBlur={handleBlur}>
       <StyledWrapper>
         <StatusChip content={status} />
-        <button onClick={handleButton}>
-          <Image src={Arrow} alt="드롭다운 화살표" />
+        <button onClick={openMenu}>
+          <Image width={26} height={26} src={Arrow} alt="드롭다운 화살표" />
         </button>
       </StyledWrapper>
-      <DropDownMenu isOpen={isOpen} setStatus={setStatus} />
+      <DropDownMenu isOpen={isOpen} setIsOpen={setIsOpen} setStatus={setStatus} />
     </StyledContainer>
   );
 }
