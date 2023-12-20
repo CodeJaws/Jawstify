@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { COLORS } from '@/styles/palettes';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 
@@ -30,8 +30,8 @@ const StyledDiv = styled.div`
 `;
 
 const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
-  width: ${({ $size }) => ($size === 'large' ? '120px' : '84px')};
-  height: ${({ $size }) => ($size === 'large' ? '48px' : '32px')};
+  width: 84px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,21 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   background: ${({ $isViolet }) => ($isViolet ? `${COLORS.VIOLET_55}` : `${COLORS.WHITE_FF}`)};
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
-  font-size: ${({ $size }) => ($size === 'large' ? '1.6rem' : '1.4rem')};
+  font-size: 1.4rem;
+
+  ${({ $size }) =>
+    $size === 'large' &&
+    css`
+      width: 120px;
+      height: 48px;
+      font-size: 1.6rem;
+
+      ${onMobile} {
+        width: 138px;
+        height: 42px;
+        font-size: 1.4rem;
+      }
+    `}
 
   ${onTablet} {
     width: ${({ $size }) => ($size === 'small' ? '72px' : '')};
@@ -48,8 +62,8 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   }
 
   ${onMobile} {
-    width: ${({ $size }) => ($size === 'large' ? '138px' : '109px')};
-    height: ${({ $size }) => ($size === 'large' ? '42px' : '28px')};
-    font-size: ${({ $size }) => ($size === 'large' ? '1.4rem' : '1.2rem')};
+    width: 109px;
+    height: 28px;
+    font-size: 1.2rem;
   }
 `;

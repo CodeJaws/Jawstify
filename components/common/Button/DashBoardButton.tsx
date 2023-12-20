@@ -7,7 +7,18 @@ import { onTablet, onMobile } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 
-function DashBoardButton() {
+interface DashBoardButtonProps {
+  text: string;
+  color: string;
+  king: boolean;
+}
+
+/**
+ * @param text 대시보드 제목
+ * @param color 대시보드 ellipse color -> 입맛대로 바꾸시면 될 듯 합니다!
+ * @param king 대시보드 생성자 여부 boolean
+ */
+function DashBoardButton({ text, color, king }: DashBoardButtonProps) {
   return (
     <>
       <StyledButton>
@@ -15,8 +26,8 @@ function DashBoardButton() {
           <StyledDiv>
             <StyledCircleImage src={greenCircle} alt="초록원" />
             <StyledInDiv>
-              비브리지
-              <CrownImage src={crown} alt="왕관" />
+              {text}
+              {king && <CrownImage src={crown} alt="왕관" />}
             </StyledInDiv>
           </StyledDiv>
           <StyledPageImage src={rightPage} alt="화살표" />
