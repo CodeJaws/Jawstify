@@ -1,9 +1,9 @@
 import Ellipse from '@/public/assets/icons/ChipEllipse.svg';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { styled } from 'styled-components';
 
 import Image from 'next/image';
+import { styled } from 'styled-components';
 
 interface StatusChipProps {
   content: string;
@@ -22,7 +22,6 @@ export default StatusChip;
 
 const StyledContainer = styled.div`
   display: inline-flex;
-  justify-content: center;
   align-items: center;
   gap: 6px;
   padding: 4px 8px;

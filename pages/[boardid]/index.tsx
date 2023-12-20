@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 function BoardID() {
-  const router = useRouter()
-  const { boardid: id } = router.query
-  return <div>BoardID #{id} page</div>
+  const router = useRouter();
+  const { boardid: id } = router.query;
+  return <div>BoardID #{id} page</div>;
 }
 
-export default BoardID
+export default BoardID;

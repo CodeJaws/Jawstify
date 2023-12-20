@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from 'styled-components';
 
 export const reset = css`
   @font-face {
@@ -40,7 +40,8 @@ export const reset = css`
   }
 
   button {
-    all: unset;
+    border: 0;
+    background: transparent;
     cursor: pointer;
   }
 
@@ -48,4 +49,4 @@ export const reset = css`
     list-style-type: none;
     padding-left: 0;
   }
-`
+`;
