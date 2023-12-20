@@ -1,5 +1,5 @@
 function MyBoard() {
-  return <div>MyBoard page</div>
+  return <div>MyBoard page</div>;
 }
 
-export default MyBoard
+export default MyBoard;

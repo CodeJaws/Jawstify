@@ -55,7 +55,7 @@ const StyledFooterContainer = styled.div`
 `;
 
 const StyledCopyright = styled.div`
-  color: ${COLORS.GRAY_40};
+  color: ${COLORS.GRAY_9F};
   ${fontStyle(12, 400)};
   margin-bottom: 12px;
 
@@ -74,7 +74,7 @@ const StyledLinkContainer = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  color: ${COLORS.GRAY_40};
+  color: ${COLORS.GRAY_9F};
   margin-bottom: 68px;
   ${fontStyle(12, 400)};
 

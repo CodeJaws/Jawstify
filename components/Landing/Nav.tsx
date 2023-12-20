@@ -84,8 +84,7 @@ const LogoTextWrapper = styled.div`
 const LinkButton = styled.div`
   display: flex;
   gap: 20px;
-  color: ${COLORS.BLACK_300};
-  font-family: Pretendard;
+  color: ${COLORS.BLACK_17};
   ${fontStyle(14, 400)};
 
   ${onTablet} {

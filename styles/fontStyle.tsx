@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from 'styled-components';
 
 export const fontStyle = (size: number, weight: number) => {
   return css`
@@ -6,5 +6,5 @@ export const fontStyle = (size: number, weight: number) => {
     font-style: normal;
     font-weight: ${weight};
     line-height: normal;
-  `
-}
+  `;
+};

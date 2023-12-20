@@ -11,6 +11,7 @@ import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
 import { onTablet, onPc } from '@/styles/mediaQuery';
 import Footer from '@/components/Landing/Footer';
+import Button from '@/components/Dashboard/Button';
 
 function Landing() {
 
@@ -82,7 +83,7 @@ const StyledHeroTextWrapper = styled.div`
 `;
 
 const StyledHeroText1 = styled.h1`
-  color: ${COLORS.BLACK_300};
+  color: ${COLORS.BLACK_17};
   letter-spacing: -2px;
   ${fontStyle(40, 700)};
 
@@ -96,7 +97,7 @@ const StyledHeroText1 = styled.h1`
 `;
 
 const StyledHeroText2 = styled.h1`
-  color: ${COLORS.VIOLET};
+  color: ${COLORS.VIOLET_55};
   font-family: Montserrat;
   letter-spacing: -1px;
   ${fontStyle(42, 700)};
@@ -128,6 +129,7 @@ const StyledHeroDescription = styled.p`
 `;
 
 const PointSection = () => {
+  
   return (
     <StyledPointSectionContainer>
       <StyledPointSectionWrapper>
@@ -167,7 +169,7 @@ const StyledPointSectionWrapper = styled.div`
   width: 343px;
   height: 686px;
   position: relative;
-  background-color: ${COLORS.VIOLET_LIGHT};
+  background-color: ${COLORS.VIOLET_F1};
   border-radius: 8px;
 
   ${onTablet} {
@@ -229,7 +231,7 @@ const StyledPointTextContainer2 = styled.div`
 `;
 
 const StyledPointText1 = styled.div`
-  color: ${COLORS.BLACK_200};
+  color: ${COLORS.BLACK_33};
   font-feature-settings: 'clig' off, 'liga' off;
   ${fontStyle(18, 500)};
   margin-bottom: 80px; 
@@ -247,7 +249,7 @@ const StyledPointText1 = styled.div`
 `;
 
 const StyledPointText2 = styled.div`
-  color: ${COLORS.BLACK_300};
+  color: ${COLORS.BLACK_17};
   font-feature-settings: 'clig' off, 'liga' off;
   ${fontStyle(36, 700)};
   grid-area: text2;
@@ -366,7 +368,7 @@ const StyledCardSectionWrapper = styled.div`
 `;
 
 const StyledCardSectionTitle = styled.h2`
-  color: ${COLORS.BLACK_300};
+  color: ${COLORS.BLACK_17};
   font-feature-settings: 'clig' off, 'liga' off;
   ${fontStyle(22, 700)};
   text-align: center;
@@ -401,7 +403,7 @@ const StyledCardContainer = styled.div`
 const StyledCardImageContainer = styled.div`
   width: 100%;
   height: 236px;
-  background-color: ${COLORS.VIOLET_LIGHT};
+  background-color: ${COLORS.VIOLET_F1};
   border-radius: 8px 8px 0 0;
   display: flex;
   justify-content: center;
@@ -476,7 +478,7 @@ const StyledCardTextContainer = styled.div`
   gap: 18px;
   padding: 27px 32px;
   background-color: #1501cb9c;
-  color: ${COLORS.WHITE};
+  color: ${COLORS.WHITE_FF};
   border-radius: 0 0 8px 8px;
 
   ${onTablet} {
