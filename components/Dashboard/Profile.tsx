@@ -1,20 +1,20 @@
-import Image from 'next/image'
-import styled from 'styled-components'
+import Image from 'next/image';
+import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle'
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery'
-import { COLORS } from '@/styles/palettes'
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 
 interface ProfileProps {
   item: {
-    id: number
-    nickname: string
-    profileImageUrl: string
-  }
+    id: number;
+    nickname: string;
+    profileImageUrl: string;
+  };
 }
 
 function Profile({ item }: ProfileProps) {
-  const { nickname, profileImageUrl } = item
+  const { nickname, profileImageUrl } = item;
   return (
     <StyledContainer>
       <StyledImageWrapper>
@@ -22,10 +22,10 @@ function Profile({ item }: ProfileProps) {
       </StyledImageWrapper>
       <p>{nickname}</p>
     </StyledContainer>
-  )
+  );
 }
 
-export default Profile
+export default Profile;
 
 const StyledContainer = styled.div`
   position: relative;
@@ -35,7 +35,7 @@ const StyledContainer = styled.div`
   gap: 12px;
 
   p {
-    color: ${COLORS.BLACK_200};
+    color: ${COLORS.BLACK_33};
     ${fontStyle(16, 500)}
   }
 
@@ -52,7 +52,7 @@ const StyledContainer = styled.div`
       display: none;
     }
   }
-`
+`;
 
 const StyledImageWrapper = styled.div`
   position: relative;
@@ -60,11 +60,11 @@ const StyledImageWrapper = styled.div`
   height: 38px;
   flex-shrink: 0;
   border-radius: 100%;
-  border: 2px solid ${COLORS.WHITE};
+  border: 2px solid ${COLORS.WHITE_FF};
   overflow: hidden;
 
   ${onMobile} {
     width: 34px;
     height: 34px;
   }
-`
+`;
