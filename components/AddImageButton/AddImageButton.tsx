@@ -5,15 +5,17 @@ import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 import { css, styled } from 'styled-components';
 
 interface Props {
   type: 'modal' | 'profile';
+  image: string | ArrayBuffer | null;
+  setImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 }
 
-function AddImageButton({ type }: Props) {
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+function AddImageButton({ type, image, setImage }: Props) {
+  const imgSrc = image as string;
 
   const handleImageSelect = (e?: ChangeEvent<HTMLInputElement> | undefined) => {
     const file = e?.target.files?.[0];
@@ -48,7 +50,7 @@ function AddImageButton({ type }: Props) {
               <StyledEditButton type="file" onChange={handleImageSelect} />
               <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />
             </StyledEditCover>
-            <StyledSelectImage $type={type} width={76} height={76} src={image as string} alt="이미지 미리보기" />
+            <StyledSelectImage $type={type} width={76} height={76} src={imgSrc} alt="이미지 미리보기" />
           </label>
         )}
       </StyledAddButton>
