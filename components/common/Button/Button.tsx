@@ -1,17 +1,18 @@
-import styled, { css } from 'styled-components';
-import { COLORS } from '@/styles/palettes';
 import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
+import styled, { css } from 'styled-components';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonOnClickProps {
   text: string;
   isViolet: boolean;
   size: 'large' | 'small';
 }
 
-function Button({ text, isViolet, size }: ButtonProps) {
+function Button({ text, isViolet, size, onClick }: ButtonProps) {
   return (
     <>
-      <StyledButton $isViolet={isViolet} $size={size}>
+      <StyledButton $isViolet={isViolet} $size={size} onClick={onClick}>
         {text}
       </StyledButton>
     </>
