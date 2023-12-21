@@ -47,7 +47,7 @@ function FormInput({ label = '', inputValue = '', placeholder, errorMessage = ''
         type={isVisible ? 'text' : 'password'}
         value={inputValue}
         placeholder={placeholder || PLACEHOLDER[label]}
-        error={isNoVal || hasError}
+        $error={isNoVal || hasError}
         onChange={onChange}
         onBlur={handleBlur}
       />

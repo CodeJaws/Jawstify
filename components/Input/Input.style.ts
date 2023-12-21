@@ -8,11 +8,11 @@ export const StyledInputContainer = styled.div`
   position: relative;
 `;
 
-export const StyledInput = styled.input<{ error: boolean }>`
+export const StyledInput = styled.input<{ $error: boolean }>`
   width: 100%;
   padding: 15px 16px;
   border-radius: 8px;
-  border: 1px solid ${({ error }) => (error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
+  border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
   background-color: ${COLORS.WHITE_FF};
   color: ${COLORS.BLACK_33};
   ${fontStyle(16, 400)}
@@ -20,7 +20,7 @@ export const StyledInput = styled.input<{ error: boolean }>`
   &:hover,
   &:focus,
   &:active {
-    border: 1px solid ${({ error }) => (error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
+    border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
     color: ${COLORS.BLACK_33};
     outline: none;
   }

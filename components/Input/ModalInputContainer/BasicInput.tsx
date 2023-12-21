@@ -52,7 +52,7 @@ function BasicInput({
         <StyledTextarea
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
-          error={isNoVal || hasError}
+          $error={isNoVal || hasError}
           onChange={onChange}
           onBlur={handleBlur}
         />
@@ -60,7 +60,7 @@ function BasicInput({
         <StyledInput
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
-          error={isNoVal || hasError}
+          $error={isNoVal || hasError}
           onChange={onChange}
           onBlur={handleBlur}
         />
@@ -72,11 +72,11 @@ function BasicInput({
 
 export default BasicInput;
 
-const StyledTextarea = styled.textarea<{ error: boolean }>`
+const StyledTextarea = styled.textarea<{ $error: boolean }>`
   width: 100%;
   padding: 15px 16px;
   border-radius: 8px;
-  border: 1px solid ${({ error }) => (error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
+  border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
   background-color: ${COLORS.WHITE_FF};
   color: ${COLORS.BLACK_33};
   ${fontStyle(16, 400)}
@@ -84,7 +84,7 @@ const StyledTextarea = styled.textarea<{ error: boolean }>`
   &:hover,
   &:focus,
   &:active {
-    border: 1px solid ${({ error }) => (error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
+    border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
     color: ${COLORS.BLACK_33};
     outline: none;
   }

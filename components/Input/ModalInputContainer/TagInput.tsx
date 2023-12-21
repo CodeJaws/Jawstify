@@ -36,7 +36,7 @@ function TagInput({ label = '태그', placeholder = DEFAULT_PLACEHOLDER.TAG, get
     }));
   };
 
-  // getValue(colorTagList); --> 부모 컴포넌트에서 getValue 넘겨줘서 선택 값 넘겨받으면 됨!
+  //getValue(colorTagList); // --> 부모 컴포넌트에서 getValue 넘겨줘서 선택 값 넘겨받으면 됨!
 
   return (
     <StyledInputContainer>
