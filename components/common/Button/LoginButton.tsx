@@ -1,16 +1,17 @@
-import styled from 'styled-components';
-import { onMobile } from '@/styles/mediaQuery';
+import styled, { css } from 'styled-components';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 
 interface LoginButtonProps {
   active: boolean;
+  type: 'login' | 'landing';
 }
 
-function LoginButton({ active }: LoginButtonProps) {
+function LoginButton({ active, type }: LoginButtonProps) {
   return (
     <>
-      <StyledButton disabled={active ? false : true} $active={active}>
+      <StyledButton $type={type} disabled={active ? false : true} $active={active}>
         로그인
       </StyledButton>
     </>
@@ -19,7 +20,7 @@ function LoginButton({ active }: LoginButtonProps) {
 
 export default LoginButton;
 
-const StyledButton = styled.button<{ $active: boolean }>`
+const StyledButton = styled.button<{ $active: boolean; $type: string }>`
   width: 520px;
   height: 50px;
   display: flex;
@@ -31,8 +32,23 @@ const StyledButton = styled.button<{ $active: boolean }>`
   color: ${COLORS.WHITE_FF};
   border-radius: 8px;
   ${fontStyle(18, 500)};
-
   ${onMobile} {
     width: 351px;
   }
+
+  ${({ $type }) =>
+    $type === 'landing' &&
+    css`
+      width: 280px;
+      height: 50px;
+      ${fontStyle(18, 500)};
+      ${onTablet} {
+        font-size: 1.6rem;
+      }
+      ${onMobile} {
+        font-size: 1.4rem;
+        width: 235px;
+        height: 42px;
+      }
+    `}
 `;

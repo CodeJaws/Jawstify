@@ -5,7 +5,7 @@ import { onMobile } from '@/styles/mediaQuery';
 interface ButtonProps {
   text: string;
   isViolet: boolean;
-  size: string;
+  size: 'large' | 'small';
 }
 
 function Button({ text, isViolet, size }: ButtonProps) {
@@ -32,6 +32,11 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
   font-size: 1.4rem;
+  ${onMobile} {
+    width: 52px;
+    height: 28px;
+    font-size: 1.2rem;
+  }
 
   ${({ $size }) =>
     $size === 'large' &&
@@ -45,10 +50,4 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
         font-size: 1.4rem;
       }
     `}
-
-  ${onMobile} {
-    width: 52px;
-    height: 28px;
-    font-size: 1.2rem;
-  }
 `;
