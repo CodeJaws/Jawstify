@@ -6,7 +6,7 @@ interface TwinButtonProps {
   text1: string;
   text2: string;
   isViolet: boolean;
-  size: string;
+  size: 'large' | 'small';
 }
 
 function TwinButton({ text1, text2, isViolet, size }: TwinButtonProps) {
@@ -41,6 +41,16 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
   font-size: 1.4rem;
+  ${onTablet} {
+    width: ${({ $size }) => ($size === 'small' ? '72px' : '')};
+    height: ${({ $size }) => ($size === 'small' ? '30px' : '')};
+  }
+
+  ${onMobile} {
+    width: 109px;
+    height: 28px;
+    font-size: 1.2rem;
+  }
 
   ${({ $size }) =>
     $size === 'large' &&
@@ -55,15 +65,4 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
         font-size: 1.4rem;
       }
     `}
-
-  ${onTablet} {
-    width: ${({ $size }) => ($size === 'small' ? '72px' : '')};
-    height: ${({ $size }) => ($size === 'small' ? '30px' : '')};
-  }
-
-  ${onMobile} {
-    width: 109px;
-    height: 28px;
-    font-size: 1.2rem;
-  }
 `;
