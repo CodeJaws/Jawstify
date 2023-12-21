@@ -1,6 +1,6 @@
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image';
 import Nav from '@/components/Landing/Nav';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import HeroImg from '@/public/assets/images/landing1.png';
 import pointImg1 from '@/public/assets/images/landing2.png';
 import pointImg2 from '@/public/assets/images/landing3.png';
@@ -11,10 +11,8 @@ import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
 import { onTablet, onPc } from '@/styles/mediaQuery';
 import Footer from '@/components/Landing/Footer';
-import Button from '@/components/Dashboard/Button';
 
 function Landing() {
-
   return (
     <>
       <Nav />
@@ -32,10 +30,10 @@ function Landing() {
       <CardSection />
       <Footer />
     </>
-  )
+  );
 }
 
-export default Landing
+export default Landing;
 
 // Hero
 const StyledHeroContainer = styled.div`
@@ -45,7 +43,7 @@ const StyledHeroContainer = styled.div`
   margin: 42px;
 
   ${onPc} {
-    padding: 94px 0; 
+    padding: 94px 0;
   }
 `;
 
@@ -64,7 +62,7 @@ const StyledHeroImageWrapper = styled.div`
     width: 722px;
     height: 423px;
   }
-`
+`;
 const StyledHeroTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -129,30 +127,35 @@ const StyledHeroDescription = styled.p`
 `;
 
 const PointSection = () => {
-  
   return (
     <StyledPointSectionContainer>
       <StyledPointSectionWrapper>
         <StyledPointTextContainer>
           <StyledPointText1>Point 1</StyledPointText1>
-          <StyledPointText2>일의 우선순위를<br/> 관리하세요.</StyledPointText2>
+          <StyledPointText2>
+            일의 우선순위를
+            <br /> 관리하세요.
+          </StyledPointText2>
         </StyledPointTextContainer>
         <StyledPointSectionImage1Wrapper>
-          <Image src={pointImg1} fill alt='일의 우선순위를 관리하세요.'/>
+          <Image src={pointImg1} fill alt="일의 우선순위를 관리하세요." />
         </StyledPointSectionImage1Wrapper>
       </StyledPointSectionWrapper>
       <StyledPointSectionWrapper>
         <StyledPointTextContainer2>
           <StyledPointText1>Point 2</StyledPointText1>
-          <StyledPointText2>해야할 일을<br/> 등록하세요</StyledPointText2>
+          <StyledPointText2>
+            해야할 일을
+            <br /> 등록하세요
+          </StyledPointText2>
         </StyledPointTextContainer2>
         <StyledPointSectionImage2Wrapper>
-          <Image src={pointImg2} fill alt='해야할 일을 등록하세요'/>
+          <Image src={pointImg2} fill alt="해야할 일을 등록하세요" />
         </StyledPointSectionImage2Wrapper>
-        </StyledPointSectionWrapper>
+      </StyledPointSectionWrapper>
     </StyledPointSectionContainer>
   );
-}
+};
 
 const StyledPointSectionContainer = styled.div`
   display: flex;
@@ -187,14 +190,14 @@ const StyledPointTextContainer = styled.div`
   display: grid;
   padding: 60px 58px;
   text-align: center;
-  grid-template-areas: 
+  grid-template-areas:
     'text1'
     'text2';
 
   ${onTablet} {
     text-align: start;
     padding: 63px 60px;
-    grid-template-areas: 
+    grid-template-areas:
       'text1 .'
       'text2 .';
   }
@@ -202,7 +205,7 @@ const StyledPointTextContainer = styled.div`
   ${onPc} {
     text-align: start;
     padding: 123px 60px;
-    grid-template-areas: 
+    grid-template-areas:
       'text1 .'
       'text2 .';
   }
@@ -212,7 +215,7 @@ const StyledPointTextContainer2 = styled.div`
   display: grid;
   padding: 60px 58px;
   text-align: center;
-  grid-template-areas: 
+  grid-template-areas:
     'text1'
     'text2';
 
@@ -224,7 +227,7 @@ const StyledPointTextContainer2 = styled.div`
   ${onPc} {
     text-align: end;
     padding: 123px 0px;
-    grid-template-areas: 
+    grid-template-areas:
       '. text1 .'
       '. text2 .';
   }
@@ -232,9 +235,11 @@ const StyledPointTextContainer2 = styled.div`
 
 const StyledPointText1 = styled.div`
   color: ${COLORS.BLACK_33};
-  font-feature-settings: 'clig' off, 'liga' off;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
   ${fontStyle(18, 500)};
-  margin-bottom: 80px; 
+  margin-bottom: 80px;
   grid-area: text1;
 
   ${onTablet} {
@@ -250,7 +255,9 @@ const StyledPointText1 = styled.div`
 
 const StyledPointText2 = styled.div`
   color: ${COLORS.BLACK_17};
-  font-feature-settings: 'clig' off, 'liga' off;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
   ${fontStyle(36, 700)};
   grid-area: text2;
 
@@ -301,48 +308,57 @@ const StyledPointSectionImage2Wrapper = styled.div`
   }
 `;
 
+interface CardContainerProps {
+  cardImg: StaticImageData;
+  imgAlt: string;
+  text1: string;
+  text2: string;
+}
+
+const CardContainer = ({ cardImg, imgAlt, text1, text2 }: CardContainerProps) => {
+  // cardImg1, 대시보드 설정 * 2,
+  return (
+    <StyledCardContainer>
+      <StyledCardImageContainer>
+        <StyledCardImage1Wrapper>
+          <Image fill src={cardImg} alt={imgAlt} />
+        </StyledCardImage1Wrapper>
+      </StyledCardImageContainer>
+      <StyledCardTextContainer>
+        <StyledCardText1>{text1}</StyledCardText1>
+        <StyledCardText2>{text2}</StyledCardText2>
+      </StyledCardTextContainer>
+    </StyledCardContainer>
+  );
+};
+
 // Card
 const CardSection = () => {
   return (
     <StyledCardSectionContainer>
       <StyledCardSectionTitle>생산성을 높이는 다양한 설정 ⚡</StyledCardSectionTitle>
       <StyledCardSectionWrapper>
-        <StyledCardContainer>
-          <StyledCardImageContainer>
-            <StyledCardImage1Wrapper>
-              <Image fill src={cardImg1} alt='대시보드 설정' />
-            </StyledCardImage1Wrapper>
-          </StyledCardImageContainer>
-          <StyledCardTextContainer>
-            <StyledCardText1>대시보드 설정</StyledCardText1>
-            <StyledCardText2>대시보드 사진과 이름을 변경할 수 있어요.</StyledCardText2>
-          </StyledCardTextContainer>
-        </StyledCardContainer>
-        <StyledCardContainer>
-          <StyledCardImageContainer>
-            <StyledCardImage2Wrapper>
-              <Image fill src={cardImg2} alt='대시보드 설정' />
-            </StyledCardImage2Wrapper>
-          </StyledCardImageContainer>
-          <StyledCardTextContainer>
-            <StyledCardText1>초대</StyledCardText1>
-            <StyledCardText2>새로운 팀원을 초대할 수 있어요.</StyledCardText2>
-          </StyledCardTextContainer>
-        </StyledCardContainer>
-        <StyledCardContainer>
-          <StyledCardImageContainer>
-            <StyledCardImage3Wrapper>
-              <Image fill src={cardImg3} alt='대시보드 설정' />
-            </StyledCardImage3Wrapper>
-          </StyledCardImageContainer>
-          <StyledCardTextContainer>
-            <StyledCardText1>구성원</StyledCardText1>
-            <StyledCardText2>구성원을 초대하고 내보낼 수 있어요.</StyledCardText2>
-          </StyledCardTextContainer>
-        </StyledCardContainer>
+        <CardContainer
+          cardImg={cardImg1}
+          imgAlt="대시보드 설정"
+          text1="대시보드 설정"
+          text2="대시보드 사진과 이름을 변경할 수 있어요."
+        />
+        <CardContainer
+          cardImg={cardImg2}
+          imgAlt="대시보드 설정"
+          text1="초대"
+          text2="새로운 팀원을 초대할 수 있어요."
+        />
+        <CardContainer
+          cardImg={cardImg3}
+          imgAlt="대시보드 설정"
+          text1="구성원"
+          text2="구성원을 초대하고 내보낼 수 있어요."
+        />
       </StyledCardSectionWrapper>
     </StyledCardSectionContainer>
-  )
+  );
 };
 
 const StyledCardSectionContainer = styled.div`
@@ -369,16 +385,18 @@ const StyledCardSectionWrapper = styled.div`
 
 const StyledCardSectionTitle = styled.h2`
   color: ${COLORS.BLACK_17};
-  font-feature-settings: 'clig' off, 'liga' off;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
   ${fontStyle(22, 700)};
   text-align: center;
   margin-bottom: 36px;
-  
+
   ${onTablet} {
     margin-bottom: 36px;
     ${fontStyle(28, 700)};
   }
-  
+
   ${onPc} {
     margin-bottom: 36px;
     ${fontStyle(28, 700)};
@@ -422,6 +440,38 @@ const StyledCardImageContainer = styled.div`
 //   width: ${(props) => props.width};
 //   height: ${(props) => props.height};
 //   position: relative;
+
+//   ${onTablet} {
+//     &:nth-child(1) {
+//       width: 320px;
+//       height: 132px;
+//     }
+
+//     &:nth-child(2) {
+//       width: 320px;
+//       height: 174px;
+//     }
+
+//     &:nth-child(3) {
+//       width: 320px;
+//       height: 209px;
+//     }
+//   }
+
+//   ${onPc} {
+//     &:nth-child(1) {
+//       width: 323px;
+//       height: 133px;
+//     }
+//     &:nth-child(2) {
+//       width: 323px;
+//       height: 176px;
+//     }
+//     &:nth-child(3) {
+//       width: 323px;
+//       height: 210px;
+//     }
+//   }
 // `;
 
 const StyledCardImage1Wrapper = styled.div`
@@ -441,8 +491,9 @@ const StyledCardImage1Wrapper = styled.div`
 `;
 
 const StyledCardImage2Wrapper = styled(StyledCardImage1Wrapper)`
-  width: 303px; 
+  width: 303px;
   height: 165px;
+  position: relative;
 
   ${onTablet} {
     width: 320px;
@@ -456,7 +507,7 @@ const StyledCardImage2Wrapper = styled(StyledCardImage1Wrapper)`
 `;
 
 const StyledCardImage3Wrapper = styled(StyledCardImage1Wrapper)`
-  width: 303px; 
+  width: 303px;
   height: 197px;
 
   ${onTablet} {
