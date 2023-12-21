@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import cardImg1 from '@/public/assets/images/landing4.png';
 import cardImg2 from '@/public/assets/images/landing5.png';
 import cardImg3 from '@/public/assets/images/landing6.png';
@@ -7,9 +7,14 @@ import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
 import { onTablet, onPc } from '@/styles/mediaQuery';
 
+interface CardContainerProps {
+  cardImg: StaticImageData;
+  imgAlt: string;
+  text1: string;
+  text2: string;
+  type: 'first' | 'second' | 'third';
+}
 
-
-// Card
 function CardSection() {
   return (
     <StyledCardSectionContainer>
@@ -20,18 +25,21 @@ function CardSection() {
           imgAlt="대시보드 설정"
           text1="대시보드 설정"
           text2="대시보드 사진과 이름을 변경할 수 있어요."
+          type="first"
         />
         <CardContainer
           cardImg={cardImg2}
           imgAlt="대시보드 설정"
           text1="초대"
           text2="새로운 팀원을 초대할 수 있어요."
+          type="second"
         />
         <CardContainer
           cardImg={cardImg3}
           imgAlt="대시보드 설정"
           text1="구성원"
           text2="구성원을 초대하고 내보낼 수 있어요."
+          type="third"
         />
       </StyledCardSectionWrapper>
     </StyledCardSectionContainer>
@@ -82,21 +90,13 @@ const StyledCardSectionWrapper = styled.div`
   }
 `;
 
-interface CardContainerProps {
-  cardImg: StaticImageData;
-  imgAlt: string;
-  text1: string;
-  text2: string;
-}
-
-const CardContainer = ({ cardImg, imgAlt, text1, text2 }: CardContainerProps) => {
-  // cardImg1, 대시보드 설정 * 2,
+const CardContainer = ({ cardImg, imgAlt, text1, text2, type }: CardContainerProps) => {
   return (
     <StyledCardContainer>
       <StyledCardImageContainer>
-        <StyledCardImage1Wrapper>
+        <StyledCardImageWrapper $type={type}>
           <Image fill src={cardImg} alt={imgAlt} />
-        </StyledCardImage1Wrapper>
+        </StyledCardImageWrapper>
       </StyledCardImageContainer>
       <StyledCardTextContainer>
         <StyledCardText1>{text1}</StyledCardText1>
@@ -139,89 +139,63 @@ const StyledCardImageContainer = styled.div`
   }
 `;
 
-// const StyledCardImageWrapper = styled.div<{width: string; height: string;}>`
-//   width: ${(props) => props.width};
-//   height: ${(props) => props.height};
-//   position: relative;
-
-//   ${onTablet} {
-//     &:nth-child(1) {
-//       width: 320px;
-//       height: 132px;
-//     }
-
-//     &:nth-child(2) {
-//       width: 320px;
-//       height: 174px;
-//     }
-
-//     &:nth-child(3) {
-//       width: 320px;
-//       height: 209px;
-//     }
-//   }
-
-//   ${onPc} {
-//     &:nth-child(1) {
-//       width: 323px;
-//       height: 133px;
-//     }
-//     &:nth-child(2) {
-//       width: 323px;
-//       height: 176px;
-//     }
-//     &:nth-child(3) {
-//       width: 323px;
-//       height: 210px;
-//     }
-//   }
-// `;
-
-const StyledCardImage1Wrapper = styled.div`
-  width: 303px;
-  height: 125px;
+const StyledCardImageWrapper = styled.div<{ $type: string }>`
   position: relative;
 
-  ${onTablet} {
-    width: 320px;
-    height: 132px;
-  }
+  ${({ $type }) => {
+    switch ($type) {
+      case 'first':
+        return css`
+          width: 303px;
+          height: 125px;
 
-  ${onPc} {
-    width: 323px;
-    height: 133px;
-  }
-`;
+          ${onTablet} {
+            width: 320px;
+            height: 132px;
+          }
 
-const StyledCardImage2Wrapper = styled(StyledCardImage1Wrapper)`
-  width: 303px;
-  height: 165px;
-  position: relative;
+          ${onPc} {
+            width: 320px;
+            height: 132px;
+          }
+        `;
+      case 'second':
+        return css`
+          width: 303px;
+          height: 165px;
 
-  ${onTablet} {
-    width: 320px;
-    height: 174px;
-  }
+          ${onTablet} {
+            width: 320px;
+            height: 174px;
+          }
 
-  ${onPc} {
-    width: 323px;
-    height: 176px;
-  }
-`;
+          ${onPc} {
+            width: 323px;
+            height: 176px;
+          }
+        `;
+      case 'third':
+        return css`
+          width: 303px;
+          height: 197px;
 
-const StyledCardImage3Wrapper = styled(StyledCardImage1Wrapper)`
-  width: 303px;
-  height: 197px;
+          ${onTablet} {
+            width: 320px;
+            height: 209px;
+          }
 
-  ${onTablet} {
-    width: 320px;
-    height: 209px;
-  }
-
-  ${onPc} {
-    width: 323px;
-    height: 210px;
-  }
+          ${onPc} {
+            width: 323px;
+            height: 210px;
+          }
+        `;
+      default:
+        return css`
+          width: 303px;
+          height: 133px;
+        `;
+    }
+  }}
 `;
 
 const StyledCardTextContainer = styled.div`
