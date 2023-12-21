@@ -4,11 +4,16 @@ import { onTablet, onMobile } from '@/styles/mediaQuery';
 import plus from '@/public/assets/icons/plus.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+import { MouseEventHandler } from 'react';
 
-function DashBoardAddButton() {
+interface DashBoardAddButtonProps {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}
+
+function DashBoardAddButton({ onClick }: DashBoardAddButtonProps) {
   return (
     <>
-      <StyledButton>
+      <StyledButton onClick={onClick}>
         새로운 대시보드 <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>
     </>

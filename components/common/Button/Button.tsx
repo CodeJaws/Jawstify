@@ -1,17 +1,19 @@
 import styled, { css } from 'styled-components';
 import { COLORS } from '@/styles/palettes';
 import { onMobile } from '@/styles/mediaQuery';
+import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
   text: string;
   isViolet: boolean;
   size: 'large' | 'small';
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-function Button({ text, isViolet, size }: ButtonProps) {
+function Button({ text, isViolet, size, onClick }: ButtonProps) {
   return (
     <>
-      <StyledButton $isViolet={isViolet} $size={size}>
+      <StyledButton $isViolet={isViolet} $size={size} onClick={onClick}>
         {text}
       </StyledButton>
     </>

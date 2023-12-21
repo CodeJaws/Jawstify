@@ -3,14 +3,17 @@ import styled from 'styled-components';
 import { onTablet, onMobile } from '@/styles/mediaQuery';
 import plus from '@/public/assets/icons/plus.svg';
 import { COLORS } from '@/styles/palettes';
+import { MouseEventHandler } from 'react';
 
-function AddButton() {
+interface AddButtonProps {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}
+
+function AddButton({ onClick }: AddButtonProps) {
   return (
-    <>
-      <StyledButton>
-        <StyledPlusImage src={plus} alt="Plus이미지" />
-      </StyledButton>
-    </>
+    <StyledButton onClick={onClick}>
+      <StyledPlusImage src={plus} alt="Plus이미지" />
+    </StyledButton>
   );
 }
 

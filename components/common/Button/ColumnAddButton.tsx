@@ -4,11 +4,16 @@ import { onTablet, onMobile } from '@/styles/mediaQuery';
 import plus from '@/public/assets/icons/plus.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+import { MouseEventHandler } from 'react';
 
-function ColumnAddButton() {
+interface ColumnAddButtonProps {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}
+
+function ColumnAddButton({ onClick }: ColumnAddButtonProps) {
   return (
     <>
-      <StyledButton>
+      <StyledButton onClick={onClick}>
         새로운 칼럼 추가하기
         <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>

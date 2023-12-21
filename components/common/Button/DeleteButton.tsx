@@ -2,11 +2,16 @@ import styled from 'styled-components';
 import { onMobile } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+import { MouseEventHandler } from 'react';
 
-function DeleteButton() {
+interface DeleteButtonProps {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}
+
+function DeleteButton({ onClick }: DeleteButtonProps) {
   return (
     <>
-      <StyledButton>대시보드 삭제하기</StyledButton>
+      <StyledButton onClick={onClick}>대시보드 삭제하기</StyledButton>
     </>
   );
 }

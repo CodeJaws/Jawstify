@@ -6,11 +6,13 @@ import Image from 'next/image';
 import { onTablet, onMobile } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+import { MouseEventHandler } from 'react';
 
 interface DashBoardButtonProps {
   text: string;
   color: string;
   king: boolean;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 /**
@@ -18,10 +20,10 @@ interface DashBoardButtonProps {
  * @param color 대시보드 ellipse color -> 입맛대로 바꾸시면 될 듯 합니다!
  * @param king 대시보드 생성자 여부 boolean
  */
-function DashBoardButton({ text, color, king }: DashBoardButtonProps) {
+function DashBoardButton({ text, color, king, onClick }: DashBoardButtonProps) {
   return (
     <>
-      <StyledButton>
+      <StyledButton onClick={onClick}>
         <StyledWrapper>
           <StyledDiv>
             <StyledCircleImage src={greenCircle} alt="초록원" />
