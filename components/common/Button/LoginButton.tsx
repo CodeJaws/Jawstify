@@ -2,14 +2,12 @@ import styled, { css } from 'styled-components';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import { MouseEventHandler } from 'react';
+import { ButtonOnClickProps } from '@/types/button';
 
-interface LoginButtonProps {
+interface LoginButtonProps extends ButtonOnClickProps {
   active: boolean;
   type: 'login' | 'landing';
   text: string;
-  onClick : MouseEventHandler<HTMLButtonElement>;
-  
 }
 
 function LoginButton({ active, type, onClick, text }: LoginButtonProps) {
