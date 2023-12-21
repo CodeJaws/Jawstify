@@ -14,7 +14,6 @@ interface Props {
 
 function AddImageButton({ type }: Props) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   const handleImageSelect = (e?: ChangeEvent<HTMLInputElement> | undefined) => {
     const file = e?.target.files?.[0];
@@ -23,7 +22,6 @@ function AddImageButton({ type }: Props) {
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result);
-        setIsHovered(false);
       };
       reader.readAsDataURL(file);
     }
@@ -36,18 +34,17 @@ function AddImageButton({ type }: Props) {
   return (
     <StyledContainer $type={type}>
       <StyledLabel $type={type}>{type === 'modal' ? '이미지' : '프로필'}</StyledLabel>
-      <StyledAddButton $type={type} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-        {!image && (
+      <StyledAddButton $type={type}>
+        {!image ? (
           <label>
             <input type="file" onChange={handleImageSelect} />
             <StyledAddImage width={28} height={28} src={Add} alt="이미지 추가 버튼" />
           </label>
-        )}
-        {image && (
+        ) : (
           <label>
-            {isHovered && <StyledEditButton type="file" onChange={handleImageSelect} />}
-            <StyledEditCover $type={type} $isHovered={isHovered}>
-              {isHovered && <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />}
+            <StyledEditButton type="file" onChange={handleImageSelect} />
+            <StyledEditCover $type={type}>
+              <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />
             </StyledEditCover>
             <StyledSelectImage $type={type} width={76} height={76} src={image as string} alt="이미지 미리보기" />
           </label>
@@ -87,6 +84,66 @@ const StyledLabel = styled.p<{ $type: string }>`
         `}
 `;
 
+const StyledEditImage = styled(Image)<{ $type: string }>`
+  position: absolute;
+
+  ${({ $type }) =>
+    $type === 'modal'
+      ? css`
+          left: 22px;
+          bottom: 22px;
+          ${onMobile} {
+            width: 22px;
+            height: 22px;
+            left: 18px;
+            bottom: 18px;
+          }
+        `
+      : css`
+          left: 60px;
+          bottom: 65px;
+          width: 60px;
+          height: 60px;
+          ${onMobile} {
+            left: 32px;
+            bottom: 32px;
+            width: 40px;
+            height: 40px;
+          }
+        `}
+`;
+
+const StyledEditButton = styled.input`
+  cursor: pointer;
+  visibility: hidden;
+`;
+
+const StyledEditCover = styled.div<{ $type: string }>`
+  position: absolute;
+  border-radius: 6px;
+  transition: background-color 0.2s ease-in-out;
+
+  background-color: transparent;
+  ${({ $type }) =>
+    $type === 'modal'
+      ? css`
+          width: 76px;
+          height: 76px;
+          ${onMobile} {
+            width: 58px;
+            height: 58px;
+          }
+        `
+      : css`
+          width: 182px;
+          height: 182px;
+          ${onMobile} {
+            width: 100px;
+            height: 100px;
+          }
+        `}
+`;
+
 const StyledAddButton = styled.div<{ $type: string }>`
   display: flex;
   position: relative;
@@ -100,6 +157,18 @@ const StyledAddButton = styled.div<{ $type: string }>`
 
   input {
     display: none;
+  }
+  ${StyledEditImage} {
+    display: none;
+  }
+
+  &:hover {
+    ${StyledEditImage} {
+      display: block;
+    }
+    ${StyledEditCover} {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
   }
 
   ${({ $type }) =>
@@ -147,63 +216,4 @@ const StyledSelectImage = styled(Image)<{ $type: string }>`
             height: 100px;
           }
         `}
-`;
-
-const StyledEditCover = styled.div<{ $type: string; $isHovered: boolean }>`
-  position: absolute;
-  border-radius: 6px;
-  transition: background-color 0.2s ease-in-out;
-  background-color: ${({ $isHovered }) => ($isHovered ? 'rgba(0, 0, 0, 0.6)' : 'transparent')};
-
-  ${({ $type }) =>
-    $type === 'modal'
-      ? css`
-          width: 76px;
-          height: 76px;
-          ${onMobile} {
-            width: 58px;
-            height: 58px;
-          }
-        `
-      : css`
-          width: 182px;
-          height: 182px;
-          ${onMobile} {
-            width: 100px;
-            height: 100px;
-          }
-        `}
-`;
-
-const StyledEditImage = styled(Image)<{ $type: string }>`
-  position: absolute;
-
-  ${({ $type }) =>
-    $type === 'modal'
-      ? css`
-          left: 22px;
-          bottom: 22px;
-          ${onMobile} {
-            width: 22px;
-            height: 22px;
-            left: 18px;
-            bottom: 18px;
-          }
-        `
-      : css`
-          left: 60px;
-          bottom: 65px;
-          width: 60px;
-          height: 60px;
-          ${onMobile} {
-            left: 32px;
-            bottom: 32px;
-            width: 40px;
-            height: 40px;
-          }
-        `}
-`;
-
-const StyledEditButton = styled.input`
-  cursor: pointer;
 `;
