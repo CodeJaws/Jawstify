@@ -37,13 +37,15 @@ function AddImageButton({ type }: Props) {
       <StyledAddButton $type={type}>
         {!image ? (
           <label>
-            <input type="file" onChange={handleImageSelect} />
-            <StyledAddImage width={28} height={28} src={Add} alt="이미지 추가 버튼" />
+            <StyledCover $type={type}>
+              <input type="file" onChange={handleImageSelect} />
+              <StyledAddImage $type={type} width={28} height={28} src={Add} alt="이미지 추가 버튼" />
+            </StyledCover>
           </label>
         ) : (
           <label>
-            <StyledEditButton type="file" onChange={handleImageSelect} />
             <StyledEditCover $type={type}>
+              <StyledEditButton type="file" onChange={handleImageSelect} />
               <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />
             </StyledEditCover>
             <StyledSelectImage $type={type} width={76} height={76} src={image as string} alt="이미지 미리보기" />
@@ -65,8 +67,31 @@ const StyledContainer = styled.div<{ $type: string }>`
     $type === 'profile' &&
     css`
       gap: 32px;
+
       ${onMobile} {
         gap: 24px;
+      }
+    `}
+`;
+
+const StyledCover = styled.div<{ $type: string }>`
+  width: 76px;
+  height: 76px;
+  cursor: pointer;
+
+  ${onMobile} {
+    width: 58px;
+    height: 58px;
+  }
+  ${({ $type }) =>
+    $type === 'profile' &&
+    css`
+      width: 182px;
+      height: 182px;
+
+      ${onMobile} {
+        width: 100px;
+        height: 100px;
       }
     `}
 `;
@@ -175,6 +200,7 @@ const StyledAddButton = styled.div<{ $type: string }>`
     css`
       width: 182px;
       height: 182px;
+
       ${onMobile} {
         width: 100px;
         height: 100px;
@@ -182,7 +208,36 @@ const StyledAddButton = styled.div<{ $type: string }>`
     `}
 `;
 
-const StyledAddImage = styled(Image)`
+const StyledAddImage = styled(Image)<{ $type: string }>`
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  left: 24px;
+  bottom: 24px;
+
+  ${onMobile} {
+    width: 22px;
+    height: 22px;
+    left: 18px;
+    bottom: 18px;
+  }
+
+  ${({ $type }) =>
+    $type === 'profile' &&
+    css`
+      width: 30px;
+      height: 30px;
+      left: 80px;
+      bottom: 80px;
+
+      ${onMobile} {
+        width: 20px;
+        height: 20px;
+        left: 40px;
+        bottom: 40px;
+      }
+    `}
+
   cursor: pointer;
 `;
 
@@ -201,6 +256,7 @@ const StyledSelectImage = styled(Image)<{ $type: string }>`
     css`
       width: 182px;
       height: 182px;
+
       ${onMobile} {
         width: 100px;
         height: 100px;
