@@ -21,7 +21,7 @@ const PLACEHOLDER = {
  * @param inputValue 부모 컴포넌트에서 제어하는 input 텍스트 값
  * @param placeholder input placeholder 텍스트
  * @param errorMessage 부모 컴포넌트에서 제어하는 input에 띄우고자 하는 에러 메세지, exist하면 error design 표시
- * @param onChange 부모 컴포넌트에서 제어하는 input onChange 재어 함수
+ * @param onChange 부모 컴포넌트에서 제어하는 input onChange 함수
  * */
 interface Props {
   label: keyof typeof PLACEHOLDER;
@@ -31,7 +31,7 @@ interface Props {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 function FormInput({ label = '', inputValue = '', placeholder, errorMessage = '', onChange }: Props) {
-  const [isNoVal, setIsNoVal] = useState<boolean>(false);
+  const [isNoValue, setIsNoValue] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState(true);
 
   const isPassword = label.includes('비밀번호');
@@ -39,7 +39,7 @@ function FormInput({ label = '', inputValue = '', placeholder, errorMessage = ''
 
   const handleVisibility = () => setIsVisible((prev) => !prev);
 
-  const handleBlur = () => (inputValue === '' ? setIsNoVal(true) : setIsNoVal(false));
+  const handleBlur = () => (inputValue === '' ? setIsNoValue(true) : setIsNoValue(false));
   return (
     <StyledInputContainer>
       <StyledLabel>{label}</StyledLabel>
@@ -47,7 +47,7 @@ function FormInput({ label = '', inputValue = '', placeholder, errorMessage = ''
         type={isVisible ? 'text' : 'password'}
         value={inputValue}
         placeholder={placeholder || PLACEHOLDER[label]}
-        $error={isNoVal || hasError}
+        $error={isNoValue || hasError}
         onChange={onChange}
         onBlur={handleBlur}
       />
@@ -56,7 +56,7 @@ function FormInput({ label = '', inputValue = '', placeholder, errorMessage = ''
           <StyledImage src={isVisible ? eyeOn : eyeOff} width={24} height={24} alt="비밀번호 숨기기" />
         </StyledEyeButton>
       )}
-      {(isNoVal || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
+      {(isNoValue || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
     </StyledInputContainer>
   );
 }

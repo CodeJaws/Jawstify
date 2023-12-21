@@ -29,8 +29,8 @@ const StyledContainer = styled.div<{ $color: string; $background: string }>`
   border-radius: 4px;
   margin-left: 6px;
   font-size: 1.2rem;
-  color: ${(props) => props.$color};
-  background-color: ${(props) => props.$background};
+  color: ${({ $color }) => $color};
+  background-color: ${({ $background }) => $background};
 
   ${onMobile} {
     font-size: 1rem;

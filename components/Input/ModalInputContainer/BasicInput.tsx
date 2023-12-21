@@ -23,7 +23,7 @@ interface Props {
  * @param errorMessage 부모 컴포넌트에서 제어하는 input에 띄우고자 하는 에러 메세지, exist하면 error design 표시
  * @param isNecessary 필수 입력 칸 여부, true일 경우 별표 표시
  * @param isTextArea textArea 여부, true일 경우 input 대신 textarea return
- * @param onChange 부모 컴포넌트에서 제어하는 input onChange 재어 함수
+ * @param onChange 부모 컴포넌트에서 제어하는 input onChange 함수
  * */
 function BasicInput({
   label = '',
@@ -34,13 +34,13 @@ function BasicInput({
   isTextArea = false,
   onChange,
 }: Props) {
-  const [isNoVal, setIsNoVal] = useState<boolean>(false);
+  const [isNoValue, setIsNoValue] = useState<boolean>(false);
 
   const defaultPlaceholder = label + '을 입력해 주세요';
   const hasError = errorMessage !== '';
 
   const handleBlur = () => {
-    isNecessary && inputValue === '' ? setIsNoVal(true) : setIsNoVal(false);
+    isNecessary && inputValue === '' ? setIsNoValue(true) : setIsNoValue(false);
   };
   return (
     <StyledInputContainer>
@@ -52,7 +52,7 @@ function BasicInput({
         <StyledTextarea
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
-          $error={isNoVal || hasError}
+          $error={isNoValue || hasError}
           onChange={onChange}
           onBlur={handleBlur}
         />
@@ -60,12 +60,12 @@ function BasicInput({
         <StyledInput
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
-          $error={isNoVal || hasError}
+          $error={isNoValue || hasError}
           onChange={onChange}
           onBlur={handleBlur}
         />
       )}
-      {(isNoVal || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
+      {(isNoValue || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
     </StyledInputContainer>
   );
 }

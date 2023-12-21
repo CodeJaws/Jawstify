@@ -47,7 +47,7 @@ function TagInput({ label = '태그', placeholder = DEFAULT_PLACEHOLDER.TAG, get
         placeholder={placeholder}
         style={{
           width: '100%',
-          height: '52px',
+          padding: '8px',
           display: 'flex',
           alignItems: 'center',
           borderColor: COLORS.GRAY_D9,
