@@ -1,11 +1,22 @@
+import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import HeroImg from '@/public/assets/images/landing1.png';
 import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
 import { onTablet, onPc } from '@/styles/mediaQuery';
+import LoginButton from '@/components/common/Button/LoginButton';
 
 function HeroSection() {
+  const router = useRouter();
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    router.push('/login');
+  }
+
   return (
     <StyledHeroContainer>
       <StyledHeroImageWrapper>
@@ -16,6 +27,7 @@ function HeroSection() {
         <StyledHeroText2>Taskify</StyledHeroText2>
       </StyledHeroTextWrapper>
       <StyledHeroDescription>서비스의 메인 설명 들어갑니다</StyledHeroDescription>
+      <LoginButton type="landing" active={true} onClick={handleClick} text="로그인하기" />
     </StyledHeroContainer>
   );
 }
@@ -26,7 +38,7 @@ const StyledHeroContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 42px;
+  margin: 80px 0;
 
   ${onPc} {
     padding: 94px 0;
@@ -49,6 +61,7 @@ const StyledHeroImageWrapper = styled.div`
     height: 423px;
   }
 `;
+
 const StyledHeroTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -96,14 +109,14 @@ const StyledHeroText2 = styled.h1`
 `;
 
 const StyledHeroDescription = styled.p`
-  margin: 18px 0 70px;
   text-align: center;
   letter-spacing: -1px;
+  margin: 18px 0 70px;
   ${fontStyle(12, 400)};
 
   ${onTablet} {
-    ${fontStyle(16, 400)};
     margin: 24px 0 66px;
+    ${fontStyle(16, 400)};
   }
 
   ${onPc} {
