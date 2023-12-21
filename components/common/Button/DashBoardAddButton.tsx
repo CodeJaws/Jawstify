@@ -1,14 +1,15 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-import { onTablet, onMobile } from '@/styles/mediaQuery';
 import plus from '@/public/assets/icons/plus.svg';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
+import Image from 'next/image';
+import styled from 'styled-components';
 
-function DashBoardAddButton() {
+function DashBoardAddButton({ onClick }: ButtonOnClickProps) {
   return (
     <>
-      <StyledButton>
+      <StyledButton onClick={onClick}>
         새로운 대시보드 <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>
     </>

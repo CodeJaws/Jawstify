@@ -1,21 +1,22 @@
-import styled, { css } from 'styled-components';
-import { COLORS } from '@/styles/palettes';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
+import styled, { css } from 'styled-components';
 
-interface TwinButtonProps {
+interface TwinButtonProps extends ButtonOnClickProps {
   text1: string;
   text2: string;
   isViolet: boolean;
   size: 'large' | 'small';
 }
 
-function TwinButton({ text1, text2, isViolet, size }: TwinButtonProps) {
+function TwinButton({ text1, text2, isViolet, size, onClick }: TwinButtonProps) {
   return (
     <StyledDiv>
-      <StyledButton $isViolet={isViolet} $size={size}>
+      <StyledButton $isViolet={isViolet} $size={size} onClick={onClick}>
         {text1}
       </StyledButton>
-      <StyledButton $isViolet={!isViolet} $size={size}>
+      <StyledButton $isViolet={!isViolet} $size={size} onClick={onClick}>
         {text2}
       </StyledButton>
     </StyledDiv>
