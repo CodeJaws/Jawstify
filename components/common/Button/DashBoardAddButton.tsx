@@ -1,16 +1,12 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-import { onTablet, onMobile } from '@/styles/mediaQuery';
 import plus from '@/public/assets/icons/plus.svg';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { MouseEventHandler } from 'react';
+import { ButtonOnClickProps } from '@/types/button';
+import Image from 'next/image';
+import styled from 'styled-components';
 
-interface DashBoardAddButtonProps {
-  onClick: MouseEventHandler<HTMLButtonElement>;
-}
-
-function DashBoardAddButton({ onClick }: DashBoardAddButtonProps) {
+function DashBoardAddButton({ onClick }: ButtonOnClickProps) {
   return (
     <>
       <StyledButton onClick={onClick}>

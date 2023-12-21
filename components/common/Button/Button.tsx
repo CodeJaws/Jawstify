@@ -1,13 +1,12 @@
-import styled, { css } from 'styled-components';
-import { COLORS } from '@/styles/palettes';
 import { onMobile } from '@/styles/mediaQuery';
-import { MouseEventHandler } from 'react';
+import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
+import styled, { css } from 'styled-components';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonOnClickProps {
   text: string;
   isViolet: boolean;
   size: 'large' | 'small';
-  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 function Button({ text, isViolet, size, onClick }: ButtonProps) {

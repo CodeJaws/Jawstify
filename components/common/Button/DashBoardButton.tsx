@@ -1,18 +1,17 @@
-import styled from 'styled-components';
-import greenCircle from '@/public/assets/icons/greenCircle.svg';
 import crown from '@/public/assets/icons/crown.svg';
+import greenCircle from '@/public/assets/icons/greenCircle.svg';
 import rightPage from '@/public/assets/icons/rightPage.svg';
-import Image from 'next/image';
-import { onTablet, onMobile } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { MouseEventHandler } from 'react';
+import { ButtonOnClickProps } from '@/types/button';
+import Image from 'next/image';
+import styled from 'styled-components';
 
-interface DashBoardButtonProps {
+interface DashBoardButtonProps extends ButtonOnClickProps {
   text: string;
   color: string;
   king: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 /**
