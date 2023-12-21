@@ -146,6 +146,7 @@ const StyledEditCover = styled.div<{ $type: string }>`
   border-radius: 6px;
   transition: background-color 0.2s ease-in-out;
   background-color: transparent;
+  cursor: pointer;
 
   ${onMobile} {
     width: 58px;
