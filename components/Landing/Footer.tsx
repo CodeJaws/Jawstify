@@ -20,10 +20,10 @@ function Footer() {
         <Link href='/'>
           <Image width={20} height={20} src={emailIcon} alt='이메일로 이동' />
         </Link>
-        <Link href='/'>
+        <Link href='https://www.facebook.com'>
           <Image width={20} height={20} src={facebookIcon} alt='페이스북으로 이동' />
         </Link>
-        <Link href='/'>
+        <Link href='https://www.instagram.com'>
           <Image width={20} height={20} src={instagramIcon} alt='인스타그램으로 이동' />
         </Link>
       </StyledSNSContainer>
