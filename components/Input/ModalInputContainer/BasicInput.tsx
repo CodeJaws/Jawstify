@@ -37,9 +37,7 @@ function BasicInput({
   isNecessary = false,
   isTextArea = false,
   onChange,
-  onButtonClick = (e) => {
-    console.log('클릭');
-  },
+  onButtonClick = (e) => {},
 }: Props) {
   const [isNoValue, setIsNoValue] = useState<boolean>(false);
 
