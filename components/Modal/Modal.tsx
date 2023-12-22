@@ -4,15 +4,51 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import Basic from './ModalContent/Basic';
+import CreateDashboard from './ModalContent/CreateDashboard';
+import CreateToDo from './ModalContent/CreateToDo';
+import EditToDo from './ModalContent/EditToDo';
+import CreateColumn from './ModalContent/CreateColumn';
+import ManageColumn from './ModalContent/ManageColumn';
+import Invite from './ModalContent/Invite';
+import TwinButton from '../common/Button/TwinButton';
+import { onMobile } from '@/styles/mediaQuery';
 
 interface Props {
-  content: null | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 칼럼 생성' | '컬럼 관리' | '초대하기';
+  title: null | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 칼럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
-  handleOKClick: () => void;
-  handleCancelClick: () => void;
+  onOkClick?: () => void;
+  onCancelClick?: () => void;
+  onDeleteClick?: () => void;
 }
 
-function Modal({ content, description = '', handleOKClick, handleCancelClick }: Props) {
+function Modal({
+  title,
+  description = '',
+  onOkClick = () => {},
+  onCancelClick = () => {},
+  onDeleteClick = () => {},
+}: Props) {
+  const renderModalContent = (title: Props['title']) => {
+    switch (title) {
+      case null:
+        return <Basic description={description} />;
+      case '새로운 대시보드':
+        return <CreateDashboard></CreateDashboard>;
+      case '할 일 생성':
+        return <CreateToDo></CreateToDo>;
+      case '할 일 수정':
+        return <EditToDo></EditToDo>;
+      case '새 칼럼 생성':
+        return <CreateColumn onOkClick={onOkClick} onCancelClick={onCancelClick} />;
+      case '컬럼 관리':
+        return <ManageColumn onOkClick={onOkClick} onCancelClick={onCancelClick} onDeleteClick={onDeleteClick} />;
+      case '초대하기':
+        return <Invite />;
+      default:
+        throw Error;
+    }
+  };
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -26,15 +62,11 @@ function Modal({ content, description = '', handleOKClick, handleCancelClick }: 
 
   return ReactDOM.createPortal(
     <>
-      <StyledModalBackdrop onClick={handleCancelClick} />
+      <StyledModalBackdrop onClick={onCancelClick} />
       <StyledModalContainer>
-        <StyledTitle>{content}</StyledTitle>
-        {/* modal content 넣기 */}
-        {content === null && <Basic description={description} />}
-        <StyledButtonContainer>
-          <button onClick={handleCancelClick}>취소</button>
-          <button onClick={handleOKClick}>확인</button>
-        </StyledButtonContainer>
+        <StyledTitle>{title}</StyledTitle>
+        {/* modal content */}
+        {renderModalContent(title)}
       </StyledModalContainer>
     </>,
     portalDiv,
@@ -68,8 +100,14 @@ const StyledModalContainer = styled.div`
   background-color: ${COLORS.WHITE_FF};
   border-radius: 10px;
   box-shadow: 0 2pc 12px 0px rgba(0, 0, 0, 0.08);
-  padding: 35px 30px 30px;
-  gap: 24px;
+  padding: 32px 28px;
+  gap: 28px;
+
+  ${onMobile} {
+    width: 330px;
+    padding: 28px 23px 28px;
+    gap: 28px;
+  }
 `;
 // const StyledMainText = styled.h4`
 //   ${FONT_STYLE.BODY01_MEDIUM};
@@ -90,11 +128,24 @@ const StyledModalContainer = styled.div`
 const StyledButtonContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 2.4rem;
+
+  ${onMobile} {
+    justify-content: center;
+  }
 `;
 
 const StyledTitle = styled.h3`
   ${fontStyle(24, 700)}
+  ${onMobile} {
+    ${fontStyle(20, 700)}
+  }
+`;
+
+const StyledTwinButton = styled(TwinButton)`
+  & > button {
+    border-radius: 8px;
+  }
 `;
