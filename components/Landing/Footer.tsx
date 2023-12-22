@@ -6,7 +6,7 @@ import instagramIcon from '@/public/assets/icons/instagramIcon.svg'
 import emailIcon from '@/public/assets/icons/emailIcon.svg'
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import { onTablet, onPc } from '@/styles/mediaQuery';
+import { onTablet, onPc, onMobile } from '@/styles/mediaQuery';
 
 function Footer() {
   return(
@@ -56,15 +56,11 @@ const StyledFooterContainer = styled.div`
 
 const StyledCopyright = styled.div`
   color: ${COLORS.GRAY_9F};
-  ${fontStyle(12, 400)};
-  margin-bottom: 12px;
+  ${fontStyle(16, 400)};
 
-  ${onTablet} {
-    margin-bottom: 0;
-  }
-
-  ${onPc} {
-    margin-bottom: 0;
+  ${onMobile} {
+    ${fontStyle(12, 400)}
+    margin-bottom: 12px;
   }
 `;
 
@@ -75,15 +71,11 @@ const StyledLinkContainer = styled.div`
 
 const StyledLink = styled(Link)`
   color: ${COLORS.GRAY_9F};
-  margin-bottom: 68px;
-  ${fontStyle(12, 400)};
+  ${fontStyle(16, 400)};
 
-  ${onTablet} {
-    margin-bottom: 0;
-  }
-
-  ${onPc} {
-    margin-bottom: 0;
+  ${onMobile} {
+    margin-bottom: 68px;
+    ${fontStyle(12, 400)};
   }
 `;
 
