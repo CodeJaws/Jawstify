@@ -1,45 +1,49 @@
-import { BACK_END, MAX_LEVEL, NORMAL, PROJECT, TO_DO } from '@/constants/Chip';
-import CROWN from '@/public/assets/icons/crown.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 
+import useDeviceType from '@/hooks/useDeviceType';
+import { ModalContext } from '@/pages/modalcard';
+import { onMobile } from '@/styles/mediaQuery';
 import Image from 'next/image';
+import { useContext } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
-import StatusChip from '../Chip/StatusChip';
+import Comment from './Comment';
+import Manger from './Manger';
+import ModalButton from './ModalButton';
 
-interface Props {
-  title: string;
-}
-
-function ModalCard({ title }: Props) {
+function ModalCard() {
+  const { title, content, status, tag, cardImg } = useContext(ModalContext);
+  const deviceType = useDeviceType();
   return (
     <StyledContainer>
-      <StyledWrapper>
+      <StyledLeftContainer>
+        {deviceType === 'mobile' && <ModalButton />}
         <StyledTitleWrapper>
           <StyledTitle>{title}</StyledTitle>
+          {deviceType === 'mobile' && <Manger />}
           <StyledTag>
-            <StatusChip content={TO_DO} />
+            {status}
             <StyledDivision />
             <StyledColorChipWrapper>
-              <ContentChip content={PROJECT} />
-              <ContentChip content={NORMAL} />
-              <ContentChip content={BACK_END} />
-              <ContentChip content={MAX_LEVEL} />
+              {tag.map((val) => (
+                <ContentChip key={val.id} text={val.text} color={val.color} backgroundColor={val.backgroundColor} />
+              ))}
             </StyledColorChipWrapper>
           </StyledTag>
         </StyledTitleWrapper>
         <StyledContentWrapper>
-          <StyledContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante
-            cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at
-            leo.
-          </StyledContent>
-          <Image width={450} height={262} src={CROWN} alt="왕관" />
+          <StyledContent>{content}</StyledContent>
+          <StyledImage width={450} height={262} src={cardImg} alt="카드 이미지" />
         </StyledContentWrapper>
-        <StyledCommentWrapper></StyledCommentWrapper>
-      </StyledWrapper>
-      <StyledRightWrapper>👻</StyledRightWrapper>
+        <Comment />
+      </StyledLeftContainer>
+      {deviceType !== 'mobile' && (
+        <StyledRightContainer>
+          <ModalButton />
+          <Manger />
+        </StyledRightContainer>
+      )}
     </StyledContainer>
   );
 }
@@ -48,18 +52,31 @@ export default ModalCard;
 
 const StyledContainer = styled.div`
   display: flex;
+  flex-shrink: 0;
+  gap: 24px;
   width: 730px;
   height: 763px;
+  padding: 32px 28px;
   background-color: ${COLORS.WHITE_FF};
+
+  ${onMobile} {
+    display: block;
+    width: 327px;
+    height: 708px;
+    padding: 12px;
+  }
+`;
+
+const StyledLeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledTitle = styled.p`
   ${fontStyle(24, 700)}
-`;
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${onMobile} {
+    font-size: 2rem;
+  }
 `;
 
 const StyledTitleWrapper = styled.div`
@@ -80,16 +97,22 @@ const StyledContentWrapper = styled.div`
   gap: 16px;
 `;
 
-const StyledCommentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  margin-top: 24px;
-`;
-
 const StyledContent = styled.p`
   ${fontStyle(14, 400)}
   line-height: 24px;
+
+  ${onMobile} {
+    font-size: 1.2rem;
+    line-height: 22px;
+  }
+`;
+
+const StyledImage = styled(Image)`
+  ${onMobile} {
+    width: 287px;
+    height: 168px;
+    margin: 0 auto;
+  }
 `;
 
 const StyledDivision = styled.div`
@@ -102,7 +125,8 @@ const StyledColorChipWrapper = styled.div`
   gap: 6px;
 `;
 
-const StyledRightWrapper = styled.div`
+const StyledRightContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 20px;
 `;
