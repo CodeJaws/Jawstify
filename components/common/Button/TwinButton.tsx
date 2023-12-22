@@ -5,7 +5,7 @@ import { ButtonOnClickProps } from '@/types/button';
 import styled, { css } from 'styled-components';
 import { MouseEvent } from 'react';
 
-interface TwinButtonProps {
+interface TwinButtonProps extends ButtonOnClickProps {
   text1: string;
   text2: string;
   isViolet?: boolean;

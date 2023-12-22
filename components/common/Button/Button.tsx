@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
 import styled, { css } from 'styled-components';
-import { MouseEvent } from 'react';
 
 interface ButtonProps extends ButtonOnClickProps {
   text: string;
