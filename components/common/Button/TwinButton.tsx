@@ -1,22 +1,38 @@
 import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { ReactNode } from 'react';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
 import styled, { css } from 'styled-components';
+import { MouseEvent } from 'react';
 
 interface TwinButtonProps extends ButtonOnClickProps {
   text1: string;
   text2: string;
-  isViolet: boolean;
+  isViolet?: boolean;
   size: 'large' | 'small';
+  children?: ReactNode;
+  className: string;
+  onLeftClick: (e: MouseEvent<HTMLElement>) => void;
+  onRightClick: (e: MouseEvent<HTMLElement>) => void;
 }
 
-function TwinButton({ text1, text2, isViolet, size, onClick }: TwinButtonProps) {
+function TwinButton({
+  text1,
+  text2,
+  isViolet = false,
+  size,
+  children,
+  className,
+  onLeftClick,
+  onRightClick,
+}: TwinButtonProps) {
   return (
-    <StyledDiv>
-      <StyledButton $isViolet={isViolet} $size={size} onClick={onClick}>
+    <StyledDiv className={className}>
+      {children}
+      <StyledButton $isViolet={isViolet} $size={size} onClick={onLeftClick}>
         {text1}
       </StyledButton>
-      <StyledButton $isViolet={!isViolet} $size={size} onClick={onClick}>
+      <StyledButton $isViolet={!isViolet} $size={size} onClick={onRightClick}>
         {text2}
       </StyledButton>
     </StyledDiv>
