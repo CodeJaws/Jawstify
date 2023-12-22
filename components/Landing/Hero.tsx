@@ -32,7 +32,7 @@ function HeroSection() {
   );
 }
 
-export default HeroSection
+export default HeroSection;
 
 const StyledHeroContainer = styled.div`
   display: flex;
@@ -79,33 +79,49 @@ const StyledHeroTextWrapper = styled.div`
   }
 `;
 
-const StyledHeroText1 = styled.h1`
+const StyledHeroText1 = styled.div`
+  width: 245px;
+  height: 48px;
   color: ${COLORS.BLACK_17};
   letter-spacing: -2px;
   ${fontStyle(40, 700)};
-
+  white-space: nowrap;
+  
   ${onTablet} {
-    ${fontStyle(56, 700)}
+    width: 349px;
+    height: 100px;
+    ${fontStyle(56, 700)};
+    line-height: 100px;
   }
-
+  
   ${onPc} {
+    width: 479px;
+    height: 100px;
     ${fontStyle(76, 700)};
-    margin-bottom: 15px;
+    line-height: 100px;
   }
-`;
+  `;
 
-const StyledHeroText2 = styled.h1`
+const StyledHeroText2 = styled.div`
+  width: 150px;
+  height: 51px;
   color: ${COLORS.VIOLET_55};
-  font-family: Montserrat;
+  font-family: 'Montserrat';
   letter-spacing: -1px;
   ${fontStyle(42, 700)};
-
+  
   ${onTablet} {
+    width: 253px;
+    height: 65px;
     ${fontStyle(70, 700)};
+    line-height: 65px;
   }
-
+  
   ${onPc} {
+    width: 327px;
+    height: 65px;
     ${fontStyle(90, 700)};
+    line-height: 65px;
   }
 `;
 

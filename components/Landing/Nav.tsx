@@ -28,7 +28,7 @@ function Nav() {
   )
 }
 
-export default Nav
+export default Nav;
 
 const StyledLandingHeaderContainer = styled.div`
   width: 100%;
