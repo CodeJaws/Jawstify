@@ -1,21 +1,19 @@
 import { COLORS } from '@/styles/palettes';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import Basic from './ModalContent/Basic';
 import CreateDashboard from './ModalContent/CreateDashboard';
-import CreateToDo from './ModalContent/CreateToDo';
-import EditToDo from './ModalContent/EditToDo';
-import CreateColumn from './ModalContent/CreateColumn';
+import CreateToDo from './ModalContent/Create&EditToDo';
 import ManageColumn from './ModalContent/ManageColumn';
-import Invite from './ModalContent/Invite';
-import TwinButton from '../common/Button/TwinButton';
 import { onMobile } from '@/styles/mediaQuery';
+import NoTitle from './ModalContent/NoTitle';
 
 interface Props {
-  title: null | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 칼럼 생성' | '컬럼 관리' | '초대하기';
+  title: '' | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 칼럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
+  isSingleButton?: boolean;
   onOkClick?: () => void;
   onCancelClick?: () => void;
   onDeleteClick?: () => void;
@@ -24,28 +22,52 @@ interface Props {
 function Modal({
   title,
   description = '',
+  isSingleButton = false,
   onOkClick = () => {},
   onCancelClick = () => {},
   onDeleteClick = () => {},
 }: Props) {
+  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+
+  const isTightVersion = title == '할 일 생성' || title === '할 일 수정';
+
   const renderModalContent = (title: Props['title']) => {
     switch (title) {
-      case null:
-        return <Basic description={description} />;
+      case '':
+        return (
+          <NoTitle
+            description={description}
+            isSingleButton={isSingleButton}
+            onCancelClick={onCancelClick}
+            onOkClick={onOkClick}
+          />
+        );
       case '새로운 대시보드':
-        return <CreateDashboard></CreateDashboard>;
+        return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} />;
       case '할 일 생성':
-        return <CreateToDo></CreateToDo>;
+        return (
+          <CreateToDo
+            type="create"
+            onOkClick={onOkClick}
+            onCancelClick={onCancelClick}
+            image={image}
+            setImage={setImage}
+          />
+        );
       case '할 일 수정':
-        return <EditToDo></EditToDo>;
-      case '새 칼럼 생성':
-        return <CreateColumn onOkClick={onOkClick} onCancelClick={onCancelClick} />;
+        return (
+          <CreateToDo
+            type="edit"
+            onOkClick={onOkClick}
+            onCancelClick={onCancelClick}
+            image={image}
+            setImage={setImage}
+          />
+        );
       case '컬럼 관리':
         return <ManageColumn onOkClick={onOkClick} onCancelClick={onCancelClick} onDeleteClick={onDeleteClick} />;
-      case '초대하기':
-        return <Invite />;
       default:
-        throw Error;
+        return <Basic type={title} onOkClick={onOkClick} onCancelClick={onCancelClick} />;
     }
   };
 
@@ -63,16 +85,15 @@ function Modal({
   return ReactDOM.createPortal(
     <>
       <StyledModalBackdrop onClick={onCancelClick} />
-      <StyledModalContainer>
+      <StyledModalContainer $isTightVersion={isTightVersion}>
         <StyledTitle>{title}</StyledTitle>
-        {/* modal content */}
         {renderModalContent(title)}
       </StyledModalContainer>
     </>,
     portalDiv,
   );
 }
-//
+
 export default Modal;
 
 const StyledModalBackdrop = styled.div`
@@ -85,9 +106,8 @@ const StyledModalBackdrop = styled.div`
   z-index: 10;
 `;
 
-const StyledModalContainer = styled.div`
-  /* width: fit-content; */
-  width: 540px;
+const StyledModalContainer = styled.div<{ $isTightVersion: boolean }>`
+  width: ${({ $isTightVersion }) => ($isTightVersion ? '506px' : '540px')};
   min-height: 250px;
   position: fixed;
   display: flex;
@@ -106,34 +126,7 @@ const StyledModalContainer = styled.div`
   ${onMobile} {
     width: 330px;
     padding: 28px 23px 28px;
-    gap: 28px;
-  }
-`;
-// const StyledMainText = styled.h4`
-//   ${FONT_STYLE.BODY01_MEDIUM};
-//   color: ${COLORS.TEXT_MAIN};
-// `;
-
-// const StyledDescriptionText = styled.h4`
-//   ${FONT_STYLE.BODY02_MEDIUM}
-//   color: ${COLORS.TEXT_MAIN}
-// `;
-
-// const StyledLine = styled.div`
-//   width: 25.6rem;
-//   height: 0.1rem;
-//   background: ${COLORS.GREY5};
-//`;
-
-const StyledButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 2.4rem;
-
-  ${onMobile} {
-    justify-content: center;
+    gap: 25px;
   }
 `;
 
@@ -141,11 +134,5 @@ const StyledTitle = styled.h3`
   ${fontStyle(24, 700)}
   ${onMobile} {
     ${fontStyle(20, 700)}
-  }
-`;
-
-const StyledTwinButton = styled(TwinButton)`
-  & > button {
-    border-radius: 8px;
   }
 `;
