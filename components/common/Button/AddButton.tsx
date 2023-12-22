@@ -1,16 +1,15 @@
+import plus from '@/public/assets/icons/plus.svg';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { onTablet, onMobile } from '@/styles/mediaQuery';
-import plus from '@/public/assets/icons/plus.svg';
-import { COLORS } from '@/styles/palettes';
 
-function AddButton() {
+function AddButton({ onClick }: ButtonOnClickProps) {
   return (
-    <>
-      <StyledButton>
-        <StyledPlusImage src={plus} alt="Plus이미지" />
-      </StyledButton>
-    </>
+    <StyledButton onClick={onClick}>
+      <StyledPlusImage src={plus} alt="Plus이미지" />
+    </StyledButton>
   );
 }
 
