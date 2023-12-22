@@ -1,9 +1,10 @@
+import Image from 'next/image';
+import styled from 'styled-components';
+
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { ButtonOnClickProps } from '@/types/button';
-import styled, { css } from 'styled-components';
 import addBoxWhite from '@/public/assets/icons/AddBoxWhite.svg';
-import Image from 'next/image';
+import { ButtonOnClickProps } from '@/types/button';
 
 interface ButtonProps extends ButtonOnClickProps {
   text: string;
