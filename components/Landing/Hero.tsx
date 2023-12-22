@@ -90,6 +90,7 @@ const StyledHeroText1 = styled.h1`
 
   ${onPc} {
     ${fontStyle(76, 700)};
+    margin-bottom: 15px;
   }
 `;
 
