@@ -50,13 +50,14 @@ const StyledContainer = styled.div<{ $isOpen: boolean }>`
   position: absolute;
   top: 50px;
   left: 0;
+  z-index: 100;
   width: 217px;
   height: 118px;
   border: 1px solid ${COLORS.GRAY_D9};
   border-radius: 6px;
   background: ${COLORS.WHITE_FF};
+  padding: 6.5px 8px;
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
-  padding: 13px 8px;
 `;
 
 const StyledWrapper = styled.div`
@@ -67,12 +68,17 @@ const StyledWrapper = styled.div`
 const StyledInWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  width: 100%;
 `;
 
 const StyledButton = styled.button`
   display: flex;
   gap: 6px;
+  width: 100%;
+  padding: 6.5px;
+  &:hover {
+    background-color: ${COLORS.GRAY_F5};
+  }
 `;
 
 const StyledBlank = styled.div`
