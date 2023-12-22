@@ -30,7 +30,7 @@ export const StyledLabel = styled.h5`
   color: ${COLORS.BLACK_33};
   margin-bottom: 8px;
   display: flex;
-  ${fontStyle(18, 500)};
+  ${fontStyle(16, 500)};
 `;
 
 export const StyledErrorText = styled.p`
