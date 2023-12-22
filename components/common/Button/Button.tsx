@@ -1,9 +1,11 @@
-import styled, { css } from 'styled-components';
-import { COLORS } from '@/styles/palettes';
 import { onMobile } from '@/styles/mediaQuery';
 import { ReactNode } from 'react';
+import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
+import styled, { css } from 'styled-components';
+import { MouseEvent } from 'react';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonOnClickProps {
   text: string;
   isViolet?: boolean;
   size: 'large' | 'small';
@@ -11,10 +13,10 @@ interface ButtonProps {
   className: string;
 }
 
-function Button({ text, isViolet = false, size, children, className }: ButtonProps) {
+function Button({ text, isViolet = false, size, children, className, onClick }: ButtonProps) {
   return (
     <>
-      <StyledButton $isViolet={isViolet} $size={size} className={className}>
+      <StyledButton $isViolet={isViolet} $size={size} className={className} onClick={onClick}>
         {text}
         {children}
       </StyledButton>

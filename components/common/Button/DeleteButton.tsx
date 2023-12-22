@@ -1,12 +1,13 @@
-import styled from 'styled-components';
-import { onMobile } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
+import styled from 'styled-components';
 
-function DeleteButton() {
+function DeleteButton({ onClick }: ButtonOnClickProps) {
   return (
     <>
-      <StyledButton>대시보드 삭제하기</StyledButton>
+      <StyledButton onClick={onClick}>대시보드 삭제하기</StyledButton>
     </>
   );
 }
