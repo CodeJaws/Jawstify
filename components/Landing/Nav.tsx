@@ -11,14 +11,14 @@ function Nav() {
   return (
     <StyledLandingHeaderContainer>
       <StyledLandingHeaderInner>
-        <StyledLogoContainer href="/">
+        <StyledLogoLinkContainer href="/">
           <LogoImageWrapper>
             <Image src={logoImage} fill alt="logoImage" />
           </LogoImageWrapper>
           <LogoTextWrapper>
             <Image src={logoText} fill alt="logoText" />
           </LogoTextWrapper>
-        </StyledLogoContainer>
+        </StyledLogoLinkContainer>
         <LinkButton>
           <Link href="/login">로그인</Link>
           <Link href="/signup">회원가입</Link>
@@ -50,7 +50,7 @@ const StyledLandingHeaderInner = styled.div`
   width: 100%;
 `
 
-const StyledLogoContainer = styled(Link)`
+const StyledLogoLinkContainer = styled(Link)`
   display: flex;
   align-items: center;
 `
