@@ -72,13 +72,14 @@ const LogoTextWrapper = styled.div`
   width: 80px;
   height: 22px;
 
+  ${onTablet} {
+    display: block;
+  }
+  
   ${onPc} {
     display: block;
   }
 
-  ${onTablet} {
-    display: block;
-  }
 `
 
 const LinkButton = styled.div`
