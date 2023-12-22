@@ -1,18 +1,22 @@
 import styled, { css } from 'styled-components';
 import { COLORS } from '@/styles/palettes';
 import { onMobile } from '@/styles/mediaQuery';
+import { ReactNode } from 'react';
 
 interface ButtonProps {
   text: string;
-  isViolet: boolean;
+  isViolet?: boolean;
   size: 'large' | 'small';
+  children?: ReactNode;
+  className: string;
 }
 
-function Button({ text, isViolet, size }: ButtonProps) {
+function Button({ text, isViolet = false, size, children, className }: ButtonProps) {
   return (
     <>
-      <StyledButton $isViolet={isViolet} $size={size}>
+      <StyledButton $isViolet={isViolet} $size={size} className={className}>
         {text}
+        {children}
       </StyledButton>
     </>
   );

@@ -1,17 +1,21 @@
 import styled, { css } from 'styled-components';
 import { COLORS } from '@/styles/palettes';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { ReactNode } from 'react';
 
 interface TwinButtonProps {
   text1: string;
   text2: string;
-  isViolet: boolean;
+  isViolet?: boolean;
   size: 'large' | 'small';
+  children?: ReactNode;
+  className: string;
 }
 
-function TwinButton({ text1, text2, isViolet, size }: TwinButtonProps) {
+function TwinButton({ text1, text2, isViolet = false, size, children, className }: TwinButtonProps) {
   return (
-    <StyledDiv>
+    <StyledDiv className={className}>
+      {children}
       <StyledButton $isViolet={isViolet} $size={size}>
         {text1}
       </StyledButton>

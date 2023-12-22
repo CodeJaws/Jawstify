@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { COLORS } from '@/styles/palettes';
 import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
 import { NO_VALUE_ERROR } from '@/constants/Input';
+import Button from '@/components/common/Button/Button';
 
 interface Props {
   label: string;
@@ -38,6 +39,7 @@ function BasicInput({
 
   const defaultPlaceholder = label + '을 입력해 주세요';
   const hasError = errorMessage !== '';
+  const isComment = label === '댓글';
 
   const handleBlur = () => {
     isNecessary && inputValue === '' ? setIsNoValue(true) : setIsNoValue(false);
@@ -53,6 +55,7 @@ function BasicInput({
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
           $error={isNoValue || hasError}
+          $isComment={isComment}
           onChange={onChange}
           onBlur={handleBlur}
         />
@@ -65,6 +68,7 @@ function BasicInput({
           onBlur={handleBlur}
         />
       )}
+      {isComment && <StyledInputButton text="입력" size="small" className="commentInput"></StyledInputButton>}
       {(isNoValue || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
     </StyledInputContainer>
   );
@@ -72,13 +76,16 @@ function BasicInput({
 
 export default BasicInput;
 
-const StyledTextarea = styled.textarea<{ $error: boolean }>`
+const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boolean }>`
   width: 100%;
+  position: relative;
   padding: 15px 16px;
+  resize: none;
   border-radius: 8px;
   border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
   background-color: ${COLORS.WHITE_FF};
   color: ${COLORS.BLACK_33};
+  height: ${({ $isComment }) => ($isComment ? '110px' : '96px')};
   ${fontStyle(16, 400)}
 
   &:hover,
@@ -88,4 +95,10 @@ const StyledTextarea = styled.textarea<{ $error: boolean }>`
     color: ${COLORS.BLACK_33};
     outline: none;
   }
+`;
+
+const StyledInputButton = styled(Button)`
+  position: absolute;
+  bottom: 14px;
+  right: 12px;
 `;
