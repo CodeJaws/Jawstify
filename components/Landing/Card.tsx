@@ -206,7 +206,7 @@ const StyledCardTextContainer = styled.div`
   flex-direction: column;
   gap: 18px;
   padding: 27px 32px;
-  background-color: #1501cb9c;
+  background-color: ${COLORS.VIOLET_15};
   color: ${COLORS.WHITE_FF};
   border-radius: 0 0 8px 8px;
 
