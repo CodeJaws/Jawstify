@@ -5,13 +5,13 @@ import { ButtonOnClickProps } from '@/types/button';
 import styled, { css } from 'styled-components';
 import { MouseEvent } from 'react';
 
-interface TwinButtonProps extends ButtonOnClickProps {
+interface TwinButtonProps {
   text1: string;
   text2: string;
   isViolet?: boolean;
   size: 'large' | 'small';
   children?: ReactNode;
-  className: string;
+  className?: string;
   onLeftClick: (e: MouseEvent<HTMLElement>) => void;
   onRightClick: (e: MouseEvent<HTMLElement>) => void;
 }
