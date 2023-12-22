@@ -17,6 +17,7 @@ function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {} }: Pr
       <StyledContainer>
         <BasicInput label="이름"></BasicInput>
       </StyledContainer>
+
       <StyledButtonContainer>
         <StyledDeleteButton onClick={onDeleteClick}>삭제하기</StyledDeleteButton>
         <StyledTwinButton
@@ -34,26 +35,30 @@ function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {} }: Pr
 export default ManageColumn;
 
 const StyledContainer = styled.div`
-  /* padding: 100px 160px; */
   white-space: nowrap;
 `;
 
 const StyledButtonContainer = styled.div`
   width: 100%;
-  display: flex;
+  display: grid;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 2.4rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
 
   ${onMobile} {
     justify-content: center;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 6px;
   }
 `;
 
 const StyledDeleteButton = styled.button`
   text-decoration: underline;
-  margin-bottom: 7px;
+  display: flex;
+  margin-bottom: 8px;
   color: ${COLORS.GRAY_9F};
+  ${fontStyle(14, 400)}
 `;
 
 const StyledTwinButton = styled(TwinButton)`
