@@ -85,7 +85,7 @@ function TablePagination({ dashboardId, table }: TablePaginationProps) {
             <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
             <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePagination(1)} />
           </div>
-          <InviteButton text="초대하기" onClick={handleInvite} />
+          {table !== 'members' && <InviteButton text="초대하기" onClick={handleInvite} />}
         </StyledPaginationWrapper>
       </StyledTopWrapper>
       <StyledNameText>{tableSubTitle}</StyledNameText>
@@ -127,6 +127,7 @@ const StyledNameText = styled.p`
 
   ${onMobile} {
     margin-left: 20px;
+    ${fontStyle(14, 400)}
   }
 `;
 
@@ -198,6 +199,9 @@ const StyledMemberBoxProfileWrapper = styled.div`
 
   ${onMobile} {
     gap: 8px;
+    p {
+      ${fontStyle(14, 400)};
+    }
   }
 `;
 
