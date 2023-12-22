@@ -19,7 +19,7 @@ interface TableProps {
   table: 'members' | 'invitationDetails';
 }
 
-/** 구성원 컴포넌트에서 하나의 줄을 의미합니다. Type은 any에서 들어온 type으로 바꾸어주면 됩니다. */
+/** 구성원 컴포넌트에서 하나의 줄을 의미합니다. */
 function Table({ item, table }: TableProps) {
   let profileImg = '';
   let buttonName = '삭제';
@@ -42,12 +42,12 @@ function Table({ item, table }: TableProps) {
       <StyledMemberBoxProfileWrapper>
         {table === 'members' && (
           <StyledMemberBoxImageWrapper>
-            <Image fill src={profileImg} alt="구성원 프로필 이미지" />
+            <Image fill src={profileImg} alt="구성원 프로필" />
           </StyledMemberBoxImageWrapper>
         )}
         <p>{itemName}</p>
       </StyledMemberBoxProfileWrapper>
-      <Button text={buttonName} isViolet={false} size="small" onClick={() => handleDelete()} />
+      <Button text={buttonName} isViolet={false} size="small" onClick={() => handleDelete()} className="" />
     </StyledMemberBoxContainer>
   );
 }
