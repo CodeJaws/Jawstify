@@ -16,6 +16,7 @@ interface CardContainerProps {
 }
 
 function CardSection() {
+  
   return (
     <StyledCardSectionContainer>
       <StyledCardSectionTitle>생산성을 높이는 다양한 설정 ⚡</StyledCardSectionTitle>
@@ -43,6 +44,22 @@ function CardSection() {
         />
       </StyledCardSectionWrapper>
     </StyledCardSectionContainer>
+  );
+}
+
+function CardContainer ({ cardImg, imgAlt, text1, text2, type }: CardContainerProps) {
+  return (
+    <StyledCardContainer>
+      <StyledCardImageContainer>
+        <StyledCardImageWrapper $type={type}>
+          <Image fill src={cardImg} alt={imgAlt} />
+        </StyledCardImageWrapper>
+      </StyledCardImageContainer>
+      <StyledCardTextContainer>
+        <StyledCardText1>{text1}</StyledCardText1>
+        <StyledCardText2>{text2}</StyledCardText2>
+      </StyledCardTextContainer>
+    </StyledCardContainer>
   );
 }
 
@@ -89,22 +106,6 @@ const StyledCardSectionWrapper = styled.div`
     gap: 33px;
   }
 `;
-
-const CardContainer = ({ cardImg, imgAlt, text1, text2, type }: CardContainerProps) => {
-  return (
-    <StyledCardContainer>
-      <StyledCardImageContainer>
-        <StyledCardImageWrapper $type={type}>
-          <Image fill src={cardImg} alt={imgAlt} />
-        </StyledCardImageWrapper>
-      </StyledCardImageContainer>
-      <StyledCardTextContainer>
-        <StyledCardText1>{text1}</StyledCardText1>
-        <StyledCardText2>{text2}</StyledCardText2>
-      </StyledCardTextContainer>
-    </StyledCardContainer>
-  );
-};
 
 const StyledCardContainer = styled.div`
   width: 343px;
