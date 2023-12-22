@@ -19,29 +19,31 @@ function CardSection() {
   
   return (
     <StyledCardSectionContainer>
-      <StyledCardSectionTitle>생산성을 높이는 다양한 설정 ⚡</StyledCardSectionTitle>
       <StyledCardSectionWrapper>
-        <CardContainer
-          cardImg={cardImg1}
-          imgAlt="대시보드 설정"
-          text1="대시보드 설정"
-          text2="대시보드 사진과 이름을 변경할 수 있어요."
-          type="first"
-        />
-        <CardContainer
-          cardImg={cardImg2}
-          imgAlt="대시보드 설정"
-          text1="초대"
-          text2="새로운 팀원을 초대할 수 있어요."
-          type="second"
-        />
-        <CardContainer
-          cardImg={cardImg3}
-          imgAlt="대시보드 설정"
-          text1="구성원"
-          text2="구성원을 초대하고 내보낼 수 있어요."
-          type="third"
-        />
+        <StyledCardSectionTitle>생산성을 높이는 다양한 설정 ⚡</StyledCardSectionTitle>
+        <StyledCardSectionInnerWrapper>
+          <CardContainer
+            cardImg={cardImg1}
+            imgAlt="대시보드 설정"
+            text1="대시보드 설정"
+            text2="대시보드 사진과 이름을 변경할 수 있어요."
+            type="first"
+          />
+          <CardContainer
+            cardImg={cardImg2}
+            imgAlt="대시보드 설정"
+            text1="초대"
+            text2="새로운 팀원을 초대할 수 있어요."
+            type="second"
+          />
+          <CardContainer
+            cardImg={cardImg3}
+            imgAlt="대시보드 설정"
+            text1="구성원"
+            text2="구성원을 초대하고 내보낼 수 있어요."
+            type="third"
+          />
+        </StyledCardSectionInnerWrapper>
       </StyledCardSectionWrapper>
     </StyledCardSectionContainer>
   );
@@ -67,16 +69,21 @@ export default CardSection;
 
 const StyledCardSectionContainer = styled.div`
   margin: 90px 0;
+  display: flex;
 `;
 
-const StyledCardSectionTitle = styled.h2`
+const StyledCardSectionWrapper = styled.div`
+  margin: 0 auto;
+`;
+
+const StyledCardSectionTitle = styled.div`
   color: ${COLORS.BLACK_17};
   font-feature-settings:
     'clig' off,
     'liga' off;
   ${fontStyle(22, 700)};
-  text-align: center;
   margin-bottom: 36px;
+  text-align: center;
 
   ${onTablet} {
     margin-bottom: 36px;
@@ -86,10 +93,11 @@ const StyledCardSectionTitle = styled.h2`
   ${onPc} {
     margin-bottom: 36px;
     ${fontStyle(28, 700)};
+    text-align: start;
   }
 `;
 
-const StyledCardSectionWrapper = styled.div`
+const StyledCardSectionInnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
