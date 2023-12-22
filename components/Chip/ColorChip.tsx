@@ -44,7 +44,7 @@ const StyledContainer = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1px;
 `;
 
 const StyledButton = styled.button`
