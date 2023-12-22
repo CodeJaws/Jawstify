@@ -1,5 +1,6 @@
 import DropDown from '@/components/ModalDropDown/DropDown';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 
 import { styled } from 'styled-components';
@@ -24,4 +25,8 @@ const StyledContainer = styled.div`
 const StyledLabel = styled.label`
   ${fontStyle(18, 500)}
   color: ${COLORS.BLACK_33};
+
+  ${onMobile} {
+    ${fontStyle(16, 500)}
+  }
 `;
