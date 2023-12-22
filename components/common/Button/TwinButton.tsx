@@ -1,21 +1,38 @@
-import styled, { css } from 'styled-components';
-import { COLORS } from '@/styles/palettes';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { ReactNode } from 'react';
+import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
+import styled, { css } from 'styled-components';
+import { MouseEvent } from 'react';
 
-interface TwinButtonProps {
+interface TwinButtonProps extends ButtonOnClickProps {
   text1: string;
   text2: string;
-  isViolet: boolean;
-  size: string;
+  isViolet?: boolean;
+  size: 'large' | 'small';
+  children?: ReactNode;
+  className: string;
+  onLeftClick: (e: MouseEvent<HTMLElement>) => void;
+  onRightClick: (e: MouseEvent<HTMLElement>) => void;
 }
 
-function TwinButton({ text1, text2, isViolet, size }: TwinButtonProps) {
+function TwinButton({
+  text1,
+  text2,
+  isViolet = false,
+  size,
+  children,
+  className,
+  onLeftClick,
+  onRightClick,
+}: TwinButtonProps) {
   return (
-    <StyledDiv>
-      <StyledButton $isViolet={isViolet} $size={size}>
+    <StyledDiv className={className}>
+      {children}
+      <StyledButton $isViolet={isViolet} $size={size} onClick={onLeftClick}>
         {text1}
       </StyledButton>
-      <StyledButton $isViolet={!isViolet} $size={size}>
+      <StyledButton $isViolet={!isViolet} $size={size} onClick={onRightClick}>
         {text2}
       </StyledButton>
     </StyledDiv>
@@ -41,6 +58,16 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
   font-size: 1.4rem;
+  ${onTablet} {
+    width: ${({ $size }) => ($size === 'small' ? '72px' : '')};
+    height: ${({ $size }) => ($size === 'small' ? '30px' : '')};
+  }
+
+  ${onMobile} {
+    width: 109px;
+    height: 28px;
+    font-size: 1.2rem;
+  }
 
   ${({ $size }) =>
     $size === 'large' &&
@@ -55,15 +82,4 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
         font-size: 1.4rem;
       }
     `}
-
-  ${onTablet} {
-    width: ${({ $size }) => ($size === 'small' ? '72px' : '')};
-    height: ${({ $size }) => ($size === 'small' ? '30px' : '')};
-  }
-
-  ${onMobile} {
-    width: 109px;
-    height: 28px;
-    font-size: 1.2rem;
-  }
 `;
