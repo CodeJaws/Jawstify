@@ -7,6 +7,7 @@ import { onMobile } from '@/styles/mediaQuery';
 import usePagination, { InvitationItem, MembersItem } from '@/hooks/usePagination';
 import PaginationButton from '../common/Button/PaginationButton';
 import Button from '../common/Button/Button';
+import InviteButton from './InviteButton';
 
 interface TablePaginationProps {
   dashboardId: number;
@@ -69,6 +70,9 @@ function TablePagination({ dashboardId, table }: TablePaginationProps) {
   const tableTitle = table === 'members' ? '구성원' : '초대 내역';
   const tableSubTitle = table === 'members' ? '이름' : '이메일';
 
+  /** 초대하기 버튼 클릭 시 동작 */
+  const handleInvite = () => {};
+
   return (
     <StyledContainer>
       <StyledTopWrapper>
@@ -81,6 +85,7 @@ function TablePagination({ dashboardId, table }: TablePaginationProps) {
             <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
             <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePagination(1)} />
           </div>
+          <InviteButton text="초대하기" onClick={handleInvite} />
         </StyledPaginationWrapper>
       </StyledTopWrapper>
       <StyledNameText>{tableSubTitle}</StyledNameText>
@@ -119,6 +124,10 @@ const StyledNameText = styled.p`
   margin-left: 28px;
   margin-top: 14px;
   margin-bottom: 24px;
+
+  ${onMobile} {
+    margin-left: 20px;
+  }
 `;
 
 const StyledTopWrapper = styled.div`
@@ -142,6 +151,7 @@ const StyledTopWrapper = styled.div`
 `;
 
 const StyledPaginationWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
