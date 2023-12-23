@@ -61,7 +61,7 @@ const StyledDashboardGroupContainer = styled.div`
   padding: 0 12px;
 
   ${onTablet} {
-    padding: 0 14px;
+    padding: 0 10px;
   }
 `;
 
@@ -72,7 +72,7 @@ const StyledImage = styled(Image)`
   top: 10px;
 
   ${onTablet} {
-    left: 0.3px;
+    left: 2.35px;
     top: 10px;
   }
 
@@ -84,17 +84,18 @@ const StyledImage = styled(Image)`
 
 const StyledTitleWrapper = styled.div`
   color: ${COLORS.GRAY_78};
-  ${fontStyle(18, 500)};
   margin-left: 16px;
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 
   ${onPc} {
+    ${fontStyle(18, 500)};
     margin-right: 6px;
   }
 
   ${onTablet} {
+    ${fontStyle(16, 500)};
     margin-right: 4px;
   }
 
@@ -126,7 +127,7 @@ const StyledDashboardContainer = styled.div<{ $isActive: boolean }>`
   }
 
   ${onTablet} {
-    padding: 0 10px;
+    padding: 0 12px;
   }
 
   ${onMobile} {

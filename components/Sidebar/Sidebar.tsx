@@ -40,6 +40,8 @@ function Sidebar() {
 export default Sidebar;
 
 const StyledContainer = styled.div`
+  position: relative;
+  z-index: 7;
   display: flex;
   flex-direction: column;
   height: 100vh;
