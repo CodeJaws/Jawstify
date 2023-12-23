@@ -1,14 +1,14 @@
-import Button from '@/components/common/Button/Button';
-import TwinButton from '@/components/common/Button/TwinButton';
+import styled from 'styled-components';
+import { ModalOnClickProps } from '@/types/modal';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
-import styled from 'styled-components';
+import { StyledTwinButton } from './Create&EditToDo';
+import { StyledContainer } from './Basic';
+import Button from '@/components/common/Button/Button';
 
-interface Props {
+interface Props extends ModalOnClickProps {
   description: string;
   isSingleButton: boolean;
-  onOkClick: () => void;
-  onCancelClick: () => void;
 }
 
 function NoTitle({ description, isSingleButton, onCancelClick = () => {}, onOkClick }: Props) {
@@ -20,23 +20,19 @@ function NoTitle({ description, isSingleButton, onCancelClick = () => {}, onOkCl
           <StyledButton text="확인" size="large" onClick={onOkClick} isViolet />
         </StyledButtonWrapper>
       ) : (
-        <StyledTwinButton
+        <StyledTwinButton2
           text1="취소"
           text2="삭제"
           size="large"
           onLeftClick={onCancelClick}
           onRightClick={onOkClick}
-        ></StyledTwinButton>
+        ></StyledTwinButton2>
       )}
     </StyledContainer>
   );
 }
 
 export default NoTitle;
-
-const StyledContainer = styled.div`
-  white-space: nowrap;
-`;
 
 const StyledDescription = styled.h5`
   ${fontStyle(18, 500)}
@@ -61,9 +57,6 @@ const StyledButton = styled(Button)`
   border-radius: 8px;
 `;
 
-const StyledTwinButton = styled(TwinButton)`
+const StyledTwinButton2 = styled(StyledTwinButton)`
   justify-content: flex-end;
-  & > button {
-    border-radius: 8px;
-  }
 `;

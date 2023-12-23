@@ -1,16 +1,15 @@
+import { Dispatch, SetStateAction } from 'react';
+import styled from 'styled-components';
+import { onMobile } from '@/styles/mediaQuery';
+import { ModalOnClickProps } from '@/types/modal';
 import AddImageButton from '@/components/AddImageButton/AddImageButton';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
 import TagInput from '@/components/Input/ModalInputContainer/TagInput';
 import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
-import { onMobile } from '@/styles/mediaQuery';
-import { Dispatch, SetStateAction } from 'react';
-import styled from 'styled-components';
 
-interface Props {
-  onOkClick: () => void;
-  onCancelClick: () => void;
+interface Props extends ModalOnClickProps {
   type: 'create' | 'edit';
   image: string | ArrayBuffer | null;
   setImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
@@ -56,6 +55,18 @@ const StyledContainer = styled.div`
   }
 `;
 
+export const StyledButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+
+  ${onMobile} {
+    justify-content: center;
+  }
+`;
+
 const StyledModalContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -66,19 +77,7 @@ const StyledModalContainer = styled.div`
   }
 `;
 
-const StyledButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 2.4rem;
-
-  ${onMobile} {
-    justify-content: center;
-  }
-`;
-
-const StyledTwinButton = styled(TwinButton)`
+export const StyledTwinButton = styled(TwinButton)`
   & > button {
     border-radius: 8px;
   }

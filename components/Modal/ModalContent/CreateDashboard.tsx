@@ -1,15 +1,10 @@
+import styled from 'styled-components';
+import { StyledButtonContainer, StyledTwinButton } from './Create&EditToDo';
+import { ModalOnClickProps } from '@/types/modal';
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
-import TwinButton from '@/components/common/Button/TwinButton';
-import { onMobile } from '@/styles/mediaQuery';
-import styled from 'styled-components';
 
-interface Props {
-  onOkClick: () => void;
-  onCancelClick: () => void;
-}
-
-function CreateDashboard({ onCancelClick, onOkClick }: Props) {
+function CreateDashboard({ onCancelClick, onOkClick }: ModalOnClickProps) {
   return (
     <>
       <StyledContainer>
@@ -38,22 +33,4 @@ const StyledContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 18px;
-`;
-
-const StyledButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 2.4rem;
-
-  ${onMobile} {
-    justify-content: center;
-  }
-`;
-
-const StyledTwinButton = styled(TwinButton)`
-  & > button {
-    border-radius: 8px;
-  }
 `;

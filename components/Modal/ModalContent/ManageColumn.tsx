@@ -1,13 +1,13 @@
-import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
-import TwinButton from '@/components/common/Button/TwinButton';
+import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import styled from 'styled-components';
+import { StyledTwinButton } from './Create&EditToDo';
+import { StyledContainer } from './Basic';
+import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import { ModalOnClickProps } from '@/types/modal';
 
-interface Props {
-  onOkClick: () => void;
-  onCancelClick: () => void;
+interface Props extends ModalOnClickProps {
   onDeleteClick: () => void;
 }
 
@@ -34,10 +34,6 @@ function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {} }: Pr
 
 export default ManageColumn;
 
-const StyledContainer = styled.div`
-  white-space: nowrap;
-`;
-
 const StyledButtonContainer = styled.div`
   width: 100%;
   display: grid;
@@ -59,10 +55,4 @@ const StyledDeleteButton = styled.button`
   margin-bottom: 8px;
   color: ${COLORS.GRAY_9F};
   ${fontStyle(14, 400)}
-`;
-
-const StyledTwinButton = styled(TwinButton)`
-  & > button {
-    border-radius: 8px;
-  }
 `;

@@ -1,21 +1,20 @@
-import { COLORS } from '@/styles/palettes';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import { ModalOnClickProps } from '@/types/modal';
+import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
 import Basic from './ModalContent/Basic';
 import CreateDashboard from './ModalContent/CreateDashboard';
 import CreateToDo from './ModalContent/Create&EditToDo';
 import ManageColumn from './ModalContent/ManageColumn';
-import { onMobile } from '@/styles/mediaQuery';
 import NoTitle from './ModalContent/NoTitle';
 
-interface Props {
+interface Props extends ModalOnClickProps {
   title: '' | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 칼럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
   isSingleButton?: boolean;
-  onOkClick?: () => void;
-  onCancelClick?: () => void;
   onDeleteClick?: () => void;
 }
 
@@ -23,8 +22,8 @@ function Modal({
   title,
   description = '',
   isSingleButton = false,
-  onOkClick = () => {},
-  onCancelClick = () => {},
+  onOkClick,
+  onCancelClick,
   onDeleteClick = () => {},
 }: Props) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);

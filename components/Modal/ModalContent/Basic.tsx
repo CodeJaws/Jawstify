@@ -1,12 +1,11 @@
+import styled from 'styled-components';
+import { StyledButtonContainer } from './Create&EditToDo';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import TwinButton from '@/components/common/Button/TwinButton';
-import { onMobile } from '@/styles/mediaQuery';
-import styled from 'styled-components';
+import { ModalOnClickProps } from '@/types/modal';
 
-interface Props {
+interface Props extends ModalOnClickProps {
   type: '초대하기' | '새 칼럼 생성';
-  onOkClick: () => void;
-  onCancelClick: () => void;
 }
 
 function Basic({ onCancelClick, onOkClick, type }: Props) {
@@ -17,7 +16,7 @@ function Basic({ onCancelClick, onOkClick, type }: Props) {
         {type === '새 칼럼 생성' && <BasicInput label="이름" placeholder="새로운 프로젝트" />}
       </StyledContainer>
 
-      <StyledButtonContainer>
+      <StyledButtonContainer2>
         <StyledTwinButton
           text1="취소"
           text2={type === '초대하기' ? '초대' : '생성'}
@@ -25,31 +24,23 @@ function Basic({ onCancelClick, onOkClick, type }: Props) {
           onLeftClick={onCancelClick}
           onRightClick={onOkClick}
         ></StyledTwinButton>
-      </StyledButtonContainer>
+      </StyledButtonContainer2>
     </>
   );
 }
 
 export default Basic;
 
-const StyledContainer = styled.div`
+export const StyledContainer = styled.div`
   white-space: nowrap;
 `;
 
-const StyledButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+const StyledButtonContainer2 = styled(StyledButtonContainer)`
   gap: 38.4px;
-
-  ${onMobile} {
-    justify-content: center;
-  }
 `;
 
 const StyledTwinButton = styled(TwinButton)`
   & > button {
-    border-radius: 0.5rem;
+    border-radius: 5px;
   }
 `;
