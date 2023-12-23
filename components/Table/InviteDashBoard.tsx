@@ -263,7 +263,7 @@ const StyledInputDiv = styled.div`
     height: 40px;
   }
   ${onMobile} {
-    margin: 20px 16px 0;
+    margin: 20px 16px 15px;
     width: 228px;
     height: 36px;
   }
@@ -299,7 +299,7 @@ const StyledWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-  padding: 31px 0 4px 28px;
+  padding: 31px 0 14px 28px;
   ${onTablet} {
     grid-template-columns: 1fr 0.7fr 1fr;
   }
@@ -343,7 +343,7 @@ const StyledHr = styled.hr`
 `;
 
 const StyledMobileContainer = styled.div`
-  padding: 24px 16px 16px 16px;
+  padding: 20px 16px 16px 16px;
   display: flex;
   gap: 16px;
 `;
