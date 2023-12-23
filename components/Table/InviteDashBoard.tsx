@@ -126,8 +126,6 @@ function InviteDashBoard() {
     setSearchText(e.target.value);
   };
 
-  const anyfunction = () => {};
-
   const showItems = dataSource.filter((item) => item.name.includes(searchText));
   return (
     <StyledDiv>
@@ -143,73 +141,75 @@ function InviteDashBoard() {
           <StyledInWrapper>수락 여부</StyledInWrapper>
         </StyledWrapper>
       )}
-      <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
-        {showItems.length !== 0 ? (
-          showItems.map((item) => {
-            return (
-              <div key={item.id}>
-                {windowSize === 'mobile' && (
-                  <>
-                    <StyledMobileContainer>
-                      <StyledMobileLeftDiv>
-                        <div>이름</div>
-                        <div>초대자</div>
-                      </StyledMobileLeftDiv>
-                      <StyledMobileRightDiv>
-                        <div>{item.name}</div>
-                        <div>{item.inviter}</div>
-                      </StyledMobileRightDiv>
-                    </StyledMobileContainer>
-                    <StyledMobileButtonWrapper>
-                      <TwinButton
-                        text1="수락"
-                        text2="거절"
-                        isViolet={true}
-                        size="small"
-                        className="temp1"
-                        onLeftClick={anyfunction}
-                        onRightClick={anyfunction}
-                      />
-                    </StyledMobileButtonWrapper>
-                  </>
-                )}
-                {width && (
-                  <StyleListWrapper>
-                    <StyledListInWrapper>{item.name}</StyledListInWrapper>
-                    <StyledListInWrapper>{item.inviter}</StyledListInWrapper>
-                    <StyledListInWrapper>
-                      <TwinButton
-                        text1="수락"
-                        text2="거절"
-                        isViolet={true}
-                        size="small"
-                        className="temp2"
-                        onLeftClick={anyfunction}
-                        onRightClick={anyfunction}
-                      />
-                    </StyledListInWrapper>
-                  </StyleListWrapper>
-                )}
-                <StyledHr />
-              </div>
-            );
-          })
-        ) : (
-          <StyledErrorDiv>검색 결과가 없습니다.</StyledErrorDiv>
-        )}
-      </InfiniteScroll>
+      <Div>
+        <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
+          {showItems.length !== 0 ? (
+            showItems.map((item) => {
+              return (
+                <div key={item.id}>
+                  {windowSize === 'mobile' && (
+                    <>
+                      <StyledMobileContainer>
+                        <StyledMobileLeftDiv>
+                          <div>이름</div>
+                          <div>초대자</div>
+                        </StyledMobileLeftDiv>
+                        <StyledMobileRightDiv>
+                          <div>{item.name}</div>
+                          <div>{item.inviter}</div>
+                        </StyledMobileRightDiv>
+                      </StyledMobileContainer>
+                      <StyledMobileButtonWrapper>
+                        <TwinButton
+                          text1="수락"
+                          text2="거절"
+                          isViolet={true}
+                          size="small"
+                          className="temp1"
+                          onLeftClick={() => {}}
+                          onRightClick={() => {}}
+                        />
+                      </StyledMobileButtonWrapper>
+                    </>
+                  )}
+                  {width && (
+                    <StyleListWrapper>
+                      <StyledListInWrapper>{item.name}</StyledListInWrapper>
+                      <StyledListInWrapper>{item.inviter}</StyledListInWrapper>
+                      <StyledListInWrapper>
+                        <TwinButton
+                          text1="수락"
+                          text2="거절"
+                          isViolet={true}
+                          size="small"
+                          className="temp2"
+                          onLeftClick={() => {}}
+                          onRightClick={() => {}}
+                        />
+                      </StyledListInWrapper>
+                    </StyleListWrapper>
+                  )}
+                  <StyledHr />
+                </div>
+              );
+            })
+          ) : (
+            <StyledErrorDiv>검색 결과가 없습니다.</StyledErrorDiv>
+          )}
+        </InfiniteScroll>
+      </Div>
     </StyledDiv>
   );
 }
 
 export default InviteDashBoard;
 
-const StyledDiv = styled.div`
+const Div = styled.div`
+  height: 400px;
   overflow-x: hidden;
-  width: 1023px;
-  height: 600px;
-  border-radius: 8px;
-  background: ${COLORS.WHITE_FF};
+  ${onMobile} {
+    height: 700px;
+  }
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -218,6 +218,14 @@ const StyledDiv = styled.div`
     border: 1px solid ${COLORS.BLACK_17};
     border-radius: 10px;
   }
+`;
+
+const StyledDiv = styled.div`
+  width: 1023px;
+  height: 600px;
+  border-radius: 8px;
+  background: ${COLORS.WHITE_FF};
+
   ${onTablet} {
     width: 504px;
     height: 592px;
