@@ -17,6 +17,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
+    "react-infinite-scroller": "^1.2.6",
     "rsuite": "^5.48.0",
     "styled-components": "^6.1.1"
   },
@@ -25,6 +26,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/styled-components": "^5.1.34",
+    "@types/react-infinite-scroller": "^1.2.5",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.1.0",

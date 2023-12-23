@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /** Window 가로 사이즈 구하기 */
 const useCheckWindowWidthSize = () => {
@@ -20,6 +20,8 @@ const useCheckWindowWidthSize = () => {
 /** Window 가로 사이즈를 통해 deviceType('pc', 'tablet', 'mobile') 반환 */
 const useDeviceType = () => {
   const width = useCheckWindowWidthSize();
+  if (width === 0) return;
+
   let deviceType;
   if (width >= 1024) {
     deviceType = 'pc';
