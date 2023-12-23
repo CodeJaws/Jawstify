@@ -1,7 +1,4 @@
-import { BACK_END, MAX_LEVEL, NORMAL, PROJECT } from '@/constants/Chip';
-import { TAG_COLOR } from '@/constants/Input';
 import { onMobile } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 
 import styled from 'styled-components';
 
