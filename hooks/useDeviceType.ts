@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /** Window 가로 사이즈 구하기 */
 const useCheckWindowWidthSize = () => {
@@ -8,6 +8,9 @@ const useCheckWindowWidthSize = () => {
     setWidth(window.innerWidth);
   }, []);
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      handleResize();
+    }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);

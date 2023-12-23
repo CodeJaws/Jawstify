@@ -1,11 +1,9 @@
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { ReactNode } from 'react';
 import { COLORS } from '@/styles/palettes';
-import { ButtonOnClickProps } from '@/types/button';
+import { MouseEvent, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
-import { MouseEvent } from 'react';
 
-interface TwinButtonProps extends ButtonOnClickProps {
+interface TwinButtonProps {
   text1: string;
   text2: string;
   isViolet?: boolean;

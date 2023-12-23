@@ -4,25 +4,127 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
 
+const mock = [
+  {
+    id: 1,
+    name: '프로덕트1',
+    inviter: '종민님1',
+  },
+  {
+    id: 2,
+    name: '프로덕트2',
+    inviter: '종민님2',
+  },
+  {
+    id: 3,
+    name: '프로덕트3',
+    inviter: '종민님3',
+  },
+  {
+    id: 4,
+    name: '프로덕트4',
+    inviter: '종민님4',
+  },
+  {
+    id: 5,
+    name: '프로덕트5',
+    inviter: '종민님5',
+  },
+  {
+    id: 6,
+    name: '프로덕트6',
+    inviter: '종민님6',
+  },
+];
+
+const addMock = [
+  {
+    id: 7,
+    name: '종민프로덕트7',
+    inviter: '종민님7',
+  },
+  {
+    id: 8,
+    name: '소은프로덕트8',
+    inviter: '종민님8',
+  },
+  {
+    id: 9,
+    name: '기연프로덕트9',
+    inviter: '종민님9',
+  },
+  {
+    id: 10,
+    name: '윤혁프로덕트10',
+    inviter: '종민님10',
+  },
+  {
+    id: 11,
+    name: '프로덕트11',
+    inviter: '종민님11',
+  },
+  {
+    id: 12,
+    name: '프로덕트12',
+    inviter: '종민님12',
+  },
+  {
+    id: 13,
+    name: '종민프로덕트13',
+    inviter: '종민님13',
+  },
+  {
+    id: 14,
+    name: '소은프로덕트14',
+    inviter: '종민님14',
+  },
+  {
+    id: 15,
+    name: '기연프로덕트15',
+    inviter: '종민님15',
+  },
+  {
+    id: 16,
+    name: '윤혁프로덕트16',
+    inviter: '종민님16',
+  },
+  {
+    id: 17,
+    name: '프로덕트17',
+    inviter: '종민님17',
+  },
+  {
+    id: 18,
+    name: '프로덕트18',
+    inviter: '종민님18',
+  },
+];
+
 function InviteDashBoard() {
-  const [dataSource, setDataSource] = useState(Array.from({ length: 6 }));
+  const [dataSource, setDataSource] = useState(mock);
   const [hasMore, setHasMore] = useState(true);
+  const [searchText, setSearchText] = useState('');
   const windowSize = useDeviceType();
 
   const fetchHasMore = () => {
     if (dataSource.length < 100) {
       setTimeout(() => {
-        setDataSource(dataSource.concat(Array.from({ length: 6 })));
+        setDataSource((prev) => [...prev, ...addMock]);
       }, 500);
     } else {
       setHasMore(false);
     }
   };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
   const anyfunction = () => {};
 
   return (
@@ -30,7 +132,7 @@ function InviteDashBoard() {
       <StyledP>초대받은 대시보드</StyledP>
       <StyledInputDiv>
         <StyledSearchImage src={search} alt="search" />
-        <StyledInput placeholder="검색" />
+        <StyledInput placeholder="검색" onChange={handleChange} />
       </StyledInputDiv>
       {!(windowSize === 'mobile') && (
         <StyledWrapper>
@@ -39,47 +141,57 @@ function InviteDashBoard() {
           <StyledInWrapper>수락 여부</StyledInWrapper>
         </StyledWrapper>
       )}
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={fetchHasMore}
-        hasMore={hasMore}
-        loader={<p>로딩중...</p>}
-        useWindow={false}
-        initialLoad={false}
-      >
-        {dataSource.map((item, index) => {
-          return (
-            <>
-              {windowSize === 'mobile' ? (
-                <>
-                  <StyledMobileContainer>
-                    <StyledMobileLeftDiv>
-                      <div>이름</div>
-                      <div>초대자</div>
-                    </StyledMobileLeftDiv>
-                    <StyledMobileRightDiv>
-                      <div>프로덕트 디자인</div>
-                      <div>윤혁님#{index + 1}</div>
-                    </StyledMobileRightDiv>
-                  </StyledMobileContainer>
-                  <StyledMobileButtonWrapper>
-                    <TwinButton text1="수락" text2="거절" isViolet={true} size="small" onClick={anyfunction} />
-                  </StyledMobileButtonWrapper>
-                </>
-              ) : (
-                <StyleListWrapper>
-                  <StyledListInWrapper>프로덕트 디자인</StyledListInWrapper>
-                  <StyledListInWrapper>종민님#{index + 1}</StyledListInWrapper>
-                  <StyledListInWrapper>
-                    <TwinButton text1="수락" text2="거절" isViolet={true} size="small" onClick={anyfunction} />
-                  </StyledListInWrapper>
-                </StyleListWrapper>
-              )}
-
-              <StyledHr />
-            </>
-          );
-        })}
+      <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
+        {dataSource
+          .filter((item) => item.name.includes(searchText))
+          .map((item) => {
+            return (
+              <div key={item.id}>
+                {windowSize === 'mobile' ? (
+                  <>
+                    <StyledMobileContainer>
+                      <StyledMobileLeftDiv>
+                        <div>이름</div>
+                        <div>초대자</div>
+                      </StyledMobileLeftDiv>
+                      <StyledMobileRightDiv>
+                        <div>{item.name}</div>
+                        <div>{item.inviter}</div>
+                      </StyledMobileRightDiv>
+                    </StyledMobileContainer>
+                    <StyledMobileButtonWrapper>
+                      <TwinButton
+                        text1="수락"
+                        text2="거절"
+                        isViolet={true}
+                        size="small"
+                        className="temp1"
+                        onLeftClick={anyfunction}
+                        onRightClick={anyfunction}
+                      />
+                    </StyledMobileButtonWrapper>
+                  </>
+                ) : (
+                  <StyleListWrapper>
+                    <StyledListInWrapper>{item.name}</StyledListInWrapper>
+                    <StyledListInWrapper>{item.inviter}</StyledListInWrapper>
+                    <StyledListInWrapper>
+                      <TwinButton
+                        text1="수락"
+                        text2="거절"
+                        isViolet={true}
+                        size="small"
+                        className="temp2"
+                        onLeftClick={anyfunction}
+                        onRightClick={anyfunction}
+                      />
+                    </StyledListInWrapper>
+                  </StyleListWrapper>
+                )}
+                <StyledHr />
+              </div>
+            );
+          })}
       </InfiniteScroll>
     </StyledDiv>
   );
