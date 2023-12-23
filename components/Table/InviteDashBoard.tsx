@@ -131,8 +131,10 @@ function InviteDashBoard() {
     <StyledDiv>
       <StyledP>초대받은 대시보드</StyledP>
       <StyledInputDiv>
-        <StyledSearchImage src={search} alt="search" />
-        <StyledInput placeholder="검색" onChange={handleChange} />
+        <label htmlFor="search">
+          <StyledSearchImage src={search} alt="search" />
+        </label>
+        <StyledInput id="search" placeholder="검색" onChange={handleChange} />
       </StyledInputDiv>
       {!(windowSize === 'mobile') && windowSize !== undefined && (
         <StyledWrapper>
