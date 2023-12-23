@@ -117,6 +117,13 @@ const StyledTitleContainer = styled.div`
   gap: 8px;
   align-items: center;
 
+  margin-left: 340px;
+  ${onTablet} {
+    margin-left: 200px;
+  }
+  ${onMobile} {
+    margin-left: 91px;
+  }
   h3 {
     color: ${COLORS.BLACK_33};
     ${fontStyle(20, 700)}
@@ -125,11 +132,14 @@ const StyledTitleContainer = styled.div`
 
 /** 구분좌 */
 const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 70px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid ${COLORS.GRAY_D9};
 
   h3 {
     ${onPc} {
