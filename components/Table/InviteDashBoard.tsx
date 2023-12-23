@@ -112,7 +112,7 @@ function InviteDashBoard() {
   const windowSize = useDeviceType();
 
   const fetchHasMore = () => {
-    if (dataSource.length < 100) {
+    if (dataSource.length < 18) {
       setTimeout(() => {
         setDataSource((prev) => [...prev, ...addMock]);
       }, 500);
@@ -127,6 +127,7 @@ function InviteDashBoard() {
 
   const anyfunction = () => {};
 
+  const showItems = dataSource.filter((item) => item.name.includes(searchText));
   return (
     <StyledDiv>
       <StyledP>초대받은 대시보드</StyledP>
@@ -142,9 +143,8 @@ function InviteDashBoard() {
         </StyledWrapper>
       )}
       <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
-        {dataSource
-          .filter((item) => item.name.includes(searchText))
-          .map((item) => {
+        {showItems.length !== 0 ? (
+          showItems.map((item) => {
             return (
               <div key={item.id}>
                 {windowSize === 'mobile' ? (
@@ -191,7 +191,10 @@ function InviteDashBoard() {
                 <StyledHr />
               </div>
             );
-          })}
+          })
+        ) : (
+          <StyledErrorDiv>검색 결과가 없습니다.</StyledErrorDiv>
+        )}
       </InfiniteScroll>
     </StyledDiv>
   );
@@ -203,8 +206,8 @@ const StyledDiv = styled.div`
   overflow-x: hidden;
   width: 1023px;
   height: 600px;
-  border: 1px solid gray;
-  margin: 10px;
+  border-radius: 8px;
+  background: ${COLORS.WHITE_FF};
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -226,6 +229,10 @@ const StyledDiv = styled.div`
 const StyledP = styled.p`
   padding: 32px 0 0 28px;
   ${fontStyle(24, 700)};
+  ${onMobile} {
+    padding: 24px 0 0 16px;
+    font-size: 20px;
+  }
 `;
 
 const StyledInputDiv = styled.div`
@@ -237,8 +244,8 @@ const StyledInputDiv = styled.div`
   height: 40px;
   border-radius: 6px;
   margin: 20px 28px 0;
-  border: 1px solid var(--gray-gray_D9D9D9, #d9d9d9);
-  background: var(--white-white_FFFFFF, #fff);
+  border: 1px solid ${COLORS.GRAY_D9};
+  background: ${COLORS.WHITE_FF};
   ${onTablet} {
     width: 448px;
     height: 40px;
@@ -271,6 +278,8 @@ const StyledSearchImage = styled(Image)`
   margin-left: 16px;
   ${onMobile} {
     margin-left: 12px;
+    width: 22px;
+    height: 22px;
   }
 `;
 
@@ -291,7 +300,7 @@ const StyledWrapper = styled.div`
 const StyledInWrapper = styled.div`
   width: 100%;
   color: ${COLORS.GRAY_9F};
-  ${fontStyle(16, 400)}
+  ${fontStyle(16, 400)};
 `;
 
 const StyleListWrapper = styled.div`
@@ -322,7 +331,7 @@ const StyledHr = styled.hr`
 `;
 
 const StyledMobileContainer = styled.div`
-  padding: 16px;
+  padding: 24px 16px 16px 16px;
   display: flex;
   gap: 16px;
 `;
@@ -348,4 +357,13 @@ const StyledMobileButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding-bottom: 16px;
+`;
+
+const StyledErrorDiv = styled.div`
+  color: ${COLORS.BLACK_33};
+  ${fontStyle(16, 400)};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 31px;
 `;
