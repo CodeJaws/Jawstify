@@ -9,7 +9,7 @@ import { useContext } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
 import Comment from './Comment';
-import Manger from './Manger';
+import Manager from './Manager';
 import ModalButton from './ModalButton';
 
 function ModalCard() {
@@ -21,7 +21,7 @@ function ModalCard() {
         {deviceType === 'mobile' && <ModalButton />}
         <StyledTitleWrapper>
           <StyledTitle>{title}</StyledTitle>
-          {deviceType === 'mobile' && <Manger />}
+          {deviceType === 'mobile' && <Manager />}
           <StyledTag>
             {status}
             <StyledDivision />
@@ -41,7 +41,7 @@ function ModalCard() {
       {deviceType !== 'mobile' && (
         <StyledRightContainer>
           <ModalButton />
-          <Manger />
+          <Manager />
         </StyledRightContainer>
       )}
     </StyledContainer>

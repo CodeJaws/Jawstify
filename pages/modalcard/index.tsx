@@ -23,8 +23,8 @@ interface Props {
   userName: string;
   createdAt: string;
   comment: string;
-  manger: string;
-  mangerImg: string;
+  manager: string;
+  managerImg: string;
   deadLine: string;
 }
 
@@ -38,8 +38,8 @@ export const ModalContext = createContext<Props>({
   userName: '',
   createdAt: '',
   comment: '',
-  manger: '',
-  mangerImg: '',
+  manager: '',
+  managerImg: '',
   deadLine: '',
 });
 
@@ -58,8 +58,8 @@ const userProfileImg = Green;
 const userName = '정만철';
 const createdAt = '2023.12.22 14:00';
 const comment = '댓글 내용입니다.';
-const manger = '고양이';
-const mangerImg = Green;
+const manager = '고양이';
+const managerImg = Green;
 const deadLine = '2023.12.31 14:00';
 
 function ModalCardTest() {
@@ -75,8 +75,8 @@ function ModalCardTest() {
         userName,
         createdAt,
         comment,
-        manger,
-        mangerImg,
+        manager,
+        managerImg,
         deadLine,
       }}
     >

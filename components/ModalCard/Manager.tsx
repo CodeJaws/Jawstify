@@ -6,16 +6,16 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import styled from 'styled-components';
 
-function Manger() {
-  const { manger, mangerImg, deadLine } = useContext(ModalContext);
+function Manager() {
+  const { manager, managerImg, deadLine } = useContext(ModalContext);
   return (
     <StyledContainer>
       <StyledInMangerWrapper>
         <StyledMangerWrapper>
           <StyledManger>담당자</StyledManger>
           <StyledMangerProfile>
-            <StyledImage width={34} height={34} src={mangerImg} alt="프로필 이미지" />
-            <StyledMangerName>{manger}</StyledMangerName>
+            <StyledImage width={34} height={34} src={managerImg} alt="프로필 이미지" />
+            <StyledMangerName>{manager}</StyledMangerName>
           </StyledMangerProfile>
         </StyledMangerWrapper>
         <StyledDeadLineWrapper>
@@ -27,7 +27,7 @@ function Manger() {
   );
 }
 
-export default Manger;
+export default Manager;
 
 const StyledContainer = styled.div`
   width: 200px;
