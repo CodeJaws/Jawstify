@@ -102,6 +102,7 @@ const StyledWrapper = styled.div`
 const StyledInWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 13px;
 `;
 
@@ -109,6 +110,12 @@ const StyledButton = styled.button`
   display: flex;
   align-items: center;
   gap: 6px;
+  padding: 0.5rem;
+
+  &:hover {
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.08);
+  }
 `;
 
 const StyledBlank = styled.div`
