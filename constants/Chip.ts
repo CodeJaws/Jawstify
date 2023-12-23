@@ -1,10 +1,14 @@
-const TO_DO = 'To Do';
-const ON_PROGRESS = 'On Progress';
-const DONE = 'Done';
+export const TO_DO = 'To Do';
+export const ON_PROGRESS = 'On Progress';
+export const DONE = 'Done';
 
-const PROJECT = '프로젝트';
-const NORMAL = '일반';
-const BACK_END = '백엔드';
-const MAX_LEVEL = '상';
+export const PROGRESS_STATUS = [
+  { id: 0, content: TO_DO },
+  { id: 1, content: ON_PROGRESS },
+  { id: 2, content: DONE },
+];
 
-export { BACK_END, DONE, MAX_LEVEL, NORMAL, ON_PROGRESS, PROJECT, TO_DO };
+export const PROJECT = '프로젝트';
+export const NORMAL = '일반';
+export const BACK_END = '백엔드';
+export const MAX_LEVEL = '상';
