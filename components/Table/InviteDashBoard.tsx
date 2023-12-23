@@ -110,6 +110,7 @@ function InviteDashBoard() {
   const [hasMore, setHasMore] = useState(true);
   const [searchText, setSearchText] = useState('');
   const windowSize = useDeviceType();
+  const width = windowSize === 'pc' || windowSize === 'tablet';
 
   const fetchHasMore = () => {
     if (dataSource.length < 18) {
@@ -135,7 +136,7 @@ function InviteDashBoard() {
         <StyledSearchImage src={search} alt="search" />
         <StyledInput placeholder="검색" onChange={handleChange} />
       </StyledInputDiv>
-      {!(windowSize === 'mobile') && (
+      {!(windowSize === 'mobile') && windowSize !== undefined && (
         <StyledWrapper>
           <StyledInWrapper>이름</StyledInWrapper>
           <StyledInWrapper>초대자</StyledInWrapper>
@@ -147,7 +148,7 @@ function InviteDashBoard() {
           showItems.map((item) => {
             return (
               <div key={item.id}>
-                {windowSize === 'mobile' ? (
+                {windowSize === 'mobile' && (
                   <>
                     <StyledMobileContainer>
                       <StyledMobileLeftDiv>
@@ -171,7 +172,8 @@ function InviteDashBoard() {
                       />
                     </StyledMobileButtonWrapper>
                   </>
-                ) : (
+                )}
+                {width && (
                   <StyleListWrapper>
                     <StyledListInWrapper>{item.name}</StyledListInWrapper>
                     <StyledListInWrapper>{item.inviter}</StyledListInWrapper>
