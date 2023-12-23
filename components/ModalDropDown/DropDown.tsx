@@ -56,7 +56,7 @@ function DropDown({ type }: ModalDropdownProps) {
       ) : (
         <StyledInputWrapper>
           <StyledInput value={inputData} onChange={openDropDown} placeholder="이름을 입력해주세요" $imgSrc={imgSrc} />
-          {inputData.length !== 0 && (
+          {filterData.length !== 0 && (
             <>
               <button onClick={openMenu}>
                 <StyledImage width={26} height={26} src={Arrow} alt="드롭다운 화살표" />
