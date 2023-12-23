@@ -1,11 +1,10 @@
-import { fontStyle } from '@/styles/fontStyle';
-import { ChangeEvent, useState, MouseEvent } from 'react';
-import styled from 'styled-components';
-import { COLORS } from '@/styles/palettes';
-import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
-import { NO_VALUE_ERROR } from '@/constants/Input';
 import Button from '@/components/common/Button/Button';
-import { MobileDatePickerProps } from '@mui/x-date-pickers';
+import { NO_VALUE_ERROR } from '@/constants/Input';
+import { fontStyle } from '@/styles/fontStyle';
+import { COLORS } from '@/styles/palettes';
+import { ChangeEvent, MouseEvent, useState } from 'react';
+import styled from 'styled-components';
+import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
 
 interface Props {
   label: string;
