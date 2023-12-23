@@ -3,33 +3,77 @@ import DropDownMenu from '@/components/ModalDropDown/DropDownMenu';
 import { TO_DO } from '@/constants/Chip';
 import Arrow from '@/public/assets/icons/ArrowDropdown.svg';
 import { COLORS } from '@/styles/palettes';
+import { ModalDropdownProps } from '@/types/dropdown';
 
 import Image from 'next/image';
-import { useState } from 'react';
-import { styled } from 'styled-components';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { css, styled } from 'styled-components';
+import { MANGER_LIST } from './ModalDropDown';
 
-function DropDown() {
+function DropDown({ type }: ModalDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState(TO_DO);
+  const [inputData, setInputData] = useState('');
+  const [imgSrc, setImgSrc] = useState('');
 
   const openMenu = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const openDropDown = (e: ChangeEvent<HTMLInputElement>) => {
+    setImgSrc('');
+    setInputData(e.currentTarget.value);
+    setIsOpen(true);
   };
 
   const handleBlur = () => {
     setIsOpen(false);
   };
 
+  const filterData = MANGER_LIST.filter((manager) => {
+    if (inputData) {
+      return manager.name.toLowerCase().includes(inputData.toLowerCase());
+    }
+  });
+
   return (
-    <StyledContainer $isPressed={isOpen} onBlur={handleBlur}>
-      <StyledWrapper>
-        <StatusChip content={status} />
-        <button onClick={openMenu}>
-          <Image width={26} height={26} src={Arrow} alt="드롭다운 화살표" />
-        </button>
-      </StyledWrapper>
-      <DropDownMenu isOpen={isOpen} setIsOpen={setIsOpen} setStatus={setStatus} />
-    </StyledContainer>
+    <>
+      {type === 'status' ? (
+        <StyledContainer $isPressed={isOpen} onBlur={handleBlur}>
+          <StyledWrapper>
+            <StatusChip content={status} />
+            <button onClick={openMenu}>
+              <Image width={26} height={26} src={Arrow} alt="드롭다운 화살표" />
+            </button>
+          </StyledWrapper>
+          <DropDownMenu
+            type={type}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            setStatus={setStatus as Dispatch<SetStateAction<string | undefined>>}
+          />
+        </StyledContainer>
+      ) : (
+        <StyledInputWrapper>
+          <StyledInput value={inputData} onChange={openDropDown} placeholder="이름을 입력해주세요" $imgSrc={imgSrc} />
+          {inputData.length !== 0 && (
+            <>
+              <button onClick={openMenu}>
+                <StyledImage width={26} height={26} src={Arrow} alt="드롭다운 화살표" />
+              </button>
+              <DropDownMenu
+                type={type}
+                isOpen={isOpen}
+                filterData={filterData}
+                setIsOpen={setIsOpen}
+                setInputData={setInputData as Dispatch<SetStateAction<string | undefined>>}
+                setImgSrc={setImgSrc as Dispatch<SetStateAction<string | undefined>>}
+              />
+            </>
+          )}
+        </StyledInputWrapper>
+      )}
+    </>
   );
 }
 
@@ -51,4 +95,38 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const StyledInputWrapper = styled.div`
+  position: relative;
+  width: 217px;
+  height: 48px;
+`;
+const StyledInput = styled.input<{ $imgSrc: any }>`
+  width: 217px;
+  height: 48px;
+  border: 1px solid ${COLORS.GRAY_D9};
+  border-radius: 6px;
+  background: ${COLORS.WHITE_FF};
+  padding: 0 10px;
+
+  ${({ $imgSrc }) =>
+    $imgSrc &&
+    css`
+      background-image: url(${$imgSrc.src});
+      background-position: 5px;
+      background-repeat: no-repeat;
+      background-size: 27px;
+      padding-left: 40px;
+    `}
+
+  &:focus {
+    border-color: ${COLORS.VIOLET_55};
+  }
+`;
+
+const StyledImage = styled(Image)`
+  position: absolute;
+  right: 16px;
+  top: 10px;
 `;
