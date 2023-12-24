@@ -1,69 +1,12 @@
-import {
-  AbortInviteDashboardProps,
-  CheckCardListItem,
-  CheckCardListProps,
-  CorrectCardItem,
-  CorrectCardProps,
-  CorrectColumnProps,
-  CorrectCommentItem,
-  CorrectCommentProps,
-  CreateCardItem,
-  CreateCardProps,
-  CreateColumnItem,
-  CreateColumnProps,
-  CreateCommentItem,
-  CreateCommentProps,
-  DeleteCardProps,
-  DeleteColumnProps,
-  DeleteCommentProps,
-  DeleteMemberInDashboardProps,
-  GetCardDetailsItem,
-  GetCardDetailsProps,
-  GetColumnListItem,
-  GetColumnListProps,
-  GetCommentListItem,
-  GetCommentListProps,
-  GetInvitationListItem,
-  GetInvitationListProps,
-  GetMembersInDashboardItem,
-  GetMembersInDashboardProps,
-  LoadInviteDashboardItem,
-  LoadInviteDashboardProps,
-  ResponseInvitationItem,
-  ResponseInvitationProps,
-  UploadCardImageItem,
-  UploadCardImageProps,
-  CorrectDashboardItem,
-  CorrectDashboardProps,
-  DeleteDashboardProps,
-  GetDashboardDetailedItem,
-  GetDashboardDetailedProps,
-  ChangePasswordProps,
-  CorrectMyInfoItem,
-  CorrectMyInfoProps,
-  CreateDashboardItem,
-  CreateDashboardProps,
-  GetDashboardListItem,
-  GetDashboardListProps,
-  GetMyInfoItem,
-  LoginItem,
-  LoginProps,
-  ProfileImgUploadItem,
-  ProfileImgUploadProps,
-  SignupItem,
-  SignupProps,
-  InviteDashboardItem,
-  InviteDashboardProps,
-} from '@/types/api';
+import * as T from '@/types/api';
 import { request } from './axios';
-
 /** AUTH
  * @param login 로그인
  * @param changePassword 비밀번호 변경
  */
 const auth = {
-  login: async (body: LoginProps) => await request.post<LoginItem>('auth/login', body),
-  changePassword: async (body: ChangePasswordProps) => await request.put('auth/login', body),
+  login: async (body: T.LoginProps) => await request.post<T.LoginItem>('auth/login', body),
+  changePassword: async (body: T.ChangePasswordProps) => await request.put('auth/login', body),
 };
 
 /** USERS
@@ -73,11 +16,11 @@ const auth = {
  * @param profileImgUpload 프로필 이미지 업로드
  */
 const users = {
-  signup: async (body: SignupProps) => await request.post<SignupItem>('users', body),
-  getMyInfo: async () => await request.get<GetMyInfoItem>('users/me'),
-  correctMyInfo: async (body: CorrectMyInfoProps) => await request.put<CorrectMyInfoItem>('users/me', body),
-  profileImgUpload: async (body: ProfileImgUploadProps) =>
-    await request.post<ProfileImgUploadItem>('users/me/image', body),
+  signup: async (body: T.SignupProps) => await request.post<T.SignupItem>('users', body),
+  getMyInfo: async () => await request.get<T.GetMyInfoItem>('users/me'),
+  correctMyInfo: async (body: T.CorrectMyInfoProps) => await request.put<T.CorrectMyInfoItem>('users/me', body),
+  profileImgUpload: async (body: T.ProfileImgUploadProps) =>
+    await request.post<T.ProfileImgUploadItem>('users/me/image', body),
 };
 
 /** DASHBOARD
@@ -91,21 +34,22 @@ const users = {
  * @param abortInviteDashboard 대시보드 초대 취소
  */
 const dashboard = {
-  createDashboard: async (body: CreateDashboardProps) => await request.post<CreateDashboardItem>('dashboards', body),
-  getDashboardList: async ({ navigationMethod, cursorId, page = 1, size = 10 }: GetDashboardListProps) =>
-    await request.get<GetDashboardListItem>(
+  createDashboard: async (body: T.CreateDashboardProps) =>
+    await request.post<T.CreateDashboardItem>('dashboards', body),
+  getDashboardList: async ({ navigationMethod, cursorId, page = 1, size = 10 }: T.GetDashboardListProps) =>
+    await request.get<T.GetDashboardListItem>(
       `dashboards?navigationMethod=${navigationMethod}&${cursorId && `cursorId=${cursorId}`}&page=${page}&size=${size}`,
     ),
-  getDashboardDetailed: async ({ dashboardId }: GetDashboardDetailedProps) =>
-    await request.get<GetDashboardDetailedItem>(`dashboards/${dashboardId}`),
-  correctDashboard: async ({ dashboardId, title, color }: CorrectDashboardProps) =>
-    await request.put<CorrectDashboardItem>(`dashboards/${dashboardId}`, { title, color }),
-  deleteDashboard: async ({ dashboardId }: DeleteDashboardProps) => await request.delete(`dashboards/${dashboardId}`),
-  inviteDashboard: async ({ dashboardId, email }: InviteDashboardProps) =>
-    await request.post<InviteDashboardItem>(`dashboards/${dashboardId}/invitations`, { email }),
-  loadInviteDashboard: async ({ dashboardId, page = 1, size = 10 }: LoadInviteDashboardProps) =>
-    await request.get<LoadInviteDashboardItem>(`dashboards/${dashboardId}/invitations?page=${page}&size=${size}`),
-  abortInviteDashboard: async ({ dashboardId, invitationId }: AbortInviteDashboardProps) =>
+  getDashboardDetailed: async ({ dashboardId }: T.GetDashboardDetailedProps) =>
+    await request.get<T.GetDashboardDetailedItem>(`dashboards/${dashboardId}`),
+  correctDashboard: async ({ dashboardId, title, color }: T.CorrectDashboardProps) =>
+    await request.put<T.CorrectDashboardItem>(`dashboards/${dashboardId}`, { title, color }),
+  deleteDashboard: async ({ dashboardId }: T.DeleteDashboardProps) => await request.delete(`dashboards/${dashboardId}`),
+  inviteDashboard: async ({ dashboardId, email }: T.InviteDashboardProps) =>
+    await request.post<T.InviteDashboardItem>(`dashboards/${dashboardId}/invitations`, { email }),
+  loadInviteDashboard: async ({ dashboardId, page = 1, size = 10 }: T.LoadInviteDashboardProps) =>
+    await request.get<T.LoadInviteDashboardItem>(`dashboards/${dashboardId}/invitations?page=${page}&size=${size}`),
+  abortInviteDashboard: async ({ dashboardId, invitationId }: T.AbortInviteDashboardProps) =>
     await request.delete(`dashboards/${dashboardId}/invitations/${invitationId}`),
 };
 
@@ -114,9 +58,9 @@ const dashboard = {
  * @param deleteMemberInDashboard 대시보드 멤버 삭제
  */
 const members = {
-  getMembersInDashboard: async ({ size = 20, page = 1, dashboardId }: GetMembersInDashboardProps) =>
-    await request.get<GetMembersInDashboardItem>(`members?dashboardId=${dashboardId}&page=${page}&size=${size}`),
-  deleteMemberInDashboard: async ({ memberId }: DeleteMemberInDashboardProps) =>
+  getMembersInDashboard: async ({ size = 20, page = 1, dashboardId }: T.GetMembersInDashboardProps) =>
+    await request.get<T.GetMembersInDashboardItem>(`members?dashboardId=${dashboardId}&page=${page}&size=${size}`),
+  deleteMemberInDashboard: async ({ memberId }: T.DeleteMemberInDashboardProps) =>
     await request.delete(`members/${memberId}`),
 };
 
@@ -125,10 +69,10 @@ const members = {
  * @param responseInvitation 초대 응답
  */
 const invitations = {
-  getInvitationList: async ({ size = 10, cursorId = 0, title }: GetInvitationListProps) =>
-    await request.get<GetInvitationListItem>(`invitations?size=${size}&cursorId=${cursorId}&title=${title}`),
-  responseInvitation: async ({ invitationId, inviteAccepted = true }: ResponseInvitationProps) =>
-    await request.put<ResponseInvitationItem>(`invitations/${invitationId}`, { inviteAccepted }),
+  getInvitationList: async ({ size = 10, cursorId = 0, title }: T.GetInvitationListProps) =>
+    await request.get<T.GetInvitationListItem>(`invitations?size=${size}&cursorId=${cursorId}&title=${title}`),
+  responseInvitation: async ({ invitationId, inviteAccepted = true }: T.ResponseInvitationProps) =>
+    await request.put<T.ResponseInvitationItem>(`invitations/${invitationId}`, { inviteAccepted }),
 };
 
 /** COLUMN
@@ -139,13 +83,14 @@ const invitations = {
  * @param uploadCardImage 카드 이미지 업로드
  */
 const columns = {
-  createColumn: async (body: CreateColumnProps) => await request.post<CreateColumnItem>('columns', body),
-  getColumnList: async ({ dashboardId }: GetColumnListProps) =>
-    await request.get<GetColumnListItem>(`columns?dashboardId=${dashboardId}`),
-  correctColumn: async ({ columnId, title }: CorrectColumnProps) => await request.put(`columns/${columnId}`, { title }),
-  deleteColumn: async ({ columnId }: DeleteColumnProps) => await request.delete(`columns/${columnId}`),
-  uploadCardImage: async ({ columnId, image }: UploadCardImageProps) =>
-    await request.post<UploadCardImageItem>(`columns/${columnId}/card-image`, { image }),
+  createColumn: async (body: T.CreateColumnProps) => await request.post<T.CreateColumnItem>('columns', body),
+  getColumnList: async ({ dashboardId }: T.GetColumnListProps) =>
+    await request.get<T.GetColumnListItem>(`columns?dashboardId=${dashboardId}`),
+  correctColumn: async ({ columnId, title }: T.CorrectColumnProps) =>
+    await request.put(`columns/${columnId}`, { title }),
+  deleteColumn: async ({ columnId }: T.DeleteColumnProps) => await request.delete(`columns/${columnId}`),
+  uploadCardImage: async ({ columnId, image }: T.UploadCardImageProps) =>
+    await request.post<T.UploadCardImageItem>(`columns/${columnId}/card-image`, { image }),
 };
 
 /** CARDS
@@ -155,11 +100,11 @@ const columns = {
  * @param getCardDetails 카드 상세 조회
  */
 const cards = {
-  createCard: async (body: CreateCardProps) => await request.post<CreateCardItem>('cards', body),
-  checkCardList: async ({ size = 10, cursorId = 0, columnId }: CheckCardListProps) =>
-    await request.get<CheckCardListItem>(`cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`),
-  correctCard: async ({ cardId, assigneeUserId, title, description, dueDate, tags, imageUrl }: CorrectCardProps) =>
-    await request.put<CorrectCardItem>(`cards/${cardId}`, {
+  createCard: async (body: T.CreateCardProps) => await request.post<T.CreateCardItem>('cards', body),
+  checkCardList: async ({ size = 10, cursorId = 0, columnId }: T.CheckCardListProps) =>
+    await request.get<T.CheckCardListItem>(`cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`),
+  correctCard: async ({ cardId, assigneeUserId, title, description, dueDate, tags, imageUrl }: T.CorrectCardProps) =>
+    await request.put<T.CorrectCardItem>(`cards/${cardId}`, {
       assigneeUserId,
       title,
       description,
@@ -167,8 +112,9 @@ const cards = {
       tags,
       imageUrl,
     }),
-  getCardDetails: async ({ cardId }: GetCardDetailsProps) => await request.get<GetCardDetailsItem>(`cards/${cardId}`),
-  deleteCard: async ({ cardId }: DeleteCardProps) => await request.delete(`cards/${cardId}`),
+  getCardDetails: async ({ cardId }: T.GetCardDetailsProps) =>
+    await request.get<T.GetCardDetailsItem>(`cards/${cardId}`),
+  deleteCard: async ({ cardId }: T.DeleteCardProps) => await request.delete(`cards/${cardId}`),
 };
 
 /** COMMENTS
@@ -178,12 +124,12 @@ const cards = {
  * @param deleteComment 댓글 삭제
  */
 const comments = {
-  createComment: async (body: CreateCommentProps) => await request.post<CreateCommentItem>('comments', body),
-  getCommentList: async ({ size = 10, cursorId = 0, cardId }: GetCommentListProps) =>
-    await request.get<GetCommentListItem>(`comments?cardId=${cardId}&size=${size}&cursorId=${cursorId}`),
-  correctComment: async ({ commentId, content }: CorrectCommentProps) =>
-    await request.put<CorrectCommentItem>(`comments/${commentId}`, { content }),
-  deleteComment: async ({ commentId }: DeleteCommentProps) => await request.delete(`comments/${commentId}`),
+  createComment: async (body: T.CreateCommentProps) => await request.post<T.CreateCommentItem>('comments', body),
+  getCommentList: async ({ size = 10, cursorId = 0, cardId }: T.GetCommentListProps) =>
+    await request.get<T.GetCommentListItem>(`comments?cardId=${cardId}&size=${size}&cursorId=${cursorId}`),
+  correctComment: async ({ commentId, content }: T.CorrectCommentProps) =>
+    await request.put<T.CorrectCommentItem>(`comments/${commentId}`, { content }),
+  deleteComment: async ({ commentId }: T.DeleteCommentProps) => await request.delete(`comments/${commentId}`),
 };
 
 /** @description 사용법: API.auth.login({}) */
