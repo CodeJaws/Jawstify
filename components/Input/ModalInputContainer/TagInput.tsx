@@ -1,89 +1,143 @@
-import 'rsuite/dist/rsuite.css';
-import { useState } from 'react';
 import styled from 'styled-components';
-import { TagPicker } from 'rsuite';
-import ContentChip from '@/components/Chip/ContentChip';
+import { ChangeEvent, useState, MouseEvent, KeyboardEvent, useEffect } from 'react';
+import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import { TAG_DATA } from '@/constants/Input';
-import { DEFAULT_PLACEHOLDER, TAG_COLOR } from '@/constants/Input';
-import { StyledInputContainer, StyledLabel } from '../Input.style';
+import { NO_VALUE_ERROR } from '@/constants/Input';
+import { TAG_COLOR } from '@/constants/Input';
+import { StyledErrorText, StyledLabel } from '../Input.style';
+import ContentChip from '@/components/Chip/ContentChip';
 
-interface colorTagProp {
-  [value: string]: {
-    color: string;
-    backgroundColor: string;
-  };
-}
-
-interface Props {
-  label?: string;
+export interface TagProps {
+  inputValue?: string;
   placeholder?: string;
-  getValue?: (value: colorTagProp) => void;
+  errorMessage?: string;
+  label?: string;
+  onChange: (inputLabel: string, value: Tag[]) => void;
+  onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
 }
 
+interface Tag {
+  value: string;
+  color: string;
+  backgroundColor: string;
+}
 /**
+ * Modal Tag Input
+ * @param errorMessage 부모 컴포넌트에서 제어하는 input에 띄우고자 하는 에러 메세지, exist하면 error design 표시
  * @param label input 라벨 텍스트
- * @param placeholder input placeholder 텍스트
- * @param getValue 현재 컴포넌트에서 부모 컴포넌트로 선택된 값 넘겨 보낼 부모 컴포넌트의 함수
+ * @param onChange 부모 컴포넌트에서 제어하는 input onChange 함수
  * */
-function TagInput({ label = '태그', placeholder = DEFAULT_PLACEHOLDER.TAG, getValue }: Props) {
-  const [colorTagList, setColorTagList] = useState<colorTagProp>({});
+function TagInput({ errorMessage = '', label = '태그', onChange }: TagProps) {
+  const [isNoValue, setIsNoValue] = useState<boolean>(false);
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [value, setValue] = useState<string>('');
 
-  const createNewTag = (value: any, TagColors: any) => {
-    setColorTagList((prev) => ({
-      ...prev,
-      [value[value.length - 1]]: { backgroundColor: TagColors[0], color: TagColors[1] },
-    }));
+  const hasError = errorMessage !== '';
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
-  //getValue(colorTagList); // --> 부모 컴포넌트에서 getValue 넘겨줘서 선택 값 넘겨받으면 됨!
+  const handleDeleteClick = (selectedValue: string) => {
+    setTags((prev) => prev.filter((prevTags) => prevTags.value !== selectedValue));
+  };
+
+  const handleOnEnterKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter' || value === '') return;
+
+    const ranVal = Math.floor(Math.random() * 4);
+    const TagColors = TAG_COLOR[ranVal];
+    const newTagEl = { value: value, backgroundColor: TagColors[0], color: TagColors[1] };
+
+    setTags((prev) => {
+      if (prev.find((prevTags) => prevTags.value === newTagEl.value)) return prev;
+      return [...prev, newTagEl];
+    });
+
+    setValue('');
+    checkEmptyValError(newTagEl.value);
+  };
+
+  const handleBlur = () => {
+    checkEmptyValError();
+  };
+
+  const checkEmptyValError = (isNewTagExist: string = '') => {
+    !isNewTagExist && tags.length === 0 ? setIsNoValue(true) : setIsNoValue(false);
+  };
+
+  useEffect(() => {
+    onChange(label, tags);
+  }, [tags]);
 
   return (
-    <StyledInputContainer>
-      <StyledLabel2>{label}</StyledLabel2>
-      <TagPicker
-        data={TAG_DATA}
-        creatable
-        placeholder={placeholder}
-        style={{
-          width: '100%',
-          padding: '8px 8px 8px 0',
-          display: 'flex',
-          alignItems: 'center',
-          borderColor: COLORS.GRAY_D9,
-          boxShadow: 'none',
-        }}
-        menuStyle={{
-          width: 300,
-          color: COLORS.BLACK_33,
-          borderTopColor: COLORS.VIOLET_55,
-          accentColor: COLORS.VIOLET_55,
-        }}
-        listProps={{
-          itemSize: 1,
-        }}
-        onCreate={(value, item) => {
-          const ranVal = Math.floor(Math.random() * 4);
-          const TagColors = TAG_COLOR[ranVal];
-          createNewTag(value, TagColors);
-        }}
-        renderValue={(value, items, tags) => {
-          return items.map((item: { value: string }, index: number) => (
-            <ContentChip
-              text={item.value}
-              key={index}
-              backgroundColor={colorTagList[item.value]?.backgroundColor}
-              color={colorTagList[item.value]?.color}
-            ></ContentChip>
-          ));
-        }}
-      />
-    </StyledInputContainer>
+    <div>
+      <StyledLabel>{label}</StyledLabel>
+      <StyledInputContainer $error={isNoValue || hasError} onBlur={handleBlur}>
+        {tags &&
+          tags.map((value, index) => (
+            <ContentChip text={value.value} key={index} backgroundColor={value.backgroundColor} color={value.color}>
+              <StyledDeleteBtn
+                onClick={(e: MouseEvent<HTMLElement>) => handleDeleteClick(value.value)}
+                $color={value.color}
+              >
+                x
+              </StyledDeleteBtn>
+            </ContentChip>
+          ))}
+        {tags.length !== 0 ? (
+          <StyledInput value={value} onChange={handleInputChange} onKeyUp={handleOnEnterKeyUp} />
+        ) : (
+          <StyledInput
+            value={value}
+            onChange={handleInputChange}
+            onKeyUp={handleOnEnterKeyUp}
+            placeholder="입력 후 Enter"
+          />
+        )}
+      </StyledInputContainer>
+      {(isNoValue || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
+    </div>
   );
 }
 
 export default TagInput;
 
-const StyledLabel2 = styled(StyledLabel)`
-  margin-bottom: 5px;
+const StyledInput = styled.input`
+  width: auto;
+  background-color: ${COLORS.WHITE_FF};
+  color: ${COLORS.BLACK_33};
+  ${fontStyle(16, 400)}
+  border: none;
+  background: transparent;
+  padding: 13px 10px 15px;
+`;
+
+const StyledInputContainer = styled.div<{ $error: boolean }>`
+  width: 100%;
+  padding-left: 5px;
+  border-radius: 8px;
+  border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
+  color: ${COLORS.BLACK_33};
+  ${fontStyle(16, 400)};
+  overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
+    color: ${COLORS.BLACK_33};
+    outline: none;
+  }
+`;
+
+const StyledDeleteBtn = styled.button<{ $color: string }>`
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0 2px 3px 4px;
+  color: ${({ $color }) => $color};
 `;

@@ -1,11 +1,10 @@
 import { fontStyle } from '@/styles/fontStyle';
-import { ChangeEvent, useState, MouseEvent } from 'react';
+import { useState, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '@/styles/palettes';
 import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
 import { NO_VALUE_ERROR } from '@/constants/Input';
 import Button from '@/components/common/Button/Button';
-import { MobileDatePickerProps } from '@mui/x-date-pickers';
 import { onMobile } from '@/styles/mediaQuery';
 
 interface Props {
@@ -15,7 +14,8 @@ interface Props {
   errorMessage?: string;
   isNecessary?: boolean;
   isTextArea?: boolean;
-  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  // onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange?: any;
   onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
 }
 
@@ -61,7 +61,7 @@ function BasicInput({
           placeholder={placeholder || defaultPlaceholder}
           $error={isNoValue || hasError}
           $isComment={isComment}
-          onChange={onChange}
+          onChange={(e) => onChange(label, e.target.value)}
           onBlur={handleBlur}
         />
       ) : (
@@ -69,7 +69,7 @@ function BasicInput({
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
           $error={isNoValue || hasError}
-          onChange={onChange}
+          onChange={(e) => onChange(label, e.target.value)}
           onBlur={handleBlur}
         />
       )}
