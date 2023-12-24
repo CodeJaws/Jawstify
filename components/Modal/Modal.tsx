@@ -27,7 +27,6 @@ function Modal({
   onDeleteClick = () => {},
   getValue = () => {},
 }: Props) {
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [value, setValue] = useState({});
 
   const isTightVersion = title == '할 일 생성' || title === '할 일 수정';
@@ -53,25 +52,11 @@ function Modal({
         return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 생성':
         return (
-          <CreateToDo
-            type="create"
-            onOkClick={onOkClick}
-            onCancelClick={onCancelClick}
-            image={image}
-            setImage={setImage}
-            getValue={setModalInputValue}
-          />
+          <CreateToDo type="create" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
         );
       case '할 일 수정':
         return (
-          <CreateToDo
-            type="edit"
-            onOkClick={onOkClick}
-            onCancelClick={onCancelClick}
-            image={image}
-            setImage={setImage}
-            getValue={setModalInputValue}
-          />
+          <CreateToDo type="edit" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
         );
       case '컬럼 관리':
         return (
