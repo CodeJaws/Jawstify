@@ -2,6 +2,7 @@ import StatusChip from '@/components/Chip/StatusChip';
 import { PROGRESS_STATUS } from '@/constants/Chip';
 import Check from '@/public/assets/icons/GrayCheck.svg';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { styled } from 'styled-components';

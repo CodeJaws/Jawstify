@@ -1,6 +1,5 @@
 import { onMobile } from '@/styles/mediaQuery';
 import { ReactNode } from 'react';
-
 import styled from 'styled-components';
 
 interface ChipProps {
