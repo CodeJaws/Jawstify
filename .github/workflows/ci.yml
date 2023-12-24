@@ -19,7 +19,7 @@ jobs:
           key: npm-packages-${{ hashFiles('**/package-lock.json')}}
 
       - name: Install dependencies
-          if: steps.cache.outputs.cache-hit == false
+          if: steps.cache.outputs.cache-hit == 'false'
           run: npm ci
 
       - name: Build
