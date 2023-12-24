@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalOnClickProps } from '@/types/modal';
 import AddImageButton from '@/components/AddImageButton/AddImageButton';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
-import TagInput from '@/components/Input/ModalInputContainer/TagInput';
+import TagInput, { TagProps } from '@/components/Input/ModalInputContainer/TagInput';
 import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
 
@@ -16,17 +16,33 @@ interface Props extends ModalOnClickProps {
 }
 
 function CreateToDo({ onOkClick, onCancelClick, type, image, setImage }: Props) {
+  const [values, setValues] = useState({
+    상태: '',
+    담당자: '',
+    제목: '',
+    설명: '',
+    마감일: '',
+    태그: {},
+  });
+
+  function handleChange(inputLabel: string, inputValue: string | {} | TagProps[]) {
+    setValues({
+      ...values,
+      [inputLabel]: inputValue,
+    });
+  }
+
   return (
     <>
       <StyledContainer>
         <StyledModalContainer>
-          <ModalDropDown />
-          {type === 'edit' && <ModalDropDown />}
+          {/* <ModalDropDown onChange={handleChange} inputValue={values.상태} />  */}
+          {/* {type === 'edit' && <ModalDropDown onChange={handleChange} inputValue={values.담당자} />} */}
         </StyledModalContainer>
-        <BasicInput isNecessary label="제목"></BasicInput>
-        <BasicInput isNecessary isTextArea label="설명"></BasicInput>
-        <DateInput />
-        <TagInput />
+        <BasicInput isNecessary label="제목" onChange={handleChange} inputValue={values.제목}></BasicInput>
+        <BasicInput isNecessary isTextArea label="설명" onChange={handleChange} inputValue={values.설명}></BasicInput>
+        <DateInput onChange={handleChange} />
+        <TagInput onChange={handleChange} />
         <AddImageButton type="modal" image={image} setImage={setImage} />
       </StyledContainer>
 
