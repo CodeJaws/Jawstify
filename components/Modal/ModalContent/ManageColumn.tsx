@@ -6,16 +6,29 @@ import { StyledTwinButton } from './Create&EditToDo';
 import { StyledContainer } from './Basic';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { ModalOnClickProps } from '@/types/modal';
+import { useState } from 'react';
 
 interface Props extends ModalOnClickProps {
   onDeleteClick: () => void;
 }
 
 function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {} }: Props) {
+  const [values, setValues] = useState({
+    이름: '',
+  });
+
+  function handleChange(inputLabel: string, inputValue: string) {
+    setValues({
+      ...values,
+      [inputLabel]: inputValue,
+    });
+    console.log(values);
+  }
+
   return (
     <>
       <StyledContainer>
-        <BasicInput label="이름"></BasicInput>
+        <BasicInput label="이름" onChange={handleChange} inputValue={values.이름} />
       </StyledContainer>
 
       <StyledButtonContainer>
