@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
@@ -11,11 +11,10 @@ import TwinButton from '@/components/common/Button/TwinButton';
 
 interface Props extends ModalCommonProps {
   type: 'create' | 'edit';
-  image: string | ArrayBuffer | null;
-  setImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 }
 
-function CreateToDo({ type, onOkClick, onCancelClick, image, setImage, getValue = () => {} }: Props) {
+function CreateToDo({ type, onOkClick, onCancelClick, getValue = () => {} }: Props) {
+  const [image, setImage] = useState<string | ArrayBuffer | null>('');
   const [values, setValues] = useState({
     상태: '',
     담당자: '',
@@ -23,15 +22,20 @@ function CreateToDo({ type, onOkClick, onCancelClick, image, setImage, getValue 
     설명: '',
     마감일: '',
     태그: {},
+    이미지: '',
   });
 
-  const handleChange = (inputLabel: string, inputValue: string | {} | TagProps[]) => {
+  const handleChange = (inputLabel: string, inputValue: string | {} | TagProps[] | ArrayBuffer | null) => {
     setValues({
       ...values,
       [inputLabel]: inputValue,
     });
   };
   getValue(values);
+
+  useEffect(() => {
+    handleChange('이미지', image);
+  }, [image]);
 
   return (
     <>
