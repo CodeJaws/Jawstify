@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { ModalOnClickProps } from '@/types/modal';
+import { ModalCommonProps } from '@/types/modal';
 import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
@@ -11,7 +11,7 @@ import CreateToDo from './ModalContent/Create&EditToDo';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
 
-interface Props extends ModalOnClickProps {
+interface Props extends ModalCommonProps {
   title: '' | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 칼럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
   isSingleButton?: boolean;
@@ -27,6 +27,11 @@ function Modal({
   onDeleteClick = () => {},
 }: Props) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  const [value, setValue] = useState({});
+
+  const getValue = () => {
+    setValue(getValue); // value = modal에 입력된 input value들의 집합
+  };
 
   const isTightVersion = title == '할 일 생성' || title === '할 일 수정';
 
@@ -39,10 +44,11 @@ function Modal({
             isSingleButton={isSingleButton}
             onCancelClick={onCancelClick}
             onOkClick={onOkClick}
+            getValue={getValue}
           />
         );
       case '새로운 대시보드':
-        return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} />;
+        return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={getValue} />;
       case '할 일 생성':
         return (
           <CreateToDo
@@ -51,6 +57,7 @@ function Modal({
             onCancelClick={onCancelClick}
             image={image}
             setImage={setImage}
+            getValue={getValue}
           />
         );
       case '할 일 수정':
@@ -61,12 +68,20 @@ function Modal({
             onCancelClick={onCancelClick}
             image={image}
             setImage={setImage}
+            getValue={getValue}
           />
         );
       case '컬럼 관리':
-        return <ManageColumn onOkClick={onOkClick} onCancelClick={onCancelClick} onDeleteClick={onDeleteClick} />;
+        return (
+          <ManageColumn
+            onOkClick={onOkClick}
+            onCancelClick={onCancelClick}
+            onDeleteClick={onDeleteClick}
+            getValue={getValue}
+          />
+        );
       default:
-        return <Basic type={title} onOkClick={onOkClick} onCancelClick={onCancelClick} />;
+        return <Basic type={title} onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={getValue} />;
     }
   };
 

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { onMobile } from '@/styles/mediaQuery';
-import { ModalOnClickProps } from '@/types/modal';
+import { ModalCommonProps } from '@/types/modal';
 import AddImageButton from '@/components/AddImageButton/AddImageButton';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
@@ -9,13 +9,13 @@ import TagInput, { TagProps } from '@/components/Input/ModalInputContainer/TagIn
 import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
 
-interface Props extends ModalOnClickProps {
+interface Props extends ModalCommonProps {
   type: 'create' | 'edit';
   image: string | ArrayBuffer | null;
   setImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 }
 
-function CreateToDo({ onOkClick, onCancelClick, type, image, setImage }: Props) {
+function CreateToDo({ type, onOkClick, onCancelClick, image, setImage, getValue }: Props) {
   const [values, setValues] = useState({
     상태: '',
     담당자: '',

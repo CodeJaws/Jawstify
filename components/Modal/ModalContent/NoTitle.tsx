@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import { ModalOnClickProps } from '@/types/modal';
+import { ModalCommonProps } from '@/types/modal';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { StyledTwinButton } from './Create&EditToDo';
 import { StyledContainer } from './Basic';
 import Button from '@/components/common/Button/Button';
 
-interface Props extends ModalOnClickProps {
+interface Props extends ModalCommonProps {
   description: string;
   isSingleButton: boolean;
 }
 
-function NoTitle({ description, isSingleButton, onCancelClick = () => {}, onOkClick }: Props) {
+function NoTitle({ description, isSingleButton, onOkClick, onCancelClick = () => {}, getValue }: Props) {
   return (
     <StyledContainer>
       <StyledDescription>{description}</StyledDescription>;

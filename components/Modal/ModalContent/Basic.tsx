@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import { StyledButtonContainer } from './Create&EditToDo';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import TwinButton from '@/components/common/Button/TwinButton';
-import { ModalOnClickProps } from '@/types/modal';
+import { ModalCommonProps } from '@/types/modal';
 import { useState } from 'react';
 
-interface Props extends ModalOnClickProps {
+interface Props extends ModalCommonProps {
   type: '초대하기' | '새 칼럼 생성';
 }
 
-function Basic({ onCancelClick, onOkClick, type }: Props) {
+function Basic({ type, onCancelClick, onOkClick, getValue }: Props) {
   const [values, setValues] = useState({
     이메일: '',
     이름: '',

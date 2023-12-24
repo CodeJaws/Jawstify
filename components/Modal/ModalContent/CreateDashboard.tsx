@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { StyledButtonContainer, StyledTwinButton } from './Create&EditToDo';
-import { ModalOnClickProps } from '@/types/modal';
+import { ModalCommonProps } from '@/types/modal';
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { useState } from 'react';
 
-function CreateDashboard({ onCancelClick, onOkClick }: ModalOnClickProps) {
+function CreateDashboard({ onCancelClick, onOkClick, getValue }: ModalCommonProps) {
   const [values, setValues] = useState({
     '대시보드 이름': '',
     색상: '',

@@ -5,14 +5,14 @@ import { COLORS } from '@/styles/palettes';
 import { StyledTwinButton } from './Create&EditToDo';
 import { StyledContainer } from './Basic';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
-import { ModalOnClickProps } from '@/types/modal';
+import { ModalCommonProps } from '@/types/modal';
 import { useState } from 'react';
 
-interface Props extends ModalOnClickProps {
+interface Props extends ModalCommonProps {
   onDeleteClick: () => void;
 }
 
-function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {} }: Props) {
+function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {}, getValue }: Props) {
   const [values, setValues] = useState({
     이름: '',
   });
