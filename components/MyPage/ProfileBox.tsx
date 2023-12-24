@@ -17,8 +17,8 @@ function ProfileBox() {
       <StyledWrapper>
         <FormInput label="이메일" />
         <FormInput label="닉네임" />
+        <StyledButton text={'저장'} size={'small'} isViolet={true} onClick={handleSave} className={''} />
       </StyledWrapper>
-      <StyledButton text={'저장'} size={'small'} isViolet={true} onClick={handleSave} className={''} />
     </StyledContainer>
   );
 }
@@ -27,7 +27,6 @@ export default ProfileBox;
 
 const StyledContainer = styled.div`
   display: flex;
-  position: relative;
   width: 620px;
   height: 355px;
   margin-top: 24px;
@@ -42,7 +41,7 @@ const StyledContainer = styled.div`
   ${onMobile} {
     flex-direction: column;
     width: 100%;
-    height: 490px;
+    height: auto;
     gap: 24px;
   }
 `;
@@ -52,22 +51,17 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: end;
-  flex-grow: 2;
+  width: 100%;
   gap: 20px;
 
   ${onMobile} {
     margin-top: 0;
+    gap: 16px;
   }
 `;
 
 const StyledButton = styled(Button)`
-  position: absolute;
-  bottom: 28px;
-  right: 28px;
-
   ${onMobile} {
     width: 84px;
-    bottom: 20px;
-    right: 20px;
   }
 `;
