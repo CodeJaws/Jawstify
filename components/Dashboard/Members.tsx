@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import useDeviceType from '@/hooks/useDeviceType';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import useDeviceType from '@/hooks/useDeviceType';
 import { createSlicedMembers } from '@/utils/createSlicedMembers';
 
 interface MembersProps {
@@ -48,9 +48,11 @@ const StyledContainer = styled.div<{ $cnt: number }>`
   }
   ${onTablet} {
     width: ${(props) => (props.$cnt > 2 ? '80' : (props.$cnt - 1) * 26 + 24)}px;
+    margin-left: 32px;
   }
   ${onMobile} {
     width: ${(props) => (props.$cnt > 2 ? '68' : (props.$cnt - 1) * 26 + 12)}px;
+    margin-left: 8px;
   }
 `;
 
