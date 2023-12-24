@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import Logo from '@/public/assets/icons/LogoSidebar.svg';
 import LogoTitle from '@/public/assets/icons/LogoSidebarTitle.svg';
 import AddBox from '@/public/assets/icons/invite.svg';
+import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
 import DashboardGroup from './DashboardGroup';
 
 /** 대시보드 목록 조회를 통해 얻은 대시보드들의 정보들 */
@@ -40,9 +40,12 @@ function Sidebar() {
 export default Sidebar;
 
 const StyledContainer = styled.div`
+  position: fixed;
+  z-index: 7;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  min-height: 1080px;
   flex-shrink: 0;
   background: ${COLORS.WHITE_FF};
   border: 1px solid ${COLORS.GRAY_D9};

@@ -7,6 +7,13 @@ export const reset = css`
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('@/fonts/Montserrat-Bold.ttf') format('ttf');
+    font-weight: 700;
+    font-style: normal;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;

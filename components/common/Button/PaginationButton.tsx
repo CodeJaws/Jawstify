@@ -7,18 +7,27 @@ import styled from 'styled-components';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 
-interface PagenationButtonProps {
+interface PaginationButtonProps {
   active: boolean;
+  direction: 'left' | 'right';
+  onClick: () => void;
 }
 
-function PaginationButton({ active }: PagenationButtonProps) {
+const choosePaginationImage = ({ direction, active }: { direction: 'left' | 'right'; active: boolean }) => {
+  if (active && direction === 'left') return leftPage;
+  else if (active && direction === 'right') return rightPage;
+  else if (!active && direction === 'left') return lightLeftPage;
+  else if (!active && direction === 'right') return lightRightPage;
+};
+
+function PaginationButton({ active, direction, onClick }: PaginationButtonProps) {
+  const selectedImg = choosePaginationImage({ direction, active });
+  const imgAlt = direction === 'left' ? '왼쪽화살표' : '오른쪽화살표';
+
   return (
-    <StyledDiv>
-      <StyledPageButton $direction={'left'} disabled={active}>
-        <StyledPageImage src={active ? leftPage : lightLeftPage} alt="왼쪽화살표" />
-      </StyledPageButton>
-      <StyledPageButton $direction={'right'}>
-        <StyledPageImage src={active ? rightPage : lightRightPage} alt="오른쪽화살표" />
+    <StyledDiv onClick={onClick}>
+      <StyledPageButton $direction={direction}>
+        <StyledPageImage src={selectedImg} alt={imgAlt} />
       </StyledPageButton>
     </StyledDiv>
   );
