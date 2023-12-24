@@ -136,7 +136,6 @@ const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
   top: 0;
   width: 100%;
   height: 70px;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   border-bottom: 1px solid ${COLORS.GRAY_D9};
