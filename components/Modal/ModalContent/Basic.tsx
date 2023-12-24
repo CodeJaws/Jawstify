@@ -3,17 +3,36 @@ import { StyledButtonContainer } from './Create&EditToDo';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { ModalOnClickProps } from '@/types/modal';
+import { useState } from 'react';
 
 interface Props extends ModalOnClickProps {
   type: '초대하기' | '새 칼럼 생성';
 }
 
 function Basic({ onCancelClick, onOkClick, type }: Props) {
+  const [values, setValues] = useState({
+    이메일: '',
+    이름: '',
+  });
+
+  // onOkClick = () => {
+  //   console.log(values); // 모달 input values 확인 가능
+  // };
+
+  function handleChange(inputLabel: string, inputValue: string) {
+    setValues({
+      ...values,
+      [inputLabel]: inputValue,
+    });
+  }
+
   return (
     <>
       <StyledContainer>
-        {type === '초대하기' && <BasicInput label="이메일" />}
-        {type === '새 칼럼 생성' && <BasicInput label="이름" placeholder="새로운 프로젝트" />}
+        {type === '초대하기' && <BasicInput label="이메일" onChange={handleChange} inputValue={values.이메일} />}
+        {type === '새 칼럼 생성' && (
+          <BasicInput label="이름" placeholder="새로운 프로젝트" onChange={handleChange} inputValue={values.이름} />
+        )}
       </StyledContainer>
 
       <StyledButtonContainer2>
