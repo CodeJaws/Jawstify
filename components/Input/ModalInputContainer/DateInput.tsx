@@ -17,7 +17,6 @@ interface Props {
  * Modal Date Input
  * @param label input 라벨 텍스트
  * @param placeholder input placeholder 텍스트
- * @param getValue 현재 컴포넌트에서 부모 컴포넌트로 선택된 값 넘겨 보낼 부모 컴포넌트의 함수
  * */
 function DateInput({ label = '마감일', placeholder = DEFAULT_PLACEHOLDER.DATE, onChange }: Props) {
   const [dates, setDates] = useState<Dayjs | null>();
