@@ -37,8 +37,8 @@ function CreateToDo({ type, onOkClick, onCancelClick, image, setImage, getValue 
     <>
       <StyledContainer>
         <StyledModalContainer>
-          {/* <ModalDropDown onChange={handleChange} inputValue={values.상태} />  */}
-          {/* {type === 'edit' && <ModalDropDown onChange={handleChange} inputValue={values.담당자} />} */}
+          {/* <ModalDropDown type="status" onChange={handleChange} inputValue={values.상태} /> */}
+          {/* {type === 'edit' && <ModalDropDown type="manager" onChange={handleChange} inputValue={values.담당자} />} */}
         </StyledModalContainer>
         <BasicInput isNecessary label="제목" onChange={handleChange} inputValue={values.제목}></BasicInput>
         <BasicInput isNecessary isTextArea label="설명" onChange={handleChange} inputValue={values.설명}></BasicInput>
