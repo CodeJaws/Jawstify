@@ -24,7 +24,7 @@ const StyledContainer = styled.div<{ $color: string; $background: string }>`
   align-items: center;
   padding: 4px 6px;
   border-radius: 4px;
-  margin-left: 6px;
+  /* margin-left: 6px; */
   font-size: 1.2rem;
   color: ${({ $color }) => $color};
   background-color: ${({ $background }) => $background};
