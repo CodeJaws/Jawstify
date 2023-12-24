@@ -6,8 +6,13 @@ import CountChip from '../Chip/CountChip';
 import { fontStyle } from '@/styles/fontStyle';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
+import { COLORS } from '@/styles/palettes';
 
-function Column() {
+interface ColumnProps {
+  title: string;
+}
+
+function Column({ title }: ColumnProps) {
   const handleClick = () => {
 
   }
@@ -18,7 +23,7 @@ function Column() {
         <Image fill src={setting} alt='설정' />
       </StyledSettingIconContainer>
       <StyledHeader>
-        <div>To Do</div>
+        <div>{title}</div>
         <StyledCountChip content='2' />
       </StyledHeader>
       <StyledWrapper>
@@ -36,6 +41,7 @@ const StyledContainer = styled.div`
   height: auto;
   padding: 12px;
   position: relative;
+  border-bottom: 1px solid ${COLORS.GRAY_EE};
 
   ${onTablet} {
     width: 584px;
@@ -45,6 +51,8 @@ const StyledContainer = styled.div`
   ${onPc} {
     width: 354px;
     padding: 20px;
+    border: none;
+    border-right: 1px solid ${COLORS.GRAY_EE};
   }
 `
 
@@ -84,7 +92,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-
+  
   ${onMobile} {
     gap: 10px;
   }
