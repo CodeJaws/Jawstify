@@ -12,7 +12,7 @@ function MyDashBoard() {
       <DashboardNavbar isMyDashboard={true} isOwner={true} title="나나나" />
       <Sidebar />
       <StyledWrapper>
-        <MyDashBoardButtonBox />
+        <MyDashBoardButtonBox dashboardId={1} />
         <InviteDashBoard />
       </StyledWrapper>
     </StyledContainer>
@@ -31,7 +31,6 @@ const StyledWrapper = styled.div`
   top: 70px;
   left: 300px;
   width: 100%;
-  height: 100vh;
   padding: 40px;
   ${onTablet} {
     left: 160px;
