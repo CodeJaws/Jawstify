@@ -14,8 +14,7 @@ interface Props {
   errorMessage?: string;
   isNecessary?: boolean;
   isTextArea?: boolean;
-  // onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onChange?: any;
+  onChange: (inputLabel: string, value: string) => void;
   onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
 }
 
