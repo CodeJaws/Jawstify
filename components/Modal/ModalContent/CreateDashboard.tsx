@@ -3,13 +3,31 @@ import { StyledButtonContainer, StyledTwinButton } from './Create&EditToDo';
 import { ModalOnClickProps } from '@/types/modal';
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import { useState } from 'react';
 
 function CreateDashboard({ onCancelClick, onOkClick }: ModalOnClickProps) {
+  const [values, setValues] = useState({
+    '대시보드 이름': '',
+    색상: '',
+  });
+
+  function handleChange(inputLabel: string, inputValue: string) {
+    setValues({
+      ...values,
+      [inputLabel]: inputValue,
+    });
+  }
+
   return (
     <>
       <StyledContainer>
-        <BasicInput label="대시보드 이름" placeholder="뉴 프로젝트"></BasicInput>
-        <ColorChip />
+        <BasicInput
+          label="대시보드 이름"
+          placeholder="뉴 프로젝트"
+          onChange={handleChange}
+          inputValue={values['대시보드 이름']}
+        />
+        <ColorChip onChange={handleChange} />
       </StyledContainer>
 
       <StyledButtonContainer>
