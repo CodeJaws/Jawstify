@@ -1,7 +1,8 @@
-import styled, { css } from 'styled-components';
-import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
+import styled from 'styled-components';
 
 export const StyledInputContainer = styled.div`
   width: 100%;
@@ -24,6 +25,10 @@ export const StyledInput = styled.input<{ $error: boolean }>`
     color: ${COLORS.BLACK_33};
     outline: none;
   }
+
+  ${onMobile} {
+    padding: 13px 16px;
+  }
 `;
 
 export const StyledLabel = styled.h5`
@@ -31,6 +36,10 @@ export const StyledLabel = styled.h5`
   margin-bottom: 8px;
   display: flex;
   ${fontStyle(18, 500)};
+
+  ${onMobile} {
+    font-size: 1.6rem;
+  }
 `;
 
 export const StyledErrorText = styled.p`
