@@ -19,8 +19,8 @@ function PasswordManagerBox() {
         <BasicInput label="현재 비밀번호" placeholder="현재 비밀번호 입력" />
         <BasicInput label="새 비밀번호" placeholder="새 비밀번호 입력" />
         <BasicInput label="새 비밀번호 확인" placeholder="새 비밀번호 확인 입력" />
-        <StyledButton text={'변경'} size={'small'} isViolet={true} onClick={handleSave} className={''} />
       </StyledWrapper>
+      <StyledButton text={'변경'} size={'small'} isViolet={true} onClick={handleSave} className={''} />
     </StyledContainer>
   );
 }
@@ -28,13 +28,13 @@ function PasswordManagerBox() {
 export default PasswordManagerBox;
 
 const StyledContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 620px;
   height: 454px;
   margin-top: 24px;
   padding: 32px 28px 28px 28px;
-  gap: 16px;
   border-radius: 8px;
   background: ${COLORS.WHITE_FF};
 
@@ -59,12 +59,17 @@ const StyledWrapper = styled.div`
   justify-content: center;
   align-items: end;
   margin-top: 32px;
-  flex-grow: 2;
   gap: 20px;
 `;
 
 const StyledButton = styled(Button)`
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+
   ${onMobile} {
     width: 84px;
+    bottom: 20px;
+    right: 20px;
   }
 `;
