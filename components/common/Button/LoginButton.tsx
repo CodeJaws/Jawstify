@@ -2,17 +2,19 @@ import styled, { css } from 'styled-components';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+import { ButtonOnClickProps } from '@/types/button';
 
-interface LoginButtonProps {
+interface LoginButtonProps extends ButtonOnClickProps {
   active: boolean;
   type: 'login' | 'landing';
+  text: string;
 }
 
-function LoginButton({ active, type }: LoginButtonProps) {
+function LoginButton({ active, type, onClick, text }: LoginButtonProps) {
   return (
     <>
-      <StyledButton $type={type} disabled={active ? false : true} $active={active}>
-        로그인
+      <StyledButton $type={type} disabled={active ? false : true} $active={active} onClick={onClick}>
+        {text}
       </StyledButton>
     </>
   );

@@ -1,10 +1,10 @@
-import { fontStyle } from '@/styles/fontStyle';
-import { useState, MouseEvent } from 'react';
-import styled from 'styled-components';
-import { COLORS } from '@/styles/palettes';
-import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
-import { NO_VALUE_ERROR } from '@/constants/Input';
 import Button from '@/components/common/Button/Button';
+import { NO_VALUE_ERROR } from '@/constants/Input';
+import { fontStyle } from '@/styles/fontStyle';
+import { COLORS } from '@/styles/palettes';
+import { MouseEvent, useState } from 'react';
+import styled from 'styled-components';
+import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
 import { onMobile } from '@/styles/mediaQuery';
 
 interface Props {

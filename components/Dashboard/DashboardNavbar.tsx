@@ -1,16 +1,16 @@
-import styled from 'styled-components';
 import Image from 'next/image';
+import styled from 'styled-components';
 
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { fontStyle } from '@/styles/fontStyle';
-import setting from '@/public/assets/icons/setting.svg';
-import invite from '@/public/assets/icons/invite.svg';
 import crown from '@/public/assets/icons/crown.svg';
+import invite from '@/public/assets/icons/invite.svg';
+import setting from '@/public/assets/icons/setting.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 
-import Button from './Button';
-import Profile from './Profile';
-import Members from './Members';
 import { COLORS } from '@/styles/palettes';
+import Button from './Button';
+import Members from './Members';
+import Profile from './Profile';
 
 interface DashboardNavbarProps {
   isMyDashboard: boolean;
@@ -117,6 +117,13 @@ const StyledTitleContainer = styled.div`
   gap: 8px;
   align-items: center;
 
+  margin-left: 340px;
+  ${onTablet} {
+    margin-left: 200px;
+  }
+  ${onMobile} {
+    margin-left: 91px;
+  }
   h3 {
     color: ${COLORS.BLACK_33};
     ${fontStyle(20, 700)}
@@ -125,11 +132,15 @@ const StyledTitleContainer = styled.div`
 
 /** 구분좌 */
 const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 70px;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid ${COLORS.GRAY_D9};
+  background-color: ${COLORS.WHITE_FF};
+  z-index: 2;
 
   h3 {
     ${onPc} {
