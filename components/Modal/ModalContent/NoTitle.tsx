@@ -11,7 +11,7 @@ interface Props extends ModalCommonProps {
   isSingleButton: boolean;
 }
 
-function NoTitle({ description, isSingleButton, onOkClick, onCancelClick = () => {}, getValue }: Props) {
+function NoTitle({ description, isSingleButton, onOkClick, onCancelClick = () => {} }: Props) {
   return (
     <StyledContainer>
       <StyledDescription>{description}</StyledDescription>;
