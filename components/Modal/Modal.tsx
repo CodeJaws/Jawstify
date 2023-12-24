@@ -25,15 +25,18 @@ function Modal({
   onOkClick,
   onCancelClick,
   onDeleteClick = () => {},
+  getValue = () => {},
 }: Props) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [value, setValue] = useState({});
 
-  const getValue = () => {
-    setValue(getValue); // value = modal에 입력된 input value들의 집합
+  const isTightVersion = title == '할 일 생성' || title === '할 일 수정';
+
+  const setModalInputValue = (values = {}) => {
+    setValue(values); // value = modal에 입력된 input value들의 집합
   };
 
-  const isTightVersion = title == '할 일 생성' || title === '할 일 수정';
+  getValue(value);
 
   const renderModalContent = (title: Props['title']) => {
     switch (title) {
@@ -44,11 +47,10 @@ function Modal({
             isSingleButton={isSingleButton}
             onCancelClick={onCancelClick}
             onOkClick={onOkClick}
-            getValue={getValue}
           />
         );
       case '새로운 대시보드':
-        return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={getValue} />;
+        return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 생성':
         return (
           <CreateToDo
@@ -57,7 +59,7 @@ function Modal({
             onCancelClick={onCancelClick}
             image={image}
             setImage={setImage}
-            getValue={getValue}
+            getValue={setModalInputValue}
           />
         );
       case '할 일 수정':
@@ -68,7 +70,7 @@ function Modal({
             onCancelClick={onCancelClick}
             image={image}
             setImage={setImage}
-            getValue={getValue}
+            getValue={setModalInputValue}
           />
         );
       case '컬럼 관리':
@@ -77,11 +79,11 @@ function Modal({
             onOkClick={onOkClick}
             onCancelClick={onCancelClick}
             onDeleteClick={onDeleteClick}
-            getValue={getValue}
+            getValue={setModalInputValue}
           />
         );
       default:
-        return <Basic type={title} onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={getValue} />;
+        return <Basic type={title} onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
     }
   };
 

@@ -15,7 +15,7 @@ interface Props extends ModalCommonProps {
   setImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 }
 
-function CreateToDo({ type, onOkClick, onCancelClick, image, setImage, getValue }: Props) {
+function CreateToDo({ type, onOkClick, onCancelClick, image, setImage, getValue = () => {} }: Props) {
   const [values, setValues] = useState({
     상태: '',
     담당자: '',
@@ -25,12 +25,13 @@ function CreateToDo({ type, onOkClick, onCancelClick, image, setImage, getValue 
     태그: {},
   });
 
-  function handleChange(inputLabel: string, inputValue: string | {} | TagProps[]) {
+  const handleChange = (inputLabel: string, inputValue: string | {} | TagProps[]) => {
     setValues({
       ...values,
       [inputLabel]: inputValue,
     });
-  }
+  };
+  getValue(values);
 
   return (
     <>
