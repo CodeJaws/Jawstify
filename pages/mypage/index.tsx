@@ -36,10 +36,6 @@ const StyledWrapper = styled.div`
   height: 100vh;
   min-height: 1080px;
   background-color: ${COLORS.GRAY_EE};
-
-  ${onMobile} {
-    height: 130vh;
-  }
 `;
 
 const StyledInWrapper = styled.div`
