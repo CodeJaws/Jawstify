@@ -11,6 +11,9 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
+interface Props {
+  onChange: (inputLabel: string, value: string) => void;
+}
 const ColorEllipse = [
   { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN_7A },
   { id: 1, src: Purple, alt: '보라색 원', color: COLORS.PURPLE_76 },
@@ -19,11 +22,13 @@ const ColorEllipse = [
   { id: 4, src: Pink, alt: '핑크색 원', color: COLORS.PINK_E8 },
 ];
 
-function ColorChip() {
+function ColorChip({ onChange }: Props) {
   const [selectedColor, setSelectedColor] = useState(0);
 
   const toggleSelectedColor = (index: number) => {
     setSelectedColor((prevSelectedColor) => (prevSelectedColor === index ? -1 : index));
+    const selectedColorText = ColorEllipse[index]?.alt || '';
+    onChange('색상', selectedColorText);
   };
 
   return (
