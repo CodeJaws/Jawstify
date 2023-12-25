@@ -104,6 +104,9 @@ const StyledLabel = styled.p<{ $type: string }>`
     $type === 'profile' &&
     css`
       ${fontStyle(24, 700)}
+      ${onMobile} {
+        font-size: 2rem;
+      }
     `}
 `;
 
