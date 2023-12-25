@@ -4,17 +4,19 @@ import Arrow from '@/public/assets/icons/ArrowDropdown.svg';
 import { COLORS } from '@/styles/palettes';
 import { ModalDropdownProps } from '@/types/dropdown';
 
-import useSelectStatus from '@/hooks/useSelectStatus';
+import useImgSrc from '@/hooks/DropDown/useImgSrc';
+import useInputData from '@/hooks/DropDown/useInputData';
+import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
 import Image from 'next/image';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { css, styled } from 'styled-components';
 import { MANGER_LIST } from './ModalDropDown';
 
 function DropDown({ type }: ModalDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { status, setStatus } = useSelectStatus();
-  const [inputData, setInputData] = useState('');
-  const [imgSrc, setImgSrc] = useState('');
+  const { status } = useSelectStatus();
+  const { inputData, setInputData } = useInputData();
+  const { imgSrc, setImgSrc } = useImgSrc();
 
   const openMenu = () => {
     setIsOpen((prev) => !prev);
@@ -46,12 +48,7 @@ function DropDown({ type }: ModalDropdownProps) {
               <Image width={26} height={26} src={Arrow} alt="드롭다운 화살표" />
             </button>
           </StyledWrapper>
-          <DropDownMenu
-            type={type}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            setStatus={setStatus as Dispatch<SetStateAction<string | undefined>>}
-          />
+          <DropDownMenu type={type} isOpen={isOpen} setIsOpen={setIsOpen} />
         </StyledContainer>
       ) : (
         <StyledInputWrapper>
@@ -61,14 +58,7 @@ function DropDown({ type }: ModalDropdownProps) {
               <button onClick={openMenu}>
                 <StyledImage width={26} height={26} src={Arrow} alt="드롭다운 화살표" />
               </button>
-              <DropDownMenu
-                type={type}
-                isOpen={isOpen}
-                filterData={filterData}
-                setIsOpen={setIsOpen}
-                setInputData={setInputData as Dispatch<SetStateAction<string | undefined>>}
-                setImgSrc={setImgSrc as Dispatch<SetStateAction<string | undefined>>}
-              />
+              <DropDownMenu type={type} isOpen={isOpen} filterData={filterData} setIsOpen={setIsOpen} />
             </>
           )}
         </StyledInputWrapper>
