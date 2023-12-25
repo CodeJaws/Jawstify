@@ -1,10 +1,10 @@
 import StatusChip from '@/components/Chip/StatusChip';
 import DropDownMenu from '@/components/ModalDropDown/DropDownMenu';
-import { TO_DO } from '@/constants/Chip';
 import Arrow from '@/public/assets/icons/ArrowDropdown.svg';
 import { COLORS } from '@/styles/palettes';
 import { ModalDropdownProps } from '@/types/dropdown';
 
+import useSelectStatus from '@/hooks/useSelectStatus';
 import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { css, styled } from 'styled-components';
@@ -12,7 +12,7 @@ import { MANGER_LIST } from './ModalDropDown';
 
 function DropDown({ type }: ModalDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [status, setStatus] = useState(TO_DO);
+  const { status, setStatus } = useSelectStatus();
   const [inputData, setInputData] = useState('');
   const [imgSrc, setImgSrc] = useState('');
 
