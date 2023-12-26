@@ -1,16 +1,18 @@
-import Image from 'next/image';
-import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
-import mainLogoText from '@/public/assets/icons/logoText.svg';
-import styled from 'styled-components';
-import { fontStyle } from '@/styles/fontStyle';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Link from 'next/link';
+import api from '@/apis/api';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import * as C from '@/constants/SignValidate';
 import FormInput from '@/components/Input/FormInput';
 import LoginButton from '@/components/common/Button/LoginButton';
-import { onMobile } from '@/styles/mediaQuery';
-import Link from 'next/link';
-import { COLORS } from '@/styles/palettes';
-import { EMAIL_ERROR, EMAIL_VALIDATE_PATTERN, NO_VALUE_ERROR, PWD_VALIDATE_PATTERN } from '@/constants/SignValidate';
-import { useEffect, useState } from 'react';
+import mainLogoText from '@/public/assets/icons/logoText.svg';
+import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 
 interface FormValue {
   email?: string;
@@ -23,7 +25,6 @@ interface FormValue {
       message: string;
     };
   };
-  serverError: string;
 }
 function Login() {
   const {
@@ -31,13 +32,27 @@ function Login() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormValue>();
+  } = useForm<FormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
 
   const watchInputsEmpty = Object.values(watch());
   const [isBtnActive, setIsBtnActive] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const onSubmit = (data: FormValue) => {
-    console.log('data: ', data);
+  const router = useRouter();
+
+  const initServerErrorMsg = () => {
+    errorMsg && setErrorMsg('');
+  };
+
+  const onSubmit = async (data: FormValue) => {
+    let response;
+    try {
+      response = await api.auth.login({ email: data.email as string, password: data.password as string });
+      response.accessToken && router.push('/boards');
+      throw Error;
+    } catch (e: any) {
+      setErrorMsg(e?.data?.message);
+    }
   };
 
   useEffect(() => {
@@ -60,19 +75,22 @@ function Login() {
         <FormInput
           label="이메일"
           register={register('email', {
-            required: NO_VALUE_ERROR,
-            pattern: { value: EMAIL_VALIDATE_PATTERN, message: EMAIL_ERROR.FORMAT_ERROR },
+            required: C.NO_VALUE_ERROR,
+            pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
+            onChange: initServerErrorMsg,
           })}
           errorMessage={errors?.email?.message}
         />
         <FormInput
           label="비밀번호"
           register={register('password', {
-            required: NO_VALUE_ERROR,
+            required: C.NO_VALUE_ERROR,
+            onChange: initServerErrorMsg,
           })}
           errorMessage={errors?.password?.message}
         />
-        <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit"></LoginButton>
+        {errorMsg && <StyledServerErrorText>{errorMsg}</StyledServerErrorText>}
+        <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit" margin="7px 0 0 "></LoginButton>
       </StyledForm>
 
       <StyledBottomTextContainer>
@@ -93,21 +111,21 @@ const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 35px;
+  gap: 40px;
   background-color: ${COLORS.GRAY_FA};
 `;
 
-const StyledLogoContainer = styled.div`
+export const StyledLogoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 22px;
   ${onMobile} {
     gap: 18px;
   }
 `;
 
-const StyledLogoImg = styled(Image)`
+export const StyledLogoImg = styled(Image)`
   margin-left: 36px;
   ${onMobile} {
     width: 100px;
@@ -115,13 +133,15 @@ const StyledLogoImg = styled(Image)`
     margin-left: 22px;
   }
 `;
-const StyledLogoText = styled(Image)`
+
+export const StyledLogoText = styled(Image)`
   ${onMobile} {
     width: 119px;
     height: 33px;
   }
 `;
-const StyledDescription = styled.h5`
+
+export const StyledDescription = styled.h5`
   ${fontStyle(20, 500)};
   margin-top: -13px;
   ${onMobile} {
@@ -129,15 +149,21 @@ const StyledDescription = styled.h5`
   }
 `;
 
-const StyledForm = styled.form`
+export const StyledForm = styled.form`
   width: min-content;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 15px;
 `;
 
 const StyledBottomTextContainer = styled.div`
-  margin-top: -12px;
+  margin-top: -15px;
+`;
+
+export const StyledLink = styled(Link)`
+  margin-left: 3px;
+  text-decoration: underline;
+  color: ${COLORS.VIOLET_55};
 `;
 
 const StyledBottomText = styled.h5`
@@ -145,8 +171,8 @@ const StyledBottomText = styled.h5`
   ${fontStyle(16, 400)}
 `;
 
-const StyledLink = styled(Link)`
-  margin-left: 3px;
-  text-decoration: underline;
-  color: ${COLORS.VIOLET_55};
+export const StyledServerErrorText = styled.p`
+  color: ${COLORS.RED_D6};
+  ${fontStyle(14, 400)};
+  margin-top: -10px;
 `;
