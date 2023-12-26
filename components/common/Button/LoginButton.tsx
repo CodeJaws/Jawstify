@@ -5,15 +5,16 @@ import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
 
 interface LoginButtonProps extends ButtonOnClickProps {
-  active: boolean;
-  type: 'login' | 'landing';
+  active?: boolean;
+  usingType: 'login' | 'landing';
   text: string;
+  type?: 'button' | 'reset' | 'submit' | undefined;
 }
 
-function LoginButton({ active, type, onClick, text }: LoginButtonProps) {
+function LoginButton({ active = false, usingType, onClick, text, type = 'button' }: LoginButtonProps) {
   return (
     <>
-      <StyledButton $type={type} disabled={active ? false : true} $active={active} onClick={onClick}>
+      <StyledButton $type={usingType} type={type} disabled={active ? false : true} $active={active} onClick={onClick}>
         {text}
       </StyledButton>
     </>
