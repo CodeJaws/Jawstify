@@ -9,10 +9,10 @@ import styled from 'styled-components';
 function MyDashBoard() {
   return (
     <StyledContainer>
-      <DashboardNavbar isMyDashboard={true} isOwner={true} title="나나나" />
+      <DashboardNavbar isMyDashboard={false} isOwner={true} title="내 대시보드" />
       <Sidebar />
       <StyledWrapper>
-        <MyDashBoardButtonBox dashboardId={1} />
+        <MyDashBoardButtonBox />
         <InviteDashBoard />
       </StyledWrapper>
     </StyledContainer>

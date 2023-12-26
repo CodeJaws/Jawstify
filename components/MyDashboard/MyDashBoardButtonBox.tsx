@@ -1,11 +1,11 @@
+import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { useState } from 'react';
 import styled from 'styled-components';
 import DashBoardAddButton from '../common/Button/DashBoardAddButton';
 import DashBoardButton from '../common/Button/DashBoardButton';
 import PaginationButton from '../common/Button/PaginationButton';
-import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
-import { useState } from 'react';
 
 const mock = [
   { id: 1, text: '일' },
