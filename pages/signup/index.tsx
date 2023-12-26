@@ -1,35 +1,61 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { useForm } from 'react-hook-form';
 import FormInput from '@/components/Input/FormInput';
-import Button from '@/components/common/Button/Button';
 import LoginButton from '@/components/common/Button/LoginButton';
 import { onMobile } from '@/styles/mediaQuery';
 import Link from 'next/link';
 import { COLORS } from '@/styles/palettes';
+import {
+  EMAIL_ERROR,
+  EMAIL_VALIDATE_PATTERN,
+  NO_VALUE_ERROR,
+  PWD_CHECK_ERROR,
+  PWD_ERROR,
+  PWD_VALIDATE_PATTERN,
+} from '@/constants/SignValidate';
+import { StyledErrorText } from '@/components/Input/Input.style';
 
-interface LoginForm {
+interface FormValue {
   email?: string;
   nickname?: string;
   password?: string;
   pwdcheck?: string;
-}
-function Login() {
-  const [values, setValues] = useState({ email: '', password: '' });
-  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
-  const { register, handleSubmit } = useForm<LoginForm>();
-
-  const onSubmit = (data: any) => {
-    setValues(data);
-    console.log('data: ', data);
-    console.log('values:', values);
+  errors: {
+    email: {
+      message: string;
+    };
+    nickname: {
+      message: string;
+    };
+    password: {
+      message: string;
+    };
+    pwdcheck: {
+      message: string;
+    };
   };
+  serverError: string;
+}
+function SignUp() {
+  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValue>();
 
-  console.log('랜더링');
+  const passwordRef = useRef<string | null | undefined>(null);
+  passwordRef.current = watch('password');
+
+  const onSubmit = (data: FormValue) => {
+    isAgreeChecked && console.log('data: ', data, 'signup success!!'); // 회원가입 성공!!
+  };
 
   return (
     <StyledContainer>
@@ -40,10 +66,36 @@ function Login() {
       </StyledLogoContainer>
 
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <FormInput label="이메일" register={register('email', { required: true })}></FormInput>
-        <FormInput label="닉네임" register={register('nickname', { required: true })}></FormInput>
-        <FormInput label="비밀번호" register={register('password', { required: true })}></FormInput>
-        <FormInput label="비밀번호 확인" register={register('pwdcheck', { required: true })}></FormInput>
+        <FormInput
+          label="이메일"
+          register={register('email', {
+            required: NO_VALUE_ERROR,
+            pattern: { value: EMAIL_VALIDATE_PATTERN, message: EMAIL_ERROR.FORMAT_ERROR },
+          })}
+          errorMessage={errors?.email?.message}
+        />
+        <FormInput
+          label="닉네임"
+          register={register('nickname', { required: NO_VALUE_ERROR })}
+          errorMessage={errors?.nickname?.message}
+        />
+        <FormInput
+          label="비밀번호"
+          register={register('password', {
+            required: NO_VALUE_ERROR,
+            pattern: { value: PWD_VALIDATE_PATTERN, message: PWD_ERROR.FORMAT_ERROR },
+            minLength: { value: 8, message: PWD_ERROR.MIN_LENGTH_ERROR },
+          })}
+          errorMessage={errors?.password?.message}
+        />
+        <FormInput
+          label="비밀번호 확인"
+          register={register('pwdcheck', {
+            required: NO_VALUE_ERROR,
+            validate: { pwdNotSame: (value) => value === passwordRef.current || PWD_CHECK_ERROR.PWD_NOT_SAME },
+          })}
+          errorMessage={errors?.pwdcheck?.message}
+        />
         <StyledCheckBoxContainer>
           <StyledCheckBox
             type="checkbox"
@@ -54,14 +106,8 @@ function Login() {
           />
           <StyledText>이용약관에 동의합니다.</StyledText>
         </StyledCheckBoxContainer>
-        <LoginButton
-          usingType="login"
-          text="로그인"
-          type="submit"
-          onClick={() => {
-            console.log('dd');
-          }}
-        ></LoginButton>
+        <LoginButton active usingType="login" text="회원가입" type="submit"></LoginButton>
+        <StyledErrorText>{errors?.serverError?.message}</StyledErrorText>
       </StyledForm>
 
       <StyledBottomTextContainer>
@@ -73,7 +119,7 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -140,6 +186,10 @@ const StyledCheckBox = styled.input`
   border-radius: 4px;
   border: 1px solid ${COLORS.GRAY_D9};
   background: ${COLORS.WHITE_FF};
+
+  &:checked {
+    background: ${COLORS.VIOLET_55};
+  }
 `;
 
 const StyledBottomTextContainer = styled.div`

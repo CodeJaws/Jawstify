@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import eyeOn from '@/public/assets/icons/eyeon.svg';
 import eyeOff from '@/public/assets/icons/eyeoff.svg';
-import { DEFAULT_PLACEHOLDER, NO_VALUE_ERROR } from '@/constants/Input';
-import { StyledInputContainer, StyledLabel, StyledInput, StyledErrorText } from './Input.style';
+import { StyledInputContainer, StyledLabel, StyledErrorText, StyledInput } from './Input.style';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { COLORS } from '@/styles/palettes';
+import { onMobile } from '@/styles/mediaQuery';
+import { fontStyle } from '@/styles/fontStyle';
+import { DEFAULT_PLACEHOLDER } from '@/constants/SignValidate';
 
 // 아래 4개의 이외의 경우 Input 사용 시 Basic Input 사용
 // Login, SignForm에 쓰이는 Input들
@@ -32,34 +35,29 @@ interface Props {
   register: UseFormRegisterReturn;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-function FormInput({ label = '', inputValue = '', placeholder, errorMessage = '', register, onChange }: Props) {
-  const [isNoValue, setIsNoValue] = useState<boolean>(false);
-  const [isVisible, setIsVisible] = useState(true);
+function FormInput({ label = '', placeholder, errorMessage = '', register }: Props) {
+  const [isVisible, setIsVisible] = useState(false);
 
   const isPassword = label.includes('비밀번호');
   const hasError = errorMessage !== '';
 
   const handleVisibility = () => setIsVisible((prev) => !prev);
 
-  const handleBlur = () => (inputValue === '' ? setIsNoValue(true) : setIsNoValue(false));
   return (
     <StyledInputContainer>
       <StyledLabel>{label}</StyledLabel>
       <StyledInput
-        type={isVisible ? 'text' : 'password'}
-        value={inputValue}
+        type={!isVisible && isPassword ? 'password' : 'text'}
         placeholder={placeholder || PLACEHOLDER[label]}
-        $error={isNoValue || hasError}
+        $error={hasError}
         {...register}
-        onChange={onChange}
-        onBlur={handleBlur}
       />
       {isPassword && (
         <StyledEyeButton onClick={handleVisibility} type="button">
-          <StyledImage src={isVisible ? eyeOn : eyeOff} width={24} height={24} alt="비밀번호 숨기기" />
+          <StyledImage src={isVisible ? eyeOff : eyeOn} width={24} height={24} alt="비밀번호 숨기기" />
         </StyledEyeButton>
       )}
-      {(isNoValue || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
+      {hasError && <StyledErrorText>{errorMessage}</StyledErrorText>}
     </StyledInputContainer>
   );
 }

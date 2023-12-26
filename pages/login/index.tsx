@@ -1,32 +1,40 @@
 import Image from 'next/image';
-import { useState } from 'react';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { useForm } from 'react-hook-form';
 import FormInput from '@/components/Input/FormInput';
-import Button from '@/components/common/Button/Button';
 import LoginButton from '@/components/common/Button/LoginButton';
 import { onMobile } from '@/styles/mediaQuery';
 import Link from 'next/link';
 import { COLORS } from '@/styles/palettes';
+import { EMAIL_ERROR, EMAIL_VALIDATE_PATTERN, NO_VALUE_ERROR, PWD_VALIDATE_PATTERN } from '@/constants/SignValidate';
 
-interface LoginForm {
+interface FormValue {
   email?: string;
   password?: string;
+  errors: {
+    email: {
+      message: string;
+    };
+    password: {
+      message: string;
+    };
+  };
+  serverError: string;
 }
 function Login() {
-  const [values, setValues] = useState({ email: '', password: '' });
-  const { register, handleSubmit } = useForm<LoginForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValue>();
 
-  const onSubmit = (data: any) => {
-    setValues(data);
+  const onSubmit = (data: FormValue) => {
+    console.log('dd');
     console.log('data: ', data);
-    console.log('values:', values);
   };
-
-  console.log('랜더링');
 
   return (
     <StyledContainer>
@@ -37,16 +45,22 @@ function Login() {
       </StyledLogoContainer>
 
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <FormInput label="이메일" register={register('email', { required: true })}></FormInput>
-        <FormInput label="비밀번호" register={register('password', { required: true })}></FormInput>
-        <LoginButton
-          usingType="login"
-          text="로그인"
-          type="submit"
-          onClick={() => {
-            console.log('dd');
-          }}
-        ></LoginButton>
+        <FormInput
+          label="이메일"
+          register={register('email', {
+            required: NO_VALUE_ERROR,
+            pattern: { value: EMAIL_VALIDATE_PATTERN, message: EMAIL_ERROR.FORMAT_ERROR },
+          })}
+          errorMessage={errors?.email?.message}
+        />
+        <FormInput
+          label="비밀번호"
+          register={register('password', {
+            required: NO_VALUE_ERROR,
+          })}
+          errorMessage={errors?.password?.message}
+        />
+        <LoginButton active usingType="login" text="로그인" type="submit"></LoginButton>
       </StyledForm>
 
       <StyledBottomTextContainer>
@@ -68,6 +82,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 35px;
+  background-color: ${COLORS.GRAY_FA};
 `;
 
 const StyledLogoContainer = styled.div`

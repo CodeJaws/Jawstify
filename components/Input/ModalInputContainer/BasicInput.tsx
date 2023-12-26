@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button/Button';
-import { NO_VALUE_ERROR } from '@/constants/Input';
+import { NO_VALUE_ERROR } from '@/constants/ModalInput';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import { MouseEvent, useState } from 'react';
