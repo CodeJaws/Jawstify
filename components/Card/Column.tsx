@@ -7,27 +7,50 @@ import { fontStyle } from '@/styles/fontStyle';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
 import { COLORS } from '@/styles/palettes';
+import React from 'react';
+import { useState } from 'react';
 
-interface ColumnProps {
-  title: string;
-}
+function Column() {
+  // const [data, setData] = useState();
+  // const { totalCount, cards } = data;
 
-function Column({ title }: ColumnProps) {
-  const handleClick = () => {
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    // 할일 생성 모달 
+    e.preventDefault();
+    console.log('할일 생성 모달');
+  }
 
+  const handlsClickSetting = (
+    e: React.MouseEvent<HTMLElement>
+  ) => {
+    // 컬럼 수정 모달
+    console.log('컬럼 수정 모달');
   }
 
   return (
     <StyledContainer>
-      <StyledSettingIconContainer>
+      <StyledSettingIconContainer onClick={handlsClickSetting}>
         <Image fill src={setting} alt='설정' />
       </StyledSettingIconContainer>
       <StyledHeader>
-        <div>{title}</div>
+        <div>Todo</div>
         <StyledCountChip content='2' />
       </StyledHeader>
       <StyledWrapper>
         <AddButton onClick={handleClick}/>
+        {/* {cards.map((card) => (
+          <li key={card.id}>
+            <Card
+              title={card.title}
+              tags={card.tags}
+              dueDate={card.dueDate}
+              assignee={card.assignee}
+              imageUrl={card.imageUrl}
+            />
+          </li>
+        ))} */}
         <Card />
       </StyledWrapper>
     </StyledContainer>

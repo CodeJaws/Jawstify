@@ -8,32 +8,9 @@ import ColumnAddButton from '@/components/common/Button/ColumnAddButton';
 import Column from '@/components/Card/Column';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 
-interface ColumnsProps {
-  id: string;
-  title: string;
-  teamId: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-const columns = [
-  {
-    id: 1,
-    title: '모달 추가하기1',
-  },
-  {
-    id: 2,
-    title: '모달 추가하기2',
-  },
-  {
-    id: 3,
-    title: '모달 추가하기3',
-  },
-];
-
 function CardTest() {
   const [isSuccess, setIsSuccess] = useState(true);
-  // const [columns, setColumns] = useState<ColumnsProps[]>([]);
+  // const [columns, setColumns] = useState([]);
   const router = useRouter();
 
   // 컬럼 목록 조회 데이터 불러오기
@@ -41,6 +18,8 @@ function CardTest() {
     // setIsSuccess((prev) => !prev)
     // setColumns에 data 넣기
   // 아니면 NotFound 페이지 이동 
+
+  // 카드 목록 조회
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement>
@@ -53,13 +32,15 @@ function CardTest() {
     <StyledContainer>
       {isSuccess && (
         <StyledWrapper>
-          {columns.map((column) => (
+          {/* {columns.map((column) => (
             <li key={column.id}>
               <Column
                 title={column.title}
+                id={column.id}
               />
             </li>
-          ))}
+          ))} */}
+          <Column />
         </StyledWrapper>
       )}
       <StyledWrapper2>

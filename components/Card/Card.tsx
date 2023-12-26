@@ -5,15 +5,22 @@ import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import calendar from '@/public/assets/icons/calendar.svg';
 import ContentChip from '../Chip/ContentChip';
+import cardImg from '@/public/assets/images/cardImage.png';
 
 function Card() {
-  return (
-    <StyledContainer>
-      <StyledImageContainer>
 
-      </StyledImageContainer>
+  const handleClickCard = () => {
+    // 카드 상세 모달 
+    console.log('카드 상세 모달');
+  }
+
+  return (
+    <StyledContainer onClick={handleClickCard}>
+      {/* <StyledImageContainer>
+        <Image src={cardImg} fill alt='카드 이미지' />
+      </StyledImageContainer> */}
       <StyledInfoContainer>
-        <StyledInfoTitle>새로운 일정 관리 Taskify</StyledInfoTitle>
+        <StyledInfoTitle>Taskify 프로젝트</StyledInfoTitle>
         <StyledInfoWrapper>
           <StyledInfoChips>
             <ContentChip text='백엔드' color='red' backgroundColor='pink' />
@@ -23,7 +30,7 @@ function Card() {
             <StyledCalendarIconContainer>
               <Image src={calendar} fill alt='캘린더 아이콘' />
             </StyledCalendarIconContainer>
-            2023.12.25
+            2024.01.05
           </StyledInfoDate>
         </StyledInfoWrapper>
       </StyledInfoContainer>
@@ -36,7 +43,9 @@ export default Card;
 
 const StyledContainer = styled.div`
   width: 284px;
-  height: 257px;
+  /* height: 257px; */
+  /* height: 97px; */
+  height: auto;
   padding: 12px;
   display: flex;
   flex-direction: column;
@@ -49,7 +58,7 @@ const StyledContainer = styled.div`
 
   ${onTablet} {
     width: 544px;
-    height: 96px;
+    /* height: 96px; */
     padding: 20px;
     flex-direction: row;
     align-items: flex-start;
@@ -58,19 +67,22 @@ const StyledContainer = styled.div`
 
   ${onPc} {
     width: 314px;
-    height: 297px;
+    /* height: 297px; */
     padding: 20px;
     gap: 12px;
   }
 `;
 
 const StyledImageContainer = styled.div`
-  border: 1px solid #000;
+  position: relative;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: 160px;
+  border-radius: 6px;
 
   ${onTablet} {
     width: 90px;
+    height: 53px;
   }
 `;
 
@@ -135,16 +147,17 @@ const StyledInfoDate = styled.div`
 
 const StyledInfoProfile = styled.span`
   grid-area: profile;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   bottom: 20px;
   right: 20px;
-  ${fontStyle(12, 600)};
+  width: 22px;
+  height: 22px;
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${fontStyle(10, 600)};
+  font-family: Montserrat;
 
 
   ${onMobile} {
