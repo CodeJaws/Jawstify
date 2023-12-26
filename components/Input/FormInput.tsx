@@ -29,7 +29,7 @@ interface Props {
   inputValue?: string;
   placeholder?: string;
   errorMessage?: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
 }
 function FormInput({ label = '', placeholder, errorMessage = '', register }: Props) {
   const [isVisible, setIsVisible] = useState(false);

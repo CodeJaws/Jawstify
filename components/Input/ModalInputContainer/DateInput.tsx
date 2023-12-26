@@ -4,7 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { Dayjs } from 'dayjs';
-import { DEFAULT_PLACEHOLDER } from '@/constants/ModalInput';
+import { DEFAULT_PLACEHOLDER } from '@/constants/SignValidate';
 import { StyledInputContainer, StyledLabel } from '../Input.style';
 
 interface Props {
