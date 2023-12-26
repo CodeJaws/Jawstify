@@ -134,7 +134,7 @@ const StyledInfoDate = styled.div`
   display: flex;
   gap: 6px;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   grid-area: date;
   ${fontStyle(12, 500)};
   color: ${COLORS.GRAY_78};
