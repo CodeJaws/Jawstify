@@ -56,4 +56,8 @@ export const reset = css`
     list-style-type: none;
     padding-left: 0;
   }
+
+  li {
+    list-style: none;
+  }
 `;
