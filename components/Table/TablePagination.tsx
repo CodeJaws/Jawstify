@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-import { onMobile } from '@/styles/mediaQuery';
 import usePagination, { InvitationItem, MembersItem } from '@/hooks/usePagination';
-import PaginationButton from '../common/Button/PaginationButton';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 import Button from '../common/Button/Button';
+import PaginationButton from '../common/Button/PaginationButton';
 import InviteButton from './InviteButton';
 
 interface TablePaginationProps {

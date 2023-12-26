@@ -1,3 +1,4 @@
+import usePagination from '@/hooks/usePagination';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -28,6 +29,12 @@ function MyDashBoardButtonBox() {
   const firstIndex = (page - 1) * limit;
   const lastIndex = firstIndex + limit;
   const currentItem = mock.slice(firstIndex, lastIndex);
+  const { handlePagination, pageNum, showItems, totalPages, totalCount } = usePagination({
+    size: 20,
+    showItemNum: 5,
+    type: 'dashboard',
+    dashboardId: 0,
+  });
 
   const totalItemCount = Object.keys(mock).length;
   const lastPages = Math.ceil(totalItemCount / 5);
@@ -57,14 +64,20 @@ function MyDashBoardButtonBox() {
             <DashBoardButton text={item.text} color="" king={true} onClick={() => {}} />
           </div>
         ))}
+        {/* {showItems.map((item, index) => (
+          <>
+            <DashBoardButton text={item. as DashboardItem} color="" king={true} onClick={() => {}} />
+            <Table key={item.id} item={item as MembersItem | InvitationItem} table={table} />
+          </>
+        ))} */}
       </ButtonBoxWrapper>
       <PaginationWrapper>
         <PaginationPage>
-          {Math.ceil(totalItemCount / 4)} 페이지 중 {page}
+          {Math.ceil(totalCount / 4)}페이지 중 {pageNum}
         </PaginationPage>
         <PaginationInWrapper>
-          <PaginationButton active={page !== 1} direction="left" onClick={handleLastPage} />
-          <PaginationButton active={page !== lastPages} direction="right" onClick={handleNextPage} />
+          <PaginationButton active={page !== 1} direction="left" onClick={() => handlePagination(-1)} />
+          <PaginationButton active={page !== lastPages} direction="right" onClick={() => handlePagination(1)} />
         </PaginationInWrapper>
       </PaginationWrapper>
     </div>

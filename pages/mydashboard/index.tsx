@@ -1,12 +1,31 @@
-import DashboardNavbar from '@/components/Dashboard/DashboardNavbar';
+import API from '@/apis/api';
+import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import MyDashBoardButtonBox from '@/components/MyDashboard/MyDashBoardButtonBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDashBoard from '@/components/Table/InviteDashBoard';
+import usePagination from '@/hooks/usePagination';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { localStorageSetItem } from '@/utils/localStorage';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 function MyDashBoard() {
+  const loginFunc = async () => {
+    const a = await API.auth.login({ email: 'test1@codeit.com', password: 'test12345' });
+    localStorageSetItem('accessToken', a.accessToken);
+  };
+
+  const { handlePagination, pageNum, showItems, totalPages, totalCount } = usePagination({
+    size: 20,
+    showItemNum: 4,
+    type: 'members',
+    dashboardId: 0,
+  });
+
+  useEffect(() => {
+    loginFunc();
+  }, []);
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} isOwner={true} title="내 대시보드" />

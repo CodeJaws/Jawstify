@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import API from '@/apis/api';
 import DEFAULT_IMAGE from '@/public/assets/icons/PinkEllipse.svg';
+import { useEffect, useState } from 'react';
 
 /** 대시보드 멤버 목록 조회를 통해 나온 정보들 - 이것도 나중에 정보를 받으면 수정 될듯 합니다*/
 const DEFAULT_INFO_OF_MEMBERS = [
@@ -182,8 +183,9 @@ const usePagination = ({
         // 초대 내역 API 요청
         //   setAllItems(prev => [...prev, 받은 데이터])
       } else if (type === 'dashboard') {
-        // 대시보드 API 요청
-        //   setAllItems(prev => [...prev, 받은 데이터])
+        // const dashboardFunc = async () => {
+        //   const a = await API.dashboard.getDashboardList({navigationMethod:'pagination', page:pageNum + num})
+        // }
       }
       setAllItems((prev) => [...prev, ...DEFAULT_ADD_MEMBERS] as AllItemTypes<typeof type>);
     }
@@ -200,6 +202,10 @@ const usePagination = ({
       setAllItems(DEFAULT_INFO_OF_MEMBERS);
       setShowItems(DEFAULT_INFO_OF_MEMBERS.slice(0, showItemNum));
       setTotalCount(9); // 전체 아이템 수 - API에서 받아올 수 있습니다.(24는 DEFAULT 값입니다.)
+      const a = await API.dashboard.getDashboardList({ navigationMethod: 'pagination' });
+      console.log(a);
+      const b = await API.dashboard.getDashboardDetailed({ dashboardId: String(203) });
+      console.log(b);
     };
 
     if (allItems.length === 0) {
