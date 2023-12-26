@@ -467,7 +467,7 @@ export interface GetMyInfoItem {
 
 export interface CorrectMyInfoProps {
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageUrl: string | ArrayBuffer | null;
 }
 
 export interface CorrectMyInfoItem {
