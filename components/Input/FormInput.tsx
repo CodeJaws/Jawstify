@@ -41,7 +41,7 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
 
   return (
     <StyledInputContainer>
-      <StyledLabel>{label}</StyledLabel>
+      <StyledFormLabel>{label}</StyledFormLabel>
       <StyledInput
         type={!isVisible && isPassword ? 'password' : 'text'}
         placeholder={placeholder || PLACEHOLDER[label]}
@@ -60,6 +60,9 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
 
 export default FormInput;
 
+const StyledFormLabel = styled(StyledLabel)`
+  font-size: 16px;
+`;
 const StyledImage = styled(Image)`
   border: none;
 `;
