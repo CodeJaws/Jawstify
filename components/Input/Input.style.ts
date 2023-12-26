@@ -26,6 +26,12 @@ export const StyledInput = styled.input<{ $error: boolean }>`
     outline: none;
   }
 
+  &:disabled {
+    color: ${COLORS.GRAY_9F};
+    border: 1px solid ${COLORS.GRAY_D9};
+    background: ${COLORS.WHITE_FF};
+  }
+
   ${onMobile} {
     padding: 13px 16px;
   }
