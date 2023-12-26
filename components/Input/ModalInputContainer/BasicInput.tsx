@@ -15,6 +15,7 @@ interface Props {
   isTextArea?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
+  disabled?: boolean;
 }
 
 /**
@@ -27,6 +28,7 @@ interface Props {
  * @param isTextArea textArea 여부, true일 경우 input 대신 textarea return
  * @param onChange 부모 컴포넌트에서 제어하는 input onChange 함수
  * @param onButtonClick Comment로 쓸 때 Input 안에 있는 버튼의 onClick prop
+ * @param disabled input을 disabled 합니다.
  * */
 function BasicInput({
   label = '',
@@ -37,6 +39,7 @@ function BasicInput({
   isTextArea = false,
   onChange,
   onButtonClick = (e) => {},
+  disabled = false,
 }: Props) {
   const [isNoValue, setIsNoValue] = useState<boolean>(false);
 
@@ -69,6 +72,7 @@ function BasicInput({
           $error={isNoValue || hasError}
           onChange={onChange}
           onBlur={handleBlur}
+          disabled={disabled}
         />
       )}
       {isComment && (
