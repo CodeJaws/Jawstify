@@ -31,7 +31,6 @@ interface FormValue {
       message: string;
     };
   };
-  extraError: string;
 }
 function SignUp() {
   const {
