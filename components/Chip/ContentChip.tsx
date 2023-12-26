@@ -1,17 +1,19 @@
 import { onMobile } from '@/styles/mediaQuery';
-
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface ChipProps {
   text: string;
   color: string;
   backgroundColor: string;
+  children?: ReactNode;
 }
 
-function ContentChip({ text, color, backgroundColor }: ChipProps) {
+function ContentChip({ text, color, backgroundColor, children }: ChipProps) {
   return (
     <StyledContainer $color={color} $background={backgroundColor}>
       {text}
+      {children}
     </StyledContainer>
   );
 }

@@ -9,7 +9,7 @@ interface TwinButtonProps {
   isViolet?: boolean;
   size: 'large' | 'small';
   children?: ReactNode;
-  className: string;
+  className?: string;
   onLeftClick: (e: MouseEvent<HTMLElement>) => void;
   onRightClick: (e: MouseEvent<HTMLElement>) => void;
 }

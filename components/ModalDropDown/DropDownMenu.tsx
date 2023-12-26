@@ -111,7 +111,7 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 6px;
   padding: 0.5rem;
-
+  width: 100%;
   &:hover {
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.08);
