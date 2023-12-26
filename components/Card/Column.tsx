@@ -85,6 +85,7 @@ const StyledSettingIconContainer = styled.div`
   height: 24px;
   right: 20px;
   top: 20px;
+  cursor: pointer;
   
   ${onMobile} {
     width: 22px; 

@@ -56,6 +56,7 @@ const StyledContainer = styled.div`
   border: 1px solid ${COLORS.GRAY_D9};
   background: ${COLORS.WHITE_FF};
   position: relative;
+  cursor: pointer;
 
   ${onTablet} {
     width: 544px;
