@@ -9,12 +9,20 @@ interface LoginButtonProps extends ButtonOnClickProps {
   usingType: 'login' | 'landing';
   text: string;
   type?: 'button' | 'reset' | 'submit' | undefined;
+  margin?: string;
 }
 
-function LoginButton({ active = false, usingType, onClick, text, type = 'button' }: LoginButtonProps) {
+function LoginButton({ active = false, usingType, onClick, text, type = 'button', margin = '0px' }: LoginButtonProps) {
   return (
     <>
-      <StyledButton $type={usingType} type={type} disabled={active ? false : true} $active={active} onClick={onClick}>
+      <StyledButton
+        $type={usingType}
+        type={type}
+        disabled={active ? false : true}
+        $active={active}
+        $margin={margin}
+        onClick={onClick}
+      >
         {text}
       </StyledButton>
     </>
@@ -23,13 +31,14 @@ function LoginButton({ active = false, usingType, onClick, text, type = 'button'
 
 export default LoginButton;
 
-const StyledButton = styled.button<{ $active: boolean; $type: string }>`
+const StyledButton = styled.button<{ $active: boolean; $type: string; $margin: string }>`
   width: 520px;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin: ${({ $margin }) => $margin};
   border-radius: 8px;
   background: ${({ $active }) => ($active ? COLORS.VIOLET_55 : COLORS.GRAY_9F)};
   color: ${COLORS.WHITE_FF};
