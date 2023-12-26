@@ -6,6 +6,7 @@ import { COLORS } from '@/styles/palettes';
 import calendar from '@/public/assets/icons/calendar.svg';
 import ContentChip from '../Chip/ContentChip';
 import cardImg from '@/public/assets/images/cardImage.png';
+import profileImg from '@/public/assets/icons/GreenEllipse.svg';
 
 function Card() {
 
@@ -34,7 +35,7 @@ function Card() {
           </StyledInfoDate>
         </StyledInfoWrapper>
       </StyledInfoContainer>
-      <StyledInfoProfile>B</StyledInfoProfile>
+      <StyledInfoProfile></StyledInfoProfile>
     </StyledContainer>
   );
 }
@@ -145,20 +146,20 @@ const StyledInfoDate = styled.div`
   }
 `;
 
-const StyledInfoProfile = styled.span`
+const StyledInfoProfile = styled.div`
   grid-area: profile;
   position: absolute;
   bottom: 20px;
   right: 20px;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%; 
   display: flex;
   justify-content: center;
   align-items: center;
   ${fontStyle(10, 600)};
   font-family: Montserrat;
-
+  background: url(${profileImg.src}) no-repeat center center;
 
   ${onMobile} {
     width: 22px;
