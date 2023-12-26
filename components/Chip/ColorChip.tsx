@@ -26,11 +26,13 @@ function ColorChip() {
     setSelectedColor((prevSelectedColor) => (prevSelectedColor === index ? -1 : index));
   };
 
+  console.log(selectedColor);
+
   return (
     <StyledContainer>
-      {ColorEllipse.map((val) => (
-        <StyledButton key={val.id} onClick={() => toggleSelectedColor(val.id)}>
-          {selectedColor === val.id && <StyledCheckImage src={Check} alt="체크" />}
+      {ColorEllipse.map((val, index) => (
+        <StyledButton key={val.id} onClick={() => toggleSelectedColor(index)}>
+          {selectedColor === index && <StyledCheckImage width={24} height={24} src={Check} alt="체크" />}
           <StyledImage width={30} height={30} src={val.src} alt={val.alt} />
         </StyledButton>
       ))}
@@ -56,6 +58,11 @@ const StyledButton = styled.button`
 
 const StyledCheckImage = styled(Image)`
   position: absolute;
+
+  ${onMobile} {
+    width: 22px;
+    height: 22px;
+  }
 `;
 
 const StyledImage = styled(Image)`
