@@ -1,4 +1,4 @@
-import DashboardNavbar from '@/components/Dashboard/DashboardNavbar';
+import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
 import Sidebar from '@/components/Sidebar/Sidebar';

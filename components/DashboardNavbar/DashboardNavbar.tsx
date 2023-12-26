@@ -123,6 +123,9 @@ const StyledTitleContainer = styled.div`
   }
   ${onMobile} {
     margin-left: 91px;
+    h3 {
+      ${fontStyle(18, 700)}
+    }
   }
   h3 {
     color: ${COLORS.BLACK_33};
@@ -142,17 +145,6 @@ const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
   background-color: ${COLORS.WHITE_FF};
   z-index: 2;
 
-  h3 {
-    ${onPc} {
-      margin-left: 40px;
-    }
-    ${onTablet} {
-      margin-left: 40px;
-    }
-    ${onMobile} {
-      margin-left: 24px;
-    }
-  }
   justify-content: ${({ $isMyDashboard }) => ($isMyDashboard ? 'space-between' : 'flex-end')};
 
   ${onPc} {
