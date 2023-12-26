@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import styled from 'styled-components';
@@ -42,7 +42,6 @@ interface FormValue {
   serverError: string;
 }
 function SignUp() {
-  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -50,12 +49,24 @@ function SignUp() {
     formState: { errors },
   } = useForm<FormValue>();
 
+  const watchInputsEmpty = Object.values(watch());
+  const [isBtnActive, setIsBtnActive] = useState(false);
+  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
+
   const passwordRef = useRef<string | null | undefined>(null);
   passwordRef.current = watch('password');
 
   const onSubmit = (data: FormValue) => {
     isAgreeChecked && console.log('data: ', data, 'signup success!!'); // 회원가입 성공!!
   };
+
+  useEffect(() => {
+    if (watchInputsEmpty.every((inputEl) => inputEl)) {
+      setIsBtnActive(true);
+    } else {
+      setIsBtnActive(false);
+    }
+  }, [watchInputsEmpty]);
 
   return (
     <StyledContainer>
@@ -106,13 +117,13 @@ function SignUp() {
           />
           <StyledText>이용약관에 동의합니다.</StyledText>
         </StyledCheckBoxContainer>
-        <LoginButton active usingType="login" text="회원가입" type="submit"></LoginButton>
+        <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit"></LoginButton>
         <StyledErrorText>{errors?.serverError?.message}</StyledErrorText>
       </StyledForm>
 
       <StyledBottomTextContainer>
         <StyledText>
-          이미 가입하셨나요? <StyledLink href="/">로그인하기</StyledLink>
+          이미 가입하셨나요? <StyledLink href="/login">로그인하기</StyledLink>
         </StyledText>
       </StyledBottomTextContainer>
     </StyledContainer>

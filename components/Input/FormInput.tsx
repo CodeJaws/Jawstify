@@ -1,13 +1,10 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import eyeOn from '@/public/assets/icons/eyeon.svg';
 import eyeOff from '@/public/assets/icons/eyeoff.svg';
 import { StyledInputContainer, StyledLabel, StyledErrorText, StyledInput } from './Input.style';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { COLORS } from '@/styles/palettes';
-import { onMobile } from '@/styles/mediaQuery';
-import { fontStyle } from '@/styles/fontStyle';
 import { DEFAULT_PLACEHOLDER } from '@/constants/SignValidate';
 
 // 아래 4개의 이외의 경우 Input 사용 시 Basic Input 사용
@@ -33,7 +30,6 @@ interface Props {
   placeholder?: string;
   errorMessage?: string;
   register: UseFormRegisterReturn;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 function FormInput({ label = '', placeholder, errorMessage = '', register }: Props) {
   const [isVisible, setIsVisible] = useState(false);

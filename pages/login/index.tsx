@@ -10,6 +10,7 @@ import { onMobile } from '@/styles/mediaQuery';
 import Link from 'next/link';
 import { COLORS } from '@/styles/palettes';
 import { EMAIL_ERROR, EMAIL_VALIDATE_PATTERN, NO_VALUE_ERROR, PWD_VALIDATE_PATTERN } from '@/constants/SignValidate';
+import { useEffect, useState } from 'react';
 
 interface FormValue {
   email?: string;
@@ -28,13 +29,24 @@ function Login() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormValue>();
 
+  const watchInputsEmpty = Object.values(watch());
+  const [isBtnActive, setIsBtnActive] = useState(false);
+
   const onSubmit = (data: FormValue) => {
-    console.log('dd');
     console.log('data: ', data);
   };
+
+  useEffect(() => {
+    if (watchInputsEmpty.every((inputEl) => inputEl)) {
+      setIsBtnActive(true);
+    } else {
+      setIsBtnActive(false);
+    }
+  }, [watchInputsEmpty]);
 
   return (
     <StyledContainer>
@@ -60,12 +72,12 @@ function Login() {
           })}
           errorMessage={errors?.password?.message}
         />
-        <LoginButton active usingType="login" text="로그인" type="submit"></LoginButton>
+        <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit"></LoginButton>
       </StyledForm>
 
       <StyledBottomTextContainer>
         <StyledBottomText>
-          회원이 아니신가요? <StyledLink href="/">회원가입하기</StyledLink>
+          회원이 아니신가요? <StyledLink href="/signup">회원가입하기</StyledLink>
         </StyledBottomText>
       </StyledBottomTextContainer>
     </StyledContainer>
