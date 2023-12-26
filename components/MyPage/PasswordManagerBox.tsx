@@ -143,8 +143,3 @@ const StyledButton = styled(Button)`
     gap: 16px;
   }
 `;
-
-const StyledErrorMsg = styled.p`
-  color: ${COLORS.RED_D6};
-  ${fontStyle(14, 400)};
-`;
