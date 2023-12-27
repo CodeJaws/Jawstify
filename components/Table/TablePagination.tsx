@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-import { onMobile } from '@/styles/mediaQuery';
 import usePagination, { InvitationItem, MembersItem } from '@/hooks/usePagination';
-import PaginationButton from '../common/Button/PaginationButton';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 import Button from '../common/Button/Button';
+import PaginationButton from '../common/Button/PaginationButton';
 import InviteButton from './InviteButton';
 
 interface TablePaginationProps {
@@ -26,7 +26,7 @@ function Table({ item, table }: TableProps) {
   let itemName;
 
   if (table === 'members' && 'nickname' in item) {
-    profileImg = item.profileImageUrl;
+    profileImg = item.profileImageUrl as string;
     buttonName = '삭제';
     itemName = item?.nickname;
   } else if ('invitee' in item && item.invitee) {

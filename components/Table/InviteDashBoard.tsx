@@ -6,8 +6,9 @@ import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
+import NoContent from '@/public/assets/images/NoContent.png';
 
 const mock = [
   {
@@ -115,7 +116,9 @@ function InviteDashBoard() {
   const fetchHasMore = () => {
     if (dataSource.length < 18) {
       setTimeout(() => {
-        setDataSource((prev) => [...prev, ...addMock]);
+        if (dataSource.length !== 0) {
+          setDataSource((prev) => [...prev, ...addMock]);
+        }
       }, 500);
     } else {
       setHasMore(false);
@@ -128,78 +131,95 @@ function InviteDashBoard() {
 
   const showItems = dataSource.filter((item) => item.name.includes(searchText));
   return (
-    <StyledDiv>
+    <StyledDiv $data={mock}>
       <StyledP>초대받은 대시보드</StyledP>
-      <StyledInputDiv>
-        <label htmlFor="search">
-          <StyledSearchImage src={search} alt="search" />
-        </label>
-        <StyledInput id="search" placeholder="검색" onChange={handleChange} />
-      </StyledInputDiv>
-      {!(windowSize === 'mobile') && windowSize !== undefined && (
-        <StyledWrapper>
-          <StyledInWrapper>이름</StyledInWrapper>
-          <StyledInWrapper>초대자</StyledInWrapper>
-          <StyledInWrapper>수락 여부</StyledInWrapper>
-        </StyledWrapper>
-      )}
-      <Div>
-        <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
-          {showItems.length !== 0 ? (
-            showItems.map((item) => {
-              return (
-                <div key={item.id}>
-                  {windowSize === 'mobile' && (
-                    <>
-                      <StyledMobileContainer>
-                        <StyledMobileLeftDiv>
-                          <div>이름</div>
-                          <div>초대자</div>
-                        </StyledMobileLeftDiv>
-                        <StyledMobileRightDiv>
-                          <div>{item.name}</div>
-                          <div>{item.inviter}</div>
-                        </StyledMobileRightDiv>
-                      </StyledMobileContainer>
-                      <StyledMobileButtonWrapper>
-                        <TwinButton
-                          text1="수락"
-                          text2="거절"
-                          isViolet={true}
-                          size="small"
-                          className="temp1"
-                          onLeftClick={() => {}}
-                          onRightClick={() => {}}
-                        />
-                      </StyledMobileButtonWrapper>
-                    </>
-                  )}
-                  {width && (
-                    <StyleListWrapper>
-                      <StyledListInWrapper>{item.name}</StyledListInWrapper>
-                      <StyledListInWrapper>{item.inviter}</StyledListInWrapper>
-                      <StyledListInWrapper>
-                        <TwinButton
-                          text1="수락"
-                          text2="거절"
-                          isViolet={true}
-                          size="small"
-                          className="temp2"
-                          onLeftClick={() => {}}
-                          onRightClick={() => {}}
-                        />
-                      </StyledListInWrapper>
-                    </StyleListWrapper>
-                  )}
-                  <StyledHr />
-                </div>
-              );
-            })
-          ) : (
-            <StyledErrorDiv>검색 결과가 없습니다.</StyledErrorDiv>
+      {dataSource.length !== 0 ? (
+        <div>
+          <StyledInputDiv>
+            <label htmlFor="search">
+              <StyledSearchImage src={search} alt="search" />
+            </label>
+            <StyledInput id="search" placeholder="검색" onChange={handleChange} />
+          </StyledInputDiv>
+          {!(windowSize === 'mobile') && windowSize !== undefined && (
+            <StyledWrapper>
+              <StyledInWrapper>이름</StyledInWrapper>
+              <StyledInWrapper>초대자</StyledInWrapper>
+              <StyledInWrapper>수락 여부</StyledInWrapper>
+            </StyledWrapper>
           )}
-        </InfiniteScroll>
-      </Div>
+          <Div>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={fetchHasMore}
+              hasMore={hasMore}
+              useWindow={false}
+              initialLoad={false}
+            >
+              {showItems.length !== 0 ? (
+                showItems.map((item) => {
+                  return (
+                    <div key={item.id}>
+                      {windowSize === 'mobile' && (
+                        <>
+                          <StyledMobileContainer>
+                            <StyledMobileLeftDiv>
+                              <div>이름</div>
+                              <div>초대자</div>
+                            </StyledMobileLeftDiv>
+                            <StyledMobileRightDiv>
+                              <div>{item.name}</div>
+                              <div>{item.inviter}</div>
+                            </StyledMobileRightDiv>
+                          </StyledMobileContainer>
+                          <StyledMobileButtonWrapper>
+                            <TwinButton
+                              text1="수락"
+                              text2="거절"
+                              isViolet={true}
+                              size="small"
+                              className="temp1"
+                              onLeftClick={() => {}}
+                              onRightClick={() => {}}
+                            />
+                          </StyledMobileButtonWrapper>
+                        </>
+                      )}
+                      {width && (
+                        <StyleListWrapper>
+                          <StyledListInWrapper>{item.name}</StyledListInWrapper>
+                          <StyledListInWrapper>{item.inviter}</StyledListInWrapper>
+                          <StyledListInWrapper>
+                            <TwinButton
+                              text1="수락"
+                              text2="거절"
+                              isViolet={true}
+                              size="small"
+                              className="temp2"
+                              onLeftClick={() => {}}
+                              onRightClick={() => {}}
+                            />
+                          </StyledListInWrapper>
+                        </StyleListWrapper>
+                      )}
+                      <StyledHr />
+                    </div>
+                  );
+                })
+              ) : (
+                <StyledErrorDiv>검색 결과가 없습니다.</StyledErrorDiv>
+              )}
+            </InfiniteScroll>
+          </Div>
+        </div>
+      ) : (
+        <>
+          <NoContentContainer>
+            <NoContentImage src={NoContent} alt="없는컨텐츠" />
+            <NoContentDiv>아직 초대받은 대시보드가 없어요</NoContentDiv>
+          </NoContentContainer>
+        </>
+      )}
     </StyledDiv>
   );
 }
@@ -222,7 +242,7 @@ const Div = styled.div`
   }
 `;
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.div<{ $data: any }>`
   width: 1023px;
   height: 600px;
   border-radius: 8px;
@@ -236,6 +256,18 @@ const StyledDiv = styled.div`
     width: 260px;
     height: 836px;
   }
+
+  ${({ $data }) =>
+    Object.keys($data).length == 0 &&
+    css`
+      height: 400px;
+      ${onTablet} {
+        height: 400px;
+      }
+      ${onMobile} {
+        height: 400px;
+      }
+    `}
 `;
 
 const StyledP = styled.p`
@@ -378,4 +410,36 @@ const StyledErrorDiv = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 31px;
+`;
+
+const NoContentContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-bottom: 122px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  ${onMobile} {
+    padding-bottom: 96px;
+    gap: 16px;
+  }
+`;
+
+const NoContentImage = styled(Image)`
+  width: 100px;
+  height: 100px;
+  ${onMobile} {
+    width: 60px;
+    height: 60px;
+  }
+`;
+
+const NoContentDiv = styled.div`
+  color: ${COLORS.GRAY_9F};
+  ${fontStyle(18, 400)}
+  ${onMobile} {
+    font-size: 14px;
+  }
 `;
