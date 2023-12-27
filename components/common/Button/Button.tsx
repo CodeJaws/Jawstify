@@ -9,7 +9,7 @@ interface ButtonProps extends ButtonOnClickProps {
   isViolet?: boolean;
   size: 'large' | 'small';
   children?: ReactNode;
-  className: string;
+  className?: string;
 }
 
 function Button({ text, isViolet = false, size, children, className, onClick }: ButtonProps) {

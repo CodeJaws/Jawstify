@@ -11,7 +11,7 @@ function Comment() {
   const { userProfileImg, userName, createdAt, comment } = useContext(ModalContext);
   return (
     <StyledContainer>
-      <BasicInput label="댓글" />
+      <BasicInput onChange={() => {}} label="댓글" />
       <StyledInCommentWrapper>
         <StyledImage width={34} height={34} src={userProfileImg} alt="프로필 이미지" />
         <StyledCommentContent>

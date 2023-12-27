@@ -16,9 +16,9 @@ function PasswordManagerBox() {
     <StyledContainer>
       <StyledTitle>비밀번호 변경</StyledTitle>
       <StyledWrapper>
-        <BasicInput label="현재 비밀번호" placeholder="현재 비밀번호 입력" />
-        <BasicInput label="새 비밀번호" placeholder="새 비밀번호 입력" />
-        <BasicInput label="새 비밀번호 확인" placeholder="새 비밀번호 확인 입력" />
+        <BasicInput label="현재 비밀번호" placeholder="현재 비밀번호 입력" onChange={() => {}} />
+        <BasicInput label="새 비밀번호" placeholder="새 비밀번호 입력" onChange={() => {}} />
+        <BasicInput label="새 비밀번호 확인" placeholder="새 비밀번호 확인 입력" onChange={() => {}} />
         <StyledButton text={'변경'} size={'small'} isViolet={true} onClick={handleSave} className={''} />
       </StyledWrapper>
     </StyledContainer>
