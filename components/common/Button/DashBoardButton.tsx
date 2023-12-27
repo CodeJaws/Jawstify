@@ -1,5 +1,4 @@
 import crown from '@/public/assets/icons/crown.svg';
-import greenCircle from '@/public/assets/icons/greenCircle.svg';
 import rightPage from '@/public/assets/icons/rightPage.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
@@ -16,7 +15,7 @@ interface DashBoardButtonProps extends ButtonOnClickProps {
 
 /**
  * @param text 대시보드 제목
- * @param color 대시보드 ellipse color -> 입맛대로 바꾸시면 될 듯 합니다!
+ * @param color 대시보드 ellipse color
  * @param king 대시보드 생성자 여부 boolean
  */
 function DashBoardButton({ text, color, king, onClick }: DashBoardButtonProps) {
@@ -25,7 +24,7 @@ function DashBoardButton({ text, color, king, onClick }: DashBoardButtonProps) {
       <StyledButton onClick={onClick}>
         <StyledWrapper>
           <StyledDiv>
-            <StyledCircleImage src={greenCircle} alt="초록원" />
+            <StyledCircleWrapper $color={color}></StyledCircleWrapper>
             <StyledInDiv>
               {text}
               {king && <CrownImage src={crown} alt="왕관" />}
@@ -107,4 +106,11 @@ const StyledCircleImage = styled(Image)`
 const StyledPageImage = styled(Image)`
   width: 18px;
   height: 18px;
+`;
+
+const StyledCircleWrapper = styled.div<{ $color: string }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background-color: ${({ $color }) => $color};
 `;
