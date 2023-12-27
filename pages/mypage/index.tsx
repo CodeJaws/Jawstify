@@ -1,5 +1,5 @@
 import api from '@/apis/api';
-import DashboardNavbar from '@/components/Dashboard/DashboardNavbar';
+import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
@@ -13,8 +13,8 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 // 테스트용
-const email = 'test3@codeit.com';
-const password = 'test1234';
+const email = 'test2@codeit.com';
+const password = 'test12345';
 
 function MyPage() {
   const [testEmail, setTestEmail] = useState('');
