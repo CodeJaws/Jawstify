@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+import API from '@/apis/api';
 import crown from '@/public/assets/icons/crown.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { useEffect, useState } from 'react';
 
 /**
  * Page 작성 시 맞는 Type으로 수정해야 하는 부분입니다. */
@@ -26,6 +28,8 @@ interface DashboardProps {
   };
 }
 
+// interface DashBoardProps
+
 function Dashboard({ item }: DashboardProps) {
   const DEFAULT_BOARD_ID = 1; // 주소창의 dashboardId를 받기
 
@@ -44,13 +48,44 @@ function Dashboard({ item }: DashboardProps) {
   );
 }
 
-function DashboardGroup({ group }: DashboardGroupProps) {
+function DashboardGroup({ firstId }: number) {
+  const [dataSource, setDataSource] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+
+  const getItems = async () => {
+    const a = await API.dashboard.getDashboardList({ navigationMethod: 'infiniteScroll' });
+    // setDataSource(a.dashboards);
+    console.log(a);
+  };
+
+  const fetchHasMore = () => {
+    if (dataSource.length < 18) {
+      setTimeout(() => {
+        if (dataSource.length !== 0) {
+          // setDataSource((prev) => [...prev, ...addMock]);
+        }
+      }, 500);
+    } else {
+      setHasMore(false);
+    }
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
   return (
-    <StyledDashboardGroupContainer>
-      {group.map((board) => (
-        <Dashboard key={board.id} item={board} />
-      ))}
-    </StyledDashboardGroupContainer>
+    <></>
+    // <StyledDashboardGroupContainer>
+    //   <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
+    //     {/* {group.map((board) => (
+    //     <Dashboard key={board.id} item={board} />
+    //   ))} */}
+    //   </InfiniteScroll>
+    //   {/* {group.map((board) => (
+    //     <Dashboard key={board.id} item={board} />
+    //   ))} */}
+    // </StyledDashboardGroupContainer>
   );
 }
 

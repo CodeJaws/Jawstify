@@ -1,23 +1,14 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-
 import Logo from '@/public/assets/icons/LogoSidebar.svg';
 import LogoTitle from '@/public/assets/icons/LogoSidebarTitle.svg';
 import AddBox from '@/public/assets/icons/invite.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import DashboardGroup from './DashboardGroup';
+import Image from 'next/image';
+import styled from 'styled-components';
+import DashboardTest from './DashboardTest';
 
 /** 대시보드 목록 조회를 통해 얻은 대시보드들의 정보들 */
-const DEFAULT_DASHBOARDS = [
-  {
-    id: 1,
-    name: '중요 문서함',
-    color: 'pink',
-    createdByMe: true,
-  },
-];
 
 function Sidebar() {
   return (
@@ -32,7 +23,8 @@ function Sidebar() {
           <Image width={20} height={20} src={AddBox} alt="추가하기" />
         </button>
       </StyledTitleWrapper>
-      <DashboardGroup group={DEFAULT_DASHBOARDS} />
+      {/* <DashboardGroup /> */}
+      <DashboardTest />
     </StyledContainer>
   );
 }
