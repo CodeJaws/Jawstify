@@ -1,14 +1,16 @@
+import API from '@/apis/api';
 import useDeviceType from '@/hooks/useDeviceType';
 import search from '@/public/assets/icons/Search.svg';
+import NoContent from '@/public/assets/images/NoContent.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { InviteDashboardItem } from '@/types/api';
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
-import NoContent from '@/public/assets/images/NoContent.png';
 
 const mock = [
   {
@@ -107,7 +109,7 @@ const addMock = [
 ];
 
 function InviteDashBoard() {
-  const [dataSource, setDataSource] = useState(mock);
+  const [dataSource, setDataSource] = useState<InviteDashboardItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [searchText, setSearchText] = useState('');
   const windowSize = useDeviceType();
@@ -115,19 +117,37 @@ function InviteDashBoard() {
 
   const fetchHasMore = () => {
     if (dataSource.length < 18) {
-      setTimeout(() => {
+     
         if (dataSource.length !== 0) {
-          setDataSource((prev) => [...prev, ...addMock]);
+          setDataSource((prev) => [...prev,...]);
         }
-      }, 500);
+    
     } else {
       setHasMore(false);
     }
   };
 
+  const handleLoadMore = async (dashboardPage: number) => {
+    const b = await API.dashboard.getDashboardList({
+      navigationMethod: 'pagination',
+      page: dashboardPage,
+      size: 18,
+    });
+    setDataSource((prev) => [...prev, ...b.dashboards]);
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
+
+  const getItems = async () => {
+    const a = await API.invitations.getInvitationList({});
+    setDataSource(a.invitations);
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
 
   const showItems = dataSource.filter((item) => item.name.includes(searchText));
   return (

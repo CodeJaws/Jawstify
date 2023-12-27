@@ -2,11 +2,11 @@ import usePagination from '@/hooks/usePagination';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { DashboardType } from '@/types/apiType';
 import styled from 'styled-components';
 import DashBoardAddButton from '../common/Button/DashBoardAddButton';
 import DashBoardButton from '../common/Button/DashBoardButton';
 import PaginationButton from '../common/Button/PaginationButton';
-import { DashboardType } from '@/types/apiType';
 
 const mock = [
   { id: 1, text: '일' },

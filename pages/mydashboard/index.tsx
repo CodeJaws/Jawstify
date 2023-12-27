@@ -3,7 +3,6 @@ import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import MyDashBoardButtonBox from '@/components/MyDashboard/MyDashBoardButtonBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDashBoard from '@/components/Table/InviteDashBoard';
-import usePagination from '@/hooks/usePagination';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { localStorageSetItem } from '@/utils/localStorage';
@@ -12,7 +11,7 @@ import styled from 'styled-components';
 
 function MyDashBoard() {
   const loginFunc = async () => {
-    const a = await API.auth.login({ email: 'test10@codeit.com', password: 'test12345' });
+    const a = await API.auth.login({ email: 'test1@codeit.com', password: 'test12345' });
     localStorageSetItem('accessToken', a.accessToken);
   };
   const dashboardId = 203; // 대시보드 아이디 여기 수정하면 됩니다
