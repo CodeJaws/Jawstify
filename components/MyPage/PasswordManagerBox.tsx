@@ -1,5 +1,11 @@
 import api from '@/apis/api';
-import { EQUAL_NOW_PWD, NEW_PWD_EIGHT, NEW_PWD_INPUT, NOW_PWD_NOT_MATCH, PWD_EIGHT } from '@/constants/ErrorMsg';
+import {
+  EQUAL_NOW_PWD_ERROR,
+  NEW_PWD_EIGHT_ERROR,
+  NEW_PWD_INPUT_ERROR,
+  NOW_PWD_NOT_MATCH_ERROR,
+  PWD_EIGHT_ERROR,
+} from '@/constants/ErrorMsg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -43,20 +49,20 @@ function PasswordManagerBox() {
       await api.auth.changePassword({ password, newPassword }).then(() => alert('비밀번호 변경 완료 🔑'));
     } catch (error: any) {
       switch (error.data.message) {
-        case PWD_EIGHT:
-          setError('password', { message: PWD_EIGHT });
+        case PWD_EIGHT_ERROR:
+          setError('password', { message: PWD_EIGHT_ERROR });
           break;
-        case NOW_PWD_NOT_MATCH:
-          setError('password', { message: NOW_PWD_NOT_MATCH });
+        case NOW_PWD_NOT_MATCH_ERROR:
+          setError('password', { message: NOW_PWD_NOT_MATCH_ERROR });
           break;
-        case NEW_PWD_EIGHT:
-          setError('newPassword', { message: NEW_PWD_EIGHT });
+        case NEW_PWD_EIGHT_ERROR:
+          setError('newPassword', { message: NEW_PWD_EIGHT_ERROR });
           break;
-        case NEW_PWD_INPUT:
-          setError('newPassword', { message: NEW_PWD_INPUT });
+        case NEW_PWD_INPUT_ERROR:
+          setError('newPassword', { message: NEW_PWD_INPUT_ERROR });
           break;
-        case EQUAL_NOW_PWD:
-          setError('newPassword', { message: EQUAL_NOW_PWD });
+        case EQUAL_NOW_PWD_ERROR:
+          setError('newPassword', { message: EQUAL_NOW_PWD_ERROR });
           break;
         default:
           break;
