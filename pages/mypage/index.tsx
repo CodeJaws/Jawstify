@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { styled } from 'styled-components';
+
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
@@ -6,13 +9,14 @@ import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import Link from 'next/link';
-import { styled } from 'styled-components';
+import useDashboard from '@/hooks/useDashboard';
 
 function MyPage() {
+  const { members, totalMembers, dashboardData } = useDashboard();
+
   return (
     <StyledContainer>
-      <DashboardNavbar isMyDashboard={false} isOwner={true} title={'주인공'} />
+      <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
       <Sidebar />
       <StyledWrapper>
         <StyledInWrapper>
