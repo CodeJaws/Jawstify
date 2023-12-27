@@ -2,9 +2,10 @@ import Button from '@/components/common/Button/Button';
 import { NO_VALUE_ERROR } from '@/constants/Input';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
+import { onMobile } from '@/styles/mediaQuery';
 
 interface Props {
   label: string;
@@ -13,7 +14,7 @@ interface Props {
   errorMessage?: string;
   isNecessary?: boolean;
   isTextArea?: boolean;
-  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (inputLabel: string, value: string) => void;
   onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
   disabled?: boolean;
 }
@@ -62,7 +63,7 @@ function BasicInput({
           placeholder={placeholder || defaultPlaceholder}
           $error={isNoValue || hasError}
           $isComment={isComment}
-          onChange={onChange}
+          onChange={(e) => onChange(label, e.target.value)}
           onBlur={handleBlur}
         />
       ) : (
@@ -70,7 +71,7 @@ function BasicInput({
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
           $error={isNoValue || hasError}
-          onChange={onChange}
+          onChange={(e) => onChange(label, e.target.value)}
           onBlur={handleBlur}
           disabled={disabled}
         />
@@ -100,7 +101,11 @@ const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boolean }>
   border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
   background-color: ${COLORS.WHITE_FF};
   color: ${COLORS.BLACK_33};
-  ${fontStyle(16, 400)}
+  ${fontStyle(18, 400)}
+
+  ${onMobile} {
+    ${fontStyle(16, 400)}
+  }
 
   &:hover,
   &:focus,

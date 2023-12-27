@@ -10,7 +10,7 @@ function ColumnAddButton({ onClick }: ButtonOnClickProps) {
   return (
     <>
       <StyledButton onClick={onClick}>
-        새로운 칼럼 추가하기
+        새로운 컬럼 추가하기
         <StyledPlusImage src={plus} alt="plus이미지" />
       </StyledButton>
     </>
