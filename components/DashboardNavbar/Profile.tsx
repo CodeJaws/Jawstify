@@ -4,21 +4,16 @@ import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import Codeit from '@/public/assets/icons/Codeit.svg';
+import useUserData from '@/hooks/global/useUserData';
 
-interface ProfileProps {
-  item: {
-    id: number;
-    nickname: string;
-    profileImageUrl: string;
-  };
-}
-
-function Profile({ item }: ProfileProps) {
-  const { nickname, profileImageUrl } = item;
+function Profile() {
+  const { user } = useUserData();
+  const { nickname, profileImageUrl } = user;
   return (
     <StyledContainer>
       <StyledImageWrapper>
-        <Image fill src={profileImageUrl} alt="프로필" />
+        <Image fill src={profileImageUrl || Codeit} alt="프로필" />
       </StyledImageWrapper>
       <p>{nickname}</p>
     </StyledContainer>
