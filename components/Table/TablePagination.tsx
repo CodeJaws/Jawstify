@@ -26,7 +26,7 @@ function Table({ item, table }: TableProps) {
   let itemName;
 
   if (table === 'members' && 'nickname' in item) {
-    profileImg = item.profileImageUrl;
+    profileImg = item.profileImageUrl as string;
     buttonName = '삭제';
     itemName = item?.nickname;
   } else if ('invitee' in item && item.invitee) {

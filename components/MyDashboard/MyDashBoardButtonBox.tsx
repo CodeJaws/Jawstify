@@ -1,4 +1,4 @@
-import usePagination from '@/hooks/usePagination';
+import usePagination, { DashboardItem } from '@/hooks/usePagination';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -23,61 +23,48 @@ const mock = [
   { id: 12, text: '십이' },
 ];
 
+interface usePaginationProps {
+  handlePagination: (val: number) => void;
+  pageNum: number;
+  showItems: DashboardItem[];
+  totalPages: number;
+  totalCount: number;
+}
+
 function MyDashBoardButtonBox() {
   const [page, setPage] = useState(1);
   const limit = 5;
   const firstIndex = (page - 1) * limit;
   const lastIndex = firstIndex + limit;
-  const currentItem = mock.slice(firstIndex, lastIndex);
+  // const currentItem = mock.slice(firstIndex, lastIndex);
   const { handlePagination, pageNum, showItems, totalPages, totalCount } = usePagination({
     size: 20,
     showItemNum: 5,
     type: 'dashboard',
-    dashboardId: 0,
-  });
+    dashboardId: 203,
+  }) as usePaginationProps;
+  // const totalItemCount = Object.keys(mock).length;
 
-  const totalItemCount = Object.keys(mock).length;
-  const lastPages = Math.ceil(totalItemCount / 5);
-
-  const handleLastPage = () => {
-    if (page === 1) {
-      return;
-    } else {
-      setPage((prev) => prev - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (page === lastPages) {
-      return;
-    } else {
-      setPage((prev) => prev + 1);
-    }
-  };
+  // const lastPages = Math.ceil(totalItemCount / 5);
+  const lastPages = Math.ceil(totalPages / 5);
 
   return (
     <div>
       <ButtonBoxWrapper>
         <DashBoardAddButton onClick={() => {}} />
-        {currentItem.map((item) => (
+        {showItems.map((item) => (
           <div key={item.id}>
-            <DashBoardButton text={item.text} color="" king={true} onClick={() => {}} />
+            <DashBoardButton text={item.title as string} color="" king={true} onClick={() => {}} />
           </div>
         ))}
-        {/* {showItems.map((item, index) => (
-          <>
-            <DashBoardButton text={item. as DashboardItem} color="" king={true} onClick={() => {}} />
-            <Table key={item.id} item={item as MembersItem | InvitationItem} table={table} />
-          </>
-        ))} */}
       </ButtonBoxWrapper>
       <PaginationWrapper>
         <PaginationPage>
-          {Math.ceil(totalCount / 4)}페이지 중 {pageNum}
+          {Math.ceil(totalCount / 5)} 페이지 중 {pageNum}
         </PaginationPage>
         <PaginationInWrapper>
-          <PaginationButton active={page !== 1} direction="left" onClick={() => handlePagination(-1)} />
-          <PaginationButton active={page !== lastPages} direction="right" onClick={() => handlePagination(1)} />
+          <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
+          <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePagination(1)} />
         </PaginationInWrapper>
       </PaginationWrapper>
     </div>
