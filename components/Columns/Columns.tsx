@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-
-
 import styled from 'styled-components';
 import ColumnAddButton from '@/components/common/Button/ColumnAddButton';
-import Column from '@/components/Card/Column';
+import Column from '@/components/Columns/Column';
 import { onPc, onTablet } from '@/styles/mediaQuery';
+import API from '@/apis/api';
 
-function CardTest() {
-  const [isSuccess, setIsSuccess] = useState(true);
-  // const [columns, setColumns] = useState([]);
+interface ColumnProps {
+  id: number;
+  title: string;
+  teamId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+function Columns() {
+  const [isSuccess, setIsSuccess] = useState('');
+  const [columns, setColumns] = useState<ColumnProps[]>([]);
   const router = useRouter();
 
-  // 컬럼 목록 조회 데이터 불러오기
-  // result가 success 이면 
-    // setIsSuccess((prev) => !prev)
-    // setColumns에 data 넣기
-  // 아니면 NotFound 페이지 이동 
+  // 컬럼 목록 조회
+  const getColumnListFunc = async (dashboardId: number) => {
+    const res = await API.columns.getColumnList({ dashboardId });
+    const columns = res?.data;
+    const isSuccess = res?.result;
+    setIsSuccess(isSuccess);
+    setColumns(columns);
+  }
 
-  // 카드 목록 조회
+  useEffect(() => {
+    getColumnListFunc(289); // 임시
+  }, []);
+
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement>
@@ -30,17 +43,13 @@ function CardTest() {
 
   return (
     <StyledContainer>
-      {isSuccess && (
+      {isSuccess === 'SUCCESS' && (
         <StyledWrapper>
-          {/* {columns.map((column) => (
+          {columns.map((column) => (
             <li key={column.id}>
-              <Column
-                title={column.title}
-                id={column.id}
-              />
+              <Column />
             </li>
-          ))} */}
-          <Column />
+          ))}
         </StyledWrapper>
       )}
       <StyledWrapper2>
@@ -50,7 +59,7 @@ function CardTest() {
   );
 }
 
-export default CardTest;
+export default Columns;
 
 const StyledContainer = styled.div`
   display: flex;

@@ -145,7 +145,7 @@ export interface CreateColumnItem {
 }
 
 export interface GetColumnListProps {
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface GetColumnListItem {

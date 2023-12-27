@@ -3,17 +3,31 @@ import Sidebar from '@/components/Sidebar/Sidebar';
 import { onTablet, onPc } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import Columns from '@/components/Columns/Columns';
+import { localStorageSetItem } from '@/utils/localStorage';
+import { useEffect } from 'react';
+import API from '@/apis/api';
+
 
 function DashBoardID() {
-  const router = useRouter();
-  const { dashboardid: id } = router.query;
+  // const router = useRouter();
+  // const { dashboardid: id } = router.query;
+
+  const loginFunc = async () => {
+    const a = await API.auth.login({ email: 'test5@codeit.com', password: 'test12345' });
+    localStorageSetItem('accessToken', a.accessToken);
+  };
+
+  useEffect(() => {
+    loginFunc();
+  }, []);
 
   return (
     <StyledContainer>
       <Sidebar />
       <DashboardNavbar isMyDashboard={false} isOwner={true} title='비브리지' />
       <StyledWrapper>
-        
+        <Columns />
       </StyledWrapper>
     </StyledContainer>
   );
@@ -27,9 +41,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledWrapper = styled.div`
-  border: 1px solid #000;
   width: 100%;
-  height: 100%;
   position: absolute;
   top: 70px;
   left: 67px;
