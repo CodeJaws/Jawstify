@@ -1,11 +1,11 @@
 import Button from '@/components/common/Button/Button';
 import { NO_VALUE_ERROR } from '@/constants/Input';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
-import { onMobile } from '@/styles/mediaQuery';
 
 interface Props {
   label: string;
@@ -14,7 +14,7 @@ interface Props {
   errorMessage?: string;
   isNecessary?: boolean;
   isTextArea?: boolean;
-  onChange: (inputLabel: string, value: string) => void;
+  onChange?: (inputLabel: string, value: string) => void;
   onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
   disabled?: boolean;
 }
@@ -51,6 +51,13 @@ function BasicInput({
   const handleBlur = () => {
     isNecessary && inputValue === '' ? setIsNoValue(true) : setIsNoValue(false);
   };
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    if (onChange) {
+      onChange(label, e.target.value);
+    }
+  };
+
   return (
     <StyledInputContainer>
       <StyledLabel>
@@ -63,7 +70,7 @@ function BasicInput({
           placeholder={placeholder || defaultPlaceholder}
           $error={isNoValue || hasError}
           $isComment={isComment}
-          onChange={(e) => onChange(label, e.target.value)}
+          onChange={handleChange}
           onBlur={handleBlur}
         />
       ) : (
@@ -71,7 +78,7 @@ function BasicInput({
           value={inputValue}
           placeholder={placeholder || defaultPlaceholder}
           $error={isNoValue || hasError}
-          onChange={(e) => onChange(label, e.target.value)}
+          onChange={handleChange}
           onBlur={handleBlur}
           disabled={disabled}
         />
