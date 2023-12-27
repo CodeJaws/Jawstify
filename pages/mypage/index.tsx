@@ -14,7 +14,7 @@ import { styled } from 'styled-components';
 
 // 테스트용
 const email = 'test2@codeit.com';
-const password = 'test12345';
+const password = 'test1234';
 
 function MyPage() {
   const [testEmail, setTestEmail] = useState('');
@@ -23,10 +23,13 @@ function MyPage() {
 
   const testFunc = async () => {
     const test = await api.auth.login({ email, password });
-    localStorageSetItem('accessToken', test.accessToken);
-    setTestEmail(test.user.email);
-    setNickName(test.user.nickname);
-    setProfileImg(test.user.profileImageUrl);
+    const get = await api.users.getMyInfo();
+    if (!get) {
+      localStorageSetItem('accessToken', test.accessToken);
+      setTestEmail(test.user.email);
+      setNickName(test.user.nickname);
+      setProfileImg(test.user.profileImageUrl);
+    }
   };
 
   useEffect(() => {
@@ -76,6 +79,7 @@ const StyledInWrapper = styled.div`
   ${onMobile} {
     left: 66px;
     width: calc(100% - 66px);
+    padding: 16px 12px;
   }
 `;
 
@@ -85,4 +89,9 @@ const StyledBackWrapper = styled(Link)`
   background-repeat: no-repeat;
   background-position: 0px 50%;
   padding-left: 20px;
+
+  ${onMobile} {
+    background-size: 18px 18px;
+    font-size: 1.4rem;
+  }
 `;
