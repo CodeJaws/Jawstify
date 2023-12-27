@@ -1,13 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { onMobile } from '@/styles/mediaQuery';
-import { ModalCommonProps } from '@/types/modal';
-import AddImageButton from '@/components/AddImageButton/AddImageButton';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
 import TagInput, { TagProps } from '@/components/Input/ModalInputContainer/TagInput';
-import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
+import { onMobile } from '@/styles/mediaQuery';
+import { ModalCommonProps } from '@/types/modal';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 interface Props extends ModalCommonProps {
   type: 'create' | 'edit';
@@ -48,7 +46,7 @@ function CreateToDo({ type, onOkClick, onCancelClick, getValue = () => {} }: Pro
         <BasicInput isNecessary isTextArea label="설명" onChange={handleChange} inputValue={values.설명}></BasicInput>
         <DateInput onChange={handleChange} />
         <TagInput onChange={handleChange} />
-        <AddImageButton type="modal" image={image} setImage={setImage} />
+        {/* @TODO 나중에 수정 부탁드립니다 <AddImageButton type="modal" image={image} setImage={setImage} /> */}
       </StyledContainer>
 
       <StyledButtonContainer>
