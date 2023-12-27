@@ -11,7 +11,7 @@ import { COLORS } from '@/styles/palettes';
 import Button from './Button';
 import Members from './Members';
 import Profile from './Profile';
-import { MemberType } from '@/pages/test';
+import { MemberType } from './Members';
 import { GetDashboardDetailedItem } from '@/types/api';
 import Link from 'next/link';
 import { useState } from 'react';
