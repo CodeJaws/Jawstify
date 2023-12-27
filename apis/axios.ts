@@ -1,6 +1,5 @@
-import axios, { AxiosError } from 'axios';
 import { localStorageGetItem } from '@/utils/localStorage';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app/1-4/';
 
@@ -8,8 +7,13 @@ axios.defaults.baseURL = BASE_URL;
 
 axios.interceptors.request.use((config) => {
   const accessToken = localStorageGetItem('accessToken');
+  config.headers = config.headers ?? {};
+  if (config.data instanceof FormData) {
+    config.headers['Content-Type'] = 'multipart/form-data';
+  } else {
+    config.headers['Content-Type'] = 'application/json';
+  }
   config.headers.Authorization = `Bearer ${accessToken}`;
-  config.headers['Content-Type'] = 'application/json';
   return config;
 });
 
