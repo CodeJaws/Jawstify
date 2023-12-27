@@ -14,17 +14,19 @@ import { styled } from 'styled-components';
 
 // 테스트용
 const email = 'test3@codeit.com';
-const password = 'test123456';
+const password = 'test1234';
 
 function MyPage() {
   const [testEmail, setTestEmail] = useState('');
   const [nickname, setNickName] = useState('');
+  const [profileImg, setProfileImg] = useState('');
 
   const testFunc = async () => {
     const test = await api.auth.login({ email, password });
     localStorageSetItem('accessToken', test.accessToken);
     setTestEmail(test.user.email);
     setNickName(test.user.nickname);
+    setProfileImg(test.user.profileImageUrl);
   };
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function MyPage() {
       <StyledWrapper>
         <StyledInWrapper>
           <StyledBackWrapper href={'/mydashboard'}>돌아가기</StyledBackWrapper>
-          <ProfileBox email={testEmail} nickname={nickname} setNickName={setNickName} />
+          <ProfileBox email={testEmail} nickname={nickname} profileImg={profileImg} setNickName={setNickName} />
           <PasswordManagerBox />
         </StyledInWrapper>
       </StyledWrapper>
