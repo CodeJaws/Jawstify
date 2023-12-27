@@ -40,7 +40,7 @@ function PasswordManagerBox() {
     const password = formValues.password;
     const newPassword = formValues.newPassword;
     try {
-      await api.auth.changePassword({ password, newPassword });
+      await api.auth.changePassword({ password, newPassword }).then(() => alert('비밀번호 변경 완료 🔑'));
     } catch (error: any) {
       switch (error.data.message) {
         case PWD_EIGHT:
