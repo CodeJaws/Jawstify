@@ -327,7 +327,7 @@ export interface InviteDashboardItem {
   invitee: {
     nickname: string;
     email: string;
-    id: 0;
+    id: number;
   };
   inviteAccepted: boolean;
   createdAt: string;
