@@ -88,7 +88,7 @@ function PasswordManagerBox() {
   return (
     <StyledContainer>
       <StyledTitle>비밀번호 변경</StyledTitle>
-      <StyledWrapper onSubmit={handleSubmit(onSubmit)} onChange={handleCheck}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)} onChange={handleCheck}>
         <FormInput register={passwordRegister} label="현재 비밀번호" errorMessage={errors.password?.message} />
         <FormInput register={newPasswordRegister} label="새 비밀번호" errorMessage={errors.newPassword?.message} />
         <FormInput
@@ -97,7 +97,7 @@ function PasswordManagerBox() {
           errorMessage={errors.newPasswordCheck?.message}
         />
         <StyledButton text={'변경'} size={'small'} isViolet={true} disabled={isActivate} />
-      </StyledWrapper>
+      </StyledForm>
     </StyledContainer>
   );
 }
@@ -133,7 +133,7 @@ const StyledTitle = styled.p`
   }
 `;
 
-const StyledWrapper = styled.form`
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
