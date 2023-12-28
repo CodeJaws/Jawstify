@@ -5,6 +5,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { styled } from 'styled-components';
@@ -19,32 +20,36 @@ interface BoardItemProps {
     updatedAt: string;
     createdByMe: boolean;
   };
-  firstId: number;
+  boardId: number;
 }
 
-function Dashboard({ item, firstId }: BoardItemProps) {
-  const isActive = item.id === firstId;
+interface DashboardTestProps {
+  boardId: number;
+}
 
+function Dashboard({ item, boardId }: BoardItemProps) {
+  const isActive = item.id === boardId;
+  console.log(boardId);
   return (
-    <StyledDashboardContainer $isActive={isActive} onClick={() => {}}>
-      <StyledColorWrapper $color={item.color}></StyledColorWrapper>
-      <StyledTitleWrapper>{item.title}</StyledTitleWrapper>
-      {item.createdByMe && <StyledImage width={17.59} height={14} src={crown} alt="방장" />}
-    </StyledDashboardContainer>
+    <Link href={`/dashboard/${item.id}`} onClick={(e) => isActive && e.preventDefault()}>
+      <StyledDashboardContainer $isActive={isActive} onClick={() => {}}>
+        <StyledColorWrapper $color={item.color}></StyledColorWrapper>
+        <StyledTitleWrapper>{item.title}</StyledTitleWrapper>
+        {item.createdByMe && <StyledImage width={17.59} height={14} src={crown} alt="방장" />}
+      </StyledDashboardContainer>
+    </Link>
   );
 }
 
-function DashboardTest() {
+function DashboardTest({ boardId }: DashboardTestProps) {
   const [dataSource, setDataSource] = useState<DashboardItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [first, setFirst] = useState(0);
   const [dashboardPage, setDashboardPage] = useState(2);
   const [totlaCount, setTotalCount] = useState(0);
 
   const getItems = async () => {
     const a = await API.dashboard.getDashboardList({ navigationMethod: 'infiniteScroll', size: 18 });
     setDataSource(a.dashboards);
-    setFirst(a.dashboards[0].id);
     setTotalCount(a.totalCount);
   };
 
@@ -76,7 +81,7 @@ function DashboardTest() {
     <StyledDashboardGroupContainer>
       <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
         {dataSource.map((item) => (
-          <Dashboard key={item.id} item={item} firstId={first} />
+          <Dashboard key={item.id} item={item} boardId={boardId} />
         ))}
       </InfiniteScroll>
     </StyledDashboardGroupContainer>

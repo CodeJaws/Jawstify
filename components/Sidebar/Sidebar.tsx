@@ -10,7 +10,11 @@ import DashboardTest from './DashboardTest';
 
 /** 대시보드 목록 조회를 통해 얻은 대시보드들의 정보들 */
 
-function Sidebar() {
+interface SidebarProps {
+  boardId: number;
+}
+
+function Sidebar({ boardId }: SidebarProps) {
   return (
     <StyledContainer>
       <StyledImageWrapper>
@@ -24,7 +28,7 @@ function Sidebar() {
         </button>
       </StyledTitleWrapper>
       {/* <DashboardGroup /> */}
-      <DashboardTest />
+      <DashboardTest boardId={boardId} />
     </StyledContainer>
   );
 }

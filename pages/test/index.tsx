@@ -7,7 +7,7 @@ function Test() {
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} isOwner={true} title="내 대시보드" />
-      <Sidebar />
+      <Sidebar boardId={340} />
     </StyledContainer>
   );
 }
