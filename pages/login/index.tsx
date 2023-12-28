@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import useAuth from '@/hooks/useAuth';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -34,23 +34,9 @@ function Login() {
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
 
-  const [isBtnActive, setIsBtnActive] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const { isBtnActive, setErrorMsg, errorMsg, handleChange } = useAuth('', getValues, ['email', 'password']);
 
   const router = useRouter();
-
-  const initServerErrorMsg = () => {
-    errorMsg && setErrorMsg('');
-  };
-
-  const validateBtnActivation = () => {
-    if (getValues('email') && getValues('password')) setIsBtnActive(true);
-  };
-
-  const handleChange = () => {
-    initServerErrorMsg();
-    validateBtnActivation();
-  };
 
   const onSubmit = async (data: FormValue) => {
     let response;
@@ -89,7 +75,7 @@ function Login() {
           })}
           errorMessage={errors?.password?.message}
         />
-        {errorMsg && <StyledServerErrorText>{errorMsg}</StyledServerErrorText>}
+        {errorMsg && <StyledServerErrorText>{errorMsg as string}</StyledServerErrorText>}
         <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit" margin="7px 0 0 "></LoginButton>
       </StyledForm>
 

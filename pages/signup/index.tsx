@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import useAuth from '@/hooks/useAuth';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import api from '@/apis/api';
@@ -40,40 +41,30 @@ function SignUp() {
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onBlur' });
 
-  // const watchInputsEmpty = Object.values(watch());
-  const [isBtnActive, setIsBtnActive] = useState(false);
-  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
   const initialErrorMsg = {
     serverError: '',
     noCheck: '',
   };
-  const [errorMsg, setErrorMsg] = useState(initialErrorMsg);
+  const { isBtnActive, setErrorMsg, errorMsg, handleChange } = useAuth(initialErrorMsg, getValues, [
+    'email',
+    'password',
+    'nickname',
+    'pwdcheck',
+  ]);
+
+  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
   const router = useRouter();
 
   const passwordRef = useRef<string | null | undefined>(null);
   passwordRef.current = getValues('password');
 
-  const initServerErrorMsg = () => {
-    errorMsg && setErrorMsg(initialErrorMsg);
-  };
-
-  const validateBtnActivation = () => {
-    if (getValues('email') && getValues('nickname') && getValues('password') && getValues('pwdcheck'))
-      setIsBtnActive(true);
-  };
-
-  const handleChange = () => {
-    initServerErrorMsg();
-    validateBtnActivation();
-  };
-
   const onSubmit = async (data: FormValue) => {
     if (!isAgreeChecked) {
-      setErrorMsg({ ...errorMsg, noCheck: '이용약관에 동의하셔야 합니다.' });
+      setErrorMsg({ ...(errorMsg as object), noCheck: '이용약관에 동의하셔야 합니다.' });
       return;
     } else {
-      setErrorMsg({ ...errorMsg, noCheck: '' });
+      setErrorMsg({ ...(errorMsg as object), noCheck: '' });
     }
 
     let response;
@@ -86,7 +77,7 @@ function SignUp() {
       alert('가입이 완료되었습니다');
       router.push('/login');
     } catch (e: any) {
-      setErrorMsg({ ...errorMsg, serverError: e?.data?.message });
+      setErrorMsg({ ...(errorMsg as object), serverError: e?.data?.message });
     }
   };
 
@@ -108,7 +99,9 @@ function SignUp() {
           })}
           errorMessage={errors?.email?.message}
         />
-        {errorMsg.serverError && <L.StyledServerErrorText>{errorMsg.serverError}</L.StyledServerErrorText>}
+        {Object(errorMsg).serverError && (
+          <L.StyledServerErrorText>{Object(errorMsg).serverError}</L.StyledServerErrorText>
+        )}
         <FormInput
           label="닉네임"
           register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
@@ -143,7 +136,7 @@ function SignUp() {
           />
           <StyledText>이용약관에 동의합니다.</StyledText>
         </StyledCheckBoxContainer>
-        {!isAgreeChecked && <StyledAgreeNotCheckedText>{errorMsg.noCheck}</StyledAgreeNotCheckedText>}
+        {!isAgreeChecked && <StyledAgreeNotCheckedText>{Object(errorMsg).noCheck}</StyledAgreeNotCheckedText>}
         <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit" margin="-3px 0 0" />
       </L.StyledForm>
 
