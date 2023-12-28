@@ -1,4 +1,4 @@
-import api from '@/apis/api';
+import API from '@/apis/api';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 // 테스트용
-const email = 'test2@codeit.com';
+const email = 'test3@codeit.com';
 const password = 'test1234';
 
 function MyPage() {
@@ -22,14 +22,12 @@ function MyPage() {
   const [profileImg, setProfileImg] = useState('');
 
   const testFunc = async () => {
-    const test = await api.auth.login({ email, password });
-    const get = await api.users.getMyInfo();
-    if (!get) {
-      localStorageSetItem('accessToken', test.accessToken);
-      setTestEmail(test.user.email);
-      setNickName(test.user.nickname);
-      setProfileImg(test.user.profileImageUrl);
-    }
+    const test = await API.auth.login({ email, password });
+
+    localStorageSetItem('accessToken', test.accessToken);
+    setTestEmail(test.user.email);
+    setNickName(test.user.nickname);
+    setProfileImg(test.user.profileImageUrl);
   };
 
   useEffect(() => {
