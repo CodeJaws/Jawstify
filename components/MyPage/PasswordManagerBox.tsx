@@ -82,7 +82,11 @@ function PasswordManagerBox() {
     const password = getValues('password');
     const newPassword = getValues('newPassword');
     const newPasswordCheck = getValues('newPasswordCheck');
-    if (password && newPassword && newPasswordCheck) setActivate(false);
+    if (password && newPassword && newPasswordCheck) {
+      setActivate(false);
+    } else {
+      setActivate(true);
+    }
   };
 
   return (
