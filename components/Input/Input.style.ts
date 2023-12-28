@@ -39,7 +39,7 @@ export const StyledInput = styled.input<{ $error: boolean }>`
 
 export const StyledLabel = styled.h5`
   color: ${COLORS.BLACK_33};
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   display: flex;
   ${fontStyle(18, 500)};
 
