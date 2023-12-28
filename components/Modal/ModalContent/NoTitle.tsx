@@ -36,7 +36,7 @@ export default NoTitle;
 
 const StyledDescription = styled.h5`
   ${fontStyle(18, 500)}
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   margin-top: 40px;
   text-align: center;
 
