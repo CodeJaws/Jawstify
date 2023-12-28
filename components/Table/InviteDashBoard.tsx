@@ -5,7 +5,6 @@ import NoContent from '@/public/assets/images/NoContent.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { InviteDashboardItem } from '@/types/api';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -108,32 +107,55 @@ const addMock = [
   },
 ];
 
+interface GetInvitationListProps {
+  id: number;
+  inviter: {
+    id: number;
+    email: string;
+    nickname: string;
+  };
+  teamId: string;
+  dashboard: {
+    title: string;
+    id: number;
+  };
+  invitee: {
+    nickname: string;
+    email: string;
+    id: number;
+  };
+  inviteAccepted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface getCursorProps {
+  cursorId: number;
+}
+
 function InviteDashBoard() {
-  const [dataSource, setDataSource] = useState<InviteDashboardItem[]>([]);
+  const [dataSource, setDataSource] = useState<GetInvitationListProps[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const [cursor, setCursor] = useState(0);
   const windowSize = useDeviceType();
   const width = windowSize === 'pc' || windowSize === 'tablet';
 
   const fetchHasMore = () => {
-    if (dataSource.length < 18) {
-     
-        if (dataSource.length !== 0) {
-          setDataSource((prev) => [...prev,...]);
-        }
-    
+    if (cursor) {
+      if (dataSource.length !== 0) {
+        handleLoadMore();
+        // setDataSource((prev) => [...prev,...]);
+      }
     } else {
       setHasMore(false);
     }
   };
 
-  const handleLoadMore = async (dashboardPage: number) => {
-    const b = await API.dashboard.getDashboardList({
-      navigationMethod: 'pagination',
-      page: dashboardPage,
-      size: 18,
-    });
-    setDataSource((prev) => [...prev, ...b.dashboards]);
+  const handleLoadMore = async () => {
+    const b = await API.invitations.getInvitationList({ cursorId: cursor });
+    setDataSource((prev) => [...prev, ...b.invitations]);
+    setCursor(b.cursorId as number);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -141,15 +163,17 @@ function InviteDashBoard() {
   };
 
   const getItems = async () => {
-    const a = await API.invitations.getInvitationList({});
+    const a = await API.invitations.getInvitationFirstList({});
+    // console.log(a);
     setDataSource(a.invitations);
+    setCursor(a.cursorId as number);
   };
 
   useEffect(() => {
     getItems();
   }, []);
 
-  const showItems = dataSource.filter((item) => item.name.includes(searchText));
+  const showItems = dataSource.filter((item) => item.dashboard.title.includes(searchText));
   return (
     <StyledDiv $data={mock}>
       <StyledP>초대받은 대시보드</StyledP>
@@ -188,8 +212,8 @@ function InviteDashBoard() {
                               <div>초대자</div>
                             </StyledMobileLeftDiv>
                             <StyledMobileRightDiv>
-                              <div>{item.name}</div>
-                              <div>{item.inviter}</div>
+                              <div>{item.dashboard.title}</div>
+                              <div>{item.inviter.nickname}</div>
                             </StyledMobileRightDiv>
                           </StyledMobileContainer>
                           <StyledMobileButtonWrapper>
@@ -207,8 +231,8 @@ function InviteDashBoard() {
                       )}
                       {width && (
                         <StyleListWrapper>
-                          <StyledListInWrapper>{item.name}</StyledListInWrapper>
-                          <StyledListInWrapper>{item.inviter}</StyledListInWrapper>
+                          <StyledListInWrapper>{item.dashboard.title}</StyledListInWrapper>
+                          <StyledListInWrapper>{item.inviter.nickname}</StyledListInWrapper>
                           <StyledListInWrapper>
                             <TwinButton
                               text1="수락"
