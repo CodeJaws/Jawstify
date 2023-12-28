@@ -36,11 +36,11 @@ function SignUp() {
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onBlur' });
 
-  const watchInputsEmpty = Object.values(watch());
+  // const watchInputsEmpty = Object.values(watch());
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
   const initialErrorMsg = {
@@ -52,10 +52,20 @@ function SignUp() {
   const router = useRouter();
 
   const passwordRef = useRef<string | null | undefined>(null);
-  passwordRef.current = watch('password');
+  passwordRef.current = getValues('password');
 
   const initServerErrorMsg = () => {
     errorMsg && setErrorMsg(initialErrorMsg);
+  };
+
+  const validateBtnActivation = () => {
+    if (getValues('email') && getValues('nickname') && getValues('password') && getValues('pwdcheck'))
+      setIsBtnActive(true);
+  };
+
+  const handleChange = () => {
+    initServerErrorMsg();
+    validateBtnActivation();
   };
 
   const onSubmit = async (data: FormValue) => {
@@ -80,14 +90,6 @@ function SignUp() {
     }
   };
 
-  useEffect(() => {
-    if (watchInputsEmpty.every((inputEl) => inputEl)) {
-      setIsBtnActive(true);
-    } else {
-      setIsBtnActive(false);
-    }
-  }, [watchInputsEmpty]);
-
   return (
     <StyledContainer>
       <L.StyledLogoContainer>
@@ -102,14 +104,14 @@ function SignUp() {
           register={register('email', {
             required: C.NO_VALUE_ERROR,
             pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
-            onChange: initServerErrorMsg,
+            onChange: handleChange,
           })}
           errorMessage={errors?.email?.message}
         />
         {errorMsg.serverError && <L.StyledServerErrorText>{errorMsg.serverError}</L.StyledServerErrorText>}
         <FormInput
           label="닉네임"
-          register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: initServerErrorMsg })}
+          register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
           errorMessage={errors?.nickname?.message}
         />
         <FormInput
@@ -118,7 +120,7 @@ function SignUp() {
             required: C.NO_VALUE_ERROR,
             pattern: { value: C.PWD_VALIDATE_PATTERN, message: C.PWD_ERROR.FORMAT_ERROR },
             minLength: { value: 8, message: C.PWD_ERROR.MIN_LENGTH_ERROR },
-            onChange: initServerErrorMsg,
+            onChange: handleChange,
           })}
           errorMessage={errors?.password?.message}
         />
@@ -127,6 +129,7 @@ function SignUp() {
           register={register('pwdcheck', {
             required: C.NO_VALUE_ERROR,
             validate: { pwdNotSame: (value) => value === passwordRef.current || C.PWD_CHECK_ERROR.PWD_NOT_SAME },
+            onChange: handleChange,
           })}
           errorMessage={errors?.pwdcheck?.message}
         />

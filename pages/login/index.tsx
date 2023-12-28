@@ -30,11 +30,10 @@ function Login() {
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
 
-  const watchInputsEmpty = Object.values(watch());
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -42,6 +41,15 @@ function Login() {
 
   const initServerErrorMsg = () => {
     errorMsg && setErrorMsg('');
+  };
+
+  const validateBtnActivation = () => {
+    if (getValues('email') && getValues('password')) setIsBtnActive(true);
+  };
+
+  const handleChange = () => {
+    initServerErrorMsg();
+    validateBtnActivation();
   };
 
   const onSubmit = async (data: FormValue) => {
@@ -54,14 +62,6 @@ function Login() {
       setErrorMsg(e?.data?.message);
     }
   };
-
-  useEffect(() => {
-    if (watchInputsEmpty.every((inputEl) => inputEl)) {
-      setIsBtnActive(true);
-    } else {
-      setIsBtnActive(false);
-    }
-  }, [watchInputsEmpty]);
 
   return (
     <StyledContainer>
@@ -77,7 +77,7 @@ function Login() {
           register={register('email', {
             required: C.NO_VALUE_ERROR,
             pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
-            onChange: initServerErrorMsg,
+            onChange: handleChange,
           })}
           errorMessage={errors?.email?.message}
         />
@@ -85,7 +85,7 @@ function Login() {
           label="비밀번호"
           register={register('password', {
             required: C.NO_VALUE_ERROR,
-            onChange: initServerErrorMsg,
+            onChange: handleChange,
           })}
           errorMessage={errors?.password?.message}
         />
