@@ -484,5 +484,5 @@ export interface ProfileImgUploadProps {
 }
 
 export interface ProfileImgUploadItem {
-  profileImageUrl: string | null;
+  profileImageUrl: string;
 }
