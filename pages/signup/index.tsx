@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '@/hooks/useAuth';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import * as C from '@/constants/SignValidate';
 import * as L from '../login';
+import Modal from '@/components/Modal/Modal';
 
 interface FormValue {
   email?: string;
@@ -41,18 +42,16 @@ function SignUp() {
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onBlur' });
 
-  const initialErrorMsg = {
-    serverError: '',
-    noCheck: '',
-  };
-  const { isBtnActive, setErrorMsg, errorMsg, handleChange } = useAuth(initialErrorMsg, getValues, [
-    'email',
-    'password',
-    'nickname',
-    'pwdcheck',
-  ]);
-
-  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
+  const {
+    isBtnActive,
+    setAlertMessage,
+    alertMessage,
+    handleChange,
+    isModalOpen,
+    setIsModalOpen,
+    isAgreeChecked,
+    setIsAgreeChecked,
+  } = useAuth(getValues, ['email', 'password', 'nickname', 'pwdcheck']);
 
   const router = useRouter();
 
@@ -61,10 +60,10 @@ function SignUp() {
 
   const onSubmit = async (data: FormValue) => {
     if (!isAgreeChecked) {
-      setErrorMsg({ ...(errorMsg as object), noCheck: '이용약관에 동의하셔야 합니다.' });
+      setAlertMessage({ ...alertMessage, noCheck: '이용약관에 동의하셔야 합니다.' });
       return;
     } else {
-      setErrorMsg({ ...(errorMsg as object), noCheck: '' });
+      setAlertMessage({ ...alertMessage, noCheck: '' });
     }
 
     let response;
@@ -74,10 +73,10 @@ function SignUp() {
         nickname: data.nickname as string,
         password: data.password as string,
       });
-      alert('가입이 완료되었습니다');
-      router.push('/login');
+      setAlertMessage({ ...alertMessage, serverMessage: C.SIGNUP_SUCCESS_MSG });
     } catch (e: any) {
-      setErrorMsg({ ...(errorMsg as object), serverError: e?.data?.message });
+      setIsModalOpen(true);
+      setAlertMessage({ ...alertMessage, serverMessage: e?.data?.message });
     }
   };
 
@@ -99,9 +98,7 @@ function SignUp() {
           })}
           errorMessage={errors?.email?.message}
         />
-        {Object(errorMsg).serverError && (
-          <L.StyledServerErrorText>{Object(errorMsg).serverError}</L.StyledServerErrorText>
-        )}
+        {alertMessage.serverMessage && <L.StyledServerErrorText>{alertMessage.serverMessage}</L.StyledServerErrorText>}
         <FormInput
           label="닉네임"
           register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
@@ -136,7 +133,7 @@ function SignUp() {
           />
           <StyledText>이용약관에 동의합니다.</StyledText>
         </StyledCheckBoxContainer>
-        {!isAgreeChecked && <StyledAgreeNotCheckedText>{Object(errorMsg).noCheck}</StyledAgreeNotCheckedText>}
+        {!isAgreeChecked && <StyledAgreeNotCheckedText>{alertMessage.noCheck}</StyledAgreeNotCheckedText>}
         <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit" margin="-3px 0 0" />
       </L.StyledForm>
 
@@ -145,6 +142,17 @@ function SignUp() {
           이미 가입하셨나요? <L.StyledLink href="/login">가입하기</L.StyledLink>
         </StyledText>
       </StyledBottomTextContainer>
+      {isModalOpen && (
+        <Modal
+          isSingleButton
+          title=""
+          description={alertMessage.serverMessage}
+          onOkClick={() => {
+            setIsModalOpen(false);
+            if (alertMessage.serverMessage === C.SIGNUP_SUCCESS_MSG) router.push('/login');
+          }}
+        />
+      )}
     </StyledContainer>
   );
 }

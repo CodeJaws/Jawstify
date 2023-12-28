@@ -13,6 +13,7 @@ import FormInput from '@/components/Input/FormInput';
 import LoginButton from '@/components/common/Button/LoginButton';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
+import Modal from '@/components/Modal/Modal';
 
 interface FormValue {
   email?: string;
@@ -34,7 +35,10 @@ function Login() {
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
 
-  const { isBtnActive, setErrorMsg, errorMsg, handleChange } = useAuth('', getValues, ['email', 'password']);
+  const { isBtnActive, setAlertMessage, alertMessage, handleChange, isModalOpen, setIsModalOpen } = useAuth(getValues, [
+    'email',
+    'password',
+  ]);
 
   const router = useRouter();
 
@@ -45,7 +49,8 @@ function Login() {
       response.accessToken && router.push('/boards');
       throw Error;
     } catch (e: any) {
-      setErrorMsg(e?.data?.message);
+      setIsModalOpen(true);
+      setAlertMessage({ ...alertMessage, serverMessage: e?.data?.message });
     }
   };
 
@@ -75,7 +80,6 @@ function Login() {
           })}
           errorMessage={errors?.password?.message}
         />
-        {errorMsg && <StyledServerErrorText>{errorMsg as string}</StyledServerErrorText>}
         <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit" margin="7px 0 0 "></LoginButton>
       </StyledForm>
 
@@ -84,6 +88,16 @@ function Login() {
           회원이 아니신가요? <StyledLink href="/signup">회원가입하기</StyledLink>
         </StyledBottomText>
       </StyledBottomTextContainer>
+      {isModalOpen && (
+        <Modal
+          isSingleButton
+          title=""
+          description={alertMessage.serverMessage}
+          onOkClick={() => {
+            setIsModalOpen(false);
+          }}
+        />
+      )}
     </StyledContainer>
   );
 }

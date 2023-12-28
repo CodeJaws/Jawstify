@@ -29,3 +29,5 @@ export const DEFAULT_PLACEHOLDER = {
   TAG: '입력 후 Enter',
   NICKNAME: '닉네임을 입력해 주세요',
 };
+
+export const SIGNUP_SUCCESS_MSG = '가입이 완료되었습니다';
