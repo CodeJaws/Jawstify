@@ -16,7 +16,7 @@ function LoginButton({ active = false, usingType, onClick, text, type = 'button'
   return (
     <>
       <StyledButton
-        $type={usingType}
+        $usingType={usingType}
         type={type}
         disabled={active ? false : true}
         $active={active}
@@ -31,7 +31,7 @@ function LoginButton({ active = false, usingType, onClick, text, type = 'button'
 
 export default LoginButton;
 
-const StyledButton = styled.button<{ $active: boolean; $type: string; $margin: string }>`
+const StyledButton = styled.button<{ $active: boolean; $usingType: string; $margin: string }>`
   width: 520px;
   height: 50px;
   display: flex;
@@ -48,8 +48,8 @@ const StyledButton = styled.button<{ $active: boolean; $type: string; $margin: s
     width: 351px;
   }
 
-  ${({ $type }) =>
-    $type === 'landing' &&
+  ${({ $usingType }) =>
+    $usingType === 'landing' &&
     css`
       width: 280px;
       height: 50px;
