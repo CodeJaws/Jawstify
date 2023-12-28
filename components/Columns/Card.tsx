@@ -1,42 +1,64 @@
-import styled from 'styled-components';
-import Image from 'next/image';
+import profileImg from '@/public/assets/icons/GreenEllipse.svg';
+import calendar from '@/public/assets/icons/calendar.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import calendar from '@/public/assets/icons/calendar.svg';
+import dateFormat from '@/utils/dateFormat';
+import Image from 'next/image';
+import styled from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
-import cardImg from '@/public/assets/images/cardImage.png';
-import profileImg from '@/public/assets/icons/GreenEllipse.svg';
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
+import ModalCard from '../ModalCard/ModalCard';
 
-function Card() {
+interface Props {
+  title: string;
+  // description: string;
+  tags: string[];
+  dueDate: string;
+  assignee: {
+    profileImageUrl: string | null;
+    nickname: string;
+    id: number;
+  };
+  imageUrl: string;
+}
+
+function Card({ title, dueDate, imageUrl, tags, assignee }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState({});
+
+  const setModalValue = (values = {}) => {
+    setValue(values); 
+  };
 
   const handleClickCard = () => {
-    // 카드 상세 모달 
+    // 카드 상세 모달
     console.log('카드 상세 모달');
-  }
+  };
+
+  const date = dateFormat(dueDate);
 
   return (
     <StyledContainer onClick={handleClickCard}>
-      {/* <StyledImageContainer>
-        <Image src={cardImg} fill alt='카드 이미지' />
-      </StyledImageContainer> */}
+      {imageUrl ? <StyledImageContainer> <Image src={imageUrl} fill alt="카드 이미지" /> </StyledImageContainer> : <></>}
       <StyledInfoContainer>
-        <StyledInfoTitle>Taskify 프로젝트</StyledInfoTitle>
+        <StyledInfoTitle>{title}</StyledInfoTitle>
         <StyledInfoWrapper>
           <StyledInfoChips>
-            <ContentChip text='백엔드' color='red' backgroundColor='pink' />
-            <ContentChip text='상' color='green' backgroundColor='yellowgreen' />
+            {tags.map((val) => <ContentChip key={val} text={val} color="red" backgroundColor="pink" /> )}
           </StyledInfoChips>
           <StyledInfoDate>
             <StyledCalendarIconContainer>
-              <Image src={calendar} fill alt='캘린더 아이콘' />
+              <Image src={calendar} fill alt="캘린더 아이콘" />
             </StyledCalendarIconContainer>
-            2024.01.05
+            {date}
           </StyledInfoDate>
         </StyledInfoWrapper>
       </StyledInfoContainer>
       <StyledInfoProfile></StyledInfoProfile>
     </StyledContainer>
+    // {isOpen && } 카드 상세 모달 
   );
 }
 
@@ -98,7 +120,7 @@ const StyledInfoContainer = styled.div`
 `;
 
 const StyledInfoTitle = styled.div`
-  color: ${COLORS.BLACK_33}; 
+  color: ${COLORS.BLACK_33};
   ${fontStyle(16, 500)};
   margin-bottom: 10px;
 
@@ -113,13 +135,12 @@ const StyledInfoWrapper = styled.div`
   display: grid;
   align-items: center;
   grid-row-gap: 6px;
-  grid-template-areas: 
+  grid-template-areas:
     'chips'
     'date';
 
   ${onTablet} {
-    grid-template-areas: 
-    'chips date';
+    grid-template-areas: 'chips date';
     justify-content: flex-start;
     grid-column-gap: 16px;
   }
@@ -140,7 +161,7 @@ const StyledInfoDate = styled.div`
   grid-area: date;
   ${fontStyle(12, 500)};
   color: ${COLORS.GRAY_78};
-  
+
   ${onMobile} {
     gap: 4px;
     ${fontStyle(10, 500)};
@@ -154,7 +175,7 @@ const StyledInfoProfile = styled.div`
   right: 20px;
   width: 24px;
   height: 24px;
-  border-radius: 50%; 
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;

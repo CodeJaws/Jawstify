@@ -3,7 +3,8 @@ import { COLORS } from '@/styles/palettes';
 import { styled } from 'styled-components';
 
 interface CountChipProps {
-  content: string;
+  // content: string;
+  content: number;
 }
 
 function CountChip({ content }: CountChipProps) {

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import styled from 'styled-components';
 import ColumnAddButton from '@/components/common/Button/ColumnAddButton';
 import Column from '@/components/Columns/Column';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 import API from '@/apis/api';
+import { GetColumnListProps } from '@/types/api';
+import Modal from '../Modal/Modal';
 
 interface ColumnProps {
   id: number;
@@ -15,10 +17,15 @@ interface ColumnProps {
   updatedAt: string;
 }
 
-function Columns() {
+function Columns({ dashboardId }: GetColumnListProps) {
   const [isSuccess, setIsSuccess] = useState('');
   const [columns, setColumns] = useState<ColumnProps[]>([]);
-  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState({});
+
+  const setModalValue = (values = {}) => {
+    setValue(values); 
+  };
 
   // 컬럼 목록 조회
   const getColumnListFunc = async (dashboardId: number) => {
@@ -30,15 +37,15 @@ function Columns() {
   }
 
   useEffect(() => {
-    getColumnListFunc(289); // 임시
-  }, []);
+    getColumnListFunc(dashboardId);
+    getColumnListFunc(408);
+  }, [dashboardId]);
 
-
-  const handleClick = (
+  const handleClickCreateModal = (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    router.push('/boardid');
+    setIsOpen(true);
   };
 
   return (
@@ -47,13 +54,31 @@ function Columns() {
         <StyledWrapper>
           {columns.map((column) => (
             <li key={column.id}>
-              <Column />
+              <Column
+                title={column.title}
+                columnId={column.id}
+              />
             </li>
           ))}
         </StyledWrapper>
       )}
       <StyledWrapper2>
-        <ColumnAddButton onClick={handleClick}/>
+        <ColumnAddButton onClick={handleClickCreateModal}/>
+        {isOpen && <Modal
+          title="새 컬럼 생성"
+          getValue={setModalValue}
+          onCancelClick={() => {
+            console.log('취소');
+            setIsOpen(false);
+          }}
+          onOkClick={() => {
+            console.log('확인');
+            console.log(value); // 모달 input value 출력
+          }}
+          onDeleteClick={() => {
+            console.log('삭제');
+          }}
+        />}
       </StyledWrapper2>
     </StyledContainer>
   );

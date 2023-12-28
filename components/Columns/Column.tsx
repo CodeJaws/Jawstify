@@ -1,57 +1,111 @@
-import Image from 'next/image';
-import styled from 'styled-components';
+import API from '@/apis/api';
 import setting from '@/public/assets/icons/setting.svg';
-import { onMobile, onTablet, onPc } from '@/styles/mediaQuery';
-import CountChip from '../Chip/CountChip';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import CountChip from '../Chip/CountChip';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
-import { COLORS } from '@/styles/palettes';
-import React from 'react';
-import { useState } from 'react';
+import { GetCardDetailsItem } from '@/types/api';
+import Modal from '../Modal/Modal';
 
-function Column() {
-  // const [data, setData] = useState();
-  // const { totalCount, cards } = data;
+interface Props {
+  columnId: number;
+  title: string;
+}
 
-  const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    // 할일 생성 모달 
+function Column({ title, columnId }: Props) {
+  const [cards, setCards] = useState<GetCardDetailsItem[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isOpen, setIsOpen] = useState({
+    setting: false,
+    create: false
+  });
+  const [value, setValue] = useState({});
+
+  const setModalValue = (values = {}) => {
+    setValue(values); 
+  };
+
+  // 카드 목록 조회
+  const getCardListFunc = async (columnId: number) => {
+    const res = await API.cards.checkCardList({ columnId });
+    const cards = res?.cards;
+    const totalCount = res?.totalCount;
+    setCards(cards);
+    setTotalCount(totalCount);
+  };
+
+  useEffect(() => {
+    getCardListFunc(columnId);
+  }, [columnId]);
+
+  const handleClickCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // 할일 생성 모달
     e.preventDefault();
     console.log('할일 생성 모달');
-  }
+    setIsOpen({ ...isOpen, create: true });
+  };
 
-  const handlsClickSetting = (
-    e: React.MouseEvent<HTMLElement>
-  ) => {
+  const handleClickSetting = (e: React.MouseEvent<HTMLElement>) => {
     // 컬럼 수정 모달
     console.log('컬럼 수정 모달');
-  }
+    setIsOpen({ ...isOpen, setting: true });
+  };
 
   return (
     <StyledContainer>
-      <StyledSettingIconContainer onClick={handlsClickSetting}>
-        <Image fill src={setting} alt='설정' />
+      <StyledSettingIconContainer onClick={handleClickSetting}>
+        <Image fill src={setting} alt="설정 버튼" />
       </StyledSettingIconContainer>
+      {isOpen.setting && <Modal title="컬럼 관리" 
+        getValue={setModalValue}
+        onCancelClick={() => {
+          console.log('취소');
+          setIsOpen({ ...isOpen, setting: false });
+        }}
+        onOkClick={() => {
+          console.log('확인');
+          console.log({ ...isOpen, setting: false }); // 모달 input value 출력
+        }}
+        onDeleteClick={() => {
+          console.log('삭제');
+        }}
+      />}  
       <StyledHeader>
-        <div>Todo</div>
-        <StyledCountChip content='2' />
+        <div>{title}</div>
+        <StyledCountChip content={totalCount}/>
       </StyledHeader>
       <StyledWrapper>
-        <AddButton onClick={handleClick}/>
-        {/* {cards.map((card) => (
+        <AddButton onClick={handleClickCreate} />
+        {isOpen.create && <Modal
+          title='할 일 생성'
+          getValue={setModalValue}
+          onCancelClick={() => {
+            console.log('취소');
+            setIsOpen({ ...isOpen, create: false });
+          }}
+          onOkClick={() => {
+            console.log('확인');
+            console.log(value); // 모달 input value 출력
+          }}
+          onDeleteClick={() => {
+            console.log('삭제');
+          }}
+        />}
+        {cards.map((card) => (
           <li key={card.id}>
-            <Card
-              title={card.title}
-              tags={card.tags}
-              dueDate={card.dueDate}
-              assignee={card.assignee}
-              imageUrl={card.imageUrl}
-            />
+            <Card 
+                title={card.title} 
+                dueDate={card.dueDate}
+                tags={card.tags}
+                assignee={card.assignee}
+                imageUrl={card.imageUrl}/>
           </li>
-        ))} */}
-        <Card />
+        ))}
       </StyledWrapper>
     </StyledContainer>
   );
@@ -77,18 +131,18 @@ const StyledContainer = styled.div`
     border: none;
     border-right: 1px solid ${COLORS.GRAY_EE};
   }
-`
+`;
 
-const StyledSettingIconContainer = styled.div`
+const StyledSettingIconContainer = styled.button`
   position: absolute;
   width: 24px;
   height: 24px;
   right: 20px;
   top: 20px;
   cursor: pointer;
-  
+
   ${onMobile} {
-    width: 22px; 
+    width: 22px;
     height: 22px;
     right: 12px;
     top: 12px;
@@ -116,7 +170,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  
+
   ${onMobile} {
     gap: 10px;
   }
