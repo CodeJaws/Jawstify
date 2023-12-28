@@ -9,15 +9,11 @@ interface Props extends ModalCommonProps {
   type: '초대하기' | '새 칼럼 생성';
 }
 
-function Basic({ type, onCancelClick, onOkClick, getValue = () => {} }: Props) {
+function Basic({ type, onCancelClick = () => {}, onOkClick, getValue = () => {} }: Props) {
   const [values, setValues] = useState({
     이메일: '',
     이름: '',
   });
-
-  // onOkClick = () => {
-  //   console.log(values); // 모달 input values 확인 가능
-  // };
 
   const handleChange = (inputLabel: string, inputValue: string) => {
     setValues({
