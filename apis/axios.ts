@@ -7,11 +7,12 @@ axios.defaults.baseURL = BASE_URL;
 
 axios.interceptors.request.use((config) => {
   const accessToken = localStorageGetItem('accessToken');
-  config.headers = config.headers ?? {};
-  if (config.data instanceof FormData) {
-    config.headers['Content-Type'] = 'multipart/form-data';
-  } else {
-    config.headers['Content-Type'] = 'application/json';
+  if (accessToken) {
+    if (config.data instanceof FormData) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    } else {
+      config.headers['Content-Type'] = 'application/json';
+    }
   }
   config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
