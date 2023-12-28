@@ -164,6 +164,7 @@ export const StyledLink = styled(Link)`
   margin-left: 3px;
   text-decoration: underline;
   color: ${COLORS.VIOLET_55};
+  text-underline-position: from-font;
 `;
 
 const StyledBottomText = styled.h5`
