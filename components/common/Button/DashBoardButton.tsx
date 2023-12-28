@@ -5,12 +5,14 @@ import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 interface DashBoardButtonProps extends ButtonOnClickProps {
   text: string;
   color: string;
   king: boolean;
+  id: number;
 }
 
 /**
@@ -18,9 +20,9 @@ interface DashBoardButtonProps extends ButtonOnClickProps {
  * @param color 대시보드 ellipse color
  * @param king 대시보드 생성자 여부 boolean
  */
-function DashBoardButton({ text, color, king, onClick }: DashBoardButtonProps) {
+function DashBoardButton({ text, color, king, onClick, id }: DashBoardButtonProps) {
   return (
-    <>
+    <Link href={`/dashboard/${id}`}>
       <StyledButton onClick={onClick}>
         <StyledWrapper>
           <StyledDiv>
@@ -33,7 +35,7 @@ function DashBoardButton({ text, color, king, onClick }: DashBoardButtonProps) {
           <StyledPageImage src={rightPage} alt="화살표" />
         </StyledWrapper>
       </StyledButton>
-    </>
+    </Link>
   );
 }
 

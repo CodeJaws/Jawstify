@@ -6,7 +6,7 @@ import InviteDashBoard from '@/components/Table/InviteDashBoard';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { localStorageSetItem } from '@/utils/localStorage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 function MyDashBoard() {
@@ -15,6 +15,7 @@ function MyDashBoard() {
     localStorageSetItem('accessToken', a.accessToken);
   };
   const dashboardId = 203; // 대시보드 아이디 여기 수정하면 됩니다
+  const [reset, setReset] = useState(true);
 
   useEffect(() => {
     loginFunc();
@@ -24,8 +25,8 @@ function MyDashBoard() {
       <DashboardNavbar isMyDashboard={false} isOwner={true} title="내 대시보드" />
       <Sidebar />
       <StyledWrapper>
-        <MyDashBoardButtonBox dashboardId={dashboardId} />
-        <InviteDashBoard />
+        <MyDashBoardButtonBox dashboardId={dashboardId} reset={reset} />
+        <InviteDashBoard setReset={setReset} />
       </StyledWrapper>
     </StyledContainer>
   );

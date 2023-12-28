@@ -6,106 +6,10 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
-
-const mock = [
-  {
-    id: 1,
-    name: '프로덕트1',
-    inviter: '종민님1',
-  },
-  {
-    id: 2,
-    name: '프로덕트2',
-    inviter: '종민님2',
-  },
-  {
-    id: 3,
-    name: '프로덕트3',
-    inviter: '종민님3',
-  },
-  {
-    id: 4,
-    name: '프로덕트4',
-    inviter: '종민님4',
-  },
-  {
-    id: 5,
-    name: '프로덕트5',
-    inviter: '종민님5',
-  },
-  {
-    id: 6,
-    name: '프로덕트6',
-    inviter: '종민님6',
-  },
-];
-
-const addMock = [
-  {
-    id: 7,
-    name: '종민프로덕트7',
-    inviter: '종민님7',
-  },
-  {
-    id: 8,
-    name: '소은프로덕트8',
-    inviter: '종민님8',
-  },
-  {
-    id: 9,
-    name: '기연프로덕트9',
-    inviter: '종민님9',
-  },
-  {
-    id: 10,
-    name: '윤혁프로덕트10',
-    inviter: '종민님10',
-  },
-  {
-    id: 11,
-    name: '프로덕트11',
-    inviter: '종민님11',
-  },
-  {
-    id: 12,
-    name: '프로덕트12',
-    inviter: '종민님12',
-  },
-  {
-    id: 13,
-    name: '종민프로덕트13',
-    inviter: '종민님13',
-  },
-  {
-    id: 14,
-    name: '소은프로덕트14',
-    inviter: '종민님14',
-  },
-  {
-    id: 15,
-    name: '기연프로덕트15',
-    inviter: '종민님15',
-  },
-  {
-    id: 16,
-    name: '윤혁프로덕트16',
-    inviter: '종민님16',
-  },
-  {
-    id: 17,
-    name: '프로덕트17',
-    inviter: '종민님17',
-  },
-  {
-    id: 18,
-    name: '프로덕트18',
-    inviter: '종민님18',
-  },
-];
 
 interface GetInvitationListProps {
   id: number;
@@ -129,11 +33,20 @@ interface GetInvitationListProps {
   updatedAt: string;
 }
 
-interface getCursorProps {
+interface GetCursorProps {
   cursorId: number;
 }
 
-function InviteDashBoard() {
+export interface GetAcceptProps {
+  acceptid: number;
+  accept: boolean;
+}
+
+interface InviteDashBoardProps {
+  setReset: Dispatch<SetStateAction<boolean>>;
+}
+
+function InviteDashBoard({ setReset }: InviteDashBoardProps) {
   const [dataSource, setDataSource] = useState<GetInvitationListProps[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [searchText, setSearchText] = useState('');
@@ -145,7 +58,6 @@ function InviteDashBoard() {
     if (cursor) {
       if (dataSource.length !== 0) {
         handleLoadMore();
-        // setDataSource((prev) => [...prev,...]);
       }
     } else {
       setHasMore(false);
@@ -163,10 +75,18 @@ function InviteDashBoard() {
   };
 
   const getItems = async () => {
-    const a = await API.invitations.getInvitationFirstList({});
-    // console.log(a);
+    const a = await API.invitations.getInvitationList({});
     setDataSource(a.invitations);
     setCursor(a.cursorId as number);
+  };
+
+  const handleAccept = async ({ acceptid, accept }: GetAcceptProps) => {
+    console.log('asdfasdfasdf');
+    const c = await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
+
+    setDataSource(dataSource.filter((item) => item.id !== acceptid));
+    // console.log(c);
+    setReset((prev) => !prev);
   };
 
   useEffect(() => {
@@ -175,7 +95,7 @@ function InviteDashBoard() {
 
   const showItems = dataSource.filter((item) => item.dashboard.title.includes(searchText));
   return (
-    <StyledDiv $data={mock}>
+    <StyledDiv $data={dataSource}>
       <StyledP>초대받은 대시보드</StyledP>
       {dataSource.length !== 0 ? (
         <div>
@@ -206,6 +126,7 @@ function InviteDashBoard() {
                     <div key={item.id}>
                       {windowSize === 'mobile' && (
                         <>
+                          {/* 모바일 사이즈 */}
                           <StyledMobileContainer>
                             <StyledMobileLeftDiv>
                               <div>이름</div>
@@ -223,13 +144,14 @@ function InviteDashBoard() {
                               isViolet={true}
                               size="small"
                               className="temp1"
-                              onLeftClick={() => {}}
-                              onRightClick={() => {}}
+                              onLeftClick={() => handleAccept({ acceptid: item.id, accept: true })}
+                              onRightClick={() => handleAccept({ acceptid: item.id, accept: false })}
                             />
                           </StyledMobileButtonWrapper>
                         </>
                       )}
                       {width && (
+                        // 모바일 외 사이즈
                         <StyleListWrapper>
                           <StyledListInWrapper>{item.dashboard.title}</StyledListInWrapper>
                           <StyledListInWrapper>{item.inviter.nickname}</StyledListInWrapper>
@@ -240,8 +162,8 @@ function InviteDashBoard() {
                               isViolet={true}
                               size="small"
                               className="temp2"
-                              onLeftClick={() => {}}
-                              onRightClick={() => {}}
+                              onLeftClick={() => handleAccept({ acceptid: item.id, accept: true })}
+                              onRightClick={() => handleAccept({ acceptid: item.id, accept: false })}
                             />
                           </StyledListInWrapper>
                         </StyleListWrapper>

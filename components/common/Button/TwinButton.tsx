@@ -1,6 +1,6 @@
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { MouseEvent, ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 interface TwinButtonProps {
@@ -10,8 +10,8 @@ interface TwinButtonProps {
   size: 'large' | 'small';
   children?: ReactNode;
   className?: string;
-  onLeftClick: (e: MouseEvent<HTMLElement>) => void;
-  onRightClick: (e: MouseEvent<HTMLElement>) => void;
+  onLeftClick: MouseEventHandler<HTMLButtonElement>;
+  onRightClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 function TwinButton({

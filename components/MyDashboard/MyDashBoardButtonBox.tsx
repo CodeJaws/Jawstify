@@ -8,21 +8,6 @@ import DashBoardAddButton from '../common/Button/DashBoardAddButton';
 import DashBoardButton from '../common/Button/DashBoardButton';
 import PaginationButton from '../common/Button/PaginationButton';
 
-const mock = [
-  { id: 1, text: '일' },
-  { id: 2, text: '이' },
-  { id: 3, text: '삼' },
-  { id: 4, text: '사' },
-  { id: 5, text: '오' },
-  { id: 6, text: '육' },
-  { id: 7, text: '칠' },
-  { id: 8, text: '팔' },
-  { id: 9, text: '구' },
-  { id: 10, text: '십' },
-  { id: 11, text: '십일' },
-  { id: 12, text: '십이' },
-];
-
 interface usePaginationProps {
   handlePagination: (val: number) => void;
   pageNum: number;
@@ -32,17 +17,18 @@ interface usePaginationProps {
 
 interface MyDashBoardButtonBoxProps {
   dashboardId: number;
+  reset: boolean;
 }
 
-function MyDashBoardButtonBox({ dashboardId }: MyDashBoardButtonBoxProps) {
+function MyDashBoardButtonBox({ dashboardId, reset }: MyDashBoardButtonBoxProps) {
   const limit = 5;
   const { handlePagination, pageNum, showItems, totalPages } = usePagination({
     size: 10,
     showItemNum: limit,
     type: 'dashboard',
     dashboardId: 203,
+    reset,
   }) as usePaginationProps;
-  // const totalItemCount = Object.keys(mock).length;
 
   return (
     <div>
@@ -55,6 +41,7 @@ function MyDashBoardButtonBox({ dashboardId }: MyDashBoardButtonBoxProps) {
               color={item.color}
               king={item.createdByMe}
               onClick={() => {}}
+              id={item.id}
             />
           </div>
         ))}

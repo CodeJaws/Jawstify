@@ -398,7 +398,7 @@ export interface GetInvitationListItem {
 }
 
 export interface ResponseInvitationProps {
-  invitationId: string;
+  invitationId: number;
   inviteAccepted?: boolean;
 }
 

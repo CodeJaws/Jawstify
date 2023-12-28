@@ -1,7 +1,6 @@
 import API from '@/apis/api';
-import DEFAULT_IMAGE from '@/public/assets/icons/PinkEllipse.svg';
 import { DashboardType, InvitationType, MemberType } from '@/types/apiType';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
 type AllItemTypes = DashboardType[] | MemberType[] | InvitationType[];
 
@@ -10,6 +9,7 @@ interface usePaginationProps {
   showItemNum: 4 | 5;
   type: 'dashboard' | 'members' | 'invitationDetails';
   dashboardId?: number;
+  reset: boolean;
 }
 
 interface usePaginationReturn {
@@ -25,7 +25,7 @@ interface usePaginationReturn {
  * @param type 어디서 페이지네이션 사용하는지 확인할 type
  * @param dashboardId 대시보드 멤버 목록 조회 API에서 사용
  */
-const usePagination = ({ size, showItemNum, type, dashboardId }: usePaginationProps): usePaginationReturn => {
+const usePagination = ({ size, showItemNum, type, dashboardId, reset }: usePaginationProps): usePaginationReturn => {
   const [pageNum, setPageNum] = useState(1);
   const [allItems, setAllItems] = useState<AllItemTypes>([]);
   const [showItems, setShowItems] = useState<AllItemTypes>([]);
@@ -44,6 +44,7 @@ const usePagination = ({ size, showItemNum, type, dashboardId }: usePaginationPr
         navigationMethod: 'pagination',
         page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
       });
+      console.log(res);
       setLoading(false);
 
       if (type === 'members') {
@@ -73,11 +74,15 @@ const usePagination = ({ size, showItemNum, type, dashboardId }: usePaginationPr
 
   useEffect(() => {
     setShowItems(allItems.slice((pageNum - 1) * showItemNum, (pageNum - 1) * showItemNum + showItemNum));
-
     if (allItems.length === 0) {
       firstFetch();
     }
   }, [allItems, pageNum, showItemNum, firstFetch]);
+
+  useLayoutEffect(() => {
+    setAllItems([]);
+    setPageNum(1);
+  }, [reset]);
 
   return { handlePagination, pageNum, showItems, totalPages };
 };
