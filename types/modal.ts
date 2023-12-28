@@ -7,7 +7,7 @@ import { ChangeEvent } from 'react';
  */
 export interface ModalCommonProps {
   onOkClick: () => void;
-  onCancelClick: () => void;
+  onCancelClick?: () => void;
   getValue?: (value: {}) => void;
 }
 
