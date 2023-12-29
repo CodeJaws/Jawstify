@@ -1,11 +1,11 @@
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 
+import useCardData from '@/hooks/ModalCard/useCardData';
 import useDeviceType from '@/hooks/useDeviceType';
-import { ModalContext } from '@/pages/modalcard';
+import Crown from '@/public/assets/images/emoji.webp';
 import { onMobile } from '@/styles/mediaQuery';
 import Image from 'next/image';
-import { useContext } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
 import Comment from './Comment';
@@ -13,8 +13,10 @@ import Manager from './Manager';
 import ModalButton from './ModalButton';
 
 function ModalCard() {
-  const { title, content, status, tag, cardImg } = useContext(ModalContext);
+  const { cardData } = useCardData();
+  const { title, description } = cardData;
   const deviceType = useDeviceType();
+
   return (
     <StyledContainer>
       <StyledLeftContainer>
@@ -23,18 +25,18 @@ function ModalCard() {
           <StyledTitle>{title}</StyledTitle>
           {deviceType === 'mobile' && <Manager />}
           <StyledTag>
-            {status}
+            {/* {status} */}
             <StyledDivision />
             <StyledColorChipWrapper>
-              {tag.map((val) => (
-                <ContentChip key={val.id} text={val.text} color={val.color} backgroundColor={val.backgroundColor} />
+              {cardData.tags.map((val) => (
+                <ContentChip key={val} text={val} color={'#fff'} backgroundColor={'#000'} />
               ))}
             </StyledColorChipWrapper>
           </StyledTag>
         </StyledTitleWrapper>
         <StyledContentWrapper>
-          <StyledContent>{content}</StyledContent>
-          <StyledImage width={450} height={262} src={cardImg} alt="카드 이미지" />
+          <StyledContent>{description}</StyledContent>
+          <StyledImage width={450} height={262} src={Crown} alt="카드 이미지" />
         </StyledContentWrapper>
         <Comment />
       </StyledLeftContainer>

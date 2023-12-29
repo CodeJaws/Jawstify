@@ -1,31 +1,36 @@
-import { ModalContext } from '@/pages/modalcard';
+import useComment from '@/hooks/ModalCard/useComment';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import dateTimeFormat from '@/utils/dateTimeFormat';
 import Image from 'next/image';
-import { useContext } from 'react';
 import styled from 'styled-components';
 import BasicInput from '../Input/ModalInputContainer/BasicInput';
 
 function Comment() {
-  const { userProfileImg, userName, createdAt, comment } = useContext(ModalContext);
+  const { comment } = useComment();
+
   return (
     <StyledContainer>
       <BasicInput onChange={() => {}} label="댓글" />
-      <StyledInCommentWrapper>
-        <StyledImage width={34} height={34} src={userProfileImg} alt="프로필 이미지" />
-        <StyledCommentContent>
-          <StyledInComment>
-            <StyledUser>{userName}</StyledUser>
-            <StyledDate>{createdAt}</StyledDate>
-          </StyledInComment>
-          <StyledComment>{comment}</StyledComment>
-          <StyledButtonWrapper>
-            <StyledButton>수정</StyledButton>
-            <StyledButton>삭제</StyledButton>
-          </StyledButtonWrapper>
-        </StyledCommentContent>
-      </StyledInCommentWrapper>
+      {comment.comments.map((val) => (
+        <>
+          <StyledInCommentWrapper>
+            <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
+            <StyledCommentContent>
+              <StyledInComment>
+                <StyledUser>{val.author.nickname}</StyledUser>
+                <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
+              </StyledInComment>
+              <StyledComment>{val.content}</StyledComment>
+              <StyledButtonWrapper>
+                <StyledButton>수정</StyledButton>
+                <StyledButton>삭제</StyledButton>
+              </StyledButtonWrapper>
+            </StyledCommentContent>
+          </StyledInCommentWrapper>
+        </>
+      ))}
     </StyledContainer>
   );
 }
