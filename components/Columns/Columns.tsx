@@ -29,6 +29,7 @@ function Columns({ dashboardId }: GetColumnListProps) {
   const getColumnListFunc = async (dashboardId: number) => {
     if (Number.isNaN(dashboardId)) return;
     const res = await API.columns.getColumnList({ dashboardId });
+    console.log(res);
     const columns = res?.data;
     const isSuccess = res?.result;
     setIsSuccess(isSuccess === 'SUCCESS');
@@ -42,10 +43,12 @@ function Columns({ dashboardId }: GetColumnListProps) {
 
   // 새 컬럼 추가하기
   const createColumnFunc = async (title: string, dashboardId: number) => {
-    const res = await API.columns.createColumn({
+    const response = await API.columns.createColumn({
       title: title,
       dashboardId: dashboardId,
     });
+    await getColumnListFunc(dashboardId);
+    console.log(response);
   };
 
   useEffect(() => {
@@ -77,9 +80,9 @@ function Columns({ dashboardId }: GetColumnListProps) {
             onCancelClick={() => {
               setIsOpen(false);
             }}
-            onOkClick={() => {
-              createColumnFunc(value.이름, 408);
-              getColumnListFunc(408);
+            onOkClick={async () => {
+              createColumnFunc(value.이름, dashboardId);
+              setIsOpen(false);
             }}
             onDeleteClick={() => {
               console.log('삭제');
