@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { InitBasic } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
-  type: '초대하기' | '새 칼럼 생성';
+  type: '초대하기' | '새 컬럼 생성';
   isDisabled?: boolean;
 }
 
