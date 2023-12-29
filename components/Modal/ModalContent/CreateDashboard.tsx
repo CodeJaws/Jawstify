@@ -4,12 +4,10 @@ import { ModalCommonProps } from '@/types/modal';
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { useState } from 'react';
+import { InitCreateDashboard } from '@/constants/InitialModalValues';
 
 function CreateDashboard({ onOkClick, onCancelClick = () => {}, getValue = () => {} }: ModalCommonProps) {
-  const [values, setValues] = useState({
-    '대시보드 이름': '',
-    색상: '',
-  });
+  const [values, setValues] = useState(InitCreateDashboard);
 
   const handleChange = (inputLabel: string, inputValue: string) => {
     setValues({

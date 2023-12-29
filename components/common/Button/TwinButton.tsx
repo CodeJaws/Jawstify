@@ -29,14 +29,19 @@ function TwinButton({
   return (
     <StyledDiv className={className}>
       {children}
-      <StyledButton $isViolet={isViolet} $size={size} onClick={onLeftClick} $background={COLORS.WHITE_FF}>
+      <StyledButton
+        $isViolet={isViolet}
+        $size={size}
+        onClick={onLeftClick}
+        $background={COLORS.WHITE_FF}
+        disabled={isDisabled}
+      >
         {text1}
       </StyledButton>
       <StyledButton
         $isViolet={!isViolet}
         $size={size}
         onClick={onRightClick}
-        disabled={isDisabled}
         $background={isDisabled ? COLORS.GRAY_9F : COLORS.VIOLET_55}
       >
         {text2}
