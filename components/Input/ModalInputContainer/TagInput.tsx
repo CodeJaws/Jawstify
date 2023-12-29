@@ -13,7 +13,7 @@ export interface TagProps {
   onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
 }
 
-interface Tag {
+export interface Tag {
   value: string;
   color: string;
   backgroundColor: string;

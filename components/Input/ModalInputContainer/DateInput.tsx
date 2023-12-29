@@ -25,7 +25,7 @@ function DateInput({ label = '마감일', placeholder = DEFAULT_PLACEHOLDER.DATE
     setDates(newVal);
     if (newVal === (undefined || null)) return;
     const dateToStr =
-      newVal.year() + '.' + (newVal.month() + 1) + '.' + newVal?.date() + ' ' + newVal?.hour() + ':' + newVal?.minute(); //ex: 2024.9.18 5:55
+      newVal.year() + '-' + (newVal.month() + 1) + '-' + newVal?.date() + ' ' + newVal?.hour() + ':' + newVal?.minute(); //ex: 2024-9-18 5:55
     onChange(label, dateToStr);
   };
 

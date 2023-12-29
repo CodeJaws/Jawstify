@@ -14,30 +14,35 @@ import Modal from '../Modal/Modal';
 import api from '@/apis/api';
 import { Certificate } from 'crypto';
 import { INIT_MANAGE_COLUMN, INIT_CREATE_N_EDIT_TODO } from '@/constants/InitialModalValues';
+import { Tag } from '../Input/ModalInputContainer/TagInput';
 
 interface Props extends GetColumnListProps {
   columnId: number;
   title: string;
+  applyColumnDelete: (dashboardId: number) => Promise<void>;
 }
 
-function Column({ title, columnId, dashboardId }: Props) {
+function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete }: Props) {
   const [cards, setCards] = useState<GetCardDetailsItem[]>([]);
+  const [title, setTitle] = useState(defaultTitle);
   const [totalCount, setTotalCount] = useState(0);
   const [isOpen, setIsOpen] = useState({
     setting: false,
     create: false,
   });
+
   // 컬럼 관리 할 일 생성
   const [manageColumnVal, setManageColumnVal] = useState(INIT_MANAGE_COLUMN);
   const [createToDoVal, setCreateToDo] = useState(INIT_CREATE_N_EDIT_TODO);
 
   // 카드 목록 조회
-  const getCardListFunc = async (columnId: number) => {
+  const getCardListFunc = async () => {
     const res = await API.cards.checkCardList({ columnId });
     const cards = res?.cards;
     const totalCount = res?.totalCount;
     setCards(cards);
     setTotalCount(totalCount);
+    console.log(cards);
   };
 
   const handleClickCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,7 +80,10 @@ function Column({ title, columnId, dashboardId }: Props) {
   //   imageUrl?: string | null | ArrayBuffer;
   // }
 
-  const handleSubmit = async () => {
+  const handleCreateToDoSubmit = async () => {
+    const formatedTagData: string[] = createToDoVal.태그.map((tagEl: Tag) =>
+      [tagEl.value, tagEl.color, tagEl.backgroundColor].join('/'),
+    );
     const body = {
       assigneeUserId: 0,
       // assigneeUserId const {user : {id: assigneeUserId}} = useUser();
@@ -84,15 +92,32 @@ function Column({ title, columnId, dashboardId }: Props) {
       title: createToDoVal.제목,
       description: createToDoVal.설명,
       dueDate: createToDoVal.마감일,
-      tags: createToDoVal.태그,
-      imageUrl: createToDoVal.이미지,
+      tags: formatedTagData,
+      // imageUrl: createToDoVal.이미지,
+      imageUrl:
+        'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/1-4_166_1703867195161.jpeg',
     };
     const response = await api.cards.createCard(body);
     console.log(response);
   };
 
+  const handleManageColumnSubmit = async () => {
+    const response = (await api.columns.correctColumn({
+      columnId: String(columnId),
+      title: manageColumnVal.이름,
+    })) as { title: '' };
+    setTitle(response.title);
+    console.log(response.title);
+  };
+
+  const handleColumnDelete = async () => {
+    const response = await api.columns.deleteColumn({ columnId: String(columnId) });
+    await applyColumnDelete(dashboardId);
+    console.log(response);
+  };
+
   useEffect(() => {
-    getCardListFunc(columnId);
+    getCardListFunc();
   }, [columnId]);
 
   return (
@@ -108,14 +133,17 @@ function Column({ title, columnId, dashboardId }: Props) {
             console.log('취소');
             setIsOpen({ ...isOpen, setting: false });
           }}
-          onOkClick={() => {
+          onOkClick={async () => {
             console.log('확인');
             console.log({ ...isOpen, setting: false }); // 모달 input value 출력
             console.log(manageColumnVal);
-            // createToDoFunc(value);
+            handleManageColumnSubmit();
+            // TODO: api status == 200 인지 확인하고 닫아야함
+            setIsOpen({ ...isOpen, setting: false });
+            // await getCardListFunc();
           }}
           onDeleteClick={() => {
-            console.log('삭제');
+            handleColumnDelete();
           }}
         />
       )}
@@ -134,7 +162,7 @@ function Column({ title, columnId, dashboardId }: Props) {
             }}
             onOkClick={() => {
               console.log(createToDoVal); // 모달 input value 출력
-              handleSubmit();
+              handleCreateToDoSubmit();
               // createToDoFunc();
             }}
             // onDeleteClick={() => {
@@ -161,11 +189,11 @@ function Column({ title, columnId, dashboardId }: Props) {
 export default Column;
 
 const StyledContainer = styled.div`
-  width: 308px;
+  width: 19.25rem;
   height: auto;
-  padding: 12px;
+  padding: 0.75rem;
   position: relative;
-  border-bottom: 1px solid ${COLORS.GRAY_EE};
+  border-bottom: 0.0625rem solid ${COLORS.GRAY_EE};
   height: 90vh;
   overflow: scroll;
 
@@ -174,58 +202,57 @@ const StyledContainer = styled.div`
   }
 
   ${onTablet} {
-    width: 584px;
     padding: 20px;
+    width: 100%;
   }
 
   ${onPc} {
     width: 354px;
-
-    padding: 20px;
+    padding: 1.25rem;
     border: none;
-    border-right: 1px solid ${COLORS.GRAY_EE};
+    border-right: 0.0625rem solid ${COLORS.GRAY_EE};
   }
 `;
 
 const StyledSettingIconContainer = styled.button`
   position: absolute;
-  width: 24px;
-  height: 24px;
-  right: 20px;
-  top: 20px;
+  width: 1.5rem;
+  height: 1.5rem;
+  right: 1.25rem;
+  top: 1.25rem;
   cursor: pointer;
 
   ${onMobile} {
-    width: 22px;
-    height: 22px;
-    right: 12px;
-    top: 12px;
+    width: 1.375rem;
+    height: 1.375rem;
+    right: 0.75rem;
+    top: 0.75rem;
   }
 `;
 
 const StyledHeader = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
   ${fontStyle(18, 700)};
-  margin-bottom: 25px;
+  margin-bottom: 1.5625rem;
 
   ${onMobile} {
     ${fontStyle(16, 700)};
-    margin-bottom: 17px;
+    margin-bottom: 1.0625rem;
   }
 `;
 
 const StyledCountChip = styled(CountChip)`
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 `;
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
 
   ${onMobile} {
-    gap: 10px;
+    gap: 0.625rem;
   }
 `;

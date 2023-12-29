@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { INIT_BASIC } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
-  type: '초대하기' | '새 컬럼 생성';
+  type: '초대하기' | '새 칼럼 생성';
   isDisabled?: boolean;
 }
 
@@ -27,7 +27,7 @@ function Basic({ type, onCancelClick = () => {}, onOkClick, getValue = () => {} 
     <>
       <StyledContainer>
         {type === '초대하기' && <BasicInput label="이메일" onChange={handleChange} inputValue={values.이메일} />}
-        {type === '새 컬럼 생성' && (
+        {type === '새 칼럼 생성' && (
           <BasicInput label="이름" placeholder="새로운 프로젝트" onChange={handleChange} inputValue={values.이름} />
         )}
       </StyledContainer>
