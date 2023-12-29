@@ -3,56 +3,72 @@ import styled from 'styled-components';
 
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import { onMobile } from '@/styles/mediaQuery';
-import usePagination, { InvitationItem, MembersItem } from '@/hooks/usePagination';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
+import usePagination from '@/hooks/usePagination';
 import PaginationButton from '../common/Button/PaginationButton';
 import Button from '../common/Button/Button';
-import InviteButton from './InviteButton';
+import { MemberType } from '@/types/apiType';
+import DefaultImage from '@/public/assets/icons/Codeit.svg';
+import API from '@/apis/api';
+import { useState } from 'react';
 
-interface TablePaginationProps {
+interface MembersTableProps {
   dashboardId: number;
-  table: 'members' | 'invitationDetails';
+  refresh: () => void;
 }
 
 interface TableProps {
-  item: MembersItem | InvitationItem;
-  table: 'members' | 'invitationDetails';
+  item: MemberType;
+  refresh: () => void;
+  refreshPagination: () => void;
 }
 
 /** 구성원 컴포넌트에서 하나의 줄을 의미합니다. */
-function Table({ item, table }: TableProps) {
-  let profileImg = '';
+function Table({ item, refresh, refreshPagination }: TableProps) {
+  const { isOwner, nickname, profileImageUrl } = item;
   let buttonName = '삭제';
-  let itemName;
-
-  if (table === 'members' && 'nickname' in item) {
-    profileImg = item.profileImageUrl;
-    buttonName = '삭제';
-    itemName = item?.nickname;
-  } else if ('invitee' in item && item.invitee) {
-    buttonName = '취소';
-    itemName = item?.invitee?.email;
-  }
 
   /** 구성원 삭제 */
-  const handleDelete = () => {};
+  const handleDelete = async () => {
+    if (confirm(`정말 ${nickname}멤버를 삭제하시겠습니까?`)) {
+      try {
+        await API.members.deleteMemberInDashboard({ memberId: String(item.id) });
+        refresh();
+        refreshPagination();
+      } catch (e: any) {
+        switch (e.data.message) {
+          case '대시보드 삭제 권한이 없습니다.':
+            alert('대시보드 삭제 권한이 없습니다.');
+            break;
+          case '대시보드가 존재하지 않습니다.':
+            alert('대시보드가 존재하지 않습니다.');
+            break;
+          case '대시보드의 멤버가 아닙니다.':
+            alert('대시보드의 멤버가 아닙니다.');
+            break;
+          default:
+            alert(e.data.message);
+        }
+      }
+    }
+  };
 
   return (
     <StyledMemberBoxContainer>
       <StyledMemberBoxProfileWrapper>
-        {table === 'members' && (
-          <StyledMemberBoxImageWrapper>
-            <Image fill src={profileImg} alt="구성원 프로필" />
-          </StyledMemberBoxImageWrapper>
-        )}
-        <p>{itemName}</p>
+        <StyledMemberBoxImageWrapper>
+          <Image fill src={profileImageUrl ?? DefaultImage} alt="구성원 프로필" />
+        </StyledMemberBoxImageWrapper>
+        <p>{nickname}</p>
       </StyledMemberBoxProfileWrapper>
-      <Button text={buttonName} isViolet={false} size="small" onClick={() => handleDelete()} className="" />
+      {!isOwner && (
+        <Button text={buttonName} isViolet={false} size="small" onClick={() => handleDelete()} className="" />
+      )}
     </StyledMemberBoxContainer>
   );
 }
 
-function TablePagination({ dashboardId, table }: TablePaginationProps) {
+function MembersTable({ dashboardId, refresh }: MembersTableProps) {
   /**
    * @param handlePagination 페이지네이션 OnClick 동작 함수
    * @param pageNum 현재 페이지 넘버
@@ -60,18 +76,22 @@ function TablePagination({ dashboardId, table }: TablePaginationProps) {
    * @param totalPages 총 페이지 수
    * @param totalCount 전체 아이템 수 - API에서 받아올 수 있습니다.
    */
-  const { handlePagination, pageNum, showItems, totalPages, totalCount } = usePagination({
-    size: 20,
-    showItemNum: 4,
+  const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
+  const refreshPagination = () => setRefreshPaginationToggle((prev) => !prev);
+
+  const SHOW_ITEMS_SIZE = 4;
+  const { handlePagination, pageNum, totalPages, allItems } = usePagination({
+    size: 10,
+    showItemNum: SHOW_ITEMS_SIZE,
     type: 'members',
     dashboardId,
+    refreshPaginationToggle,
   });
 
-  const tableTitle = table === 'members' ? '구성원' : '초대 내역';
-  const tableSubTitle = table === 'members' ? '이름' : '이메일';
+  const tableTitle = '구성원';
+  const tableSubTitle = '이름';
 
-  /** 초대하기 버튼 클릭 시 동작 */
-  const handleInvite = () => {};
+  const showItems = allItems.slice((pageNum - 1) * SHOW_ITEMS_SIZE, (pageNum - 1) * SHOW_ITEMS_SIZE + SHOW_ITEMS_SIZE);
 
   return (
     <StyledContainer>
@@ -79,41 +99,49 @@ function TablePagination({ dashboardId, table }: TablePaginationProps) {
         <h1>{tableTitle}</h1>
         <StyledPaginationWrapper>
           <div>
-            {Math.ceil(totalCount / 4)}페이지 중 {pageNum}
+            {totalPages}페이지 중 {pageNum}
           </div>
           <div>
             <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
             <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePagination(1)} />
           </div>
-          {table !== 'members' && <InviteButton text="초대하기" onClick={handleInvite} />}
         </StyledPaginationWrapper>
       </StyledTopWrapper>
       <StyledNameText>{tableSubTitle}</StyledNameText>
       {showItems.map((item, index) => (
-        <>
-          <Table key={item.id} item={item as MembersItem | InvitationItem} table={table} />
-          {showItems.length - 1 !== index && <StyledMemberBoxSeperator></StyledMemberBoxSeperator>}
-        </>
+        <div key={item.id}>
+          <Table item={item as MemberType} refresh={refresh} refreshPagination={refreshPagination} />
+          {showItems.length - 1 !== index && <StyledSeperator></StyledSeperator>}
+        </div>
       ))}
     </StyledContainer>
   );
 }
 
-export default TablePagination;
+export default MembersTable;
 
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 620px;
-  height: 404px;
   flex-shrink: 0;
 
+  height: 404px;
   border-radius: 8px;
   background: ${COLORS.WHITE_FF};
 
+  ${onTablet} {
+    width: 100%;
+  }
+
   ${onMobile} {
-    width: 284px;
+    width: 100%;
+    /* width: 284px; */
     height: 337px;
+  }
+
+  ${onMobile} {
+    height: 377px;
   }
 `;
 
@@ -122,7 +150,7 @@ const StyledNameText = styled.p`
   ${fontStyle(16, 400)};
 
   margin-left: 28px;
-  margin-top: 14px;
+  /* margin-top: 14px; */
   margin-bottom: 24px;
 
   ${onMobile} {
@@ -177,6 +205,7 @@ const StyledMemberBoxContainer = styled.div`
   width: 100%;
   height: 38px;
   padding: 0 28px;
+  margin: 16px 0;
 
   justify-content: space-between;
   align-items: center;
@@ -216,10 +245,9 @@ const StyledMemberBoxImageWrapper = styled.div`
   }
 `;
 
-const StyledMemberBoxSeperator = styled.div`
+const StyledSeperator = styled.div`
   width: 100%;
   height: 0;
   flex-shrink: 0;
   border: 1px solid ${COLORS.GRAY_EE};
-  margin: 16px 0;
 `;
