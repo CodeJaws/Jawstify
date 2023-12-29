@@ -1,4 +1,4 @@
-import { DEFAULT_PLACEHOLDER } from '@/constants/Input';
+import { DEFAULT_PLACEHOLDER } from '@/constants/SignValidate';
 import eyeOff from '@/public/assets/icons/eyeoff.svg';
 import eyeOn from '@/public/assets/icons/eyeon.svg';
 import Image from 'next/image';
@@ -32,7 +32,7 @@ interface Props {
   inputValue?: string;
   placeholder?: string;
   errorMessage?: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
 }
 function FormInput({ label = '', placeholder, errorMessage = '', register }: Props) {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,7 +44,7 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
 
   return (
     <StyledInputContainer>
-      <StyledLabel>{label}</StyledLabel>
+      <StyledFormLabel>{label}</StyledFormLabel>
       <StyledInput
         type={!isVisible && isPassword ? 'password' : 'text'}
         placeholder={placeholder || PLACEHOLDER[label]}
@@ -63,6 +63,9 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
 
 export default FormInput;
 
+const StyledFormLabel = styled(StyledLabel)`
+  font-size: 16px;
+`;
 const StyledImage = styled(Image)`
   border: none;
 `;

@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button/Button';
-import { NO_VALUE_ERROR } from '@/constants/Input';
+import { NO_VALUE_ERROR } from '@/constants/SignValidate';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
