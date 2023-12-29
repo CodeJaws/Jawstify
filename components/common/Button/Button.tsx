@@ -1,7 +1,7 @@
 import { onMobile } from '@/styles/mediaQuery';
-import { ReactNode } from 'react';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
+import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ButtonProps extends ButtonOnClickProps {
@@ -10,12 +10,13 @@ interface ButtonProps extends ButtonOnClickProps {
   size: 'large' | 'small';
   children?: ReactNode;
   className?: string;
+  disabled?: boolean;
 }
 
-function Button({ text, isViolet = false, size, children, className, onClick }: ButtonProps) {
+function Button({ text, isViolet = false, size, children, className, onClick, disabled = false }: ButtonProps) {
   return (
     <>
-      <StyledButton $isViolet={isViolet} $size={size} className={className} onClick={onClick}>
+      <StyledButton $isViolet={isViolet} $size={size} className={className} onClick={onClick} disabled={disabled}>
         {text}
         {children}
       </StyledButton>
@@ -37,6 +38,11 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
   font-size: 1.4rem;
+
+  &:disabled {
+    background-color: ${COLORS.GRAY_9F};
+  }
+
   ${onMobile} {
     width: 52px;
     height: 28px;
