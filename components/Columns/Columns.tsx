@@ -16,21 +16,22 @@ interface ColumnProps {
 }
 
 function Columns({ dashboardId }: GetColumnListProps) {
-  const [isSuccess, setIsSuccess] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   const [columns, setColumns] = useState<ColumnProps[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState({이름:''});
+  const [value, setValue] = useState({ 이름: '' });
 
-  const setModalValue = (values: {이름: ''}) => {
+  const setModalValue = (values: { 이름: '' }) => {
     setValue(values);
   };
 
   // 컬럼 목록 조회
   const getColumnListFunc = async (dashboardId: number) => {
+    if (Number.isNaN(dashboardId)) return;
     const res = await API.columns.getColumnList({ dashboardId });
     const columns = res?.data;
     const isSuccess = res?.result;
-    setIsSuccess(isSuccess);
+    setIsSuccess(isSuccess === 'SUCCESS');
     setColumns(columns);
   };
 
@@ -48,13 +49,12 @@ function Columns({ dashboardId }: GetColumnListProps) {
   };
 
   useEffect(() => {
-    // getColumnListFunc(dashboardId);
-    getColumnListFunc(408);
+    getColumnListFunc(dashboardId);
   }, [dashboardId]);
 
   return (
     <StyledContainer>
-      {isSuccess === 'SUCCESS' && (
+      {isSuccess && (
         <StyledWrapper>
           {columns.map((column) => (
             <li key={column.id}>

@@ -22,17 +22,20 @@ function Column({ title, columnId }: Props) {
   const [totalCount, setTotalCount] = useState(0);
   const [isOpen, setIsOpen] = useState({
     setting: false,
-    create: false
+    create: false,
   });
   const [value, setValue] = useState({
-    담당자: '',
-    제목: '',
-    설명: '',
-    상태: '',
-    마감일: '',
-    태그: {},
-    이미지: '',
+    이름: '',
   });
+  // const [value, setValue] = useState({
+  //   담당자: '',
+  //   제목: '',
+  //   설명: '',
+  //   상태: '',
+  //   마감일: '',
+  //   태그: {},
+  //   이미지: '',
+  // });
 
   // 카드 목록 조회
   const getCardListFunc = async (columnId: number) => {
@@ -48,13 +51,13 @@ function Column({ title, columnId }: Props) {
     console.log('할일 생성 모달');
     setIsOpen({ ...isOpen, create: true });
   };
-  
+
   // const createToDoFunc = async (value: CreateCardProps) => {
   //   const res = await API.cards.createCard(value);
   //   console.log(res);
   // }
 
-  const setModalValue = (values: {이름: ''}) => {
+  const setModalValue = (values: { 이름: '' }) => {
     setValue(values);
   };
 
@@ -62,7 +65,7 @@ function Column({ title, columnId }: Props) {
     console.log('컬럼 수정 모달');
     setIsOpen({ ...isOpen, setting: true });
   };
-  
+
   useEffect(() => {
     getCardListFunc(columnId);
   }, [columnId]);
@@ -72,49 +75,55 @@ function Column({ title, columnId }: Props) {
       <StyledSettingIconContainer onClick={handleClickSetting}>
         <Image fill src={setting} alt="설정 버튼" />
       </StyledSettingIconContainer>
-      {isOpen.setting && <Modal title="컬럼 관리" 
-        getValue={setValue({...value, })}
-        onCancelClick={() => {
-          console.log('취소');
-          setIsOpen({ ...isOpen, setting: false });
-        }}
-        onOkClick={() => {
-          console.log('확인');
-          console.log({ ...isOpen, setting: false }); // 모달 input value 출력
-          // createToDoFunc(value);
-        }}
-        onDeleteClick={() => {
-          console.log('삭제');
-        }}
-      />}  
+      {isOpen.setting && (
+        <Modal
+          title="컬럼 관리"
+          getValue={setModalValue}
+          onCancelClick={() => {
+            console.log('취소');
+            setIsOpen({ ...isOpen, setting: false });
+          }}
+          onOkClick={() => {
+            console.log('확인');
+            console.log({ ...isOpen, setting: false }); // 모달 input value 출력
+            // createToDoFunc(value);
+          }}
+          onDeleteClick={() => {
+            console.log('삭제');
+          }}
+        />
+      )}
       <StyledHeader>
         <div>{title}</div>
-        <StyledCountChip content={totalCount}/>
+        <StyledCountChip content={totalCount} />
       </StyledHeader>
       <StyledWrapper>
         <AddButton onClick={handleClickCreate} />
-        {isOpen.create && <Modal
-          title='할 일 생성'
-          getValue={setModalValue}
-          onCancelClick={() => {
-            setIsOpen({ ...isOpen, create: false });
-          }}
-          onOkClick={() => {
-            console.log(value); // 모달 input value 출력
-            // createToDoFunc();
-          }}
-          // onDeleteClick={() => {
-          //   console.log('삭제');
-          // }}
-        />}
+        {isOpen.create && (
+          <Modal
+            title="할 일 생성"
+            getValue={setModalValue}
+            onCancelClick={() => {
+              setIsOpen({ ...isOpen, create: false });
+            }}
+            onOkClick={() => {
+              console.log(value); // 모달 input value 출력
+              // createToDoFunc();
+            }}
+            // onDeleteClick={() => {
+            //   console.log('삭제');
+            // }}
+          />
+        )}
         {cards.map((card) => (
           <li key={card.id}>
-            <Card 
-                title={card.title} 
-                dueDate={card.dueDate}
-                tags={card.tags}
-                assignee={card.assignee}
-                imageUrl={card.imageUrl}/>
+            <Card
+              title={card.title}
+              dueDate={card.dueDate}
+              tags={card.tags}
+              assignee={card.assignee}
+              imageUrl={card.imageUrl}
+            />
           </li>
         ))}
       </StyledWrapper>
@@ -130,6 +139,12 @@ const StyledContainer = styled.div`
   padding: 12px;
   position: relative;
   border-bottom: 1px solid ${COLORS.GRAY_EE};
+  height: 90vh;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   ${onTablet} {
     width: 584px;
@@ -138,6 +153,7 @@ const StyledContainer = styled.div`
 
   ${onPc} {
     width: 354px;
+
     padding: 20px;
     border: none;
     border-right: 1px solid ${COLORS.GRAY_EE};
