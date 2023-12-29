@@ -4,6 +4,7 @@ import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { ModalCommonProps } from '@/types/modal';
 import { useState } from 'react';
+import { InitBasic } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
   type: '초대하기' | '새 칼럼 생성';
@@ -11,10 +12,7 @@ interface Props extends ModalCommonProps {
 }
 
 function Basic({ type, onCancelClick = () => {}, onOkClick, getValue = () => {} }: Props) {
-  const [values, setValues] = useState({
-    이메일: '',
-    이름: '',
-  });
+  const [values, setValues] = useState(InitBasic);
 
   const handleChange = (inputLabel: string, inputValue: string) => {
     setValues({
