@@ -11,9 +11,9 @@ import AddButton from '../common/Button/AddButton';
 import Card from './Card';
 import { CreateCardProps, GetCardDetailsItem, GetColumnListProps } from '@/types/api';
 import Modal from '../Modal/Modal';
-import { InitCreateNEditToDo, InitManageColumn } from '@/constants/InitialModalValues';
 import api from '@/apis/api';
 import { Certificate } from 'crypto';
+import { INIT_MANAGE_COLUMN, INIT_CREATE_N_EDIT_TODO } from '@/constants/InitialModalValues';
 
 interface Props extends GetColumnListProps {
   columnId: number;
@@ -28,8 +28,8 @@ function Column({ title, columnId, dashboardId }: Props) {
     create: false,
   });
   // 컬럼 관리 할 일 생성
-  const [manageColumnVal, setManageColumnVal] = useState(InitManageColumn);
-  const [createToDoVal, setCreateToDo] = useState(InitCreateNEditToDo);
+  const [manageColumnVal, setManageColumnVal] = useState(INIT_MANAGE_COLUMN);
+  const [createToDoVal, setCreateToDo] = useState(INIT_CREATE_N_EDIT_TODO);
 
   // 카드 목록 조회
   const getCardListFunc = async (columnId: number) => {
@@ -78,6 +78,7 @@ function Column({ title, columnId, dashboardId }: Props) {
   const handleSubmit = async () => {
     const body = {
       assigneeUserId: 0,
+      // assigneeUserId const {user : {id: assigneeUserId}} = useUser();
       dashboardId: dashboardId,
       columnId: columnId,
       title: createToDoVal.제목,
@@ -87,6 +88,7 @@ function Column({ title, columnId, dashboardId }: Props) {
       imageUrl: createToDoVal.이미지,
     };
     const response = await api.cards.createCard(body);
+    console.log(response);
   };
 
   useEffect(() => {
@@ -132,6 +134,7 @@ function Column({ title, columnId, dashboardId }: Props) {
             }}
             onOkClick={() => {
               console.log(createToDoVal); // 모달 input value 출력
+              handleSubmit();
               // createToDoFunc();
             }}
             // onDeleteClick={() => {
