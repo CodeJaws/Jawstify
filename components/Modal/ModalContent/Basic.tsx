@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 interface Props extends ModalCommonProps {
   type: '초대하기' | '새 칼럼 생성';
+  isDisabled?: boolean;
 }
 
 function Basic({ type, onCancelClick = () => {}, onOkClick, getValue = () => {} }: Props) {
@@ -40,6 +41,7 @@ function Basic({ type, onCancelClick = () => {}, onOkClick, getValue = () => {} 
           size="large"
           onLeftClick={onCancelClick}
           onRightClick={onOkClick}
+          isDisabled={values.이메일 === ''}
         ></StyledTwinButton>
       </StyledButtonContainer2>
     </>
