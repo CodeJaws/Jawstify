@@ -12,7 +12,7 @@ interface Props extends ModalCommonProps {
   onDeleteClick: () => void;
 }
 
-function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {}, getValue = () => {} }: Props) {
+function ManageColumn({ onOkClick, onCancelClick = () => {}, onDeleteClick = () => {}, getValue = () => {} }: Props) {
   const [values, setValues] = useState({
     이름: '',
   });

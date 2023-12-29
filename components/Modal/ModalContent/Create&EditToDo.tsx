@@ -13,7 +13,7 @@ interface Props extends ModalCommonProps {
   type: 'create' | 'edit';
 }
 
-function CreateToDo({ type, onOkClick, onCancelClick, getValue = () => {} }: Props) {
+function CreateToDo({ type, onOkClick, onCancelClick = () => {}, getValue = () => {} }: Props) {
   const [image, setImage] = useState<string | ArrayBuffer | null>('');
   const [values, setValues] = useState({
     상태: '',

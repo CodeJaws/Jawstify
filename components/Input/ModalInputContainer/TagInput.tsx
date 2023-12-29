@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ChangeEvent, useState, MouseEvent, KeyboardEvent, useEffect } from 'react';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import { TAG_COLOR } from '@/constants/Input';
+import { TAG_COLOR } from '@/constants/ModalInput';
 import { StyledLabel } from '../Input.style';
 import ContentChip from '@/components/Chip/ContentChip';
 
