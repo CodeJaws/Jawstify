@@ -41,7 +41,7 @@ function Basic({ type, onCancelClick = () => {}, onOkClick, getValue = () => {} 
           size="large"
           onLeftClick={onCancelClick}
           onRightClick={onOkClick}
-          isDisabled={values.이메일 === ''}
+          isDisabled={values.이메일 === '' &&  values.이름 === ''}
         ></StyledTwinButton>
       </StyledButtonContainer2>
     </>

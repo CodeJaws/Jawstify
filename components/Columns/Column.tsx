@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import CountChip from '../Chip/CountChip';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
-import { GetCardDetailsItem } from '@/types/api';
+import { CreateCardProps, GetCardDetailsItem } from '@/types/api';
 import Modal from '../Modal/Modal';
 
 interface Props {
@@ -24,11 +24,15 @@ function Column({ title, columnId }: Props) {
     setting: false,
     create: false
   });
-  const [value, setValue] = useState({});
-
-  const setModalValue = (values = {}) => {
-    setValue(values); 
-  };
+  const [value, setValue] = useState({
+    담당자: '',
+    제목: '',
+    설명: '',
+    상태: '',
+    마감일: '',
+    태그: {},
+    이미지: '',
+  });
 
   // 카드 목록 조회
   const getCardListFunc = async (columnId: number) => {
@@ -39,22 +43,29 @@ function Column({ title, columnId }: Props) {
     setTotalCount(totalCount);
   };
 
-  useEffect(() => {
-    getCardListFunc(columnId);
-  }, [columnId]);
-
   const handleClickCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // 할일 생성 모달
     e.preventDefault();
     console.log('할일 생성 모달');
     setIsOpen({ ...isOpen, create: true });
   };
+  
+  // const createToDoFunc = async (value: CreateCardProps) => {
+  //   const res = await API.cards.createCard(value);
+  //   console.log(res);
+  // }
+
+  const setModalValue = (values: {이름: ''}) => {
+    setValue(values);
+  };
 
   const handleClickSetting = (e: React.MouseEvent<HTMLElement>) => {
-    // 컬럼 수정 모달
     console.log('컬럼 수정 모달');
     setIsOpen({ ...isOpen, setting: true });
   };
+  
+  useEffect(() => {
+    getCardListFunc(columnId);
+  }, [columnId]);
 
   return (
     <StyledContainer>
@@ -62,7 +73,7 @@ function Column({ title, columnId }: Props) {
         <Image fill src={setting} alt="설정 버튼" />
       </StyledSettingIconContainer>
       {isOpen.setting && <Modal title="컬럼 관리" 
-        getValue={setModalValue}
+        getValue={setValue({...value, })}
         onCancelClick={() => {
           console.log('취소');
           setIsOpen({ ...isOpen, setting: false });
@@ -70,6 +81,7 @@ function Column({ title, columnId }: Props) {
         onOkClick={() => {
           console.log('확인');
           console.log({ ...isOpen, setting: false }); // 모달 input value 출력
+          // createToDoFunc(value);
         }}
         onDeleteClick={() => {
           console.log('삭제');
@@ -85,16 +97,15 @@ function Column({ title, columnId }: Props) {
           title='할 일 생성'
           getValue={setModalValue}
           onCancelClick={() => {
-            console.log('취소');
             setIsOpen({ ...isOpen, create: false });
           }}
           onOkClick={() => {
-            console.log('확인');
             console.log(value); // 모달 input value 출력
+            // createToDoFunc();
           }}
-          onDeleteClick={() => {
-            console.log('삭제');
-          }}
+          // onDeleteClick={() => {
+          //   console.log('삭제');
+          // }}
         />}
         {cards.map((card) => (
           <li key={card.id}>

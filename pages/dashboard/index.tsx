@@ -10,8 +10,8 @@ import API from '@/apis/api';
 
 
 function DashBoardID() {
-  // const router = useRouter();
-  // const { dashboardid: id } = router.query;
+  const router = useRouter();
+  const { dashboardid: id } = router.query;
 
   const loginFunc = async () => {
     const a = await API.auth.login({ email: 'test5@codeit.com', password: 'test12345' });

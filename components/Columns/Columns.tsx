@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import router, { useRouter } from 'next/router';
-import styled from 'styled-components';
-import ColumnAddButton from '@/components/common/Button/ColumnAddButton';
-import Column from '@/components/Columns/Column';
-import { onPc, onTablet } from '@/styles/mediaQuery';
 import API from '@/apis/api';
+import Column from '@/components/Columns/Column';
+import ColumnAddButton from '@/components/common/Button/ColumnAddButton';
+import { onPc, onTablet } from '@/styles/mediaQuery';
 import { GetColumnListProps } from '@/types/api';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import Modal from '../Modal/Modal';
 
 interface ColumnProps {
@@ -21,10 +19,10 @@ function Columns({ dashboardId }: GetColumnListProps) {
   const [isSuccess, setIsSuccess] = useState('');
   const [columns, setColumns] = useState<ColumnProps[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState({});
+  const [value, setValue] = useState({이름:''});
 
-  const setModalValue = (values = {}) => {
-    setValue(values); 
+  const setModalValue = (values: {이름: ''}) => {
+    setValue(values);
   };
 
   // 컬럼 목록 조회
@@ -34,19 +32,25 @@ function Columns({ dashboardId }: GetColumnListProps) {
     const isSuccess = res?.result;
     setIsSuccess(isSuccess);
     setColumns(columns);
-  }
+  };
 
-  useEffect(() => {
-    getColumnListFunc(dashboardId);
-    getColumnListFunc(408);
-  }, [dashboardId]);
-
-  const handleClickCreateModal = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleClickCreateModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsOpen(true);
   };
+
+  // 새 컬럼 추가하기
+  const createColumnFunc = async (title: string, dashboardId: number) => {
+    const res = await API.columns.createColumn({
+      title: title,
+      dashboardId: dashboardId,
+    });
+  };
+
+  useEffect(() => {
+    // getColumnListFunc(dashboardId);
+    getColumnListFunc(408);
+  }, [dashboardId]);
 
   return (
     <StyledContainer>
@@ -54,31 +58,29 @@ function Columns({ dashboardId }: GetColumnListProps) {
         <StyledWrapper>
           {columns.map((column) => (
             <li key={column.id}>
-              <Column
-                title={column.title}
-                columnId={column.id}
-              />
+              <Column title={column.title} columnId={column.id} />
             </li>
           ))}
         </StyledWrapper>
       )}
       <StyledWrapper2>
-        <ColumnAddButton onClick={handleClickCreateModal}/>
-        {isOpen && <Modal
-          title="새 컬럼 생성"
-          getValue={setModalValue}
-          onCancelClick={() => {
-            console.log('취소');
-            setIsOpen(false);
-          }}
-          onOkClick={() => {
-            console.log('확인');
-            console.log(value); // 모달 input value 출력
-          }}
-          onDeleteClick={() => {
-            console.log('삭제');
-          }}
-        />}
+        <ColumnAddButton onClick={handleClickCreateModal} />
+        {isOpen && (
+          <Modal
+            title="새 컬럼 생성"
+            getValue={setModalValue}
+            onCancelClick={() => {
+              setIsOpen(false);
+            }}
+            onOkClick={() => {
+              createColumnFunc(value.이름, 408);
+              getColumnListFunc(408);
+            }}
+            onDeleteClick={() => {
+              console.log('삭제');
+            }}
+          />
+        )}
       </StyledWrapper2>
     </StyledContainer>
   );
