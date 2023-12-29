@@ -4,23 +4,51 @@ import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import Codeit from '@/public/assets/icons/Codeit.svg';
+import useUserData from '@/hooks/global/useUserData';
+import { FocusEvent, useEffect, useState } from 'react';
+import { UserType } from '@/types/apiType';
+import DashboardDropdown from './DashboardDropdown';
 
-interface ProfileProps {
-  item: {
-    id: number;
-    nickname: string;
-    profileImageUrl: string;
+function Profile() {
+  const { user } = useUserData();
+  const [showUser, setShowUser] = useState<UserType>({
+    createdAt: '',
+    email: '',
+    id: 0,
+    nickname: '',
+    profileImageUrl: null,
+    updatedAt: '',
+  });
+  const { nickname, profileImageUrl } = showUser;
+
+  const [isDropdown, setIsDropdown] = useState(false);
+
+  const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setIsDropdown(false);
+    }
   };
-}
 
-function Profile({ item }: ProfileProps) {
-  const { nickname, profileImageUrl } = item;
+  const handleClickDropdown = () => {
+    setIsDropdown((prev) => !prev);
+  };
+
+  useEffect(() => {
+    setShowUser(user);
+  }, []);
+
   return (
     <StyledContainer>
       <StyledImageWrapper>
-        <Image fill src={profileImageUrl} alt="프로필" />
+        <Image fill src={profileImageUrl || Codeit} alt="프로필" />
       </StyledImageWrapper>
-      <p>{nickname}</p>
+      <StyledNameWrapper onBlur={(e) => handleBlur(e)}>
+        <label onClick={handleClickDropdown}>
+          <button>{showUser.nickname}</button>
+          {isDropdown && <DashboardDropdown />}
+        </label>
+      </StyledNameWrapper>
     </StyledContainer>
   );
 }
@@ -34,7 +62,8 @@ const StyledContainer = styled.div`
   align-items: center;
   gap: 12px;
 
-  p {
+  label > button {
+    cursor: pointer;
     color: ${COLORS.BLACK_33};
     ${fontStyle(16, 500)}
   }
@@ -48,7 +77,7 @@ const StyledContainer = styled.div`
   }
   ${onMobile} {
     margin-right: 12px;
-    p {
+    label {
       display: none;
     }
   }
@@ -68,3 +97,5 @@ const StyledImageWrapper = styled.div`
     height: 34px;
   }
 `;
+
+const StyledNameWrapper = styled.div``;
