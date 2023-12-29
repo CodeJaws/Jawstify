@@ -58,7 +58,7 @@ function Columns({ dashboardId }: GetColumnListProps) {
         <StyledWrapper>
           {columns.map((column) => (
             <li key={column.id}>
-              <Column title={column.title} columnId={column.id} />
+              <Column title={column.title} columnId={column.id} dashboardId={dashboardId} />
             </li>
           ))}
         </StyledWrapper>

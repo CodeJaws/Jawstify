@@ -9,33 +9,27 @@ import styled from 'styled-components';
 import CountChip from '../Chip/CountChip';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
-import { CreateCardProps, GetCardDetailsItem } from '@/types/api';
+import { CreateCardProps, GetCardDetailsItem, GetColumnListProps } from '@/types/api';
 import Modal from '../Modal/Modal';
+import { InitCreateNEditToDo, InitManageColumn } from '@/constants/InitialModalValues';
+import api from '@/apis/api';
+import { Certificate } from 'crypto';
 
-interface Props {
+interface Props extends GetColumnListProps {
   columnId: number;
   title: string;
 }
 
-function Column({ title, columnId }: Props) {
+function Column({ title, columnId, dashboardId }: Props) {
   const [cards, setCards] = useState<GetCardDetailsItem[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isOpen, setIsOpen] = useState({
     setting: false,
     create: false,
   });
-  const [value, setValue] = useState({
-    이름: '',
-  });
-  // const [value, setValue] = useState({
-  //   담당자: '',
-  //   제목: '',
-  //   설명: '',
-  //   상태: '',
-  //   마감일: '',
-  //   태그: {},
-  //   이미지: '',
-  // });
+  // 컬럼 관리 할 일 생성
+  const [manageColumnVal, setManageColumnVal] = useState(InitManageColumn);
+  const [createToDoVal, setCreateToDo] = useState(InitCreateNEditToDo);
 
   // 카드 목록 조회
   const getCardListFunc = async (columnId: number) => {
@@ -58,12 +52,41 @@ function Column({ title, columnId }: Props) {
   // }
 
   const setModalValue = (values: { 이름: '' }) => {
-    setValue(values);
+    setManageColumnVal(values);
+  };
+
+  const setModalValue2 = (values: any) => {
+    setCreateToDo(values);
   };
 
   const handleClickSetting = (e: React.MouseEvent<HTMLElement>) => {
     console.log('컬럼 수정 모달');
     setIsOpen({ ...isOpen, setting: true });
+  };
+
+  // export interface CreateCardProps {
+  //   assigneeUserId?: number;
+  //   dashboardId: number;
+  //   columnId: number;
+  //   title: string;
+  //   description: string;
+  //   dueDate?: string;
+  //   tags?: string[];
+  //   imageUrl?: string | null | ArrayBuffer;
+  // }
+
+  const handleSubmit = async () => {
+    const body = {
+      assigneeUserId: 0,
+      dashboardId: dashboardId,
+      columnId: columnId,
+      title: createToDoVal.제목,
+      description: createToDoVal.설명,
+      dueDate: createToDoVal.마감일,
+      tags: createToDoVal.태그,
+      imageUrl: createToDoVal.이미지,
+    };
+    const response = await api.cards.createCard(body);
   };
 
   useEffect(() => {
@@ -86,6 +109,7 @@ function Column({ title, columnId }: Props) {
           onOkClick={() => {
             console.log('확인');
             console.log({ ...isOpen, setting: false }); // 모달 input value 출력
+            console.log(manageColumnVal);
             // createToDoFunc(value);
           }}
           onDeleteClick={() => {
@@ -102,12 +126,12 @@ function Column({ title, columnId }: Props) {
         {isOpen.create && (
           <Modal
             title="할 일 생성"
-            getValue={setModalValue}
+            getValue={setModalValue2}
             onCancelClick={() => {
               setIsOpen({ ...isOpen, create: false });
             }}
             onOkClick={() => {
-              console.log(value); // 모달 input value 출력
+              console.log(createToDoVal); // 모달 input value 출력
               // createToDoFunc();
             }}
             // onDeleteClick={() => {
