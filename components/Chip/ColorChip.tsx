@@ -13,7 +13,7 @@ import { styled } from 'styled-components';
 
 interface ColorChipProps {
   onChange: (inputLabel: string, value: string) => void;
-  color: string;
+  color?: string;
 }
 const ColorEllipse = [
   { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN_7A },
