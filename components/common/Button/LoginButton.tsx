@@ -5,15 +5,24 @@ import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
 
 interface LoginButtonProps extends ButtonOnClickProps {
-  active: boolean;
-  type: 'login' | 'landing';
+  active?: boolean;
+  usingType: 'login' | 'landing';
   text: string;
+  type?: 'button' | 'reset' | 'submit' | undefined;
+  margin?: string;
 }
 
-function LoginButton({ active, type, onClick, text }: LoginButtonProps) {
+function LoginButton({ active = false, usingType, onClick, text, type = 'button', margin = '0px' }: LoginButtonProps) {
   return (
     <>
-      <StyledButton $type={type} disabled={active ? false : true} $active={active} onClick={onClick}>
+      <StyledButton
+        $usingType={usingType}
+        type={type}
+        disabled={active ? false : true}
+        $active={active}
+        $margin={margin}
+        onClick={onClick}
+      >
         {text}
       </StyledButton>
     </>
@@ -22,13 +31,14 @@ function LoginButton({ active, type, onClick, text }: LoginButtonProps) {
 
 export default LoginButton;
 
-const StyledButton = styled.button<{ $active: boolean; $type: string }>`
+const StyledButton = styled.button<{ $active: boolean; $usingType: string; $margin: string }>`
   width: 520px;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin: ${({ $margin }) => $margin};
   border-radius: 8px;
   background: ${({ $active }) => ($active ? COLORS.VIOLET_55 : COLORS.GRAY_9F)};
   color: ${COLORS.WHITE_FF};
@@ -38,8 +48,8 @@ const StyledButton = styled.button<{ $active: boolean; $type: string }>`
     width: 351px;
   }
 
-  ${({ $type }) =>
-    $type === 'landing' &&
+  ${({ $usingType }) =>
+    $usingType === 'landing' &&
     css`
       width: 280px;
       height: 50px;

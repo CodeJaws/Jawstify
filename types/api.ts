@@ -10,7 +10,7 @@ export interface LoginItem {
     email: string;
     id: number;
     nickname: string;
-    profileImageUrl: string | null | null;
+    profileImageUrl: string;
     updatedAt: string;
   };
 }
@@ -467,7 +467,7 @@ export interface GetMyInfoItem {
 
 export interface CorrectMyInfoProps {
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageUrl: string | ArrayBuffer | null;
 }
 
 export interface CorrectMyInfoItem {
@@ -480,9 +480,9 @@ export interface CorrectMyInfoItem {
 }
 
 export interface ProfileImgUploadProps {
-  image: string;
+  formData: FormData;
 }
 
 export interface ProfileImgUploadItem {
-  profileImageUrl: string | null;
+  profileImageUrl: string;
 }

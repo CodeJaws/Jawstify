@@ -109,7 +109,7 @@ const StyledModalBackdrop = styled.div`
 
 const StyledModalContainer = styled.div<{ $isTightVersion: boolean }>`
   width: ${({ $isTightVersion }) => ($isTightVersion ? '506px' : '540px')};
-  min-height: 250px;
+  min-height: 240px;
   position: fixed;
   display: flex;
   flex-direction: column;

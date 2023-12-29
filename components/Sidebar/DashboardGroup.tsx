@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import crown from '@/public/assets/icons/crown.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 
 /**
  * Page 작성 시 맞는 Type으로 수정해야 하는 부분입니다. */
@@ -39,7 +39,7 @@ function Dashboard({ item }: DashboardProps) {
     <StyledDashboardContainer $isActive={isActive} onClick={handleClick}>
       <StyledColorWrapper $color={item.color}></StyledColorWrapper>
       <StyledTitleWrapper>{item.name}</StyledTitleWrapper>
-      {item.createdByMe && <StyledImage width={17.59} height={14} src={crown} alt="방장" />}
+      {item.createdByMe && <StyledImage width={18} height={14} src={crown} alt="방장" />}
     </StyledDashboardContainer>
   );
 }
