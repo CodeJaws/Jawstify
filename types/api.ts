@@ -106,7 +106,7 @@ export interface CorrectCardItem {
 }
 
 export interface GetCardDetailsProps {
-  cardId: string;
+  cardId: number;
 }
 
 export interface GetCardDetailsItem {
@@ -116,7 +116,7 @@ export interface GetCardDetailsItem {
   tags: string[];
   dueDate: string;
   assignee: {
-    profileImageUrl: string | null;
+    profileImageUrl: string;
     nickname: string;
     id: number;
   };
@@ -212,7 +212,7 @@ export interface GetCommentListItem {
     updatedAt: string;
     cardId: number;
     author: {
-      profileImageUrl: string | null;
+      profileImageUrl: string;
       nickname: string;
       id: number;
     };
