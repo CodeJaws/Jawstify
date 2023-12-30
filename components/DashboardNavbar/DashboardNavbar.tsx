@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import crown from '@/public/assets/icons/crown.svg';
 import invite from '@/public/assets/icons/invite.svg';
@@ -14,7 +15,6 @@ import Members from './Members';
 import Profile from './Profile';
 import { MemberType } from './Members';
 import { GetDashboardDetailedItem } from '@/types/api';
-import Link from 'next/link';
 import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import API from '@/apis/api';
@@ -40,6 +40,9 @@ interface DashboardNavbarProps {
  * @param {string} title 대시보드 이름
  */
 function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: DashboardNavbarProps) {
+  // const { setUser } = useUserData();
+  // const { user } = useUser() as any;
+  // setUser(user);
   const router = useRouter();
   const dashboardTitle = isMyDashboard
     ? '내 대시보드'
@@ -106,7 +109,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
         )}
       </StyledTitleContainer>
       <StyledWrapper>
-        {!isMyDashboard ? (
+        {!isMyDashboard && dashboardTitle !== '계정관리' ? (
           <>
             <StyledButtonWrapper>
               {dashboard && dashboard.createdByMe && (
@@ -120,7 +123,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
                 초대하기
               </Button>
             </StyledButtonWrapper>
-            {members && totalMembers && <Members members={members} totalMembers={totalMembers} />}
+            {members && totalMembers ? <Members members={members} totalMembers={totalMembers} /> : null}
             <StyledSeperatorWrapper></StyledSeperatorWrapper>
           </>
         ) : null}

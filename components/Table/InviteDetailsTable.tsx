@@ -207,12 +207,15 @@ const StyledContainer = styled.div`
   height: 477px;
   border-radius: 8px;
   background: ${COLORS.WHITE_FF};
+  margin-bottom: 40px;
 
   ${onTablet} {
     width: 100%;
+    margin-bottom: 48px;
   }
 
   ${onMobile} {
+    margin-bottom: 32px;
     width: 100%;
     height: 406px;
   }

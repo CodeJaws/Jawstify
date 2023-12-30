@@ -148,12 +148,14 @@ const StyledContainer = styled.div`
 const StyledNameText = styled.p`
   color: ${COLORS.GRAY_9F};
   ${fontStyle(16, 400)};
+  margin-top: 27px;
 
   margin-left: 28px;
   /* margin-top: 14px; */
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 
   ${onMobile} {
+    margin-top: 18px;
     margin-left: 20px;
     ${fontStyle(14, 400)}
   }
@@ -238,6 +240,8 @@ const StyledMemberBoxImageWrapper = styled.div`
   position: relative;
   width: 38px;
   height: 38px;
+  border: 1px solid transparent;
+  border-radius: 100%;
 
   ${onMobile} {
     width: 34px;
