@@ -1,13 +1,15 @@
 import Close from '@/public/assets/icons/Close.svg';
 import { onMobile } from '@/styles/mediaQuery';
+import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 import Menu from './Menu';
 
 function ModalButton() {
+  const router = useRouter();
   return (
     <StyledContainer>
       <Menu />
-      <StyledClose />
+      <StyledClose onClick={() => router.push('/myboard')} />
     </StyledContainer>
   );
 }
