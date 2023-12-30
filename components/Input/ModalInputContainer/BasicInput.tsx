@@ -39,7 +39,7 @@ function BasicInput({
   isNecessary = false,
   isTextArea = false,
   onChange,
-  onButtonClick = (e) => {},
+  onButtonClick = () => {},
   disabled = false,
 }: Props) {
   const [isNoValue, setIsNoValue] = useState<boolean>(false);
@@ -83,14 +83,7 @@ function BasicInput({
           disabled={disabled}
         />
       )}
-      {isComment && (
-        <StyledInputButton
-          text="입력"
-          size="small"
-          className="commentInput"
-          onClick={onButtonClick}
-        ></StyledInputButton>
-      )}
+      {isComment && <StyledInputButton text="입력" size="small" className="commentInput" onClick={onButtonClick} />}
       {(isNoValue || hasError) && <StyledErrorText>{errorMessage || NO_VALUE_ERROR}</StyledErrorText>}
     </StyledInputContainer>
   );
@@ -98,7 +91,7 @@ function BasicInput({
 
 export default BasicInput;
 
-const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boolean }>`
+export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boolean }>`
   width: 100%;
   height: ${({ $isComment }) => ($isComment ? '110px' : '96px')};
   position: relative;
