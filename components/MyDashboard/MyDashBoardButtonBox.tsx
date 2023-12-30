@@ -1,8 +1,11 @@
+import API from '@/apis/api';
+import Modal from '@/components/Modal/Modal';
 import usePagination from '@/hooks/usePagination';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { DashboardType } from '@/types/apiType';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import DashBoardAddButton from '../common/Button/DashBoardAddButton';
 import DashBoardButton from '../common/Button/DashBoardButton';
@@ -18,9 +21,10 @@ interface usePaginationProps {
 interface MyDashBoardButtonBoxProps {
   dashboardId: number;
   reset: boolean;
+  setReset: Dispatch<SetStateAction<boolean>>;
 }
 
-function MyDashBoardButtonBox({ dashboardId, reset }: MyDashBoardButtonBoxProps) {
+function MyDashBoardButtonBox({ dashboardId, reset, setReset }: MyDashBoardButtonBoxProps) {
   const limit = 5;
   const { handlePagination, pageNum, showItems, totalPages } = usePagination({
     size: 10,
@@ -29,11 +33,33 @@ function MyDashBoardButtonBox({ dashboardId, reset }: MyDashBoardButtonBoxProps)
     dashboardId: 203,
     reset,
   }) as usePaginationProps;
+  const [isOpen, setIsOpen] = useState(false);
+  const [values, setValues] = useState({
+    '대시보드 이름': '',
+    색상: '',
+  });
+
+  const setModalValue = (
+    values = {
+      '대시보드 이름': '',
+      색상: '',
+    },
+  ) => {
+    setValues(values); // value = modal에 입력된 input value들의 집합
+  };
+
+  const handleCreate = async () => {
+    await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
+  };
 
   return (
     <div>
       <ButtonBoxWrapper>
-        <DashBoardAddButton onClick={() => {}} />
+        <DashBoardAddButton
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        />
         {showItems.map((item) => (
           <div key={item.id}>
             <DashBoardButton
@@ -46,6 +72,7 @@ function MyDashBoardButtonBox({ dashboardId, reset }: MyDashBoardButtonBoxProps)
           </div>
         ))}
       </ButtonBoxWrapper>
+
       <PaginationWrapper>
         <PaginationPage>
           {totalPages} 페이지 중 {pageNum}
@@ -55,6 +82,20 @@ function MyDashBoardButtonBox({ dashboardId, reset }: MyDashBoardButtonBoxProps)
           <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePagination(1)} />
         </PaginationInWrapper>
       </PaginationWrapper>
+      {isOpen && (
+        <Modal
+          title="새로운 대시보드"
+          getValue={setModalValue}
+          onCancelClick={() => {
+            setIsOpen(false);
+          }}
+          onOkClick={() => {
+            handleCreate();
+            setIsOpen(false);
+            setReset((prev) => !prev);
+          }}
+        />
+      )}
     </div>
   );
 }

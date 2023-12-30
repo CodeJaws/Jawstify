@@ -20,12 +20,13 @@ function MyDashBoard() {
   useEffect(() => {
     loginFunc();
   }, []);
+
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} isOwner={true} title="내 대시보드" />
       <Sidebar />
       <StyledWrapper>
-        <MyDashBoardButtonBox dashboardId={dashboardId} reset={reset} />
+        <MyDashBoardButtonBox dashboardId={dashboardId} reset={reset} setReset={setReset} />
         <InviteDashBoard setReset={setReset} />
       </StyledWrapper>
     </StyledContainer>
@@ -44,6 +45,7 @@ const StyledWrapper = styled.div`
   top: 70px;
   left: 300px;
   width: 100%;
+  height: 100%;
   padding: 40px;
   ${onTablet} {
     left: 160px;

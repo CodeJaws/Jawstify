@@ -82,10 +82,8 @@ function InviteDashBoard({ setReset }: InviteDashBoardProps) {
 
   const handleAccept = async ({ acceptid, accept }: GetAcceptProps) => {
     console.log('asdfasdfasdf');
-    const c = await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
-
+    // const c = await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
     setDataSource(dataSource.filter((item) => item.id !== acceptid));
-    // console.log(c);
     setReset((prev) => !prev);
   };
 
