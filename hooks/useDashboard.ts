@@ -1,6 +1,7 @@
 import API from '@/apis/api';
 import { useEffect, useState } from 'react';
 import { GetDashboardDetailedItem, GetMembersInDashboardItem } from '@/types/api';
+import { useRouter } from 'next/router';
 
 type MemberType = GetMembersInDashboardItem['members'][0];
 
@@ -10,6 +11,7 @@ interface useDashboardProps {
 }
 
 const useDashboard = ({ dashboardId, refreshToggle }: useDashboardProps) => {
+  const router = useRouter();
   const [members, setMembers] = useState<MemberType[]>([]);
   const [totalMembers, setTotalMembers] = useState(0);
   const [dashboardData, setDashboardData] = useState<GetDashboardDetailedItem>({
@@ -29,14 +31,18 @@ const useDashboard = ({ dashboardId, refreshToggle }: useDashboardProps) => {
       setMembers(membersInDashboardData.members);
       setTotalMembers(membersInDashboardData.totalCount);
       setDashboardData(dashboardDetailedData);
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
+      if (e.data.message === '대시보드의 멤버가 아닙니다.' || e.data.message === '대시보드가 존재하지 않습니다.') {
+        alert('잘못된 접근입니다!');
+        router.push('/mydashboard');
+      }
     }
   };
 
   useEffect(() => {
     dashboardFetch();
-  }, [dashboardId]);
+  }, [dashboardId, refreshToggle]);
 
   return { totalMembers, members, dashboardData };
 };
