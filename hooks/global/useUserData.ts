@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-
 import { persist } from 'zustand/middleware';
+
 import { UserType } from '@/types/apiType';
 
 interface useUserDataProps {
@@ -10,7 +10,7 @@ interface useUserDataProps {
 
 const useUserData = create(
   persist<useUserDataProps>(
-    (set, get) => ({
+    (set) => ({
       user: {
         createdAt: '',
         email: '',
