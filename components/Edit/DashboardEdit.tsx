@@ -54,6 +54,13 @@ function DashboardEdit({ dashboardData, refresh }: DashboardEditProps) {
   };
 
   const handleSubmit = async () => {
+    if (values['대시보드 이름'].length >= 10) {
+      alert('대시보드 이름을 9자 이하로 설정해주세요.');
+      return;
+    } else if (values['대시보드 이름'].length === 0) {
+      alert('대시보드 이름을 입력해주세요.');
+      return;
+    }
     try {
       await API.dashboard.correctDashboard({
         dashboardId: String(dashboardData.id),
@@ -94,7 +101,7 @@ function DashboardEdit({ dashboardData, refresh }: DashboardEditProps) {
   return (
     <StyledContainer>
       <StyledTitleWrapper>
-        <h3>asd</h3>
+        <h3>{dashboardData.title}</h3>
         {deviceType !== 'mobile' ? (
           <ColorChip onChange={handleChange} color={values['색상']} />
         ) : (
@@ -109,7 +116,13 @@ function DashboardEdit({ dashboardData, refresh }: DashboardEditProps) {
           inputValue={values['대시보드 이름']}
         />
       </StyledMainWrapper>
-      <StyledButton isViolet={true} text="변경" size="small" onClick={handleSubmit} />
+      <StyledButton
+        isViolet={true}
+        text="변경"
+        size="small"
+        onClick={handleSubmit}
+        disabled={values['대시보드 이름'].length === 0}
+      />
     </StyledContainer>
   );
 }
@@ -155,10 +168,13 @@ const StyledMainWrapper = styled.div`
 
 const StyledButton = styled(Button)`
   position: absolute;
+  width: 84px;
+  height: 32px;
 
   bottom: 28px;
   right: 28px;
   ${onMobile} {
+    height: 28px;
     bottom: 21px;
     right: 20px;
   }
