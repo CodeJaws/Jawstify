@@ -1,88 +1,45 @@
-import StatusChip from '@/components/Chip/StatusChip';
+import API from '@/apis/api';
 import ModalCard from '@/components/ModalCard/ModalCard';
-import { BACK_END, MAX_LEVEL, NORMAL, PROJECT, TO_DO } from '@/constants/Chip';
-import CROWN from '@/public/assets/icons/crown.svg';
-import Green from '@/public/assets/icons/GreenEllipse.svg';
-import { COLORS } from '@/styles/palettes';
-import React, { createContext } from 'react';
+import useGetMember from '@/hooks/DropDown/useGetMember';
+import useCardData from '@/hooks/ModalCard/useCardData';
+import useCardId from '@/hooks/ModalCard/useCardId';
+import useComment from '@/hooks/ModalCard/useComment';
+import useDashBoard from '@/hooks/ModalCard/useDashBoard';
+import useRefresh from '@/hooks/useRefresh';
+import { useEffect } from 'react';
 
-interface Tag {
-  id: number;
-  text: string;
-  color: string;
-  backgroundColor: string;
-}
-
-interface Props {
-  title: string;
-  content: string;
-  status: React.ReactElement;
-  tag: Tag[];
-  cardImg: string;
-  userProfileImg: string;
-  userName: string;
-  createdAt: string;
-  comment: string;
-  manager: string;
-  managerImg: string;
-  deadLine: string;
-}
-
-export const ModalContext = createContext<Props>({
-  title: '',
-  content: '',
-  status: <StatusChip content={TO_DO} />,
-  tag: [],
-  cardImg: '',
-  userProfileImg: '',
-  userName: '',
-  createdAt: '',
-  comment: '',
-  manager: '',
-  managerImg: '',
-  deadLine: '',
-});
-
-const title = '🚨 비상';
-const content =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at leo.';
-const status = <StatusChip content={TO_DO} />;
-const tag = [
-  { id: 0, text: PROJECT, color: COLORS.WHITE_FF, backgroundColor: COLORS.BLUE_49 },
-  { id: 1, text: NORMAL, color: COLORS.WHITE_FF, backgroundColor: COLORS.GREEN_7A },
-  { id: 2, text: BACK_END, color: COLORS.WHITE_FF, backgroundColor: COLORS.PINK_E8 },
-  { id: 3, text: MAX_LEVEL, color: COLORS.WHITE_FF, backgroundColor: COLORS.ORANGE_F9 },
-];
-const cardImg = CROWN;
-const userProfileImg = Green;
-const userName = '정만철';
-const createdAt = '2023.12.22 14:00';
-const comment = '댓글 내용입니다.';
-const manager = '고양이';
-const managerImg = Green;
-const deadLine = '2023.12.31 14:00';
+// @TODO 카드 번호 필요 (zustand로 관리하면 될 듯)
+const cardId = 328;
+const size = 10;
+const dashboardId = 325;
 
 function ModalCardTest() {
-  return (
-    <ModalContext.Provider
-      value={{
-        title,
-        content,
-        status,
-        tag,
-        cardImg,
-        userProfileImg,
-        userName,
-        createdAt,
-        comment,
-        manager,
-        managerImg,
-        deadLine,
-      }}
-    >
-      <ModalCard />
-    </ModalContext.Provider>
-  );
+  const { cardData, setCardData } = useCardData();
+  const { setCardId } = useCardId();
+  const { setTasks } = useDashBoard();
+  const { setMembers } = useGetMember();
+  const { comment, setComment } = useComment();
+  const { refresh } = useRefresh();
+
+  const testAPI = async () => {
+    const test = await API.cards.getCardDetails({ cardId });
+    const comment = await API.comments.getCommentList({ size, cardId });
+
+    const dashBoard = await API.columns.getColumnList({ dashboardId });
+    const getMember = await API.members.getMembersInDashboard({ dashboardId });
+
+    setTasks(dashBoard);
+    setCardData(test);
+    setComment(comment);
+    setCardId(cardId);
+    setMembers(getMember);
+  };
+
+  useEffect(() => {
+    testAPI();
+  }, [refresh]);
+
+  return <ModalCard />;
 }
 
 export default ModalCardTest;
