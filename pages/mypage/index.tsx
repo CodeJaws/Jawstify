@@ -1,47 +1,36 @@
-import API from '@/apis/api';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import useUserData from '@/hooks/global/useUserData';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { localStorageSetItem } from '@/utils/localStorage';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
-// 테스트용
-const email = 'test3@codeit.com';
-const password = 'test1234';
-
 function MyPage() {
-  const [testEmail, setTestEmail] = useState('');
+  const { user } = useUserData();
   const [nickname, setNickName] = useState('');
-  const [profileImg, setProfileImg] = useState('');
-
-  const testFunc = async () => {
-    const test = await API.auth.login({ email, password });
-
-    localStorageSetItem('accessToken', test.accessToken);
-    setTestEmail(test.user.email);
-    setNickName(test.user.nickname);
-    setProfileImg(test.user.profileImageUrl);
-  };
 
   useEffect(() => {
-    testFunc();
-  }, []);
-
+    setNickName(user.nickname);
+  }, [user]);
   return (
     <StyledContainer>
-      <DashboardNavbar isMyDashboard={false} isOwner={true} title={'주인공'} />
+      <DashboardNavbar isMyDashboard={false} />
       <Sidebar />
       <StyledWrapper>
         <StyledInWrapper>
           <StyledBackWrapper href={'/mydashboard'}>돌아가기</StyledBackWrapper>
-          <ProfileBox email={testEmail} nickname={nickname} profileImg={profileImg} setNickName={setNickName} />
+          <ProfileBox
+            email={user.email}
+            nickname={nickname}
+            profileImg={user.profileImageUrl}
+            setNickName={setNickName}
+          />
           <PasswordManagerBox />
         </StyledInWrapper>
       </StyledWrapper>

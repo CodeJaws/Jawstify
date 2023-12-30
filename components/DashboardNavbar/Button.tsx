@@ -10,11 +10,12 @@ interface ButtonProps {
   imageUrl: string;
   children: ReactNode;
   altText: string;
+  onClick?: () => void;
 }
 
-function Button({ imageUrl, children, altText }: ButtonProps) {
+function Button({ imageUrl, children, altText, onClick }: ButtonProps) {
   return (
-    <StyledButton>
+    <StyledButton onClick={onClick}>
       <StyledImage src={imageUrl} alt={altText} />
       <p>{children}</p>
     </StyledButton>
@@ -29,33 +30,21 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledButton = styled.button`
-  width: max-content;
+  width: min-content;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  padding: 0 16px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid ${COLORS.GRAY_D9};
   background: ${COLORS.WHITE_FF};
 
   p {
     color: ${COLORS.GRAY_78};
-
-    ${onPc} {
-      ${fontStyle(16, 500)}
-    }
-
-    ${onTablet} {
-      text-align: center;
-      ${fontStyle(14, 500)}
-    }
-
-    ${onMobile} {
-      text-align: center;
-      ${fontStyle(14, 500)}
-    }
+    ${fontStyle(14, 500)}
+    text-align: center;
   }
 
   &:hover {
@@ -72,7 +61,6 @@ const StyledButton = styled.button`
 
   ${onMobile} {
     height: 30px;
-    padding: 0 12px;
     ${StyledImage} {
       display: none;
     }

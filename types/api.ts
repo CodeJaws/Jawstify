@@ -10,7 +10,7 @@ export interface LoginItem {
     email: string;
     id: number;
     nickname: string;
-    profileImageUrl: string;
+    profileImageUrl: string | null;
     updatedAt: string;
   };
 }
@@ -278,7 +278,7 @@ export interface GetDashboardListItem {
 }
 
 export interface GetDashboardDetailedProps {
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface GetDashboardDetailedItem {
@@ -318,7 +318,11 @@ export interface InviteDashboardProps {
 
 export interface InviteDashboardItem {
   id: number;
-  inviterUserId: number;
+  inviter: {
+    nickname: string;
+    email: string;
+    id: number;
+  };
   teamId: string;
   dashboard: {
     title: string;
@@ -327,7 +331,7 @@ export interface InviteDashboardItem {
   invitee: {
     nickname: string;
     email: string;
-    id: 0;
+    id: number;
   };
   inviteAccepted: boolean;
   createdAt: string;
@@ -335,7 +339,7 @@ export interface InviteDashboardItem {
 }
 
 export interface LoadInviteDashboardProps {
-  dashboardId: string;
+  dashboardId: number;
   page?: number;
   size?: number;
 }
@@ -344,7 +348,11 @@ export interface LoadInviteDashboardItem {
   totalCount: number;
   invitations: {
     id: number;
-    inviterUserId: number;
+    inviter: {
+      nickname: string;
+      email: string;
+      id: number;
+    };
     teamId: string;
     dashboard: {
       title: string;
@@ -376,7 +384,11 @@ export interface GetInvitationListItem {
   cursorId: number | null;
   invitations: {
     id: number;
-    inviterUserId: number;
+    inviter: {
+      nickname: string;
+      email: string;
+      id: number;
+    };
     teamId: string;
     dashboard: {
       title: string;

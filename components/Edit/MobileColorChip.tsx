@@ -1,20 +1,16 @@
-import Blue from '@/public/assets/icons/BlueEllipse.svg';
-import Check from '@/public/assets/icons/Check.svg';
+import Image from 'next/image';
+import styled from 'styled-components';
+
+import { onMobile } from '@/styles/mediaQuery';
 import Green from '@/public/assets/icons/GreenEllipse.svg';
 import Orange from '@/public/assets/icons/OrangeEllipse.svg';
 import Pink from '@/public/assets/icons/PinkEllipse.svg';
+import Blue from '@/public/assets/icons/BlueEllipse.svg';
 import Purple from '@/public/assets/icons/PurpleEllipse.svg';
-import { onMobile } from '@/styles/mediaQuery';
+import Check from '@/public/assets/icons/Check.svg';
 import { COLORS } from '@/styles/palettes';
-
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { styled } from 'styled-components';
 
-interface ColorChipProps {
-  onChange: (inputLabel: string, value: string) => void;
-  color?: string;
-}
 const ColorEllipse = [
   { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN_7A },
   { id: 1, src: Purple, alt: '보라색 원', color: COLORS.PURPLE_76 },
@@ -23,32 +19,48 @@ const ColorEllipse = [
   { id: 4, src: Pink, alt: '핑크색 원', color: COLORS.PINK_E8 },
 ];
 
-function ColorChip({ onChange, color }: ColorChipProps) {
+interface MobileColorChipProps {
+  onChange: (inputLabel: string, value: string) => void;
+  color: string;
+}
+
+function MobileColorChip({ onChange, color }: MobileColorChipProps) {
   const [selectedColor, setSelectedColor] = useState(-1);
 
   const toggleSelectedColor = (index: number) => {
-    setSelectedColor((prev) => (prev === index ? -1 : index));
-    const selectedColorText = ColorEllipse[index]?.alt || '';
-    onChange('색상', selectedColorText);
+    if (index >= 5) {
+      setSelectedColor(index - 5);
+      const selectedColorText = ColorEllipse[index - 5]?.alt || '';
+      onChange('색상', selectedColorText);
+    } else {
+      setSelectedColor(index);
+      const selectedColorText = ColorEllipse[index]?.alt || '';
+      onChange('색상', selectedColorText);
+    }
   };
 
   useEffect(() => {
-    setSelectedColor(ColorEllipse.find((x) => x.color === color)?.id as number);
+    setSelectedColor(ColorEllipse.find((x) => x.color === color)?.id ?? -1);
   }, [color]);
+
+  if (selectedColor === -1) return null;
 
   return (
     <StyledContainer>
-      {ColorEllipse.map((val, index) => (
-        <StyledButton key={val.id} onClick={() => toggleSelectedColor(index)}>
-          {selectedColor === index && <StyledCheckImage width={24} height={24} src={Check} alt="체크" />}
-          <StyledImage width={30} height={30} src={val.src} alt={val.alt} />
-        </StyledButton>
-      ))}
+      <StyledButton key={ColorEllipse[selectedColor].id} onClick={() => toggleSelectedColor(selectedColor + 1)}>
+        <StyledCheckImage width={24} height={24} src={Check} alt="체크" />
+        <StyledImage
+          width={30}
+          height={30}
+          src={ColorEllipse[selectedColor].src}
+          alt={ColorEllipse[selectedColor].alt}
+        />
+      </StyledButton>
     </StyledContainer>
   );
 }
 
-export default ColorChip;
+export default MobileColorChip;
 
 const StyledContainer = styled.div`
   display: inline-flex;
@@ -74,6 +86,8 @@ const StyledCheckImage = styled(Image)`
 `;
 
 const StyledImage = styled(Image)`
+  width: 30px;
+  height: 30px;
   ${onMobile} {
     width: 28px;
     height: 28px;
