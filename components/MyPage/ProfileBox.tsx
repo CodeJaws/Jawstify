@@ -77,7 +77,7 @@ function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
     <StyledContainer>
       <AddImageButton
         type={'profile'}
-        profileImg={profileImg}
+        image={profileImg}
         previewImage={previewImage}
         setPreviewImage={setPreviewImage}
         setImage={setImage}
