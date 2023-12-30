@@ -27,7 +27,7 @@ function ColorChip({ onChange }: Props) {
 
   const toggleSelectedColor = (index: number) => {
     setSelectedColor((prevSelectedColor) => (prevSelectedColor === index ? -1 : index));
-    const selectedColorText = ColorEllipse[index]?.alt || '';
+    const selectedColorText = ColorEllipse[index]?.color || '';
     onChange('색상', selectedColorText);
   };
 

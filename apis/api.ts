@@ -38,7 +38,9 @@ const dashboard = {
     await request.post<T.CreateDashboardItem>('dashboards', body),
   getDashboardList: async ({ navigationMethod, cursorId, page = 1, size = 10 }: T.GetDashboardListProps) =>
     await request.get<T.GetDashboardListItem>(
-      `dashboards?navigationMethod=${navigationMethod}&${cursorId && `cursorId=${cursorId}`}&page=${page}&size=${size}`,
+      `dashboards?navigationMethod=${navigationMethod}${
+        cursorId ? `&cursorId=${cursorId}` : ''
+      }&page=${page}&size=${size}`,
     ),
   getDashboardDetailed: async ({ dashboardId }: T.GetDashboardDetailedProps) =>
     await request.get<T.GetDashboardDetailedItem>(`dashboards/${dashboardId}`),

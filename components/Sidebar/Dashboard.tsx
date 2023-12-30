@@ -23,13 +23,13 @@ interface BoardItemProps {
   boardId: number;
 }
 
-interface DashboardTestProps {
+interface DashboardProps {
   boardId: number;
+  reset: boolean;
 }
 
-function Dashboard({ item, boardId }: BoardItemProps) {
+function DashboardItems({ item, boardId }: BoardItemProps) {
   const isActive = item.id === boardId;
-  console.log(boardId);
   return (
     <Link href={`/dashboard/${item.id}`} onClick={(e) => isActive && e.preventDefault()}>
       <StyledDashboardContainer $isActive={isActive} onClick={() => {}}>
@@ -41,16 +41,16 @@ function Dashboard({ item, boardId }: BoardItemProps) {
   );
 }
 
-function DashboardTest({ boardId }: DashboardTestProps) {
+function Dashboard({ reset, boardId }: DashboardProps) {
   const [dataSource, setDataSource] = useState<DashboardItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [dashboardPage, setDashboardPage] = useState(2);
   const [totlaCount, setTotalCount] = useState(0);
 
   const getItems = async () => {
-    const a = await API.dashboard.getDashboardList({ navigationMethod: 'infiniteScroll', size: 18 });
-    setDataSource(a.dashboards);
-    setTotalCount(a.totalCount);
+    const item = await API.dashboard.getDashboardList({ navigationMethod: 'infiniteScroll', size: 18 });
+    setDataSource(item.dashboards);
+    setTotalCount(item.totalCount);
   };
 
   const fetchHasMore = () => {
@@ -62,37 +62,36 @@ function DashboardTest({ boardId }: DashboardTestProps) {
       setHasMore(false);
     }
   };
-  console.log(dataSource);
   const handleLoadMore = async (dashboardPage: number) => {
-    const b = await API.dashboard.getDashboardList({
+    const item = await API.dashboard.getDashboardList({
       navigationMethod: 'pagination',
       page: dashboardPage,
       size: 18,
     });
-    setDataSource((prev) => [...prev, ...b.dashboards]);
+    setDataSource((prev) => [...prev, ...item.dashboards]);
     setDashboardPage((prev) => prev + 1);
   };
 
   useEffect(() => {
     getItems();
-  }, []);
+  }, [reset]);
 
   return (
     <StyledDashboardGroupContainer>
       <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
         {dataSource.map((item) => (
-          <Dashboard key={item.id} item={item} boardId={boardId} />
+          <DashboardItems key={item.id} item={item} boardId={boardId} />
         ))}
       </InfiniteScroll>
     </StyledDashboardGroupContainer>
   );
 }
 
-export default DashboardTest;
+export default Dashboard;
 
 const StyledDashboardGroupContainer = styled.div`
   width: 100%;
-  height: 800px;
+  height: 790px;
   overflow: scroll;
   padding: 0 12px;
 
