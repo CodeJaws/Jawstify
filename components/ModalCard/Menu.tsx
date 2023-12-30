@@ -1,27 +1,60 @@
+import API from '@/apis/api';
+import useCardId from '@/hooks/ModalCard/useCardId';
 import MenuImg from '@/public/assets/icons/MenuButton.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { styled } from 'styled-components';
+import Modal from '../Modal/Modal';
 
 function Menu() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { cardId } = useCardId();
+
+  const router = useRouter();
+
   const openMenu = () => {
     setIsOpen((prev) => !prev);
   };
+
   const closeMenu = () => {
     setIsOpen(false);
   };
+
+  const handleUpdate = () => {
+    setIsOpen(false);
+    setIsModalOpen(true);
+  };
+
+  const updateCard = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await API.cards.deleteCard({ cardId });
+      alert('❌ 삭제완료');
+      router.push('/myboard');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <StyledContainer onClick={openMenu} onBlur={closeMenu}>
-      {isOpen && (
-        <StyledMenu>
-          <StyledButton>수정하기</StyledButton>
-          <StyledButton>삭제하기</StyledButton>
-        </StyledMenu>
-      )}
-    </StyledContainer>
+    <>
+      <StyledContainer onClick={openMenu} onBlur={closeMenu}>
+        {isOpen && (
+          <StyledMenu>
+            <StyledButton onClick={handleUpdate}>수정하기</StyledButton>
+            <StyledButton onClick={handleDelete}>삭제하기</StyledButton>
+          </StyledMenu>
+        )}
+      </StyledContainer>
+      {isModalOpen && <Modal title={'할 일 수정'} onOkClick={updateCard} onCancelClick={() => setIsModalOpen(false)} />}
+    </>
   );
 }
 
