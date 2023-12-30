@@ -20,12 +20,12 @@ interface BoardItemProps {
     updatedAt: string;
     createdByMe: boolean;
   };
-  boardId: number;
+  boardId?: number;
 }
 
 interface DashboardProps {
-  boardId: number;
-  reset: boolean;
+  boardId?: number;
+  reset?: boolean;
 }
 
 function DashboardItems({ item, boardId }: BoardItemProps) {

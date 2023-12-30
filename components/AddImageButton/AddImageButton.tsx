@@ -10,47 +10,51 @@ import { css, styled } from 'styled-components';
 
 interface Props {
   type: 'modal' | 'profile';
-  image: string | ArrayBuffer | null;
-  setImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
+  profileImg: string | null;
+  previewImage: string | ArrayBuffer | null;
+  setPreviewImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
+  setImage: Dispatch<SetStateAction<File | undefined>>;
 }
 
-function AddImageButton({ type, image, setImage }: Props) {
-  const imgSrc = image as string;
+function AddImageButton({ type, profileImg, previewImage, setPreviewImage, setImage }: Props) {
+  const imgSrc = previewImage as string;
 
-  const handleImageSelect = (e?: ChangeEvent<HTMLInputElement> | undefined) => {
-    const file = e?.target.files?.[0];
+  const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
 
     if (file) {
+      setImage(file as File);
+
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result);
+        setPreviewImage(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
   useEffect(() => {
-    handleImageSelect();
-  }, [image]);
+    setPreviewImage(profileImg);
+  }, [profileImg, setPreviewImage]);
 
   return (
     <StyledContainer $type={type}>
       <StyledLabel $type={type}>{type === 'modal' ? '이미지' : '프로필'}</StyledLabel>
       <StyledAddButton $type={type}>
-        {!image ? (
+        {!imgSrc ? (
           <label>
             <StyledCover $type={type}>
-              <input type="file" onChange={handleImageSelect} />
+              <input type="file" accept="image/*" onChange={handleImageSelect} />
               <StyledAddImage $type={type} width={28} height={28} src={Add} alt="이미지 추가 버튼" />
             </StyledCover>
           </label>
         ) : (
           <label>
             <StyledEditCover $type={type}>
-              <StyledEditButton type="file" onChange={handleImageSelect} />
+              <StyledEditButton type="file" accept="image/*" onChange={handleImageSelect} />
               <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />
             </StyledEditCover>
-            <StyledSelectImage $type={type} width={76} height={76} src={imgSrc} alt="이미지 미리보기" />
+            <StyledSelectImage $type={type} width={76} height={76} src={imgSrc} priority={true} alt="이미지 미리보기" />
           </label>
         )}
       </StyledAddButton>

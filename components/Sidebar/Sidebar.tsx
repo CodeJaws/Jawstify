@@ -15,9 +15,9 @@ import Dashboard from './Dashboard';
 /** 대시보드 목록 조회를 통해 얻은 대시보드들의 정보들 */
 
 interface SidebarProps {
-  boardId: number;
-  reset: boolean;
-  setReset: Dispatch<SetStateAction<boolean>>;
+  boardId?: number;
+  reset?: boolean;
+  setReset?: Dispatch<SetStateAction<boolean>>;
 }
 
 function Sidebar({ reset, boardId, setReset }: SidebarProps) {
@@ -38,7 +38,9 @@ function Sidebar({ reset, boardId, setReset }: SidebarProps) {
 
   const handleCreate = async () => {
     await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
-    setReset((prev) => !prev);
+    if (setReset) {
+      setReset((prev) => !prev);
+    }
   };
 
   return (

@@ -10,6 +10,7 @@ interface TwinButtonProps {
   size: 'large' | 'small';
   children?: ReactNode;
   className?: string;
+  isDisabled?: boolean;
   onLeftClick: (e: MouseEvent<HTMLElement>) => void;
   onRightClick: (e: MouseEvent<HTMLElement>) => void;
 }
@@ -21,16 +22,23 @@ function TwinButton({
   size,
   children,
   className,
+  isDisabled,
   onLeftClick,
   onRightClick,
 }: TwinButtonProps) {
   return (
     <StyledDiv className={className}>
       {children}
-      <StyledButton $isViolet={isViolet} $size={size} onClick={onLeftClick}>
+      <StyledButton $isViolet={isViolet} $size={size} onClick={onLeftClick} $background={COLORS.WHITE_FF}>
         {text1}
       </StyledButton>
-      <StyledButton $isViolet={!isViolet} $size={size} onClick={onRightClick}>
+      <StyledButton
+        $isViolet={!isViolet}
+        disabled={isDisabled}
+        $size={size}
+        onClick={onRightClick}
+        $background={isDisabled ? COLORS.GRAY_9F : COLORS.VIOLET_55}
+      >
         {text2}
       </StyledButton>
     </StyledDiv>
@@ -44,7 +52,7 @@ const StyledDiv = styled.div`
   gap: 10px;
 `;
 
-const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
+const StyledButton = styled.button<{ $isViolet: boolean; $size: string; $background: string }>`
   width: 84px;
   height: 32px;
   display: flex;
@@ -52,7 +60,7 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   align-items: center;
   border-radius: 4px;
   border: 1px solid ${COLORS.GRAY_D9};
-  background: ${({ $isViolet }) => ($isViolet ? `${COLORS.VIOLET_55}` : `${COLORS.WHITE_FF}`)};
+  background: ${({ $background }) => $background};
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
   font-size: 1.4rem;

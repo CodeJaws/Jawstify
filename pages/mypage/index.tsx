@@ -1,3 +1,4 @@
+import API from '@/apis/api';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
@@ -6,10 +7,33 @@ import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { localStorageSetItem } from '@/utils/localStorage';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
+// 테스트용
+const email = 'test3@codeit.com';
+const password = 'test1234';
+
 function MyPage() {
+  const [testEmail, setTestEmail] = useState('');
+  const [nickname, setNickName] = useState('');
+  const [profileImg, setProfileImg] = useState('');
+
+  const testFunc = async () => {
+    const test = await API.auth.login({ email, password });
+
+    localStorageSetItem('accessToken', test.accessToken);
+    setTestEmail(test.user.email);
+    setNickName(test.user.nickname);
+    setProfileImg(test.user.profileImageUrl);
+  };
+
+  useEffect(() => {
+    testFunc();
+  }, []);
+
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} isOwner={true} title={'주인공'} />
@@ -17,7 +41,7 @@ function MyPage() {
       <StyledWrapper>
         <StyledInWrapper>
           <StyledBackWrapper href={'/mydashboard'}>돌아가기</StyledBackWrapper>
-          <ProfileBox />
+          <ProfileBox email={testEmail} nickname={nickname} profileImg={profileImg} setNickName={setNickName} />
           <PasswordManagerBox />
         </StyledInWrapper>
       </StyledWrapper>
@@ -53,6 +77,7 @@ const StyledInWrapper = styled.div`
   ${onMobile} {
     left: 66px;
     width: calc(100% - 66px);
+    padding: 16px 12px;
   }
 `;
 
@@ -62,4 +87,9 @@ const StyledBackWrapper = styled(Link)`
   background-repeat: no-repeat;
   background-position: 0px 50%;
   padding-left: 20px;
+
+  ${onMobile} {
+    background-size: 18px 18px;
+    font-size: 1.4rem;
+  }
 `;
