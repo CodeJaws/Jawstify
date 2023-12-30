@@ -385,15 +385,9 @@ export interface GetInvitationListItem {
   invitations: {
     id: number;
     inviter: {
-<<<<<<< HEAD
-      id: number;
-      email: string;
-      nickname: string;
-=======
       nickname: string;
       email: string;
       id: number;
->>>>>>> 620c50073eb53807a765edf64c564d3b88df2b61
     };
     teamId: string;
     dashboard: {
