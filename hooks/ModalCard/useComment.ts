@@ -15,7 +15,7 @@ const useComment = create<Props>((set) => ({
         content: '',
         createdAt: '',
         updatedAt: '',
-        cardId2: 0,
+        cardId: 0,
         author: {
           profileImageUrl: '',
           nickname: '',
