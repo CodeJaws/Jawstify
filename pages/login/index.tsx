@@ -1,19 +1,19 @@
-import { useForm } from 'react-hook-form';
-import useAuth from '@/hooks/useAuth';
-import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import Link from 'next/link';
 import api from '@/apis/api';
+import FormInput from '@/components/Input/FormInput';
+import Modal from '@/components/Modal/Modal';
+import LoginButton from '@/components/common/Button/LoginButton';
+import * as C from '@/constants/SignValidate';
+import useAuth from '@/hooks/useAuth';
+import mainLogoText from '@/public/assets/icons/logoText.svg';
+import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import * as C from '@/constants/SignValidate';
-import FormInput from '@/components/Input/FormInput';
-import LoginButton from '@/components/common/Button/LoginButton';
-import mainLogoText from '@/public/assets/icons/logoText.svg';
-import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
-import Modal from '@/components/Modal/Modal';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
 interface FormValue {
   email?: string;

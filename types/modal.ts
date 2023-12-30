@@ -7,13 +7,8 @@ import { ChangeEvent } from 'react';
  */
 export interface ModalCommonProps {
   onOkClick: () => void;
-<<<<<<< HEAD
-  onCancelClick: () => void;
-  getValue?: (value: any) => void;
-=======
   onCancelClick?: () => void;
-  getValue?: (value: {}) => void;
->>>>>>> d7f33fa8eeaef649d5703ea87cbea81f3ee7b938
+  getValue?: (value: any) => void;
 }
 
 export type InputChangeType = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;

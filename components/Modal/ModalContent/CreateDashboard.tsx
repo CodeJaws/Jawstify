@@ -37,7 +37,7 @@ function CreateDashboard({ onCancelClick, onOkClick, getValue = () => {} }: Moda
           text1="취소"
           text2="생성"
           size="large"
-          onLeftClick={onCancelClick}
+          onLeftClick={() => onCancelClick}
           onRightClick={onOkClick}
         ></StyledTwinButton>
       </StyledButtonContainer>
