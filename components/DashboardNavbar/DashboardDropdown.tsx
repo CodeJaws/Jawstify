@@ -5,7 +5,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import { localStorageClear } from '@/utils/localStorage';
 
-import UserImage from '@/public/assets/icons/user.svg';
+import UserImage from '@/public/assets/icons/User.svg';
 import LogoutImage from '@/public/assets/icons/Logout.svg';
 import DashboardImage from '@/public/assets/icons/Dashboard.svg';
 import Image from 'next/image';
