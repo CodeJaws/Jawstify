@@ -2,7 +2,6 @@ import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { ModalCommonProps } from '@/types/modal';
 import { useState } from 'react';
-<<<<<<< HEAD
 import styled from 'styled-components';
 import { StyledButtonContainer, StyledTwinButton } from './Create&EditToDo';
 
@@ -11,12 +10,6 @@ function CreateDashboard({ onCancelClick, onOkClick, getValue = () => {} }: Moda
     '대시보드 이름': '',
     색상: '#7AC555',
   });
-=======
-import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
-
-function CreateDashboard({ onOkClick, onCancelClick = () => {}, getValue = () => {} }: ModalCommonProps) {
-  const [values, setValues] = useState(INIT_CREATE_DASHBOARD);
->>>>>>> d7f33fa8eeaef649d5703ea87cbea81f3ee7b938
 
   const handleChange = (inputLabel: string, inputValue: string) => {
     setValues({
