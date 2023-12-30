@@ -78,7 +78,8 @@ export interface CheckCardListItem {
 }
 
 export interface CorrectCardProps {
-  cardId: string;
+  cardId: number;
+  columnId: number;
   assigneeUserId?: number;
   title: string;
   description: string;
@@ -123,12 +124,13 @@ export interface GetCardDetailsItem {
   imageUrl: string;
   teamId: string;
   columnId: number;
+  dashboardId: number;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface DeleteCardProps {
-  cardId: string;
+  cardId: number;
 }
 
 export interface CreateColumnProps {
@@ -145,7 +147,7 @@ export interface CreateColumnItem {
 }
 
 export interface GetColumnListProps {
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface GetColumnListItem {
@@ -220,7 +222,7 @@ export interface GetCommentListItem {
 }
 
 export interface CorrectCommentProps {
-  commentId: string;
+  commentId: number;
   content: string;
 }
 
@@ -238,7 +240,7 @@ export interface CorrectCommentItem {
 }
 
 export interface DeleteCommentProps {
-  commentId: string;
+  commentId: number;
 }
 
 export interface CreateDashboardProps {
@@ -429,7 +431,7 @@ export interface GetMembersInDashboardItem {
       userId: number;
       email: string;
       nickname: string;
-      profileImageUrl: string | null;
+      profileImageUrl: string;
       createdAt: string;
       updatedAt: string;
       isOwner: boolean;
