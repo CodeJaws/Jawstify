@@ -6,7 +6,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
@@ -39,10 +39,11 @@ export interface GetAcceptProps {
 }
 
 interface InviteDashBoardProps {
-  setReset: Dispatch<SetStateAction<boolean>>;
+  refresh: () => void;
+  refreshToFirst: () => void;
 }
 
-function InviteDashBoard({ setReset }: InviteDashBoardProps) {
+function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   const [dataSource, setDataSource] = useState<GetInvitationListProps[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [searchText, setSearchText] = useState('');
@@ -79,7 +80,8 @@ function InviteDashBoard({ setReset }: InviteDashBoardProps) {
   const handleAccept = async ({ acceptid, accept }: GetAcceptProps) => {
     await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
     setDataSource(dataSource.filter((item) => item.id !== acceptid));
-    setReset((prev) => !prev);
+    refresh();
+    refreshToFirst();
   };
 
   useEffect(() => {
@@ -155,6 +157,7 @@ function InviteDashBoard({ setReset }: InviteDashBoardProps) {
                               isViolet={true}
                               size="small"
                               className="temp2"
+                              violet={true}
                               onLeftClick={() => handleAccept({ acceptid: item.id, accept: true })}
                               onRightClick={() => handleAccept({ acceptid: item.id, accept: false })}
                             />

@@ -15,7 +15,10 @@ function MyDashBoard() {
     localStorageSetItem('accessToken', a.accessToken);
   };
   const dashboardId = 203; // 대시보드 아이디 여기 수정하면 됩니다
-  const [reset, setReset] = useState(true);
+  const [resetToFirst, setResetToFirst] = useState(false);
+  const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
+  const refresh = () => setRefreshPaginationToggle((prev) => !prev);
+  const refreshToFirst = () => setResetToFirst((prev) => !prev);
 
   useEffect(() => {
     loginFunc();
@@ -23,11 +26,16 @@ function MyDashBoard() {
 
   return (
     <StyledContainer>
-      <DashboardNavbar isMyDashboard={false} isOwner={true} title="내 대시보드" />
+      <DashboardNavbar isMyDashboard={true} />
       <Sidebar />
       <StyledWrapper>
-        <MyDashBoardButtonBox dashboardId={dashboardId} reset={reset} setReset={setReset} />
-        <InviteDashBoard setReset={setReset} />
+        <MyDashBoardButtonBox
+          dashboardId={dashboardId}
+          resetToFirst={resetToFirst}
+          refresh={refresh}
+          refreshPaginationToggle={refreshPaginationToggle}
+        />
+        <InviteDashBoard refresh={() => refresh} refreshToFirst={() => refreshToFirst()} />
       </StyledWrapper>
     </StyledContainer>
   );

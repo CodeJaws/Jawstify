@@ -1,6 +1,6 @@
 import API from '@/apis/api';
 import { DashboardType, InvitationType, MemberType } from '@/types/apiType';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type AllItemTypes = DashboardType[] | MemberType[] | InvitationType[];
 
@@ -9,14 +9,15 @@ interface usePaginationProps {
   showItemNum: 4 | 5;
   type: 'dashboard' | 'members' | 'invitationDetails';
   dashboardId?: number;
-  reset: boolean;
+  refreshPaginationToggle?: boolean;
+  resetToFirst?: boolean;
 }
 
 interface usePaginationReturn {
   handlePagination: (val: number) => void;
-  showItems: AllItemTypes;
   pageNum: number;
   totalPages: number;
+  allItems: AllItemTypes;
 }
 
 /**
@@ -25,13 +26,21 @@ interface usePaginationReturn {
  * @param type 어디서 페이지네이션 사용하는지 확인할 type
  * @param dashboardId 대시보드 멤버 목록 조회 API에서 사용
  */
-const usePagination = ({ size, showItemNum, type, dashboardId, reset }: usePaginationProps): usePaginationReturn => {
+const usePagination = ({
+  size,
+  showItemNum,
+  type,
+  dashboardId,
+  refreshPaginationToggle,
+  resetToFirst,
+}: usePaginationProps): usePaginationReturn => {
   const [pageNum, setPageNum] = useState(1);
   const [allItems, setAllItems] = useState<AllItemTypes>([]);
-  const [showItems, setShowItems] = useState<AllItemTypes>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const totalPages = Math.ceil(totalCount / showItemNum); // 총 페이지 수
+
+  const [checkRefresh, setCheckRefresh] = useState(true);
 
   const handlePagination = async (num: number) => {
     if (loading) return;
@@ -40,20 +49,31 @@ const usePagination = ({ size, showItemNum, type, dashboardId, reset }: usePagin
 
     if (Math.min(totalCount, (pageNum + num) * showItemNum) > allItems.length) {
       setLoading(true);
-      const res = await API.dashboard.getDashboardList({
-        navigationMethod: 'pagination',
-        page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
-      });
-      console.log(res);
-      setLoading(false);
-
-      if (type === 'members') {
-        setAllItems((prev) => [...prev, ...res.dashboards] as MemberType[]);
-      } else if (type === 'invitationDetails') {
-        setAllItems((prev) => [...prev, ...res.dashboards] as InvitationType[]);
-      } else if (type === 'dashboard') {
+      if (type === 'dashboard') {
+        const res = await API.dashboard.getDashboardList({
+          navigationMethod: 'pagination',
+          page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
+        });
         setAllItems((prev) => [...prev, ...res.dashboards] as DashboardType[]);
+        setTotalCount(res.totalCount);
+      } else if (type === 'members') {
+        const res = await API.members.getMembersInDashboard({
+          size,
+          page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
+          dashboardId: Number(dashboardId),
+        });
+        setAllItems((prev) => [...prev, ...res.members] as MemberType[]);
+        setTotalCount(res.totalCount);
+      } else if (type === 'invitationDetails') {
+        const res = await API.dashboard.loadInviteDashboard({
+          dashboardId: Number(dashboardId),
+          page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
+          size,
+        });
+        setAllItems((prev) => [...prev, ...res.invitations] as InvitationType[]);
+        setTotalCount(res.totalCount);
       }
+      setLoading(false);
     }
     setPageNum((prev) => prev + num);
     return;
@@ -61,30 +81,42 @@ const usePagination = ({ size, showItemNum, type, dashboardId, reset }: usePagin
 
   const firstFetch = useCallback(async () => {
     setLoading(true);
-    const res = await API.dashboard.getDashboardList({
-      navigationMethod: 'pagination',
-      page: 1,
-      size,
-    });
-    setTotalCount(res.totalCount); // 전체 아이템 수
-    setAllItems(res.dashboards);
-    setShowItems(res.dashboards.slice(0, showItemNum));
+    let fetchedItems: AllItemTypes = [];
+    if (type === 'dashboard') {
+      const res = await API.dashboard.getDashboardList({
+        navigationMethod: 'pagination',
+        page: 1,
+        size,
+      });
+      fetchedItems = res.dashboards;
+      setTotalCount(res.totalCount);
+    } else if (type === 'members') {
+      const res = await API.members.getMembersInDashboard({ size, page: 1, dashboardId: Number(dashboardId) });
+      fetchedItems = res.members;
+      setTotalCount(res.totalCount);
+    } else if (type === 'invitationDetails') {
+      const res = await API.dashboard.loadInviteDashboard({ dashboardId: Number(dashboardId), page: 1, size });
+      fetchedItems = res.invitations;
+      setTotalCount(res.totalCount);
+    }
+    setAllItems(fetchedItems);
     setLoading(false);
-  }, [showItemNum, size]);
+  }, [type, size, showItemNum, dashboardId, allItems]);
 
   useEffect(() => {
-    setShowItems(allItems.slice((pageNum - 1) * showItemNum, (pageNum - 1) * showItemNum + showItemNum));
-    if (allItems.length === 0) {
+    if (refreshPaginationToggle !== checkRefresh) {
       firstFetch();
     }
-  }, [allItems, pageNum, showItemNum, firstFetch]);
+    setCheckRefresh(refreshPaginationToggle as boolean);
+  }, [refreshPaginationToggle, firstFetch, checkRefresh]);
 
-  useLayoutEffect(() => {
-    setAllItems([]);
+  useEffect(() => {
+    firstFetch();
     setPageNum(1);
-  }, [reset]);
+  }, [resetToFirst]);
+  console.log('REF', resetToFirst);
 
-  return { handlePagination, pageNum, showItems, totalPages };
+  return { handlePagination, pageNum, totalPages, allItems };
 };
 
 export default usePagination;

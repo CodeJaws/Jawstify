@@ -5,7 +5,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { DashboardType } from '@/types/apiType';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import DashBoardAddButton from '../common/Button/DashBoardAddButton';
 import DashBoardButton from '../common/Button/DashBoardButton';
@@ -14,24 +14,31 @@ import PaginationButton from '../common/Button/PaginationButton';
 interface usePaginationProps {
   handlePagination: (val: number) => void;
   pageNum: number;
-  showItems: DashboardType[];
+  allItems: DashboardType[];
   totalPages: number;
 }
 
 interface MyDashBoardButtonBoxProps {
   dashboardId: number;
-  reset: boolean;
-  setReset: Dispatch<SetStateAction<boolean>>;
+  resetToFirst: boolean;
+  refresh: () => void;
+  refreshPaginationToggle: boolean;
 }
 
-function MyDashBoardButtonBox({ dashboardId, reset, setReset }: MyDashBoardButtonBoxProps) {
+function MyDashBoardButtonBox({
+  dashboardId,
+  resetToFirst,
+  refresh,
+  refreshPaginationToggle,
+}: MyDashBoardButtonBoxProps) {
   const limit = 5;
-  const { handlePagination, pageNum, showItems, totalPages } = usePagination({
+  const { handlePagination, pageNum, allItems, totalPages } = usePagination({
     size: 10,
     showItemNum: limit,
     type: 'dashboard',
     dashboardId: 203,
-    reset,
+    refreshPaginationToggle,
+    resetToFirst,
   }) as usePaginationProps;
   const [isOpen, setIsOpen] = useState(false);
   const [values, setValues] = useState({
@@ -52,10 +59,11 @@ function MyDashBoardButtonBox({ dashboardId, reset, setReset }: MyDashBoardButto
   //   navigationMethod: 'pagination',
   //   page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
   // });
+  const showItems = allItems.slice((pageNum - 1) * limit, (pageNum - 1) * limit + limit);
 
   const handleCreate = async () => {
     await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
-    setReset((prev) => !prev);
+    refresh();
   };
 
   return (
