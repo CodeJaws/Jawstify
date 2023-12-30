@@ -19,24 +19,17 @@ interface usePaginationProps {
 }
 
 interface MyDashBoardButtonBoxProps {
-  dashboardId: number;
   resetToFirst: boolean;
   refresh: () => void;
   refreshPaginationToggle: boolean;
 }
 
-function MyDashBoardButtonBox({
-  dashboardId,
-  resetToFirst,
-  refresh,
-  refreshPaginationToggle,
-}: MyDashBoardButtonBoxProps) {
+function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }: MyDashBoardButtonBoxProps) {
   const limit = 5;
   const { handlePagination, pageNum, allItems, totalPages } = usePagination({
     size: 10,
     showItemNum: limit,
     type: 'dashboard',
-    dashboardId: 203,
     refreshPaginationToggle,
     resetToFirst,
   }) as usePaginationProps;
@@ -55,10 +48,6 @@ function MyDashBoardButtonBox({
     setValues(values); // value = modal에 입력된 input value들의 집합
   };
 
-  //const res = await API.dashboard.getDashboardList({
-  //   navigationMethod: 'pagination',
-  //   page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
-  // });
   const showItems = allItems.slice((pageNum - 1) * limit, (pageNum - 1) * limit + limit);
 
   const handleCreate = async () => {

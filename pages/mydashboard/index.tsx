@@ -1,28 +1,17 @@
-import API from '@/apis/api';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import MyDashBoardButtonBox from '@/components/MyDashboard/MyDashBoardButtonBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDashBoard from '@/components/Table/InviteDashBoard';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { localStorageSetItem } from '@/utils/localStorage';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 function MyDashBoard() {
-  const loginFunc = async () => {
-    const a = await API.auth.login({ email: 'test1@codeit.com', password: 'test12345' });
-    localStorageSetItem('accessToken', a.accessToken);
-  };
-  const dashboardId = 203; // 대시보드 아이디 여기 수정하면 됩니다
   const [resetToFirst, setResetToFirst] = useState(false);
   const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
   const refresh = () => setRefreshPaginationToggle((prev) => !prev);
   const refreshToFirst = () => setResetToFirst((prev) => !prev);
-
-  useEffect(() => {
-    loginFunc();
-  }, []);
 
   return (
     <StyledContainer>
@@ -30,7 +19,6 @@ function MyDashBoard() {
       <Sidebar />
       <StyledWrapper>
         <MyDashBoardButtonBox
-          dashboardId={dashboardId}
           resetToFirst={resetToFirst}
           refresh={refresh}
           refreshPaginationToggle={refreshPaginationToggle}

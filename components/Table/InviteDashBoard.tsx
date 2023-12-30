@@ -139,6 +139,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
                               isViolet={true}
                               size="small"
                               className="temp1"
+                              leftViolet={true}
                               onLeftClick={() => handleAccept({ acceptid: item.id, accept: true })}
                               onRightClick={() => handleAccept({ acceptid: item.id, accept: false })}
                             />
@@ -157,7 +158,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
                               isViolet={true}
                               size="small"
                               className="temp2"
-                              violet={true}
+                              leftViolet={true}
                               onLeftClick={() => handleAccept({ acceptid: item.id, accept: true })}
                               onRightClick={() => handleAccept({ acceptid: item.id, accept: false })}
                             />
