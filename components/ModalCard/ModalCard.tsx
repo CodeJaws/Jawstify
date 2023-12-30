@@ -1,21 +1,35 @@
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-
+import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
 import useCardData from '@/hooks/ModalCard/useCardData';
+import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import useDeviceType from '@/hooks/useDeviceType';
-import Crown from '@/public/assets/images/emoji.webp';
+import Emoji from '@/public/assets/images/emoji.webp';
+import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
+import StatusChip from '../Chip/StatusChip';
 import Comment from './Comment';
 import Manager from './Manager';
 import ModalButton from './ModalButton';
 
 function ModalCard() {
   const { cardData } = useCardData();
-  const { title, description } = cardData;
+  const { setStatus } = useSelectStatus();
+
+  const { tasks } = useDashBoard();
+  const { title, description, imageUrl } = cardData;
+
   const deviceType = useDeviceType();
+
+  const filterColumn = tasks.data.filter((val) => val.id === cardData.columnId);
+  const status = filterColumn[0].title;
+
+  useEffect(() => {
+    setStatus(status);
+  }, [setStatus, status]);
 
   return (
     <StyledContainer>
@@ -25,18 +39,27 @@ function ModalCard() {
           <StyledTitle>{title}</StyledTitle>
           {deviceType === 'mobile' && <Manager />}
           <StyledTag>
-            {/* {status} */}
+            <StatusChip content={status} />
             <StyledDivision />
             <StyledColorChipWrapper>
               {cardData.tags.map((val) => (
-                <ContentChip key={val} text={val} color={'#fff'} backgroundColor={'#000'} />
+                <ContentChip
+                  key={val}
+                  text={val.substring(0, val.indexOf('/'))}
+                  color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
+                  backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
+                />
               ))}
             </StyledColorChipWrapper>
           </StyledTag>
         </StyledTitleWrapper>
         <StyledContentWrapper>
           <StyledContent>{description}</StyledContent>
-          <StyledImage width={450} height={262} src={Crown} alt="카드 이미지" />
+          {imageUrl ? (
+            <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />
+          ) : (
+            <StyledImage width={450} height={262} src={Emoji} alt="카드 기본 이미지" />
+          )}
         </StyledContentWrapper>
         <Comment />
       </StyledLeftContainer>
@@ -57,7 +80,7 @@ const StyledContainer = styled.div`
   flex-shrink: 0;
   gap: 24px;
   width: 730px;
-  height: 763px;
+  height: auto;
   padding: 32px 28px;
   background-color: ${COLORS.WHITE_FF};
 
@@ -102,6 +125,7 @@ const StyledContentWrapper = styled.div`
 const StyledContent = styled.p`
   ${fontStyle(14, 400)}
   line-height: 24px;
+  word-break: break-all;
 
   ${onMobile} {
     font-size: 1.2rem;
@@ -124,7 +148,6 @@ const StyledDivision = styled.div`
 
 const StyledColorChipWrapper = styled.div`
   display: flex;
-  gap: 6px;
 `;
 
 const StyledRightContainer = styled.div`
