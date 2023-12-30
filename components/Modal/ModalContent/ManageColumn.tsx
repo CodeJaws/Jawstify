@@ -7,15 +7,14 @@ import { StyledContainer } from './Basic';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { ModalCommonProps } from '@/types/modal';
 import { useState } from 'react';
+import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
   onDeleteClick: () => void;
 }
 
-function ManageColumn({ onOkClick, onCancelClick, onDeleteClick = () => {}, getValue = () => {} }: Props) {
-  const [values, setValues] = useState({
-    이름: '',
-  });
+function ManageColumn({ onOkClick, onCancelClick = () => {}, onDeleteClick = () => {}, getValue = () => {} }: Props) {
+  const [values, setValues] = useState(INIT_MANAGE_COLUMN);
 
   const handleChange = (inputLabel: string, inputValue: string) => {
     setValues({

@@ -11,11 +11,9 @@ import LoginButton from '@/components/common/Button/LoginButton';
 function HeroSection() {
   const router = useRouter();
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     router.push('/login');
-  }
+  };
 
   return (
     <StyledHeroContainer>
@@ -27,7 +25,7 @@ function HeroSection() {
         <StyledHeroText2>Taskify</StyledHeroText2>
       </StyledHeroTextWrapper>
       <StyledHeroDescription>서비스의 메인 설명 들어갑니다</StyledHeroDescription>
-      <LoginButton type="landing" active={true} onClick={handleClick} text="로그인하기" />
+      <LoginButton usingType="landing" active={true} onClick={handleClick} text="로그인하기" />
     </StyledHeroContainer>
   );
 }
@@ -86,21 +84,21 @@ const StyledHeroText1 = styled.div`
   letter-spacing: -2px;
   ${fontStyle(40, 700)};
   white-space: nowrap;
-  
+
   ${onTablet} {
     width: 349px;
     height: 100px;
     ${fontStyle(56, 700)};
     line-height: 100px;
   }
-  
+
   ${onPc} {
     width: 479px;
     height: 100px;
     ${fontStyle(76, 700)};
     line-height: 100px;
   }
-  `;
+`;
 
 const StyledHeroText2 = styled.div`
   width: 150px;
@@ -109,14 +107,14 @@ const StyledHeroText2 = styled.div`
   font-family: 'Montserrat';
   letter-spacing: -1px;
   ${fontStyle(42, 700)};
-  
+
   ${onTablet} {
     width: 253px;
     height: 65px;
     ${fontStyle(70, 700)};
     line-height: 65px;
   }
-  
+
   ${onPc} {
     width: 327px;
     height: 65px;

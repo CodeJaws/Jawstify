@@ -6,7 +6,7 @@ import { request } from './axios';
  */
 const auth = {
   login: async (body: T.LoginProps) => await request.post<T.LoginItem>('auth/login', body),
-  changePassword: async (body: T.ChangePasswordProps) => await request.put('auth/login', body),
+  changePassword: async (body: T.ChangePasswordProps) => await request.put('auth/password', body),
 };
 
 /** USERS
