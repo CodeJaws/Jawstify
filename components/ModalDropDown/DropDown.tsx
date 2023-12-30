@@ -4,19 +4,22 @@ import Arrow from '@/public/assets/icons/ArrowDropdown.svg';
 import { COLORS } from '@/styles/palettes';
 import { ModalDropdownProps } from '@/types/dropdown';
 
+import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
 import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
+import useCardData from '@/hooks/ModalCard/useCardData';
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { css, styled } from 'styled-components';
-import { MANGER_LIST } from './ModalDropDown';
 
-function DropDown({ type }: ModalDropdownProps) {
+function DropDown({ type, onChange }: ModalDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { status } = useSelectStatus();
   const { inputData, setInputData } = useInputData();
   const { imgSrc, setImgSrc } = useImgSrc();
+  const { members } = useGetMember();
+  const { cardData } = useCardData();
 
   const openMenu = () => {
     setIsOpen((prev) => !prev);
@@ -32,11 +35,23 @@ function DropDown({ type }: ModalDropdownProps) {
     setIsOpen(false);
   };
 
-  const filterData = MANGER_LIST.filter((manager) => {
+  const filterData = members.members.filter((manager) => {
     if (inputData) {
-      return manager.name.toLowerCase().includes(inputData.toLowerCase());
+      return manager.nickname.toLowerCase().includes(inputData.toLowerCase());
     }
   });
+
+  useEffect(() => {
+    onChange('상태', status);
+  }, [status]);
+
+  useEffect(() => {
+    onChange('담당자', inputData);
+  }, [inputData]);
+
+  useEffect(() => {
+    setInputData(cardData.assignee.nickname);
+  }, [setInputData]);
 
   return (
     <>
