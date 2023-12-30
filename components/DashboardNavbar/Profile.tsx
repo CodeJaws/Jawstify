@@ -9,6 +9,7 @@ import useUserData from '@/hooks/global/useUserData';
 import { FocusEvent, useEffect, useState } from 'react';
 import { UserType } from '@/types/apiType';
 import DashboardDropdown from './DashboardDropdown';
+import useDeviceType from '@/hooks/useDeviceType';
 
 function Profile() {
   const { user } = useUserData();
@@ -21,6 +22,7 @@ function Profile() {
     updatedAt: '',
   });
   const { nickname, profileImageUrl } = showUser;
+  const deviceType = useDeviceType();
 
   const [isDropdown, setIsDropdown] = useState(false);
 
@@ -39,21 +41,29 @@ function Profile() {
   }, []);
 
   return (
-    <StyledContainer>
-      <StyledImageWrapper>
-        <Image fill src={profileImageUrl || Codeit} alt="프로필" />
-      </StyledImageWrapper>
-      <StyledNameWrapper onBlur={(e) => handleBlur(e)}>
-        <label onClick={handleClickDropdown}>
-          <button>{showUser.nickname}</button>
-          {isDropdown && <DashboardDropdown />}
+    <>
+      <StyledContainer onBlur={(e) => handleBlur(e)}>
+        <label onMouseDown={handleClickDropdown}>
+          <StyledImageWrapper>
+            <StyledImage fill src={profileImageUrl || Codeit} alt="프로필" onClick={handleClickDropdown} />
+          </StyledImageWrapper>
+          <StyledNameWrapper>
+            <button>{showUser.nickname}</button>
+          </StyledNameWrapper>
         </label>
-      </StyledNameWrapper>
-    </StyledContainer>
+        <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
+      </StyledContainer>
+    </>
   );
 }
 
 export default Profile;
+
+const StyledNameWrapper = styled.div`
+  button {
+    ${fontStyle(16, 500)};
+  }
+`;
 
 const StyledContainer = styled.div`
   position: relative;
@@ -62,10 +72,14 @@ const StyledContainer = styled.div`
   align-items: center;
   gap: 12px;
 
+  label {
+    display: flex;
+    align-items: center;
+    color: ${COLORS.BLACK_33};
+  }
+
   label > button {
     cursor: pointer;
-    color: ${COLORS.BLACK_33};
-    ${fontStyle(16, 500)}
   }
 
   ${onPc} {
@@ -77,10 +91,14 @@ const StyledContainer = styled.div`
   }
   ${onMobile} {
     margin-right: 12px;
-    label {
+    ${StyledNameWrapper} {
       display: none;
     }
   }
+`;
+
+const StyledImage = styled(Image)`
+  cursor: pointer;
 `;
 
 const StyledImageWrapper = styled.div`
@@ -97,5 +115,3 @@ const StyledImageWrapper = styled.div`
     height: 34px;
   }
 `;
-
-const StyledNameWrapper = styled.div``;
