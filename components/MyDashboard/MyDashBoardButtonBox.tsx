@@ -48,8 +48,14 @@ function MyDashBoardButtonBox({ dashboardId, reset, setReset }: MyDashBoardButto
     setValues(values); // value = modal에 입력된 input value들의 집합
   };
 
+  //const res = await API.dashboard.getDashboardList({
+  //   navigationMethod: 'pagination',
+  //   page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
+  // });
+
   const handleCreate = async () => {
     await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
+    setReset((prev) => !prev);
   };
 
   return (
@@ -72,7 +78,6 @@ function MyDashBoardButtonBox({ dashboardId, reset, setReset }: MyDashBoardButto
           </div>
         ))}
       </ButtonBoxWrapper>
-
       <PaginationWrapper>
         <PaginationPage>
           {totalPages} 페이지 중 {pageNum}
@@ -92,7 +97,6 @@ function MyDashBoardButtonBox({ dashboardId, reset, setReset }: MyDashBoardButto
           onOkClick={() => {
             handleCreate();
             setIsOpen(false);
-            setReset((prev) => !prev);
           }}
         />
       )}

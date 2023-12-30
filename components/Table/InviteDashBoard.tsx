@@ -33,10 +33,6 @@ interface GetInvitationListProps {
   updatedAt: string;
 }
 
-interface GetCursorProps {
-  cursorId: number;
-}
-
 export interface GetAcceptProps {
   acceptid: number;
   accept: boolean;
@@ -81,8 +77,7 @@ function InviteDashBoard({ setReset }: InviteDashBoardProps) {
   };
 
   const handleAccept = async ({ acceptid, accept }: GetAcceptProps) => {
-    console.log('asdfasdfasdf');
-    // const c = await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
+    await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
     setDataSource(dataSource.filter((item) => item.id !== acceptid));
     setReset((prev) => !prev);
   };
