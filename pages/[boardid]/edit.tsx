@@ -14,7 +14,8 @@ import useDashboard from '@/hooks/useDashboard';
 import API from '@/apis/api';
 import MembersTable from '@/components/Table/MembersTable';
 import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import DeleteButton from '@/components/common/Button/DeleteButton';
 
 interface BoardEditProps {
   boardid: number;
@@ -72,7 +73,8 @@ function BoardEdit({ boardid: dashboardId }: BoardEditProps) {
               <MembersTable dashboardId={Number(dashboardId)} refresh={refresh} />
             </div>
             <InviteDetailsTable dashboardId={Number(dashboardId)} />
-            <StyledDeleteButton onClick={deleteDashboard}>대시보드 삭제하기</StyledDeleteButton>
+            <DeleteButton onClick={deleteDashboard} />
+            {/* <StyledDeleteButton onClick={}>대시보드 삭제하기</StyledDeleteButton> */}
           </StyledMainWrapper>
         </StyledInWrapper>
       </StyledWrapper>
@@ -105,6 +107,8 @@ const StyledInWrapper = styled.div`
     width: calc(100% - 160px);
   }
   ${onMobile} {
+    padding-left: 12px;
+    padding-top: 16px;
     left: 66px;
     width: calc(100% - 66px);
   }
@@ -116,28 +120,12 @@ const StyledLink = styled(Link)`
   background-repeat: no-repeat;
   background-position: 0px 50%;
   padding-left: 20px;
+  ${onMobile} {
+    font-size: 1.4rem;
+  }
 `;
 
 const StyledMainWrapper = styled.div`
   margin-top: 25px;
   gap: 12px;
-`;
-
-const StyledDeleteButton = styled.button`
-  margin-top: 40px;
-  display: flex;
-  width: 320px;
-  height: 62px;
-  /* padding: 20px 95px; */
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.GRAY_FA};
-
-  color: ${COLORS.BLACK_33};
-  ${fontStyle(18, 500)};
-  text-align: center;
 `;
