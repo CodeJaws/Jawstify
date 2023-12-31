@@ -1,15 +1,16 @@
 import Close from '@/public/assets/icons/Close.svg';
 import { onMobile } from '@/styles/mediaQuery';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 import Menu from './Menu';
 
 function ModalButton() {
   const router = useRouter();
+  const dashboardId = usePathname();
   return (
     <StyledContainer>
       <Menu />
-      <StyledClose onClick={() => router.push('/myboard')} />
+      <StyledClose onClick={() => router.push(`/dashboard/${dashboardId}`)} />
     </StyledContainer>
   );
 }
