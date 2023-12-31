@@ -4,6 +4,7 @@ import Arrow from '@/public/assets/icons/ArrowDropdown.svg';
 import { COLORS } from '@/styles/palettes';
 import { ModalDropdownProps } from '@/types/dropdown';
 
+import { Emoji } from '@/constants/ModalInput';
 import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
@@ -26,8 +27,10 @@ function DropDown({ type, onChange }: ModalDropdownProps) {
   };
 
   const openDropDown = (e: ChangeEvent<HTMLInputElement>) => {
-    setImgSrc('');
     setInputData(e.currentTarget.value);
+    if (inputData) {
+      setImgSrc('');
+    }
     setIsOpen(true);
   };
 
@@ -51,7 +54,9 @@ function DropDown({ type, onChange }: ModalDropdownProps) {
 
   useEffect(() => {
     setInputData(cardData.assignee.nickname);
-  }, [setInputData]);
+
+    setImgSrc(cardData.assignee.profileImageUrl);
+  }, [setInputData, setImgSrc]);
 
   return (
     <>
@@ -67,7 +72,12 @@ function DropDown({ type, onChange }: ModalDropdownProps) {
         </StyledContainer>
       ) : (
         <StyledInputWrapper>
-          <StyledInput value={inputData} onChange={openDropDown} placeholder="이름을 입력해주세요" $imgSrc={imgSrc} />
+          <StyledInput
+            value={inputData}
+            onChange={openDropDown}
+            placeholder="이름을 입력해주세요"
+            $imgSrc={imgSrc ?? Emoji}
+          />
           {filterData.length !== 0 && (
             <>
               <button onClick={openMenu}>
@@ -118,7 +128,7 @@ const StyledInput = styled.input<{ $imgSrc: any }>`
   ${({ $imgSrc }) =>
     $imgSrc &&
     css`
-      background-image: url(${$imgSrc.src});
+      background-image: url(${$imgSrc});
       background-position: 5px;
       background-repeat: no-repeat;
       background-size: 27px;

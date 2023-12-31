@@ -63,9 +63,9 @@ function DropDownMenu({ type, isOpen, filterData, setIsOpen }: DropDownMenuProps
       <StyledWrapper>
         {type === 'status' ? (
           <StyledInWrapper>
-            {tasks.data.map((val, index) => (
+            {tasks.data.map((val) => (
               <StyledButton key={val.id} onMouseDown={() => handleCheck(val.id, val.title)}>
-                {isCheck === index ? <Image width={22} height={22} src={Check} alt="체크 이미지" /> : <StyledBlank />}
+                {isCheck === val.id ? <Image width={22} height={22} src={Check} alt="체크 이미지" /> : <StyledBlank />}
                 <StatusChip content={val.title} />
               </StyledButton>
             ))}
@@ -74,10 +74,9 @@ function DropDownMenu({ type, isOpen, filterData, setIsOpen }: DropDownMenuProps
           <StyledInWrapper>
             {filterData?.map((val) => (
               <StyledButton
-                key={val.id}
+                key={val.userId}
                 onMouseDown={() => handleCheckName(val.userId, val.nickname, val.profileImageUrl)}
               >
-                {isCheck === val.id ? <Image width={22} height={22} src={Check} alt="체크 이미지" /> : <StyledBlank />}
                 <StyledMangerList>
                   {val.profileImageUrl ? (
                     <Image width={26} height={26} src={val.profileImageUrl} alt="담당자 이미지" />
