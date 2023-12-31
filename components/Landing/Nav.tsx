@@ -109,9 +109,10 @@ const LinkButton = styled.div`
 `
 const StyledThemeModeIcon = styled(Image)`
   cursor: pointer;
-
+  
   ${onMobile} {
     width: 14px;
     height: 14px;
+    margin-top: 1.5px;
   }
 `;
