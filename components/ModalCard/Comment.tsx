@@ -51,13 +51,13 @@ function Comment() {
       dashboardId: 325, // @TODO 대시보드 아이디 가져오기
     };
 
-    await API.comments.createComment(body).then(() => alert('댓글 보내기 성공!'));
+    await API.comments.createComment(body);
     setRefresh(!refresh);
     setValues('');
   };
 
   const deleteComment = async (commentId: number) => {
-    await API.comments.deleteComment({ commentId }).then(() => alert('❌ 댓글 삭제 성공!'));
+    if (confirm('댓글을 삭제 하시겠습니까?')) await API.comments.deleteComment({ commentId });
     setRefresh(!refresh);
   };
 
@@ -73,43 +73,44 @@ function Comment() {
           submitComment();
         }}
       />
-      {comment.comments.map((val) => (
-        <StyledInCommentWrapper key={val.id}>
-          {val.author.profileImageUrl ? (
-            <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
-          ) : (
-            <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
-          )}
-
-          <StyledCommentContent>
-            <StyledInComment>
-              <StyledUser>{val.author.nickname}</StyledUser>
-              <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
-            </StyledInComment>
-            {isUpdateMap[val.id] ? (
-              <StyledInputWrapper>
-                <StyledInput
-                  value={updatedCommentMap[val.id] || val.content}
-                  onChange={(e) => handleUpdateInputChange(val.id, e)}
-                  placeholder="수정할 내용을 입력하세요."
-                />
-                <StyledButtonInWrapper>
-                  <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
-                  <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
-                </StyledButtonInWrapper>
-              </StyledInputWrapper>
+      <StyledCommentWrapper>
+        {comment.comments.map((val) => (
+          <StyledInCommentWrapper key={val.id}>
+            {val.author.profileImageUrl ? (
+              <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
             ) : (
-              <StyledComment>{val.content}</StyledComment>
+              <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
             )}
-            {!isUpdateMap[val.id] && (
-              <StyledButtonWrapper>
-                <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
-                <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
-              </StyledButtonWrapper>
-            )}
-          </StyledCommentContent>
-        </StyledInCommentWrapper>
-      ))}
+            <StyledCommentContent>
+              <StyledInComment>
+                <StyledUser>{val.author.nickname}</StyledUser>
+                <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
+              </StyledInComment>
+              {isUpdateMap[val.id] ? (
+                <StyledInputWrapper>
+                  <StyledInput
+                    value={updatedCommentMap[val.id] || val.content}
+                    onChange={(e) => handleUpdateInputChange(val.id, e)}
+                    placeholder="수정할 내용을 입력하세요."
+                  />
+                  <StyledButtonInWrapper>
+                    <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
+                    <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
+                  </StyledButtonInWrapper>
+                </StyledInputWrapper>
+              ) : (
+                <StyledComment>{val.content}</StyledComment>
+              )}
+              {!isUpdateMap[val.id] && (
+                <StyledButtonWrapper>
+                  <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
+                  <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
+                </StyledButtonWrapper>
+              )}
+            </StyledCommentContent>
+          </StyledInCommentWrapper>
+        ))}
+      </StyledCommentWrapper>
     </StyledContainer>
   );
 }
@@ -121,6 +122,17 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   margin-top: 24px;
+  overflow-y: hidden;
+`;
+
+const StyledCommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  overflow-y: scroll;
+  ${onMobile} {
+    overflow: visible;
+  }
 `;
 
 const StyledInCommentWrapper = styled.div`
@@ -130,6 +142,7 @@ const StyledInCommentWrapper = styled.div`
 `;
 
 const StyledImage = styled(Image)`
+  border-radius: 20px;
   ${onMobile} {
     width: 26px;
     height: 26px;

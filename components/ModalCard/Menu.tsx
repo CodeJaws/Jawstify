@@ -35,9 +35,10 @@ function Menu() {
 
   const handleDelete = async () => {
     try {
-      await API.cards.deleteCard({ cardId });
-      alert('❌ 삭제완료');
-      router.push('/myboard');
+      if (confirm('카드를 삭제 하시겠습니까?')) {
+        await API.cards.deleteCard({ cardId });
+        router.push('/myboard');
+      }
     } catch (error) {
       console.log(error);
     }
