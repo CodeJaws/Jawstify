@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
 import StatusChip from '../Chip/StatusChip';
+import { StyledModalBackdrop } from '../Modal/Modal';
 import Comment from './Comment';
 import Manager from './Manager';
 import ModalButton from './ModalButton';
@@ -32,63 +33,74 @@ function ModalCard() {
   }, [setStatus, status]);
 
   return (
-    <StyledContainer>
-      <StyledLeftContainer>
-        {deviceType === 'mobile' && <ModalButton />}
-        <StyledTitleWrapper>
-          <StyledTitle>{title}</StyledTitle>
-          {deviceType === 'mobile' && <Manager />}
-          <StyledTag>
-            <StatusChip content={status} />
-            <StyledDivision />
-            <StyledColorChipWrapper>
-              {cardData.tags.map((val) => (
-                <ContentChip
-                  key={val}
-                  text={val.substring(0, val.indexOf('/'))}
-                  color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
-                  backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
-                />
-              ))}
-            </StyledColorChipWrapper>
-          </StyledTag>
-        </StyledTitleWrapper>
-        <StyledContentWrapper>
-          <StyledContent>{description}</StyledContent>
-          {imageUrl ? (
-            <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />
-          ) : (
-            <StyledImage width={450} height={262} src={Emoji} alt="카드 기본 이미지" />
-          )}
-        </StyledContentWrapper>
-        <Comment />
-      </StyledLeftContainer>
-      {deviceType !== 'mobile' && (
-        <StyledRightContainer>
-          <ModalButton />
-          <Manager />
-        </StyledRightContainer>
-      )}
-    </StyledContainer>
+    <>
+      <StyledModalBackdrop />
+      <StyledContainer>
+        <StyledLeftContainer>
+          {deviceType === 'mobile' && <ModalButton />}
+          <StyledTitleWrapper>
+            <StyledTitle>{title}</StyledTitle>
+            {deviceType === 'mobile' && <Manager />}
+            <StyledTag>
+              <StatusChip content={status} />
+              <StyledDivision />
+              <StyledColorChipWrapper>
+                {cardData.tags.map((val) => (
+                  <ContentChip
+                    key={val}
+                    text={val.substring(0, val.indexOf('/'))}
+                    color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
+                    backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
+                  />
+                ))}
+              </StyledColorChipWrapper>
+            </StyledTag>
+          </StyledTitleWrapper>
+          <StyledContentWrapper>
+            <StyledContent>{description}</StyledContent>
+            {imageUrl ? (
+              <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />
+            ) : (
+              <StyledImage width={450} height={262} src={Emoji} alt="카드 기본 이미지" />
+            )}
+          </StyledContentWrapper>
+          <Comment />
+        </StyledLeftContainer>
+        {deviceType !== 'mobile' && (
+          <StyledRightContainer>
+            <ModalButton />
+            <Manager />
+          </StyledRightContainer>
+        )}
+      </StyledContainer>
+    </>
   );
 }
 
 export default ModalCard;
 
 const StyledContainer = styled.div`
+  position: fixed;
   display: flex;
-  flex-shrink: 0;
-  gap: 24px;
   width: 730px;
-  height: auto;
-  padding: 32px 28px;
+  height: 764px;
+  justify-content: center;
+  gap: 24px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
   background-color: ${COLORS.WHITE_FF};
+  border-radius: 10px;
+  box-shadow: 0 2pc 12px 0px rgba(0, 0, 0, 0.08);
+  padding: 32px 28px;
 
   ${onMobile} {
     display: block;
     width: 327px;
     height: 708px;
-    padding: 12px;
+    padding: 15px;
+    overflow-y: scroll;
   }
 `;
 
@@ -142,12 +154,14 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledDivision = styled.div`
-  height: 20px;
+  height: auto;
   border: 1px solid ${COLORS.GRAY_D9};
 `;
 
 const StyledColorChipWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 5px;
 `;
 
 const StyledRightContainer = styled.div`
