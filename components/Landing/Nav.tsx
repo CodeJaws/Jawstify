@@ -6,18 +6,12 @@ import Link from 'next/link'
 import { COLORS } from '@/styles/palettes'
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery'
 import { fontStyle } from '@/styles/fontStyle'
-import { EventHandler, MouseEventHandler, useState } from 'react'
 import sunIcon from '@/public/assets/icons/sun.svg';
 import moonIcon from '@/public/assets/icons/moon.svg';
-
-type ThemeKey = 'light' | 'dark';
+import useTheme from '@/hooks/useTheme';
 
 function Nav() {
-  const [themeMode, setThemeMode] = useState<ThemeKey>('light');
-
-  const handleThemeMode = () => {
-    setThemeMode(themeMode === 'dark' ? 'light' : 'dark');
-  }
+  const { themeMode, toggleThemeMode } = useTheme();
 
   return (
     <StyledLandingHeaderContainer>
@@ -31,7 +25,7 @@ function Nav() {
           </LogoTextWrapper>
         </StyledLogoLinkContainer>
         <LinkButton>
-          <div onClick={handleThemeMode}>
+          <div onClick={() => toggleThemeMode()}>
             {themeMode === 'dark' ? (
               <StyledThemeModeIcon src={sunIcon} width={20} height={20} alt="라이트 모드로 변경"/>
             ) : (
