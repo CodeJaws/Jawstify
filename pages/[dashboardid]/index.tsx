@@ -6,19 +6,35 @@ import useCardId from '@/hooks/ModalCard/useCardId';
 import useComment from '@/hooks/ModalCard/useComment';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import useRefresh from '@/hooks/useRefresh';
+import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
 
-// @TODO 카드 번호 필요 (zustand로 관리하면 될 듯)
 const cardId = 328;
 const size = 10;
-const dashboardId = 325;
 
-function ModalCardTest() {
-  const { cardData, setCardData } = useCardData();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (!context.params) {
+    return {
+      notFound: true,
+    };
+  }
+  const dashboardId = context?.params['dashboardid'];
+  return {
+    props: {
+      dashboardId,
+    },
+  };
+}
+interface DashboardEditPageProps {
+  dashboardId: number;
+}
+
+function BoardID({ dashboardId }: DashboardEditPageProps) {
+  const { setCardData } = useCardData();
   const { setCardId } = useCardId();
   const { setTasks } = useDashBoard();
   const { setMembers } = useGetMember();
-  const { comment, setComment } = useComment();
+  const { setComment } = useComment();
   const { refresh } = useRefresh();
 
   const testAPI = async () => {
@@ -28,10 +44,10 @@ function ModalCardTest() {
     const dashBoard = await API.columns.getColumnList({ dashboardId });
     const getMember = await API.members.getMembersInDashboard({ dashboardId });
 
-    setTasks(dashBoard);
     setCardData(test);
     setComment(comment);
     setCardId(cardId);
+    setTasks(dashBoard);
     setMembers(getMember);
   };
 
@@ -42,4 +58,4 @@ function ModalCardTest() {
   return <ModalCard />;
 }
 
-export default ModalCardTest;
+export default BoardID;

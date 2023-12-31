@@ -14,7 +14,7 @@ import { styled } from 'styled-components';
 
 // 테스트용
 const email = 'test10@codeit.com';
-const password = ' test12345';
+const password = 'test12345';
 
 function MyPage() {
   const [testEmail, setTestEmail] = useState('');
