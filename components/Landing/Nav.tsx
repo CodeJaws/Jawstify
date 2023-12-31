@@ -3,7 +3,6 @@ import logoText from '@/public/assets/icons/logoText.svg'
 import styled from 'styled-components'
 import Image from 'next/image'
 import Link from 'next/link'
-import { COLORS } from '@/styles/palettes'
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery'
 import { fontStyle } from '@/styles/fontStyle'
 import sunIcon from '@/public/assets/icons/sun.svg';
@@ -97,7 +96,7 @@ const LogoTextWrapper = styled.div`
 const LinkButton = styled.div`
   display: flex;
   gap: 20px;
-  color: ${COLORS.BLACK_17};
+  color: var(--text-main);
   ${fontStyle(14, 400)};
 
   ${onTablet} {
