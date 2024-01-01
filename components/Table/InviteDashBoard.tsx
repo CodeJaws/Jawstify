@@ -6,7 +6,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
@@ -50,6 +50,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   const [cursor, setCursor] = useState(0);
   const windowSize = useDeviceType();
   const width = windowSize === 'pc' || windowSize === 'tablet';
+  const InviteContainerRef = useRef<HTMLDivElement>(null);
 
   const fetchHasMore = () => {
     if (cursor) {
@@ -88,6 +89,13 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
     getItems();
   }, []);
 
+  useEffect(() => {
+    getItems();
+    if (InviteContainerRef.current) {
+      InviteContainerRef.current.scrollTop = 0;
+    }
+  }, [refresh]);
+
   const showItems = dataSource.filter((item) => item.dashboard.title.includes(searchText));
   return (
     <StyledDiv $data={dataSource}>
@@ -107,7 +115,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
               <StyledInWrapper>수락 여부</StyledInWrapper>
             </StyledWrapper>
           )}
-          <Div>
+          <Div ref={InviteContainerRef}>
             <InfiniteScroll
               pageStart={0}
               loadMore={fetchHasMore}
