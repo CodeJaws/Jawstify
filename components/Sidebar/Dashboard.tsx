@@ -32,7 +32,7 @@ function DashboardItems({ item, boardId }: BoardItemProps) {
   const isActive = item.id === boardId;
   return (
     <Link href={`/dashboard/${item.id}`} onClick={(e) => isActive && e.preventDefault()}>
-      <StyledDashboardContainer $isActive={isActive} onClick={() => {}}>
+      <StyledDashboardContainer $isActive={isActive}>
         <StyledColorWrapper $color={item.color}></StyledColorWrapper>
         <StyledTitleWrapper>{item.title}</StyledTitleWrapper>
         {item.createdByMe && <StyledImage width={17.59} height={14} src={crown} alt="방장" />}
@@ -60,9 +60,10 @@ function Dashboard({ reset, boardId }: DashboardProps) {
         handleLoadMore(dashboardPage);
       }
     } else {
-      setHasMore(false);
+      setHasMore((prev) => !prev);
     }
   };
+
   const handleLoadMore = async (dashboardPage: number) => {
     const item = await API.dashboard.getDashboardList({
       navigationMethod: 'pagination',
@@ -75,12 +76,12 @@ function Dashboard({ reset, boardId }: DashboardProps) {
 
   useEffect(() => {
     getItems();
-  }, []);
-
-  useEffect(() => {
-    getItems();
     if (dashboardContainerRef.current) {
       dashboardContainerRef.current.scrollTop = 0;
+      if (hasMore === false) {
+        setDashboardPage(2);
+        setHasMore((prev) => !prev);
+      }
     }
   }, [reset]);
 

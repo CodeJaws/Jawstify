@@ -8,11 +8,9 @@ import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import Dashboard from './Dashboard';
-
-/** 대시보드 목록 조회를 통해 얻은 대시보드들의 정보들 */
 
 interface SidebarProps {
   boardId?: number;
