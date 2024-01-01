@@ -1,4 +1,5 @@
 import API from '@/apis/api';
+import useModalOpen from '@/hooks/DropDown/useModalOpen';
 import useCardId from '@/hooks/ModalCard/useCardId';
 import MenuImg from '@/public/assets/icons/MenuButton.svg';
 import { fontStyle } from '@/styles/fontStyle';
@@ -11,7 +12,7 @@ import Modal from '../Modal/Modal';
 
 function Menu() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isModalOpen, setIsModalOpen } = useModalOpen();
   const { cardId } = useCardId();
 
   const router = useRouter();
