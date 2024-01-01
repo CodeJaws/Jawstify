@@ -35,7 +35,9 @@ function Modal({
     setValue(values); // value = modal에 입력된 input value들의 집합
   };
 
-  getValue(value);
+  useEffect(() => {
+    getValue(value);
+  }, [getValue, value]);
 
   const renderModalContent = (title: Props['title']) => {
     switch (title) {
