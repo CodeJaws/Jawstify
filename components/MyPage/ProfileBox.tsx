@@ -49,30 +49,34 @@ function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
     } else {
       const formData = new FormData();
       formData.append('image', image);
-      const response = await API.users.profileImgUpload(formData);
-      const { profileImageUrl } = response;
 
-      try {
-        await API.users.correctMyInfo({ profileImageUrl, nickname });
-        alert('프로필 업데이트 완료 🍀');
-        user.profileImageUrl = profileImageUrl;
-        user.nickname = nickname;
-        setUser(user);
-      } catch (e: any) {
-        switch (e.data.message) {
-          case NICKNAME_ERROR:
-            alert(NICKNAME_ERROR);
-            break;
-          case NICKNAME_IMG_ERROR:
-            alert(NICKNAME_IMG_ERROR);
-            break;
-          case IMG_URL_ERROR:
-            alert(IMG_URL_ERROR);
-            break;
-          default:
-            alert(e.data.message);
-            break;
+      if (image.type !== 'image/svg+xml') {
+        const response = await API.users.profileImgUpload(formData);
+        const { profileImageUrl } = response;
+        try {
+          await API.users.correctMyInfo({ profileImageUrl, nickname });
+          alert('프로필 업데이트 완료 🍀');
+          user.profileImageUrl = profileImageUrl;
+          user.nickname = nickname;
+          setUser(user);
+        } catch (e: any) {
+          switch (e.data.message) {
+            case NICKNAME_ERROR:
+              alert(NICKNAME_ERROR);
+              break;
+            case NICKNAME_IMG_ERROR:
+              alert(NICKNAME_IMG_ERROR);
+              break;
+            case IMG_URL_ERROR:
+              alert(IMG_URL_ERROR);
+              break;
+            default:
+              alert(e.data.message);
+              break;
+          }
         }
+      } else {
+        alert('형식에 맞는 이미지만 사용가능합니다.');
       }
     }
   };
