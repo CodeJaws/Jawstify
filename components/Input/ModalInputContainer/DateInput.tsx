@@ -58,7 +58,7 @@ function DateInput({ label = '마감일', placeholder = DEFAULT_PLACEHOLDER.DATE
             width: 1,
             border: 'none',
           }}
-          value={dates}
+          value={dates ?? null}
           disablePast
           closeOnSelect
           format="YYYY.MM.DD hh:mm A"
