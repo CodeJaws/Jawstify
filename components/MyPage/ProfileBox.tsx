@@ -12,7 +12,7 @@ import Button from '../common/Button/Button';
 interface Props {
   email: string;
   nickname: string;
-  profileImg: string;
+  profileImg: string | null;
   setNickName: Dispatch<SetStateAction<string>>;
 }
 

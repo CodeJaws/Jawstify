@@ -5,31 +5,33 @@ import useDeviceType from '@/hooks/useDeviceType';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { createSlicedMembers } from '@/utils/createSlicedMembers';
+import { GetMembersInDashboardItem } from '@/types/api';
+import DefaultProfile from '@/public/assets/icons/Codeit.svg';
+
+export type MemberType = GetMembersInDashboardItem['members'][0];
 
 interface MembersProps {
-  members: {
-    profileImageUrl: string;
-    id: number;
-  }[];
+  members: MemberType[];
+  totalMembers: number;
 }
 
-function Members({ members }: MembersProps) {
+function Members({ members, totalMembers }: MembersProps) {
   const deviceType = useDeviceType();
   let showMembers = createSlicedMembers({ members, deviceType });
-  const checkMemberLength = (deviceType === 'pc' && members.length > 4) || (deviceType !== 'pc' && members.length > 2);
+  const checkMemberLength = (deviceType === 'pc' && totalMembers > 4) || (deviceType !== 'pc' && totalMembers > 2);
 
-  if (members.length === 0) return null;
+  if (totalMembers === 0) return null;
   return (
-    <StyledContainer $cnt={members.length}>
+    <StyledContainer $cnt={totalMembers}>
       {showMembers.map((member, idx) => (
         <StyledImageContainer key={member.id} $idx={idx} $isLast={false}>
-          <Image fill src={member.profileImageUrl} alt="프로필" />
+          <Image width={38} height={38} src={member.profileImageUrl || DefaultProfile} alt="프로필" />
         </StyledImageContainer>
       ))}
 
       {checkMemberLength && (
         <StyledImageContainer $idx={showMembers.length} $isLast={true}>
-          <p>+{members.length - showMembers.length}</p>
+          <p>+{totalMembers - showMembers.length}</p>
         </StyledImageContainer>
       )}
     </StyledContainer>

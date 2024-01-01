@@ -70,7 +70,9 @@ const members = {
  */
 const invitations = {
   getInvitationList: async ({ size = 10, cursorId = 0, title }: T.GetInvitationListProps) =>
-    await request.get<T.GetInvitationListItem>(`invitations?size=${size}&cursorId=${cursorId}&title=${title}`),
+    await request.get<T.GetInvitationListItem>(
+      `invitations?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}${title ? `&title=${title}` : ''}`,
+    ),
   responseInvitation: async ({ invitationId, inviteAccepted = true }: T.ResponseInvitationProps) =>
     await request.put<T.ResponseInvitationItem>(`invitations/${invitationId}`, { inviteAccepted }),
 };

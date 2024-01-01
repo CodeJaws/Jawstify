@@ -2,6 +2,7 @@ import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
 import TagInput, { TagProps } from '@/components/Input/ModalInputContainer/TagInput';
 import TwinButton from '@/components/common/Button/TwinButton';
+import { INIT_CREATE_N_EDIT_TODO } from '@/constants/InitialModalValues';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
@@ -13,15 +14,7 @@ interface Props extends ModalCommonProps {
 
 function CreateToDo({ type, onOkClick, onCancelClick = () => {}, getValue = () => {} }: Props) {
   const [image, setImage] = useState<string | ArrayBuffer | null>('');
-  const [values, setValues] = useState({
-    상태: '',
-    담당자: '',
-    제목: '',
-    설명: '',
-    마감일: '',
-    태그: {},
-    이미지: '',
-  });
+  const [values, setValues] = useState(INIT_CREATE_N_EDIT_TODO);
 
   const handleChange = (inputLabel: string, inputValue: string | {} | TagProps[] | ArrayBuffer | null) => {
     setValues({
