@@ -110,7 +110,6 @@ const StyledContainer = styled.div`
     width: 327px;
     height: 708px;
     padding: 15px;
-    overflow-y: scroll;
   }
 `;
 

@@ -137,9 +137,9 @@ const cards = {
  */
 const comments = {
   createComment: async (body: T.CreateCommentProps) => await request.post<T.CreateCommentItem>('comments', body),
-  getCommentList: async ({ size = 10, cursorId = 0, cardId }: T.GetCommentListProps) =>
+  getCommentList: async ({ size = 4, cursorId = 0, cardId }: T.GetCommentListProps) =>
     await request.get<T.GetCommentListItem>(
-      `comments?cardId=${cardId}&size=${size}${cursorId && `&cursorId=${cursorId}`}`,
+      `comments?cardId=${cardId}&size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}`,
     ),
   correctComment: async ({ commentId, content }: T.CorrectCommentProps) =>
     await request.put<T.CorrectCommentItem>(`comments/${commentId}`, { content }),

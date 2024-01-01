@@ -1,7 +1,6 @@
 import API from '@/apis/api';
 import useCardData from '@/hooks/ModalCard/useCardData';
 import useCardId from '@/hooks/ModalCard/useCardId';
-import useComment from '@/hooks/ModalCard/useComment';
 import useRefresh from '@/hooks/useRefresh';
 import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
@@ -9,15 +8,32 @@ import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import dateTimeFormat from '@/utils/dateTimeFormat';
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import BasicInput from '../Input/ModalInputContainer/BasicInput';
 
+const size = 4;
+interface Props {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  cardId: number;
+  author: {
+    profileImageUrl: string;
+    nickname: string;
+    id: number;
+  };
+}
+
 function Comment() {
-  const { comment } = useComment();
+  const [comment, setComment] = useState<Props[]>([]);
   const { cardData } = useCardData();
   const { cardId } = useCardId();
   const { refresh, setRefresh } = useRefresh();
+  const [cursorId, setCursorId] = useState<number | null>(0);
+  const [hasMore, setHasMore] = useState(true);
 
   // 댓글 별로 수정 여부를 관리하는 상태 추가
   const [isUpdateMap, setIsUpdateMap] = useState<{ [key: number]: boolean }>({});
@@ -61,6 +77,37 @@ function Comment() {
     setRefresh(!refresh);
   };
 
+  const fetchHasMore = () => {
+    if (cursorId) {
+      if (comment?.length !== 0) {
+        loadCommentMore();
+      }
+    }
+    if (cursorId === null) {
+      setHasMore((prev) => !prev);
+    }
+  };
+
+  const loadComment = async () => {
+    const response = await API.comments.getCommentList({ size, cardId: 328 });
+    setComment(response.comments);
+    setCursorId(response.cursorId);
+
+    console.log('처음 부른 커서 아아디: ', cursorId);
+  };
+
+  const loadCommentMore = async () => {
+    const response = await API.comments.getCommentList({ cardId, cursorId: cursorId });
+    setComment((prev) => [...prev, ...response.comments]);
+    setCursorId(response.cursorId);
+
+    console.log('다음 커서 아아디: ', cursorId);
+  };
+
+  useEffect(() => {
+    loadComment();
+  }, []);
+
   return (
     <StyledContainer>
       <BasicInput
@@ -73,43 +120,46 @@ function Comment() {
           submitComment();
         }}
       />
+
       <StyledCommentWrapper>
-        {comment.comments.map((val) => (
-          <StyledInCommentWrapper key={val.id}>
-            {val.author.profileImageUrl ? (
-              <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
-            ) : (
-              <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
-            )}
-            <StyledCommentContent>
-              <StyledInComment>
-                <StyledUser>{val.author.nickname}</StyledUser>
-                <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
-              </StyledInComment>
-              {isUpdateMap[val.id] ? (
-                <StyledInputWrapper>
-                  <StyledInput
-                    value={updatedCommentMap[val.id] || val.content}
-                    onChange={(e) => handleUpdateInputChange(val.id, e)}
-                    placeholder="수정할 내용을 입력하세요."
-                  />
-                  <StyledButtonInWrapper>
-                    <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
-                    <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
-                  </StyledButtonInWrapper>
-                </StyledInputWrapper>
+        <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
+          {comment?.map((val) => (
+            <StyledInCommentWrapper key={val.id}>
+              {val.author.profileImageUrl ? (
+                <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
               ) : (
-                <StyledComment>{val.content}</StyledComment>
+                <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
               )}
-              {!isUpdateMap[val.id] && (
-                <StyledButtonWrapper>
-                  <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
-                  <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
-                </StyledButtonWrapper>
-              )}
-            </StyledCommentContent>
-          </StyledInCommentWrapper>
-        ))}
+              <StyledCommentContent>
+                <StyledInComment>
+                  <StyledUser>{val.author.nickname}</StyledUser>
+                  <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
+                </StyledInComment>
+                {isUpdateMap[val.id] ? (
+                  <StyledInputWrapper>
+                    <StyledInput
+                      value={updatedCommentMap[val.id] || val.content}
+                      onChange={(e) => handleUpdateInputChange(val.id, e)}
+                      placeholder="수정할 내용을 입력하세요."
+                    />
+                    <StyledButtonInWrapper>
+                      <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
+                      <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
+                    </StyledButtonInWrapper>
+                  </StyledInputWrapper>
+                ) : (
+                  <StyledComment>{val.content}</StyledComment>
+                )}
+                {!isUpdateMap[val.id] && (
+                  <StyledButtonWrapper>
+                    <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
+                    <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
+                  </StyledButtonWrapper>
+                )}
+              </StyledCommentContent>
+            </StyledInCommentWrapper>
+          ))}
+        </InfiniteScroll>
       </StyledCommentWrapper>
     </StyledContainer>
   );
@@ -122,7 +172,6 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   margin-top: 24px;
-  overflow-y: hidden;
 `;
 
 const StyledCommentWrapper = styled.div`
@@ -131,7 +180,7 @@ const StyledCommentWrapper = styled.div`
   row-gap: 15px;
   overflow-y: scroll;
   ${onMobile} {
-    overflow: visible;
+    height: 74px;
   }
 `;
 
@@ -139,6 +188,7 @@ const StyledInCommentWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  margin-bottom: 15px;
 `;
 
 const StyledImage = styled(Image)`

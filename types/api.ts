@@ -201,7 +201,7 @@ export interface CreateCommentItem {
 
 export interface GetCommentListProps {
   size?: number;
-  cursorId?: number;
+  cursorId?: number | null;
   cardId: number;
 }
 
