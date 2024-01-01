@@ -10,7 +10,7 @@ import { css, styled } from 'styled-components';
 
 interface Props {
   type: 'modal' | 'profile';
-  profileImg: string | null;
+  profileImg: string | null | ArrayBuffer;
   previewImage: string | ArrayBuffer | null;
   setPreviewImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
   setImage: Dispatch<SetStateAction<File | undefined>>;
@@ -44,14 +44,18 @@ function AddImageButton({ type, profileImg, previewImage, setPreviewImage, setIm
         {!imgSrc ? (
           <label>
             <StyledCover $type={type}>
-              <input type="file" accept="image/*" onChange={handleImageSelect} />
+              <input type="file" accept="image/gif, image/jpeg, image/png, image/jpg" onChange={handleImageSelect} />
               <StyledAddImage $type={type} width={28} height={28} src={Add} alt="이미지 추가 버튼" />
             </StyledCover>
           </label>
         ) : (
           <label>
             <StyledEditCover $type={type}>
-              <StyledEditButton type="file" accept="image/*" onChange={handleImageSelect} />
+              <StyledEditButton
+                type="file"
+                accept="image/gif, image/jpeg, image/png, image/jpg"
+                onChange={handleImageSelect}
+              />
               <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />
             </StyledEditCover>
             <StyledSelectImage $type={type} width={76} height={76} src={imgSrc} priority={true} alt="이미지 미리보기" />
