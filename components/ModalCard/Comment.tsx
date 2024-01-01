@@ -1,112 +1,29 @@
-import API from '@/apis/api';
-import useCardData from '@/hooks/ModalCard/useCardData';
-import useCardId from '@/hooks/ModalCard/useCardId';
-import useRefresh from '@/hooks/useRefresh';
+import useComment from '@/hooks/useComment';
 import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import dateTimeFormat from '@/utils/dateTimeFormat';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import BasicInput from '../Input/ModalInputContainer/BasicInput';
 
-const size = 4;
-interface Props {
-  id: number;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  cardId: number;
-  author: {
-    profileImageUrl: string;
-    nickname: string;
-    id: number;
-  };
-}
-
 function Comment() {
-  const [comment, setComment] = useState<Props[]>([]);
-  const { cardData } = useCardData();
-  const { cardId } = useCardId();
-  const { refresh, setRefresh } = useRefresh();
-  const [cursorId, setCursorId] = useState<number | null>(0);
-  const [hasMore, setHasMore] = useState(true);
-
-  // 댓글 별로 수정 여부를 관리하는 상태 추가
-  const [isUpdateMap, setIsUpdateMap] = useState<{ [key: number]: boolean }>({});
-  const [updatedCommentMap, setUpdatedCommentMap] = useState<{ [key: number]: string }>({});
-  const [value, setValues] = useState('');
-
-  const isOpenComment = (commentId: number) => {
-    setIsUpdateMap((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
-  };
-
-  const handleUpdateInputChange = (commentId: number, e: ChangeEvent<HTMLTextAreaElement>) => {
-    setUpdatedCommentMap((prev) => ({ ...prev, [commentId]: e.target.value }));
-  };
-
-  const handleUpdateButtonClick = async (commentId: number) => {
-    const content = updatedCommentMap[commentId];
-    setIsUpdateMap((prev) => ({ ...prev, [commentId]: false }));
-    await API.comments.correctComment({ commentId, content });
-    setRefresh(!refresh);
-  };
-
-  const handleChange = (e: string) => {
-    setValues(e);
-  };
-
-  const submitComment = async () => {
-    const body = {
-      content: value,
-      cardId: cardId,
-      columnId: cardData.columnId,
-      dashboardId: 325, // @TODO 대시보드 아이디 가져오기
-    };
-
-    await API.comments.createComment(body);
-    setRefresh(!refresh);
-    setValues('');
-  };
-
-  const deleteComment = async (commentId: number) => {
-    if (confirm('댓글을 삭제 하시겠습니까?')) await API.comments.deleteComment({ commentId });
-    setRefresh(!refresh);
-  };
-
-  const fetchHasMore = () => {
-    if (cursorId) {
-      if (comment?.length !== 0) {
-        loadCommentMore();
-      }
-    }
-    if (cursorId === null) {
-      setHasMore((prev) => !prev);
-    }
-  };
-
-  const loadComment = async () => {
-    const response = await API.comments.getCommentList({ size, cardId: 328 });
-    setComment(response.comments);
-    setCursorId(response.cursorId);
-
-    console.log('처음 부른 커서 아아디: ', cursorId);
-  };
-
-  const loadCommentMore = async () => {
-    const response = await API.comments.getCommentList({ cardId, cursorId: cursorId });
-    setComment((prev) => [...prev, ...response.comments]);
-    setCursorId(response.cursorId);
-
-    console.log('다음 커서 아아디: ', cursorId);
-  };
-
-  useEffect(() => {
-    loadComment();
-  }, []);
+  const {
+    value,
+    comment,
+    updatedCommentMap,
+    hasMore,
+    isUpdateMap,
+    isOpenComment,
+    handleUpdateInputChange,
+    handleUpdateButtonClick,
+    handleChange,
+    submitComment,
+    deleteComment,
+    fetchHasMore,
+  } = useComment();
 
   return (
     <StyledContainer>
