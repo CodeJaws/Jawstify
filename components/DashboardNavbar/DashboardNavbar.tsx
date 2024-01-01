@@ -40,9 +40,6 @@ interface DashboardNavbarProps {
  * @param {string} title 대시보드 이름
  */
 function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: DashboardNavbarProps) {
-  // const { setUser } = useUserData();
-  // const { user } = useUser() as any;
-  // setUser(user);
   const router = useRouter();
   const dashboardTitle = isMyDashboard
     ? '내 대시보드'
