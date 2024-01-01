@@ -114,7 +114,6 @@ const usePagination = ({
     firstFetch();
     setPageNum(1);
   }, [resetToFirst]);
-  console.log('REF', resetToFirst);
 
   return { handlePagination, pageNum, totalPages, allItems };
 };

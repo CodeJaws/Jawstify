@@ -24,8 +24,9 @@ interface MyDashBoardButtonBoxProps {
   refreshPaginationToggle: boolean;
 }
 
+const limit = 5;
+
 function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }: MyDashBoardButtonBoxProps) {
-  const limit = 5;
   const { handlePagination, pageNum, allItems, totalPages } = usePagination({
     size: 10,
     showItemNum: limit,

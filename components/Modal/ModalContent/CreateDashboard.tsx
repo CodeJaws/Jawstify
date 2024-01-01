@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { StyledButtonContainer, StyledTwinButton } from './Create&EditToDo';
 
-function CreateDashboard({ onCancelClick, onOkClick, getValue = () => {} }: ModalCommonProps) {
+function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () => {} }: ModalCommonProps) {
   const [values, setValues] = useState({
     '대시보드 이름': '',
     색상: '#7AC555',
@@ -37,7 +37,7 @@ function CreateDashboard({ onCancelClick, onOkClick, getValue = () => {} }: Moda
           text1="취소"
           text2="생성"
           size="large"
-          onLeftClick={() => onCancelClick}
+          onLeftClick={onCancelClick}
           onRightClick={onOkClick}
         ></StyledTwinButton>
       </StyledButtonContainer>
