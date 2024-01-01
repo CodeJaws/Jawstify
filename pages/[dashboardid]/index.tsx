@@ -6,7 +6,7 @@ import useCardId from '@/hooks/ModalCard/useCardId';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import useRefresh from '@/hooks/useRefresh';
 import { GetServerSidePropsContext } from 'next';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 const cardId = 328;
 
@@ -34,7 +34,7 @@ function BoardID({ dashboardId }: DashboardEditPageProps) {
   const { setMembers } = useGetMember();
   const { refresh } = useRefresh();
 
-  const testAPI = async () => {
+  const testAPI = useCallback(async () => {
     const test = await API.cards.getCardDetails({ cardId });
 
     const dashBoard = await API.columns.getColumnList({ dashboardId });
@@ -45,11 +45,11 @@ function BoardID({ dashboardId }: DashboardEditPageProps) {
     setCardId(cardId);
     setTasks(dashBoard);
     setMembers(getMember);
-  };
+  }, [dashboardId, setCardData, setCardId, setMembers, setTasks]);
 
   useEffect(() => {
     testAPI();
-  }, [refresh]);
+  }, [refresh, testAPI]);
 
   return <ModalCard />;
 }
