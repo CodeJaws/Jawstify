@@ -172,6 +172,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   margin-top: 24px;
+  overflow: hidden;
 `;
 
 const StyledCommentWrapper = styled.div`
