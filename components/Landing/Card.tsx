@@ -77,7 +77,7 @@ const StyledCardSectionWrapper = styled.div`
 `;
 
 const StyledCardSectionTitle = styled.div`
-  color: ${COLORS.BLACK_17};
+  color: var(--text-third);
   font-feature-settings:
     'clig' off,
     'liga' off;
@@ -133,7 +133,7 @@ const StyledCardContainer = styled.div`
 const StyledCardImageContainer = styled.div`
   width: 100%;
   height: 236px;
-  background-color: ${COLORS.VIOLET_F1};
+  background-color: var(--bg-third);
   border-radius: 8px 8px 0 0;
   display: flex;
   justify-content: center;
@@ -214,7 +214,7 @@ const StyledCardTextContainer = styled.div`
   flex-direction: column;
   gap: 18px;
   padding: 27px 32px;
-  background-color: ${COLORS.VIOLET_15};
+  background-color: var(--bg-fourth);
   color: ${COLORS.WHITE_FF};
   border-radius: 0 0 8px 8px;
 
