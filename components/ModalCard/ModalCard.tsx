@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
 import StatusChip from '../Chip/StatusChip';
-import { StyledModalBackdrop } from '../Modal/Modal';
+
 import Comment from './Comment';
 import Manager from './Manager';
 import ModalButton from './ModalButton';
@@ -78,6 +78,16 @@ function ModalCard() {
 }
 
 export default ModalCard;
+
+const StyledModalBackdrop = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  z-index: 10;
+`;
 
 const StyledContainer = styled.div`
   position: fixed;
