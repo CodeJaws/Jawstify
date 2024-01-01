@@ -1,13 +1,14 @@
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { ModalCommonProps } from '@/types/modal';
-import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
 import Basic from './ModalContent/Basic';
-import CreateDashboard from './ModalContent/CreateDashboard';
 import CreateToDo from './ModalContent/Create&EditToDo';
+import CreateDashboard from './ModalContent/CreateDashboard';
+import EditToDo from './ModalContent/EditToDo';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
 
@@ -55,9 +56,7 @@ function Modal({
           <CreateToDo type="create" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
         );
       case '할 일 수정':
-        return (
-          <CreateToDo type="edit" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
-        );
+        return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
         return (
           <ManageColumn
@@ -85,7 +84,7 @@ function Modal({
 
   return ReactDOM.createPortal(
     <>
-      <StyledModalBackdrop onClick={onCancelClick} />
+      {title !== '할 일 수정' && <StyledModalBackdrop onClick={onCancelClick} />}
       <StyledModalContainer $isTightVersion={isTightVersion}>
         <StyledTitle>{title}</StyledTitle>
         {renderModalContent(title)}
