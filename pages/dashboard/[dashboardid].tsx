@@ -13,7 +13,7 @@ function DashBoardID() {
   const { dashboardid: id } = router.query;
 
   const loginFunc = async () => {
-    const a = await API.auth.login({ email: 'test5@codeit.com', password: 'test12345' });
+    const a = await API.auth.login({ email: 'test5@codeit.com', password: 'test123456' });
     localStorageSetItem('accessToken', a.accessToken);
   };
 
@@ -36,11 +36,10 @@ export default DashBoardID;
 
 const StyledContainer = styled.div`
   width: 100%;
-  height: 100vh;
 `;
 
 const StyledWrapper = styled.div`
-  width: auto;
+  width: -webkit-fill-available;
   position: absolute;
   top: 70px;
   left: 67px;

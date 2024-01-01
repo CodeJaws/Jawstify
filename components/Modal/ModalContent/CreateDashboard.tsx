@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledButtonContainer, StyledTwinButton } from './Create&EditToDo';
+import { StyledButtonContainer, StyledTwinButton } from './CreateToDo';
 import { ModalCommonProps } from '@/types/modal';
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';

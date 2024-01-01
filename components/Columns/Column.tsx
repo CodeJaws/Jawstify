@@ -9,12 +9,12 @@ import styled from 'styled-components';
 import CountChip from '../Chip/CountChip';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
-import { CreateCardProps, GetCardDetailsItem, GetColumnListProps } from '@/types/api';
+import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
 import Modal from '../Modal/Modal';
 import api from '@/apis/api';
-import { Certificate } from 'crypto';
-import { INIT_MANAGE_COLUMN, INIT_CREATE_N_EDIT_TODO } from '@/constants/InitialModalValues';
+import { INIT_MANAGE_COLUMN, INIT_CREATE_TODO } from '@/constants/InitialModalValues';
 import { Tag } from '../Input/ModalInputContainer/TagInput';
+import InfiniteScroll from 'react-infinite-scroller';
 
 interface Props extends GetColumnListProps {
   columnId: number;
@@ -23,173 +23,171 @@ interface Props extends GetColumnListProps {
 }
 
 function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete }: Props) {
-  const [cards, setCards] = useState<GetCardDetailsItem[]>([]);
-  const [title, setTitle] = useState(defaultTitle);
-  const [totalCount, setTotalCount] = useState(0);
-  const [isOpen, setIsOpen] = useState({
-    setting: false,
-    create: false,
+  console.log(columnId);
+  const [columnCardList, setColumnCardList] = useState<GetCardDetailsItem[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState({
+    manageColumn: false,
+    createToDo: false,
+  });
+  const [cardListInfos, setCardListInfos] = useState({
+    title: defaultTitle,
+    totalCount: 0,
+    cursorId: 0,
   });
 
-  // 컬럼 관리 할 일 생성
-  const [manageColumnVal, setManageColumnVal] = useState(INIT_MANAGE_COLUMN);
-  const [createToDoVal, setCreateToDo] = useState(INIT_CREATE_N_EDIT_TODO);
+  const [manageColModalVals, setManageColModalVals] = useState<typeof INIT_MANAGE_COLUMN>(INIT_MANAGE_COLUMN);
+  const [createToDoModalVals, setCreateToDoModalVals] = useState<typeof INIT_CREATE_TODO>(INIT_CREATE_TODO);
 
-  // 카드 목록 조회
-  const getCardListFunc = async () => {
-    const res = await API.cards.checkCardList({ columnId });
-    const cards = res?.cards;
-    const totalCount = res?.totalCount;
-    setCards(cards);
-    setTotalCount(totalCount);
-    console.log(cards);
+  // 무한스크롤 카드 리스트 가져오기
+  const fetchHasMore = () => {
+    // 여기는 총 개수 totalCount
+    if (columnCardList.length < cardListInfos.totalCount) {
+      loadColumnCardList();
+    } else {
+      setHasMore(false);
+    }
   };
 
-  const handleClickCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log('할일 생성 모달');
-    setIsOpen({ ...isOpen, create: true });
+  // 모달 관리
+  const handleModalsOpen = (type: 'manageColumn' | 'createToDo') => {
+    if (type === 'manageColumn') {
+      setIsModalOpen({ ...isModalOpen, manageColumn: true });
+    } else if (type === 'createToDo') {
+      setIsModalOpen({ ...isModalOpen, createToDo: true });
+    }
   };
 
-  // const createToDoFunc = async (value: CreateCardProps) => {
-  //   const res = await API.cards.createCard(value);
-  //   console.log(res);
-  // }
+  // const setManageColumnVal = (values: typeof INIT_MANAGE_COLUMN) =>
+  //   setModalValues({ ...modalValues, manageColumn: values });
 
-  const setModalValue = (values: { 이름: '' }) => {
-    setManageColumnVal(values);
+  // const setCreateToDoVal = (values: any) => setModalValues({ ...modalValues, createToDo: values });
+
+  // 컬럼 카드 리스트 response 요청
+  const loadColumnCardList = async () => {
+    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
+    await setColumnCardList(res.cards);
+    await setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
-  const setModalValue2 = (values: any) => {
-    setCreateToDo(values);
-  };
-
-  const handleClickSetting = (e: React.MouseEvent<HTMLElement>) => {
-    console.log('컬럼 수정 모달');
-    setIsOpen({ ...isOpen, setting: true });
-  };
-
-  // export interface CreateCardProps {
-  //   assigneeUserId?: number;
-  //   dashboardId: number;
-  //   columnId: number;
-  //   title: string;
-  //   description: string;
-  //   dueDate?: string;
-  //   tags?: string[];
-  //   imageUrl?: string | null | ArrayBuffer;
-  // }
-
-  const handleCreateToDoSubmit = async () => {
-    const formatedTagData: string[] = createToDoVal.태그.map((tagEl: Tag) =>
-      [tagEl.value, tagEl.color, tagEl.backgroundColor].join('/'),
-    );
-    const body = {
-      assigneeUserId: 0,
-      // assigneeUserId const {user : {id: assigneeUserId}} = useUser();
-      dashboardId: dashboardId,
-      columnId: columnId,
-      title: createToDoVal.제목,
-      description: createToDoVal.설명,
-      dueDate: createToDoVal.마감일,
-      tags: formatedTagData,
-      // imageUrl: createToDoVal.이미지,
-      imageUrl:
-        'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/1-4_166_1703867195161.jpeg',
-    };
-    const response = await api.cards.createCard(body);
-    console.log(response);
-  };
-
-  const handleManageColumnSubmit = async () => {
-    const response = (await api.columns.correctColumn({
-      columnId: String(columnId),
-      title: manageColumnVal.이름,
-    })) as { title: '' };
-    setTitle(response.title);
-    console.log(response.title);
-  };
-
+  // Modal Input Values Submit Events
   const handleColumnDelete = async () => {
     const response = await api.columns.deleteColumn({ columnId: String(columnId) });
     await applyColumnDelete(dashboardId);
     console.log(response);
   };
 
+  const handleManageColumnSubmit = async () => {
+    const response = (await api.columns.correctColumn({
+      columnId: String(columnId),
+      title: manageColModalVals.이름,
+    })) as { title: '' };
+    setCardListInfos({ ...cardListInfos, title: response.title });
+    console.log(response.title);
+  };
+
+  const handleCreateToDoSubmit = async () => {
+    const formatedTagData: string[] = createToDoModalVals.태그.map((tagEl: Tag) =>
+      [tagEl.value, tagEl.color, tagEl.backgroundColor].join('/'),
+    );
+
+    const body = {
+      assigneeUserId: 0,
+      // assigneeUserId const {user : {id: assigneeUserId}} = useUser();
+      dashboardId: dashboardId,
+      columnId: columnId,
+      title: createToDoModalVals.제목,
+      description: createToDoModalVals.설명,
+      dueDate: createToDoModalVals.마감일,
+      tags: formatedTagData,
+      // imageUrl: createToDoVal.이미지,
+      imageUrl:
+        'https%3A%2F%2Fsprint-fe-project.s3.ap-northeast-2.amazonaws.com%2Ftaskify%2Ftask_image%2F1-5_1012_1703665850084.jpeg',
+    };
+    const response = await api.cards.createCard(body);
+    console.log(response);
+  };
+
   useEffect(() => {
-    getCardListFunc();
+    loadColumnCardList();
   }, [columnId]);
 
   return (
-    <StyledContainer>
-      <StyledSettingIconContainer onClick={handleClickSetting}>
-        <Image fill src={setting} alt="설정 버튼" />
-      </StyledSettingIconContainer>
-      {isOpen.setting && (
-        <Modal
-          title="컬럼 관리"
-          getValue={setModalValue}
-          onCancelClick={() => {
-            console.log('취소');
-            setIsOpen({ ...isOpen, setting: false });
-          }}
-          onOkClick={async () => {
-            console.log('확인');
-            console.log({ ...isOpen, setting: false }); // 모달 input value 출력
-            console.log(manageColumnVal);
-            handleManageColumnSubmit();
-            // TODO: api status == 200 인지 확인하고 닫아야함
-            setIsOpen({ ...isOpen, setting: false });
-            // await getCardListFunc();
-          }}
-          onDeleteClick={() => {
-            handleColumnDelete();
-          }}
-        />
-      )}
-      <StyledHeader>
-        <div>{title}</div>
-        <StyledCountChip content={totalCount} />
-      </StyledHeader>
-      <StyledWrapper>
-        <AddButton onClick={handleClickCreate} />
-        {isOpen.create && (
+    <>
+      <StyledContainer>
+        {isModalOpen.manageColumn && (
+          <Modal
+            title="컬럼 관리"
+            defaultValue={{ 이름: cardListInfos.title }}
+            getValue={setManageColModalVals}
+            onCancelClick={() => {
+              console.log('취소');
+              setIsModalOpen({ ...isModalOpen, manageColumn: false });
+            }}
+            onOkClick={async () => {
+              console.log('확인');
+              console.log({ ...isModalOpen, manageColumn: false }); // 모달 input value 출력
+              // console.log(modalValues.manageColumn);
+              handleManageColumnSubmit();
+              // TODO: api status == 200 인지 확인하고 닫아야함
+              setIsModalOpen({ ...isModalOpen, manageColumn: false });
+              // await loadColumnCardList();
+            }}
+            onDeleteClick={() => {
+              handleColumnDelete();
+            }}
+          />
+        )}
+        {isModalOpen.createToDo && (
           <Modal
             title="할 일 생성"
-            getValue={setModalValue2}
+            getValue={setCreateToDoModalVals}
             onCancelClick={() => {
-              setIsOpen({ ...isOpen, create: false });
+              setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
             onOkClick={() => {
-              console.log(createToDoVal); // 모달 input value 출력
+              // console.log(modalValues.createToDo); // 모달 input value 출력
               handleCreateToDoSubmit();
-              // createToDoFunc();
             }}
             // onDeleteClick={() => {
             //   console.log('삭제');
             // }}
           />
         )}
-        {cards.map((card) => (
-          <li key={card.id}>
-            <Card
-              title={card.title}
-              dueDate={card.dueDate}
-              tags={card.tags}
-              assignee={card.assignee}
-              imageUrl={card.imageUrl}
-            />
-          </li>
-        ))}
-      </StyledWrapper>
-    </StyledContainer>
+        <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
+          <StyledSettingIconContainer onClick={() => handleModalsOpen('manageColumn')}>
+            <Image fill src={setting} alt="설정 버튼" />
+          </StyledSettingIconContainer>
+
+          <StyledHeader>
+            <div>{cardListInfos.title}</div>
+            <StyledCountChip content={cardListInfos.totalCount} />
+          </StyledHeader>
+          <StyledWrapper>
+            <AddButton onClick={() => handleModalsOpen('createToDo')} />
+
+            {columnCardList.map((card) => (
+              <li key={card.id}>
+                <Card
+                  title={card.title}
+                  dueDate={card.dueDate}
+                  tags={card.tags}
+                  assignee={card.assignee}
+                  imageUrl={card.imageUrl}
+                />
+              </li>
+            ))}
+          </StyledWrapper>
+        </InfiniteScroll>
+      </StyledContainer>
+    </>
   );
 }
 
 export default Column;
 
 const StyledContainer = styled.div`
-  width: 19.25rem;
+  width: 100%;
   height: auto;
   padding: 0.75rem;
   position: relative;
@@ -202,6 +200,7 @@ const StyledContainer = styled.div`
   }
 
   ${onTablet} {
+    height: fit-content;
     padding: 20px;
     width: 100%;
   }
@@ -211,6 +210,10 @@ const StyledContainer = styled.div`
     padding: 1.25rem;
     border: none;
     border-right: 0.0625rem solid ${COLORS.GRAY_EE};
+  }
+
+  ${onMobile} {
+    height: fit-content;
   }
 `;
 

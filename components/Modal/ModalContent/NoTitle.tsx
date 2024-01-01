@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ModalCommonProps } from '@/types/modal';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
-import { StyledTwinButton } from './Create&EditToDo';
+import { StyledTwinButton } from './CreateToDo';
 import { StyledContainer } from './Basic';
 import Button from '@/components/common/Button/Button';
 

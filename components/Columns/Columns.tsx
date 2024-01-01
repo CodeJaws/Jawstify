@@ -59,16 +59,18 @@ function Columns({ dashboardId }: GetColumnListProps) {
     <StyledContainer>
       {isSuccess && (
         <StyledWrapper>
-          {columns.map((column) => (
-            <li key={column.id}>
-              <Column
-                title={column.title}
-                columnId={column.id}
-                dashboardId={dashboardId}
-                applyColumnDelete={getColumnListFunc}
-              />
-            </li>
-          ))}
+          {columns.map((column) => {
+            return (
+              <li key={column.id}>
+                <Column
+                  title={column.title}
+                  columnId={column.id}
+                  dashboardId={dashboardId}
+                  applyColumnDelete={getColumnListFunc}
+                />
+              </li>
+            );
+          })}
         </StyledWrapper>
       )}
       <StyledWrapper2>

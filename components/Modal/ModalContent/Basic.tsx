@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledButtonContainer } from './Create&EditToDo';
+import { StyledButtonContainer } from './CreateToDo.tsx';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { ModalCommonProps } from '@/types/modal';

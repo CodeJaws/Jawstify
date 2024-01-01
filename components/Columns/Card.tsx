@@ -25,28 +25,36 @@ interface Props {
 }
 
 function Card({ title, dueDate, imageUrl, tags, assignee }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState({});
+  const [isCardDetailModalOpen, setIsCardDetailModalOpen] = useState(false);
 
-  const setModalValue = (values = {}) => {
-    setValue(values); 
-  };
-
-  const handleClickCard = () => {
-    // 카드 상세 모달
+  const handleCardDetailModalOpen = () => {
     console.log('카드 상세 모달');
+    setIsCardDetailModalOpen(true);
   };
 
   const date = dateFormat(dueDate);
 
   return (
-    <StyledContainer onClick={handleClickCard}>
-      {imageUrl ? <StyledImageContainer> <Image src={imageUrl} fill alt="카드 이미지" /> </StyledImageContainer> : <></>}
+    <StyledContainer onClick={handleCardDetailModalOpen}>
+      {imageUrl ? (
+        <StyledImageContainer>
+          <Image src={imageUrl} fill alt="카드 이미지" />{' '}
+        </StyledImageContainer>
+      ) : (
+        <></>
+      )}
       <StyledInfoContainer>
         <StyledInfoTitle>{title}</StyledInfoTitle>
         <StyledInfoWrapper>
           <StyledInfoChips>
-            {tags.map((val) => <ContentChip key={val} text={val} color="red" backgroundColor="pink" /> )}
+            {tags.map((val) => (
+              <ContentChip
+                key={val}
+                text={val.substring(0, val.indexOf('/'))}
+                color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
+                backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
+              />
+            ))}
           </StyledInfoChips>
           <StyledInfoDate>
             <StyledCalendarIconContainer>
@@ -58,7 +66,7 @@ function Card({ title, dueDate, imageUrl, tags, assignee }: Props) {
       </StyledInfoContainer>
       <StyledInfoProfile></StyledInfoProfile>
     </StyledContainer>
-    // {isOpen && } 카드 상세 모달 
+    // {isCardDetailModalOpen && } 카드 상세 모달
   );
 }
 
@@ -66,8 +74,6 @@ export default Card;
 
 const StyledContainer = styled.div`
   width: 284px;
-  /* height: 257px; */
-  /* height: 97px; */
   height: auto;
   padding: 12px;
   display: flex;
@@ -82,7 +88,6 @@ const StyledContainer = styled.div`
 
   ${onTablet} {
     width: 544px;
-    /* height: 96px; */
     padding: 20px;
     flex-direction: row;
     align-items: flex-start;
@@ -91,7 +96,7 @@ const StyledContainer = styled.div`
 
   ${onPc} {
     width: 314px;
-    /* height: 297px; */
+
     padding: 20px;
     gap: 12px;
   }
@@ -148,7 +153,7 @@ const StyledInfoWrapper = styled.div`
 
 const StyledInfoChips = styled.div`
   grid-area: chips;
-  display: flex;
+  display: block;
   justify-content: flex-start;
   gap: 6px;
 `;

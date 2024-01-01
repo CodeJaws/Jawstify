@@ -3,7 +3,16 @@ export const INIT_CREATE_DASHBOARD = {
   색상: '',
 };
 
-export const INIT_CREATE_N_EDIT_TODO = {
+export const INIT_CREATE_TODO = {
+  담당자: '',
+  제목: '',
+  설명: '',
+  마감일: '',
+  태그: [],
+  이미지: '',
+};
+
+export const INIT_EDIT_TODO = {
   상태: '',
   담당자: '',
   제목: '',

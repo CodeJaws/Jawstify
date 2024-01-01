@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { StyledTwinButton } from './Create&EditToDo';
+import { StyledTwinButton } from './CreateToDo';
 import { StyledContainer } from './Basic';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { ModalCommonProps } from '@/types/modal';
@@ -11,10 +11,17 @@ import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
   onDeleteClick: () => void;
+  defaultValue: { 이름: string };
 }
 
-function ManageColumn({ onOkClick, onCancelClick = () => {}, onDeleteClick = () => {}, getValue = () => {} }: Props) {
-  const [values, setValues] = useState(INIT_MANAGE_COLUMN);
+function ManageColumn({
+  onOkClick,
+  onCancelClick = () => {},
+  onDeleteClick = () => {},
+  getValue = () => {},
+  defaultValue,
+}: Props) {
+  const [values, setValues] = useState(defaultValue || INIT_MANAGE_COLUMN);
 
   const handleChange = (inputLabel: string, inputValue: string) => {
     setValues({

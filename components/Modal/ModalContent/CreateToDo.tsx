@@ -2,19 +2,15 @@ import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
 import TagInput, { TagProps } from '@/components/Input/ModalInputContainer/TagInput';
 import TwinButton from '@/components/common/Button/TwinButton';
-import { INIT_CREATE_N_EDIT_TODO } from '@/constants/InitialModalValues';
+import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-interface Props extends ModalCommonProps {
-  type: 'create' | 'edit';
-}
-
-function CreateToDo({ type, onOkClick, onCancelClick = () => {}, getValue = () => {} }: Props) {
+function CreateToDo({ onOkClick, onCancelClick = () => {}, getValue = () => {} }: ModalCommonProps) {
   const [image, setImage] = useState<string | ArrayBuffer | null>('');
-  const [values, setValues] = useState(INIT_CREATE_N_EDIT_TODO);
+  const [values, setValues] = useState(INIT_CREATE_TODO);
 
   const handleChange = (inputLabel: string, inputValue: string | {} | TagProps[] | ArrayBuffer | null) => {
     setValues({

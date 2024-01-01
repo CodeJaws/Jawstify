@@ -7,14 +7,16 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import Basic from './ModalContent/Basic';
 import CreateDashboard from './ModalContent/CreateDashboard';
-import CreateToDo from './ModalContent/Create&EditToDo';
+import CreateToDo from './ModalContent/CreateToDo';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
+import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
   title: '' | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 컬럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
   isSingleButton?: boolean;
+  defaultValue?: typeof INIT_EDIT_TODO | typeof INIT_MANAGE_COLUMN | typeof INIT_BASIC;
   onDeleteClick?: () => void;
 }
 
@@ -22,6 +24,7 @@ function Modal({
   title,
   description = '',
   isSingleButton = false,
+  defaultValue,
   onOkClick,
   onCancelClick,
   onDeleteClick = () => {},
@@ -51,13 +54,9 @@ function Modal({
       case '새로운 대시보드':
         return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 생성':
-        return (
-          <CreateToDo type="create" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
-        );
+        return <CreateToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 수정':
-        return (
-          <CreateToDo type="edit" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
-        );
+        return; // <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
         return (
           <ManageColumn
@@ -65,6 +64,7 @@ function Modal({
             onCancelClick={onCancelClick}
             onDeleteClick={onDeleteClick}
             getValue={setModalInputValue}
+            defaultValue={defaultValue as typeof INIT_MANAGE_COLUMN}
           />
         );
       default:
