@@ -53,12 +53,13 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   const InviteContainerRef = useRef<HTMLDivElement>(null);
 
   const fetchHasMore = () => {
+    console.log(hasMore);
     if (cursor) {
       if (dataSource.length !== 0) {
         handleLoadMore();
       }
     } else {
-      setHasMore(false);
+      setHasMore((prev) => !prev);
     }
   };
 
@@ -87,13 +88,11 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
 
   useEffect(() => {
     getItems();
-  }, []);
-
-  useEffect(() => {
-    getItems();
     if (InviteContainerRef.current) {
       InviteContainerRef.current.scrollTop = 0;
+      setHasMore((prev) => !prev);
     }
+    console.log(hasMore);
   }, [refresh]);
 
   const showItems = dataSource.filter((item) => item.dashboard.title.includes(searchText));
