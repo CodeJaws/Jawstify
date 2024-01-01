@@ -4,7 +4,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ChangeEvent, MouseEvent, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
 
 interface Props {
@@ -114,6 +114,16 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
     color: ${COLORS.BLACK_33};
     outline: none;
   }
+
+  ${({ $isComment }) =>
+    $isComment &&
+    css`
+      ${onMobile} {
+        height: 65px;
+        padding: 10px 15px 37px;
+        font-size: 1.2rem;
+      }
+    `}
 `;
 
 const StyledInputButton = styled(Button)`
