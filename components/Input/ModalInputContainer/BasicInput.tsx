@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import { NO_VALUE_ERROR } from '@/constants/SignValidate';
 import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -101,10 +101,10 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
   border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
   background-color: ${COLORS.WHITE_FF};
   color: ${COLORS.BLACK_33};
-  ${fontStyle(18, 400)}
+  ${fontStyle(14, 400)}
 
   ${onMobile} {
-    ${fontStyle(16, 400)}
+    ${fontStyle(12, 400)}
   }
 
   &:hover,
@@ -130,4 +130,14 @@ const StyledInputButton = styled(Button)`
   position: absolute;
   bottom: 14px;
   right: 12px;
+
+  ${onTablet} {
+    width: 77px;
+    height: 32px;
+  }
+
+  ${onMobile} {
+    width: 84px;
+    height: 28px;
+  }
 `;

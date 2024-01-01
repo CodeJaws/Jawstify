@@ -137,6 +137,9 @@ const StyledTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  ${onMobile} {
+    gap: 16px;
+  }
 `;
 
 const StyledTag = styled.div`

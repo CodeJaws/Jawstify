@@ -1,7 +1,7 @@
 import useComment from '@/hooks/useComment';
 import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import dateTimeFormat from '@/utils/dateTimeFormat';
 import Image from 'next/image';
@@ -90,6 +90,15 @@ const StyledContainer = styled.div`
   gap: 20px;
   margin-top: 24px;
   overflow: hidden;
+
+  ${onTablet} {
+    gap: 30px;
+  }
+
+  ${onMobile} {
+    gap: 16px;
+    margin-top: 19px;
+  }
 `;
 
 const StyledCommentWrapper = styled.div`
