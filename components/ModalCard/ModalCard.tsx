@@ -4,7 +4,7 @@ import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import useDeviceType from '@/hooks/useDeviceType';
 import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import { useEffect } from 'react';
@@ -19,11 +19,10 @@ import ModalButton from './ModalButton';
 function ModalCard() {
   const { cardData } = useCardData();
   const { setStatus } = useSelectStatus();
-
   const { tasks } = useDashBoard();
-  const { title, description, imageUrl } = cardData;
-
   const deviceType = useDeviceType();
+
+  const { title, description, imageUrl } = cardData;
 
   const filterColumn = tasks.data.filter((val) => val.id === cardData.columnId);
   const status = filterColumn[0].title;
@@ -81,8 +80,8 @@ export default ModalCard;
 
 const StyledModalBackdrop = styled.div`
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;
@@ -105,6 +104,11 @@ const StyledContainer = styled.div`
   box-shadow: 0 2pc 12px 0px rgba(0, 0, 0, 0.08);
   padding: 32px 28px;
 
+  ${onTablet} {
+    width: 680px;
+    height: 770px;
+  }
+
   ${onMobile} {
     display: block;
     width: 327px;
@@ -116,6 +120,10 @@ const StyledContainer = styled.div`
 const StyledLeftContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  ${onTablet} {
+    min-width: 250px;
+  }
 `;
 
 const StyledTitle = styled.p`
@@ -155,10 +163,14 @@ const StyledContent = styled.p`
 `;
 
 const StyledImage = styled(Image)`
+  ${onTablet} {
+    width: 420px;
+    height: 245px;
+    margin: 0 auto;
+  }
   ${onMobile} {
     width: 287px;
     height: 168px;
-    margin: 0 auto;
   }
 `;
 
