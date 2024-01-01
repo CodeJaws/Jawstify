@@ -6,7 +6,7 @@ import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { styled } from 'styled-components';
 
@@ -46,6 +46,7 @@ function Dashboard({ reset, boardId }: DashboardProps) {
   const [hasMore, setHasMore] = useState(true);
   const [dashboardPage, setDashboardPage] = useState(2);
   const [totlaCount, setTotalCount] = useState(0);
+  const dashboardContainerRef = useRef<HTMLDivElement>(null);
 
   const getItems = async () => {
     const item = await API.dashboard.getDashboardList({ navigationMethod: 'infiniteScroll', size: 18 });
@@ -74,10 +75,17 @@ function Dashboard({ reset, boardId }: DashboardProps) {
 
   useEffect(() => {
     getItems();
+  }, []);
+
+  useEffect(() => {
+    getItems();
+    if (dashboardContainerRef.current) {
+      dashboardContainerRef.current.scrollTop = 0;
+    }
   }, [reset]);
 
   return (
-    <StyledDashboardGroupContainer>
+    <StyledDashboardGroupContainer ref={dashboardContainerRef}>
       <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
         {dataSource.map((item) => (
           <DashboardItems key={item.id} item={item} boardId={boardId} />
