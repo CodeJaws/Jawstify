@@ -11,3 +11,6 @@ export const TAG_DATA = [].map((item) => ({
   value: item,
   label: item,
 }));
+
+export const Emoji =
+  'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/1-4_131_1703943135693.webp';

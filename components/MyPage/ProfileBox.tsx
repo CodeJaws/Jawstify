@@ -20,7 +20,6 @@ interface Props {
 function ProfileBox({ email, nickname, profileImg, setNickName, setPreviewImage }: Props) {
   const { setUser, user } = useUserData();
   const [image, setImage] = useState<File>();
-  // const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
 
   const changeProfile = async () => {
@@ -88,6 +87,7 @@ function ProfileBox({ email, nickname, profileImg, setNickName, setPreviewImage 
       <AddImageButton
         type={'profile'}
         profileImg={profileImg}
+        image={profileImg}
         previewImage={profileImg}
         setPreviewImage={setPreviewImage}
         setImage={setImage}

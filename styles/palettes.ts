@@ -9,6 +9,7 @@ export const COLORS = {
   BLACK_4B: '#4B4B4B',
   BLACK_33: '#333236',
   BLACK_17: '#171717',
+  BLACK_00: '#000000',
   VIOLET_55: '#5534DA',
   VIOLET_F1: '#F1EFFD',
   VIOLET_15: '#1501cb9c',

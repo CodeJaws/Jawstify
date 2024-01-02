@@ -1,4 +1,3 @@
-import { TO_DO } from '@/constants/Chip';
 import { create } from 'zustand';
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
 }
 
 const useSelectStatus = create<Props>((set) => ({
-  status: TO_DO,
+  status: '',
   setStatus: (value: string) => set({ status: value }),
 }));
 
