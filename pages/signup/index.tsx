@@ -88,7 +88,7 @@ function SignUp() {
         <L.StyledDescription>첫 방문을 환영합니다!</L.StyledDescription>
       </L.StyledLogoContainer>
 
-      <L.StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm2 onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           label="이메일"
           register={register('email', {
@@ -135,7 +135,7 @@ function SignUp() {
         </StyledCheckBoxContainer>
         {!isAgreeChecked && <StyledAgreeNotCheckedText>{alertMessage.noCheck}</StyledAgreeNotCheckedText>}
         <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit" margin="-3px 0 0" />
-      </L.StyledForm>
+      </StyledForm2>
 
       <StyledBottomTextContainer>
         <StyledText>
@@ -170,6 +170,9 @@ const StyledContainer = styled.div`
   background-color: ${COLORS.GRAY_FA};
 `;
 
+const StyledForm2 = styled(L.StyledForm)`
+  margin-bottom: 0;
+`;
 const StyledCheckBoxContainer = styled.div`
   display: flex;
   justify-content: flex-start;
