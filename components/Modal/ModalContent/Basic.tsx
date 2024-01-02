@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { StyledButtonContainer } from './Create&EditToDo';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import TwinButton from '@/components/common/Button/TwinButton';
-import { ModalCommonProps } from '@/types/modal';
-import { useState } from 'react';
 import { INIT_BASIC } from '@/constants/InitialModalValues';
+import { ModalCommonProps } from '@/types/modal';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { StyledButtonContainer } from './Create&EditToDo';
 
 interface Props extends ModalCommonProps {
   type: '초대하기' | '새 컬럼 생성';
@@ -21,7 +21,9 @@ function Basic({ type, onCancelClick = () => {}, onOkClick, getValue = () => {} 
     });
   };
 
-  getValue(values);
+  useEffect(() => {
+    getValue(values);
+  }, [getValue, values]);
 
   return (
     <>

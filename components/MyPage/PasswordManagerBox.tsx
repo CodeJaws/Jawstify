@@ -38,6 +38,7 @@ function PasswordManagerBox() {
     handleSubmit,
     getValues,
     setError,
+    resetField,
     formState: { errors },
   } = useForm<FormProps>({ mode: 'onBlur' });
   const [isActivate, setActivate] = useState(true);
@@ -47,6 +48,9 @@ function PasswordManagerBox() {
     const newPassword = formValues.newPassword;
     try {
       await api.auth.changePassword({ password, newPassword }).then(() => alert('비밀번호 변경 완료 🔑'));
+      resetField('password');
+      resetField('newPassword');
+      resetField('newPasswordCheck');
     } catch (error: any) {
       switch (error.data.message) {
         case PWD_EIGHT_ERROR:

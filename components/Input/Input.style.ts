@@ -41,10 +41,10 @@ export const StyledLabel = styled.h5`
   color: var(--input-label);
   margin-bottom: 10px;
   display: flex;
-  ${fontStyle(18, 500)};
+  ${fontStyle(16, 500)};
 
   ${onMobile} {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 `;
 

@@ -1,12 +1,12 @@
+import { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { onMobile } from '@/styles/mediaQuery';
+import { ModalCommonProps } from '@/types/modal';
+import { INIT_CREATE_N_EDIT_TODO } from '@/constants/InitialModalValues';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
 import TagInput, { TagProps } from '@/components/Input/ModalInputContainer/TagInput';
 import TwinButton from '@/components/common/Button/TwinButton';
-import { INIT_CREATE_N_EDIT_TODO } from '@/constants/InitialModalValues';
-import { onMobile } from '@/styles/mediaQuery';
-import { ModalCommonProps } from '@/types/modal';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 interface Props extends ModalCommonProps {
   type: 'create' | 'edit';
@@ -16,17 +16,20 @@ function CreateToDo({ type, onOkClick, onCancelClick = () => {}, getValue = () =
   const [image, setImage] = useState<string | ArrayBuffer | null>('');
   const [values, setValues] = useState(INIT_CREATE_N_EDIT_TODO);
 
-  const handleChange = (inputLabel: string, inputValue: string | {} | TagProps[] | ArrayBuffer | null) => {
-    setValues({
-      ...values,
-      [inputLabel]: inputValue,
-    });
-  };
-  getValue(values);
+  const handleChange = useCallback(
+    (inputLabel: string, inputValue: string | {} | TagProps[] | ArrayBuffer | null) => {
+      setValues({
+        ...values,
+        [inputLabel]: inputValue,
+      });
+    },
+    [values],
+  );
 
   useEffect(() => {
     handleChange('이미지', image);
-  }, [image]);
+    getValue(values);
+  }, [image, getValue, values, handleChange]);
 
   return (
     <>
