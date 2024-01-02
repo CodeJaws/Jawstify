@@ -30,7 +30,7 @@ function BoardID({ dashboardId }: DashboardEditPageProps) {
   const { setCardData } = useCardData();
   const { setTasks } = useDashBoard();
   const { setMembers } = useGetMember();
-  const { setCardId, cardId: card } = useCardId();
+  const { setCardId } = useCardId();
   const { refresh } = useRefresh();
 
   const params = useSearchParams();
