@@ -47,8 +47,9 @@ const StyledContainer = styled.div`
   height: 100vh;
   min-height: 1080px;
   flex-shrink: 0;
-  background: ${COLORS.WHITE_FF};
-  border: 1px solid ${COLORS.GRAY_D9};
+  background: var(--nav-bg);
+  border-right: 1px solid #555555;
+  
   ${onPc} {
     width: 300px;
   }

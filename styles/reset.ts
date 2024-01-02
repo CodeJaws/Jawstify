@@ -26,7 +26,7 @@ export const reset = css`
   body {
     font-size: 62.5%;
     -webkit-font-smoothing: antialiased;
-    background-color: ${COLORS.GRAY_FA};
+    /* background-color: ${COLORS.GRAY_FA}; */
   }
 
   body {

@@ -85,6 +85,7 @@ export default BoardEdit;
 
 const StyledContainer = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const StyledWrapper = styled.div`
@@ -98,7 +99,7 @@ const StyledInWrapper = styled.div`
   top: 70px;
   left: 300px;
   width: calc(100% - 300px);
-  height: 100vh;
+  height: 100%;
   padding: 20px;
 
   ${onTablet} {

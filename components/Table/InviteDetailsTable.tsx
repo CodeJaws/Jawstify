@@ -155,7 +155,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
             <h1>{tableTitle}</h1>
             <StyledPaginationWrapper>
               <div>
-                {totalPages}페이지 중 {pageNum}
+                {totalPages} 페이지 중 {pageNum}
               </div>
               <div>
                 <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
@@ -206,8 +206,9 @@ const StyledContainer = styled.div`
 
   height: 477px;
   border-radius: 8px;
-  background: ${COLORS.WHITE_FF};
+  background-color: #303134;
   margin-bottom: 40px;
+  border: 1px solid #555555;
 
   ${onTablet} {
     width: 100%;
@@ -243,6 +244,7 @@ const StyledTopWrapper = styled.div`
   padding: 0 28px;
   h1 {
     color: ${COLORS.BLACK_33};
+    color: #ffffff;
     ${fontStyle(24, 700)};
   }
   margin-top: 26px;
@@ -251,6 +253,7 @@ const StyledTopWrapper = styled.div`
     h1 {
       color: ${COLORS.BLACK_33};
       ${fontStyle(20, 700)};
+      color: #ffffff;
     }
     padding: 0 20px;
   }
@@ -265,7 +268,8 @@ const StyledPaginationWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${COLORS.BLACK_33};
+    /* color: ${COLORS.BLACK_33}; */
+    color: #ffffff;
     ${fontStyle(14, 400)};
   }
 
@@ -301,7 +305,7 @@ const StyledMemberBoxProfileWrapper = styled.div`
   gap: 12px;
 
   p {
-    color: ${COLORS.BLACK_33};
+    color: #ffffff;
     ${fontStyle(16, 400)};
   }
 
@@ -317,7 +321,8 @@ const StyledSeperator = styled.div`
   width: 100%;
   height: 0;
   flex-shrink: 0;
-  border: 1px solid ${COLORS.GRAY_EE};
+  /* border: 1px solid ${COLORS.GRAY_EE}; */
+  border: 0.5px solid #555555;
 `;
 
 const StyledNoItemWrapper = styled.div`

@@ -135,7 +135,9 @@ const StyledContainer = styled.div`
   height: 256px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: ${COLORS.WHITE_FF};
+  background: #303134;
+  border: 1px solid #555555;
+  
   ${onTablet} {
     width: 100%;
   }
@@ -152,17 +154,22 @@ const StyledTitleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-top: 29px;
+
   h3 {
     color: ${COLORS.BLACK_33};
     ${fontStyle(20, 700)};
+    color: #ffffff;
   }
+
 `;
 
 const StyledMainWrapper = styled.div`
   margin-top: 37px;
   margin-bottom: 24px;
   h3 {
-    color: ${COLORS.BLACK_33} ${fontStyle(18, 500)};
+    color: ${COLORS.BLACK_33};
+    ${fontStyle(18, 500)};
+    color: #ffffff;
   }
 `;
 

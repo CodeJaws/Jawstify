@@ -42,6 +42,7 @@ export const StyledLabel = styled.h5`
   margin-bottom: 10px;
   display: flex;
   ${fontStyle(18, 500)};
+  color: #ffffff;
 
   ${onMobile} {
     font-size: 1.6rem;

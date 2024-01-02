@@ -62,6 +62,7 @@ const StyledImageContainer = styled.div<{ $idx: number; $isLast: boolean }>`
   overflow: hidden;
   border-radius: 100%;
   border: 2px solid #fff;
+  border: 2px solid #d9d9d9;
   position: absolute;
   width: 38px;
   height: 38px;

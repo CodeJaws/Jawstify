@@ -121,7 +121,8 @@ const StyledDashboardContainer = styled.div<{ $isActive: boolean }>`
     background: ${COLORS.VIOLET_F1};
   }
   background: ${({ $isActive }) => ($isActive ? `${COLORS.VIOLET_F1}` : 'transparent')};
-
+  background: #303134;
+  
   ${onPc} {
     padding: 0 12px;
   }

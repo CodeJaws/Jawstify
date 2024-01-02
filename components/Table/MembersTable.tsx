@@ -128,20 +128,18 @@ const StyledContainer = styled.div`
 
   height: 404px;
   border-radius: 8px;
-  background: ${COLORS.WHITE_FF};
+  background: #303134;
+  border: 1px solid #555555;
 
   ${onTablet} {
     width: 100%;
   }
 
   ${onMobile} {
-    width: 100%;
     /* width: 284px; */
-    height: 337px;
-  }
-
-  ${onMobile} {
-    height: 377px;
+    /* height: 337px; */
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -149,6 +147,7 @@ const StyledNameText = styled.p`
   color: ${COLORS.GRAY_9F};
   ${fontStyle(16, 400)};
   margin-top: 27px;
+  color: ${COLORS.WHITE_FF};
 
   margin-left: 28px;
   /* margin-top: 14px; */
@@ -168,6 +167,7 @@ const StyledTopWrapper = styled.div`
   padding: 0 28px;
   h1 {
     color: ${COLORS.BLACK_33};
+    color: #ffffff;
     ${fontStyle(24, 700)};
   }
   margin-top: 26px;
@@ -175,6 +175,7 @@ const StyledTopWrapper = styled.div`
   ${onMobile} {
     h1 {
       color: ${COLORS.BLACK_33};
+      color: #ffffff;
       ${fontStyle(20, 700)};
     }
     padding: 0 20px;
@@ -225,6 +226,7 @@ const StyledMemberBoxProfileWrapper = styled.div`
 
   p {
     color: ${COLORS.BLACK_33};
+    color: #ffffff;
     ${fontStyle(16, 400)};
   }
 
@@ -232,6 +234,7 @@ const StyledMemberBoxProfileWrapper = styled.div`
     gap: 8px;
     p {
       ${fontStyle(14, 400)};
+      color: #ffffff;
     }
   }
 `;
@@ -254,4 +257,5 @@ const StyledSeperator = styled.div`
   height: 0;
   flex-shrink: 0;
   border: 1px solid ${COLORS.GRAY_EE};
+  border: 0.5px solid #555555;
 `;

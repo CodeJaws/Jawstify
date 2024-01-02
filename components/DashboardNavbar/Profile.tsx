@@ -108,6 +108,7 @@ const StyledImageWrapper = styled.div`
   flex-shrink: 0;
   border-radius: 100%;
   border: 2px solid ${COLORS.WHITE_FF};
+  border: 2px solid #d9d9d9;
   overflow: hidden;
 
   ${onMobile} {

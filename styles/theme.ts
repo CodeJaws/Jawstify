@@ -19,11 +19,13 @@ export const theme = css`
     --text-main: ${COLORS.BLACK_00};
     --text-second: ${COLORS.BLACK_33};
     --text-third: ${COLORS.BLACK_17};
+
+    --nav-bg: ${COLORS.WHITE_FF};
   }
 
   body[data-theme="dark"] {
     // landingPage
-    --bg-main: ${COLORS.BLACK_00};
+    --bg-main: #000000;
     --bg-second: ${COLORS.BLACK_17};
     --bg-third: ${COLORS.BLACK_4B};
     --bg-fourth: ${COLORS.BLACK_17};
@@ -32,6 +34,9 @@ export const theme = css`
     --text-main: ${COLORS.WHITE_FF};
     --text-second: ${COLORS.GRAY_9F};;
     --text-third: ${COLORS.WHITE_FF};
+
+    --nav-bg : #191919;
+
   }
 
 `;

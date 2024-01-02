@@ -152,6 +152,7 @@ const StyledTitleContainer = styled.div`
   }
   h3 {
     color: ${COLORS.BLACK_33};
+    color: ${COLORS.WHITE_FF};
     ${fontStyle(20, 700)}
   }
 `;
@@ -164,8 +165,8 @@ const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
   height: 70px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${COLORS.GRAY_D9};
-  background-color: ${COLORS.WHITE_FF};
+  border-bottom: 1px solid #555555;
+  background-color: var(--nav-bg);
   z-index: 2;
 
   justify-content: ${({ $isMyDashboard }) => ($isMyDashboard ? 'space-between' : 'flex-end')};
