@@ -107,6 +107,15 @@ const StyledCommentWrapper = styled.div`
   row-gap: 15px;
   overflow-y: scroll;
   height: 80px;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: ${COLORS.GRAY_D9};
+  }
   ${onMobile} {
     height: 74px;
   }

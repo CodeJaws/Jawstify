@@ -124,13 +124,35 @@ const StyledContainer = styled.div`
     height: 708px;
     padding: 15px;
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 30%;
+      border-radius: 10px;
+      background: ${COLORS.GRAY_D9};
+    }
+    &::-webkit-scrollbar-button:vertical:start:decrement,
+    &::-webkit-scrollbar-button:vertical:start:increment {
+      height: 25px;
+    }
   }
 `;
 
 const StyledLeftContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: ${COLORS.GRAY_D9};
+  }
 
   ${onTablet} {
     min-width: 250px;
