@@ -4,7 +4,7 @@ import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
 import { ModalCommonProps } from '@/types/modal';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { StyledButtonContainer, StyledTwinButton } from './Create&EditToDo';
+import { StyledButtonContainer, StyledTwinButton } from './CreateToDo';
 
 function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () => {} }: ModalCommonProps) {
   const [values, setValues] = useState(INIT_CREATE_DASHBOARD);
