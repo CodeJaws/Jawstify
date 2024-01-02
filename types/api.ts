@@ -378,7 +378,7 @@ export interface AbortInviteDashboardProps {
 
 export interface GetInvitationListProps {
   size?: number;
-  cursorId?: number;
+  cursorId?: number | null;
   title?: string;
 }
 
@@ -408,7 +408,7 @@ export interface GetInvitationListItem {
 }
 
 export interface ResponseInvitationProps {
-  invitationId: string;
+  invitationId: number;
   inviteAccepted?: boolean;
 }
 

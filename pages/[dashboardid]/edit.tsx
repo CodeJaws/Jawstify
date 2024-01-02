@@ -1,21 +1,20 @@
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { GetServerSideProps } from 'next';
 
-import { COLORS } from '@/styles/palettes';
+import API from '@/apis/api';
+import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
+import DashboardEdit from '@/components/Edit/DashboardEdit';
+import Sidebar from '@/components/Sidebar/Sidebar';
+import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
+import MembersTable from '@/components/Table/MembersTable';
+import DeleteButton from '@/components/common/Button/DeleteButton';
+import useDashboard from '@/hooks/useDashboard';
+import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
-import Sidebar from '@/components/Sidebar/Sidebar';
-import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { useRouter } from 'next/router';
-import DashboardEdit from '@/components/Edit/DashboardEdit';
-import useDashboard from '@/hooks/useDashboard';
-import API from '@/apis/api';
-import MembersTable from '@/components/Table/MembersTable';
-import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
 import { useState } from 'react';
-import DeleteButton from '@/components/common/Button/DeleteButton';
 
 interface BoardEditProps {
   boardid: number;

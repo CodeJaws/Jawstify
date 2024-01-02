@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-import { onMobile, onTablet } from '@/styles/mediaQuery';
-import usePagination from '@/hooks/usePagination';
-import PaginationButton from '../common/Button/PaginationButton';
-import Button from '../common/Button/Button';
-import { MemberType } from '@/types/apiType';
-import DefaultImage from '@/public/assets/icons/Codeit.svg';
 import API from '@/apis/api';
+import usePagination from '@/hooks/usePagination';
+import DefaultImage from '@/public/assets/icons/Codeit.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { MemberType } from '@/types/apiType';
 import { useState } from 'react';
+import Button from '../common/Button/Button';
+import PaginationButton from '../common/Button/PaginationButton';
 
 interface MembersTableProps {
   dashboardId: number;

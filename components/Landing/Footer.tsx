@@ -34,7 +34,7 @@ function Footer() {
 export default Footer;
 
 const StyledFooterContainer = styled.div`
-  background-color: ${COLORS.BLACK_17};
+  background-color: var(--bg-footer);
   width: 100%;
   display: flex;
   flex-direction: column;
