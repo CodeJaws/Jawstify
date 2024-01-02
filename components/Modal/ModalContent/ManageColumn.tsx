@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { ModalCommonProps } from '@/types/modal';
+import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { StyledTwinButton } from './Create&EditToDo';
+import { ModalCommonProps } from '@/types/modal';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { StyledContainer } from './Basic';
-import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import { StyledTwinButton } from './CreateToDo';
 
 interface Props extends ModalCommonProps {
   onDeleteClick: () => void;

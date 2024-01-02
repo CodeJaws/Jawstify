@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Basic from './ModalContent/Basic';
-import CreateToDo from './ModalContent/Create&EditToDo';
 import CreateDashboard from './ModalContent/CreateDashboard';
+import CreateToDo from './ModalContent/CreateToDo';
 import EditToDo from './ModalContent/EditToDo';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
@@ -54,9 +54,7 @@ function Modal({
       case '새로운 대시보드':
         return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 생성':
-        return (
-          <CreateToDo type="create" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
-        );
+        return <CreateToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 수정':
         return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
