@@ -4,6 +4,7 @@ import { ModalCommonProps } from '@/types/modal';
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
+import { useState } from 'react';
 
 function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () => {} }: ModalCommonProps) {
   const [values, setValues] = useState(INIT_CREATE_DASHBOARD);
