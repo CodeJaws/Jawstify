@@ -85,12 +85,11 @@ function ProfileBox({ email, nickname, profileImg, setNickName, setPreviewImage 
   return (
     <StyledContainer>
       <AddImageButton
-        type={'profile'}
-        profileImg={profileImg}
+        type="profile"
         image={profileImg}
+        setImage={setImage}
         previewImage={profileImg}
         setPreviewImage={setPreviewImage}
-        setImage={setImage}
       />
       <StyledWrapper>
         <BasicInput label="이메일" inputValue={email} disabled />

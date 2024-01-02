@@ -10,7 +10,6 @@ import { COLORS } from '@/styles/palettes';
 
 interface Props {
   type: 'modal' | 'profile';
-  profileImg: string | null | ArrayBuffer;
   image: string | null | ArrayBuffer;
   previewImage: string | ArrayBuffer | null;
   setPreviewImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
