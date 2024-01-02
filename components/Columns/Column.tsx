@@ -12,8 +12,7 @@ import Card from './Card';
 import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
 import Modal from '../Modal/Modal';
 import api from '@/apis/api';
-import { INIT_MANAGE_COLUMN, INIT_CREATE_TODO } from '@/constants/InitialModalValues';
-import { Tag } from '../Input/ModalInputContainer/TagInput';
+import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import InfiniteScroll from 'react-infinite-scroller';
 
 interface Props extends GetColumnListProps {
@@ -23,7 +22,6 @@ interface Props extends GetColumnListProps {
 }
 
 function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete }: Props) {
-  console.log(columnId);
   const [columnCardList, setColumnCardList] = useState<GetCardDetailsItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState({
@@ -37,11 +35,9 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   });
 
   const [manageColModalVals, setManageColModalVals] = useState<typeof INIT_MANAGE_COLUMN>(INIT_MANAGE_COLUMN);
-  const [createToDoModalVals, setCreateToDoModalVals] = useState<typeof INIT_CREATE_TODO>(INIT_CREATE_TODO);
 
-  // 무한스크롤 카드 리스트 가져오기
+  // 무한스크롤로 카드 리스트 가져오기 - TODO: ERROR!
   const fetchHasMore = () => {
-    // 여기는 총 개수 totalCount
     if (columnCardList.length < cardListInfos.totalCount) {
       loadColumnCardList();
     } else {
@@ -49,7 +45,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
     }
   };
 
-  // 모달 관리
+  // 모달 open 여부 관리
   const handleModalsOpen = (type: 'manageColumn' | 'createToDo') => {
     if (type === 'manageColumn') {
       setIsModalOpen({ ...isModalOpen, manageColumn: true });
@@ -58,23 +54,17 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
     }
   };
 
-  // const setManageColumnVal = (values: typeof INIT_MANAGE_COLUMN) =>
-  //   setModalValues({ ...modalValues, manageColumn: values });
-
-  // const setCreateToDoVal = (values: any) => setModalValues({ ...modalValues, createToDo: values });
-
-  // 컬럼 카드 리스트 response 요청
+  // 컬럼 카드 리스트 데이터 api 요청 및 받은 데이터 렌더링
   const loadColumnCardList = async () => {
     const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
-    await setColumnCardList(res.cards);
-    await setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
+    setColumnCardList(res.cards);
+    setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
   // Modal Input Values Submit Events
   const handleColumnDelete = async () => {
     const response = await api.columns.deleteColumn({ columnId: String(columnId) });
     await applyColumnDelete(dashboardId);
-    console.log(response);
   };
 
   const handleManageColumnSubmit = async () => {
@@ -83,29 +73,6 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
       title: manageColModalVals.이름,
     })) as { title: '' };
     setCardListInfos({ ...cardListInfos, title: response.title });
-    console.log(response.title);
-  };
-
-  const handleCreateToDoSubmit = async () => {
-    const formatedTagData: string[] = createToDoModalVals.태그.map((tagEl: Tag) =>
-      [tagEl.value, tagEl.color, tagEl.backgroundColor].join('/'),
-    );
-
-    const body = {
-      assigneeUserId: 0,
-      // assigneeUserId const {user : {id: assigneeUserId}} = useUser();
-      dashboardId: dashboardId,
-      columnId: columnId,
-      title: createToDoModalVals.제목,
-      description: createToDoModalVals.설명,
-      dueDate: createToDoModalVals.마감일,
-      tags: formatedTagData,
-      // imageUrl: createToDoVal.이미지,
-      imageUrl:
-        'https%3A%2F%2Fsprint-fe-project.s3.ap-northeast-2.amazonaws.com%2Ftaskify%2Ftask_image%2F1-5_1012_1703665850084.jpeg',
-    };
-    const response = await api.cards.createCard(body);
-    console.log(response);
   };
 
   useEffect(() => {
@@ -121,17 +88,11 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
             defaultValue={{ 이름: cardListInfos.title }}
             getValue={setManageColModalVals}
             onCancelClick={() => {
-              console.log('취소');
               setIsModalOpen({ ...isModalOpen, manageColumn: false });
             }}
             onOkClick={async () => {
-              console.log('확인');
-              console.log({ ...isModalOpen, manageColumn: false }); // 모달 input value 출력
-              // console.log(modalValues.manageColumn);
               handleManageColumnSubmit();
-              // TODO: api status == 200 인지 확인하고 닫아야함
               setIsModalOpen({ ...isModalOpen, manageColumn: false });
-              // await loadColumnCardList();
             }}
             onDeleteClick={() => {
               handleColumnDelete();
@@ -141,17 +102,14 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
         {isModalOpen.createToDo && (
           <Modal
             title="할 일 생성"
-            getValue={setCreateToDoModalVals}
+            dashboardInfos={{ columnId, dashboardId }}
             onCancelClick={() => {
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
             onOkClick={() => {
-              // console.log(modalValues.createToDo); // 모달 input value 출력
-              handleCreateToDoSubmit();
+              loadColumnCardList(); // createToDo 모달에서 필요한 api 요청 처리
+              setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
-            // onDeleteClick={() => {
-            //   console.log('삭제');
-            // }}
           />
         )}
         <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
@@ -169,6 +127,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
             {columnCardList.map((card) => (
               <li key={card.id}>
                 <Card
+                  cardInfoData={{ dashboardId, cardId: card.id }}
                   title={card.title}
                   dueDate={card.dueDate}
                   tags={card.tags}
