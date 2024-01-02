@@ -29,7 +29,6 @@ function Columns({ dashboardId }: GetColumnListProps) {
   const getColumnListFunc = async (dashboardId: number) => {
     if (Number.isNaN(dashboardId)) return;
     const res = await API.columns.getColumnList({ dashboardId });
-    console.log(res);
     const columns = res?.data;
     const isSuccess = res?.result;
     setIsSuccess(isSuccess === 'SUCCESS');
@@ -48,7 +47,6 @@ function Columns({ dashboardId }: GetColumnListProps) {
       dashboardId: dashboardId,
     });
     await getColumnListFunc(dashboardId);
-    console.log(response);
   };
 
   useEffect(() => {
@@ -85,9 +83,6 @@ function Columns({ dashboardId }: GetColumnListProps) {
             onOkClick={async () => {
               createColumnFunc(value.이름, dashboardId);
               setIsOpen(false);
-            }}
-            onDeleteClick={() => {
-              console.log('삭제');
             }}
           />
         )}
