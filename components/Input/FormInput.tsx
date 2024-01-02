@@ -56,7 +56,7 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
       />
       {isPassword && (
         <StyledEyeButton onClick={handleVisibility} type="button">
-          <StyledImage src={isVisible ? eyeOff : eyeOn} width={24} height={24} alt="비밀번호 숨기기" />
+          <StyledImage src={isVisible ? eyeOn : eyeOff} width={24} height={24} alt="비밀번호 숨기기" />
         </StyledEyeButton>
       )}
       {hasError && <StyledErrorText>{errorMessage}</StyledErrorText>}
