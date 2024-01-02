@@ -14,12 +14,14 @@ interface Props {
   nickname: string;
   profileImg: string | ArrayBuffer | null;
   setNickName: Dispatch<SetStateAction<string>>;
+  setPreviewImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 }
 
-function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
+function ProfileBox({ email, nickname, profileImg, setNickName, setPreviewImage }: Props) {
   const { setUser, user } = useUserData();
   const [image, setImage] = useState<File>();
-  const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
+  // const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const changeProfile = async () => {
     if (!image) {
@@ -31,16 +33,16 @@ function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
       } catch (e: any) {
         switch (e.data.message) {
           case NICKNAME_ERROR:
-            alert(NICKNAME_ERROR);
+            setErrorMsg(NICKNAME_ERROR);
             break;
           case NICKNAME_IMG_ERROR:
-            alert(NICKNAME_IMG_ERROR);
+            setErrorMsg(NICKNAME_IMG_ERROR);
             break;
           case IMG_URL_ERROR:
-            alert(IMG_URL_ERROR);
+            setErrorMsg(IMG_URL_ERROR);
             break;
           default:
-            alert(e.data.message);
+            setErrorMsg(e.data.message);
             break;
         }
       }
@@ -62,16 +64,16 @@ function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
         } catch (e: any) {
           switch (e.data.message) {
             case NICKNAME_ERROR:
-              alert(NICKNAME_ERROR);
+              setErrorMsg(NICKNAME_ERROR);
               break;
             case NICKNAME_IMG_ERROR:
-              alert(NICKNAME_IMG_ERROR);
+              setErrorMsg(NICKNAME_IMG_ERROR);
               break;
             case IMG_URL_ERROR:
-              alert(IMG_URL_ERROR);
+              setErrorMsg(IMG_URL_ERROR);
               break;
             default:
-              alert(e.data.message);
+              setErrorMsg(e.data.message);
               break;
           }
         }
@@ -86,13 +88,18 @@ function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
       <AddImageButton
         type={'profile'}
         profileImg={profileImg}
-        previewImage={previewImage}
+        previewImage={profileImg}
         setPreviewImage={setPreviewImage}
         setImage={setImage}
       />
       <StyledWrapper>
         <BasicInput label="이메일" inputValue={email} disabled />
-        <BasicInput label="닉네임" inputValue={nickname} onChange={(label, value) => setNickName(value)} />
+        <BasicInput
+          label="닉네임"
+          inputValue={nickname}
+          onChange={(label, value) => setNickName(value)}
+          errorMessage={errorMsg}
+        />
         <StyledButton text={'저장'} size={'small'} isViolet={true} onClick={changeProfile} />
       </StyledWrapper>
     </StyledContainer>
