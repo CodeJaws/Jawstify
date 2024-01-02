@@ -3,12 +3,14 @@ import FormInput from '@/components/Input/FormInput';
 import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
+import useUserData from '@/hooks/global/useUserData';
 import useAuth from '@/hooks/useAuth';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { localStorageSetItem } from '@/utils/localStorage';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -41,11 +43,13 @@ function Login() {
   ]);
 
   const router = useRouter();
-
+  const { setUser } = useUserData();
   const onSubmit = async (data: FormValue) => {
     let response;
     try {
       response = await api.auth.login({ email: data.email as string, password: data.password as string });
+      localStorageSetItem('accessToken', response.accessToken);
+      await setUser(response.user);
       response.accessToken && router.push('/boards');
       throw Error;
     } catch (e: any) {

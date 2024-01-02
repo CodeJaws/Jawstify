@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import { COLORS } from './palettes';
 
 export const reset = css`
   @font-face {
@@ -25,6 +26,7 @@ export const reset = css`
   body {
     font-size: 62.5%;
     -webkit-font-smoothing: antialiased;
+    background-color: ${COLORS.GRAY_FA};
   }
 
   body {

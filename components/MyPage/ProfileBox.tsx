@@ -12,7 +12,7 @@ import Button from '../common/Button/Button';
 interface Props {
   email: string;
   nickname: string;
-  profileImg: string;
+  profileImg: string | null;
   setNickName: Dispatch<SetStateAction<string>>;
 }
 
@@ -77,7 +77,7 @@ function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
     <StyledContainer>
       <AddImageButton
         type={'profile'}
-        profileImg={profileImg}
+        image={profileImg}
         previewImage={previewImage}
         setPreviewImage={setPreviewImage}
         setImage={setImage}

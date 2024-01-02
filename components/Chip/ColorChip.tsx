@@ -8,11 +8,12 @@ import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
-interface Props {
+interface ColorChipProps {
   onChange: (inputLabel: string, value: string) => void;
+  color?: string;
 }
 const ColorEllipse = [
   { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN_7A },
@@ -22,7 +23,7 @@ const ColorEllipse = [
   { id: 4, src: Pink, alt: '핑크색 원', color: COLORS.PINK_E8 },
 ];
 
-function ColorChip({ onChange }: Props) {
+function ColorChip({ onChange, color }: ColorChipProps) {
   const [selectedColor, setSelectedColor] = useState(0);
 
   const toggleSelectedColor = (index: number) => {
@@ -31,7 +32,13 @@ function ColorChip({ onChange }: Props) {
     onChange('색상', selectedColorText);
   };
 
-  console.log(selectedColor);
+  useEffect(() => {
+    setSelectedColor(ColorEllipse.find((x) => x.color === color)?.id as number);
+  }, [color]);
+
+  useEffect(() => {
+    setSelectedColor(0);
+  }, []);
 
   return (
     <StyledContainer>

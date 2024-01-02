@@ -1,9 +1,9 @@
 import API from '@/apis/api';
-import { DashboardItem } from '@/hooks/usePagination';
 import crown from '@/public/assets/icons/crown.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { DashboardType } from '@/types/apiType';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -42,7 +42,7 @@ function DashboardItems({ item, boardId }: BoardItemProps) {
 }
 
 function Dashboard({ reset, boardId }: DashboardProps) {
-  const [dataSource, setDataSource] = useState<DashboardItem[]>([]);
+  const [dataSource, setDataSource] = useState<DashboardType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [dashboardPage, setDashboardPage] = useState(2);
   const [totlaCount, setTotalCount] = useState(0);
