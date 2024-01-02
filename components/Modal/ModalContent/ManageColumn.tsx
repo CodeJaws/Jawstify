@@ -4,7 +4,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ModalCommonProps } from '@/types/modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { StyledContainer } from './Basic';
 import { StyledTwinButton } from './CreateToDo';
@@ -23,7 +23,9 @@ function ManageColumn({ onOkClick, onCancelClick = () => {}, onDeleteClick = () 
     });
   };
 
-  getValue(values);
+  useEffect(() => {
+    getValue(values);
+  }, [getValue, values]);
 
   return (
     <>
