@@ -80,7 +80,7 @@ const StyledHeroTextWrapper = styled.div`
 const StyledHeroText1 = styled.div`
   width: 245px;
   height: 48px;
-  color: ${COLORS.BLACK_17};
+  color: var(--text-main);
   letter-spacing: -2px;
   ${fontStyle(40, 700)};
   white-space: nowrap;

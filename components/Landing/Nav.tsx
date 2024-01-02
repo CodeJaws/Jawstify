@@ -3,11 +3,15 @@ import logoText from '@/public/assets/icons/logoText.svg'
 import styled from 'styled-components'
 import Image from 'next/image'
 import Link from 'next/link'
-import { COLORS } from '@/styles/palettes'
-import { onPc, onTablet } from '@/styles/mediaQuery'
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery'
 import { fontStyle } from '@/styles/fontStyle'
+import sunIcon from '@/public/assets/icons/sun.svg';
+import moonIcon from '@/public/assets/icons/moon.svg';
+import useTheme from '@/hooks/useTheme';
 
 function Nav() {
+  const { themeMode, toggleThemeMode } = useTheme();
+
   return (
     <StyledLandingHeaderContainer>
       <StyledLandingHeaderInner>
@@ -20,6 +24,13 @@ function Nav() {
           </LogoTextWrapper>
         </StyledLogoLinkContainer>
         <LinkButton>
+          <div onClick={() => toggleThemeMode()}>
+            {themeMode === 'dark' ? (
+              <StyledThemeModeIcon src={sunIcon} width={20} height={20} alt="라이트 모드로 변경"/>
+            ) : (
+              <StyledThemeModeIcon src={moonIcon} width={20} height={20} alt="다크 모드로 변경"/>
+            )}
+          </div>
           <Link href="/login">로그인</Link>
           <Link href="/signup">회원가입</Link>
         </LinkButton>
@@ -85,7 +96,7 @@ const LogoTextWrapper = styled.div`
 const LinkButton = styled.div`
   display: flex;
   gap: 20px;
-  color: ${COLORS.BLACK_17};
+  color: var(--text-main);
   ${fontStyle(14, 400)};
 
   ${onTablet} {
@@ -96,3 +107,12 @@ const LinkButton = styled.div`
     ${fontStyle(16, 400)};
   }
 `
+const StyledThemeModeIcon = styled(Image)`
+  cursor: pointer;
+  
+  ${onMobile} {
+    width: 14px;
+    height: 14px;
+    margin-top: 1.5px;
+  }
+`;
