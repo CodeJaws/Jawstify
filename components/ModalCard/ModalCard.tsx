@@ -56,7 +56,16 @@ function ModalCard() {
             </StyledTag>
           </StyledTitleWrapper>
           <StyledContentWrapper>
-            <StyledContent>{description}</StyledContent>
+            <StyledContent>
+              {description.split('\n').map((val) => {
+                return (
+                  <>
+                    {val}
+                    <br />
+                  </>
+                );
+              })}
+            </StyledContent>
             {imageUrl ? (
               <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />
             ) : (
@@ -114,12 +123,14 @@ const StyledContainer = styled.div`
     width: 327px;
     height: 708px;
     padding: 15px;
+    overflow-y: scroll;
   }
 `;
 
 const StyledLeftContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 
   ${onTablet} {
     min-width: 250px;
@@ -144,6 +155,7 @@ const StyledTitleWrapper = styled.div`
 
 const StyledTag = styled.div`
   display: flex;
+  align-items: center;
   gap: 20px;
 `;
 
@@ -178,8 +190,11 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledDivision = styled.div`
-  height: auto;
+  height: 22px;
   border: 1px solid ${COLORS.GRAY_D9};
+  ${onMobile} {
+    height: 20px;
+  }
 `;
 
 const StyledColorChipWrapper = styled.div`

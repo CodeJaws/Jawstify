@@ -89,13 +89,13 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   margin-top: 24px;
-  overflow: hidden;
 
   ${onTablet} {
     gap: 30px;
   }
 
   ${onMobile} {
+    overflow: hidden;
     gap: 16px;
     margin-top: 19px;
   }
@@ -106,6 +106,7 @@ const StyledCommentWrapper = styled.div`
   flex-direction: column;
   row-gap: 15px;
   overflow-y: scroll;
+  height: 80px;
   ${onMobile} {
     height: 74px;
   }
