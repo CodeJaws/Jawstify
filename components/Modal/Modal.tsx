@@ -1,13 +1,14 @@
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { ModalCommonProps } from '@/types/modal';
-import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
 import Basic from './ModalContent/Basic';
-import CreateDashboard from './ModalContent/CreateDashboard';
 import CreateToDo from './ModalContent/CreateToDo';
+import EditToDo from './ModalContent/EditToDo';
+import CreateDashboard from './ModalContent/CreateDashboard';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
 import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
@@ -56,7 +57,7 @@ function Modal({
       case '할 일 생성':
         return <CreateToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 수정':
-        return; // <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
+        return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
         return (
           <ManageColumn
@@ -85,7 +86,7 @@ function Modal({
 
   return ReactDOM.createPortal(
     <>
-      <StyledModalBackdrop onClick={onCancelClick} />
+      {title !== '할 일 수정' && <StyledModalBackdrop onClick={onCancelClick} />}
       <StyledModalContainer $isTightVersion={isTightVersion}>
         <StyledTitle>{title}</StyledTitle>
         {renderModalContent(title)}
@@ -99,8 +100,8 @@ export default Modal;
 
 const StyledModalBackdrop = styled.div`
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;

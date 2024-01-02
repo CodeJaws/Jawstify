@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import { ChangeEvent, useState, MouseEvent, KeyboardEvent, useEffect } from 'react';
+import ContentChip from '@/components/Chip/ContentChip';
+import { TAG_COLOR } from '@/constants/ModalInput';
+import useCardData from '@/hooks/ModalCard/useCardData';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import { TAG_COLOR } from '@/constants/ModalInput';
+import { ChangeEvent, KeyboardEvent, MouseEvent, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { StyledLabel } from '../Input.style';
-import ContentChip from '@/components/Chip/ContentChip';
 
 export interface TagProps {
   inputValue?: string;
@@ -26,6 +27,16 @@ export interface Tag {
 function TagInput({ label = '태그', onChange }: TagProps) {
   const [tags, setTags] = useState<Tag[]>([]);
   const [value, setValue] = useState<string>('');
+  const { cardData } = useCardData();
+
+  const getTag = cardData.tags;
+
+  const splitTag = getTag.map((val) => val.split('/'));
+  const formatTag = splitTag.map((val) => ({
+    value: val[0],
+    color: val[1],
+    backgroundColor: val[2],
+  }));
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -49,6 +60,10 @@ function TagInput({ label = '태그', onChange }: TagProps) {
 
     setValue('');
   };
+
+  useEffect(() => {
+    setTags(formatTag);
+  }, []);
 
   useEffect(() => {
     onChange(label, tags);

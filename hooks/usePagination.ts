@@ -1,154 +1,24 @@
-import { useEffect, useState } from 'react';
-import DEFAULT_IMAGE from '@/public/assets/icons/PinkEllipse.svg';
+import API from '@/apis/api';
+import { DashboardType, InvitationType, MemberType } from '@/types/apiType';
+import { useCallback, useEffect, useState } from 'react';
 
-/** 대시보드 멤버 목록 조회를 통해 나온 정보들 - 이것도 나중에 정보를 받으면 수정 될듯 합니다*/
-const DEFAULT_INFO_OF_MEMBERS = [
-  {
-    id: 1,
-    nickname: '정만철1@naver.com',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: false,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-  {
-    id: 2,
-    nickname: '김태순2',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: false,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-  {
-    id: 3,
-    nickname: '최주협3',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: false,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-  {
-    id: 4,
-    nickname: '윤지현4',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: false,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-  {
-    id: 5,
-    nickname: '박종민5',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: true,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-  {
-    id: 6,
-    nickname: '박민6',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: false,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-];
-
-/** 추가하는 멤버들 */
-const DEFAULT_ADD_MEMBERS = [
-  {
-    id: 7,
-    nickname: '정만철7',
-    profileImageUrl: DEFAULT_IMAGE,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-    isOwner: false,
-  },
-  {
-    id: 8,
-    nickname: '김태순8',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: false,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-  {
-    id: 9,
-    nickname: '최주협9',
-    profileImageUrl: DEFAULT_IMAGE,
-    isOwner: false,
-    createdAt: 'string',
-    updatedAt: 'string',
-    userId: 1,
-  },
-];
+type AllItemTypes = DashboardType[] | MemberType[] | InvitationType[];
 
 interface usePaginationProps {
   size: number;
   showItemNum: 4 | 5;
-  type: 'members' | 'invitationDetails' | 'dashboard';
+  type: 'dashboard' | 'members' | 'invitationDetails';
   dashboardId?: number;
+  refreshPaginationToggle?: boolean;
+  resetToFirst?: boolean;
 }
 
-interface usePaginationReturn<T> {
+interface usePaginationReturn {
   handlePagination: (val: number) => void;
-  showItems: AllItemTypes<T>;
   pageNum: number;
   totalPages: number;
-  totalCount: number;
+  allItems: AllItemTypes;
 }
-
-/** 대시보드 API Types */
-export interface DashboardItem {
-  id: number;
-  title: string;
-  color: string;
-  createdAt: string;
-  updatedAt: string;
-  createdByMe: boolean;
-  userId: number;
-}
-
-/** 구성원들 API Types */
-export interface MembersItem {
-  id: number;
-  userId: number;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-  isOwner: boolean;
-}
-
-/** 초대 내역 API Types */
-export interface InvitationItem {
-  id: number;
-  inviterUserId: number;
-  teamId: string;
-  dashboard: {
-    title: string;
-    id: number;
-  };
-  invitee: {
-    nickname: string;
-    email: string;
-    id: number;
-  };
-  inviteAccepted: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export type AllItemTypes<T> = Tt<T>;
-
-type Tt<T> = T extends 'members' ? MembersItem[] : T extends 'invitationDetails' ? InvitationItem[] : DashboardItem[];
 
 /**
  * @param size API에서 한번에 받아올 구성원 수 - API 요청 시 사용
@@ -161,53 +31,91 @@ const usePagination = ({
   showItemNum,
   type,
   dashboardId,
-}: usePaginationProps): usePaginationReturn<typeof type> => {
+  refreshPaginationToggle,
+  resetToFirst,
+}: usePaginationProps): usePaginationReturn => {
   const [pageNum, setPageNum] = useState(1);
-  const [allItems, setAllItems] = useState<AllItemTypes<typeof type>>([]);
-  const [showItems, setShowItems] = useState<AllItemTypes<typeof type>>([]);
+  const [allItems, setAllItems] = useState<AllItemTypes>([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false);
   const totalPages = Math.ceil(totalCount / showItemNum); // 총 페이지 수
 
-  /** Pagination 버튼 클릭 시 axios 함수를 여기에 적으면 될 것 같네요 */
-  const handlePagination = (num: number) => {
+  const [checkRefresh, setCheckRefresh] = useState(true);
+
+  const handlePagination = async (num: number) => {
+    if (loading) return;
     if ((pageNum + num - 1) * showItemNum > totalCount) return; // 전체 아이템 수 이상을 받아오려는 경우
     if (pageNum + num < 1 || pageNum + num > totalPages) return; // 처음에서 <, 마지막 페이지에서 > 버튼을 클릭 하는 경우
 
-    if ((pageNum + num) * showItemNum > allItems.length) {
-      // axios 요청
-      if (type === 'members') {
-        // 구성원 API 요청
-        //   setAllItems(prev => [...prev, 받은 데이터])
+    if (Math.min(totalCount, (pageNum + num) * showItemNum) > allItems.length) {
+      setLoading(true);
+      if (type === 'dashboard') {
+        const res = await API.dashboard.getDashboardList({
+          navigationMethod: 'pagination',
+          page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
+        });
+        setAllItems((prev) => [...prev, ...res.dashboards] as DashboardType[]);
+        setTotalCount(res.totalCount);
+      } else if (type === 'members') {
+        const res = await API.members.getMembersInDashboard({
+          size,
+          page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
+          dashboardId: Number(dashboardId),
+        });
+        setAllItems((prev) => [...prev, ...res.members] as MemberType[]);
+        setTotalCount(res.totalCount);
       } else if (type === 'invitationDetails') {
-        // 초대 내역 API 요청
-        //   setAllItems(prev => [...prev, 받은 데이터])
-      } else if (type === 'dashboard') {
-        // 대시보드 API 요청
-        //   setAllItems(prev => [...prev, 받은 데이터])
+        const res = await API.dashboard.loadInviteDashboard({
+          dashboardId: Number(dashboardId),
+          page: Math.max(1, Math.ceil((pageNum + num) / (size / showItemNum))),
+          size,
+        });
+        setAllItems((prev) => [...prev, ...res.invitations] as InvitationType[]);
+        setTotalCount(res.totalCount);
       }
-      setAllItems((prev) => [...prev, ...DEFAULT_ADD_MEMBERS] as AllItemTypes<typeof type>);
+      setLoading(false);
     }
-
     setPageNum((prev) => prev + num);
     return;
   };
 
+  const firstFetch = useCallback(async () => {
+    setLoading(true);
+    let fetchedItems: AllItemTypes = [];
+    if (type === 'dashboard') {
+      const res = await API.dashboard.getDashboardList({
+        navigationMethod: 'pagination',
+        page: 1,
+        size,
+      });
+      fetchedItems = res.dashboards;
+      setTotalCount(res.totalCount);
+    } else if (type === 'members') {
+      const res = await API.members.getMembersInDashboard({ size, page: 1, dashboardId: Number(dashboardId) });
+      fetchedItems = res.members;
+      setTotalCount(res.totalCount);
+    } else if (type === 'invitationDetails') {
+      const res = await API.dashboard.loadInviteDashboard({ dashboardId: Number(dashboardId), page: 1, size });
+      fetchedItems = res.invitations;
+      setTotalCount(res.totalCount);
+    }
+    setAllItems(fetchedItems);
+    setLoading(false);
+  }, [type, size, showItemNum, dashboardId, allItems]);
+
   useEffect(() => {
-    setShowItems(allItems.slice((pageNum - 1) * showItemNum, (pageNum - 1) * showItemNum + showItemNum));
-
-    /** 아이템(대시보드 or 구성원들 or 초대 내역)들의 첫 갱신 */
-    const firstFetch = async () => {
-      setAllItems(DEFAULT_INFO_OF_MEMBERS);
-      setShowItems(DEFAULT_INFO_OF_MEMBERS.slice(0, showItemNum));
-      setTotalCount(9); // 전체 아이템 수 - API에서 받아올 수 있습니다.(24는 DEFAULT 값입니다.)
-    };
-
-    if (allItems.length === 0) {
+    if (refreshPaginationToggle !== checkRefresh) {
       firstFetch();
     }
-  }, [allItems, pageNum, showItemNum]);
+    setCheckRefresh(refreshPaginationToggle as boolean);
+  }, [refreshPaginationToggle, firstFetch, checkRefresh]);
 
-  return { handlePagination, pageNum, showItems, totalPages, totalCount };
+  useEffect(() => {
+    firstFetch();
+    setPageNum(1);
+  }, [resetToFirst]);
+
+  return { handlePagination, pageNum, totalPages, allItems };
 };
 
 export default usePagination;

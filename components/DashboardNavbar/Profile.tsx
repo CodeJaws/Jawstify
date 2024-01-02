@@ -4,28 +4,66 @@ import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import Codeit from '@/public/assets/icons/Codeit.svg';
+import useUserData from '@/hooks/global/useUserData';
+import { FocusEvent, useEffect, useState } from 'react';
+import { UserType } from '@/types/apiType';
+import DashboardDropdown from './DashboardDropdown';
+import useDeviceType from '@/hooks/useDeviceType';
 
-interface ProfileProps {
-  item: {
-    id: number;
-    nickname: string;
-    profileImageUrl: string;
+function Profile() {
+  const { user } = useUserData();
+  const [showUser, setShowUser] = useState<UserType>({
+    createdAt: '',
+    email: '',
+    id: 0,
+    nickname: '',
+    profileImageUrl: null,
+    updatedAt: '',
+  });
+  const { nickname, profileImageUrl } = showUser;
+  const deviceType = useDeviceType();
+
+  const [isDropdown, setIsDropdown] = useState(false);
+
+  const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setIsDropdown(false);
+    }
   };
-}
 
-function Profile({ item }: ProfileProps) {
-  const { nickname, profileImageUrl } = item;
+  const handleClickDropdown = () => {
+    setIsDropdown((prev) => !prev);
+  };
+
+  useEffect(() => {
+    setShowUser(user);
+  }, []);
+
   return (
-    <StyledContainer>
-      <StyledImageWrapper>
-        <Image fill src={profileImageUrl} alt="프로필" />
-      </StyledImageWrapper>
-      <p>{nickname}</p>
-    </StyledContainer>
+    <>
+      <StyledContainer onBlur={(e) => handleBlur(e)}>
+        <label onMouseDown={handleClickDropdown}>
+          <StyledImageWrapper>
+            <StyledImage fill src={profileImageUrl || Codeit} alt="프로필" onClick={handleClickDropdown} />
+          </StyledImageWrapper>
+          <StyledNameWrapper>
+            <button>{showUser.nickname}</button>
+          </StyledNameWrapper>
+        </label>
+        <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
+      </StyledContainer>
+    </>
   );
 }
 
 export default Profile;
+
+const StyledNameWrapper = styled.div`
+  button {
+    ${fontStyle(16, 500)};
+  }
+`;
 
 const StyledContainer = styled.div`
   position: relative;
@@ -34,9 +72,14 @@ const StyledContainer = styled.div`
   align-items: center;
   gap: 12px;
 
-  p {
+  label {
+    display: flex;
+    align-items: center;
     color: ${COLORS.BLACK_33};
-    ${fontStyle(16, 500)}
+  }
+
+  label > button {
+    cursor: pointer;
   }
 
   ${onPc} {
@@ -48,10 +91,14 @@ const StyledContainer = styled.div`
   }
   ${onMobile} {
     margin-right: 12px;
-    p {
+    ${StyledNameWrapper} {
       display: none;
     }
   }
+`;
+
+const StyledImage = styled(Image)`
+  cursor: pointer;
 `;
 
 const StyledImageWrapper = styled.div`

@@ -8,11 +8,12 @@ import { ButtonOnClickProps } from '@/types/button';
 
 interface ButtonProps extends ButtonOnClickProps {
   text: string;
+  hasItems: boolean;
 }
 
-function InviteButton({ text, onClick }: ButtonProps) {
+function InviteButton({ text, onClick, hasItems }: ButtonProps) {
   return (
-    <StyledButton onClick={onClick}>
+    <StyledButton onClick={onClick} $hasItems={hasItems}>
       <Image src={addBoxWhite} alt="초대하기" />
       {text}
     </StyledButton>
@@ -21,7 +22,7 @@ function InviteButton({ text, onClick }: ButtonProps) {
 
 export default InviteButton;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $hasItems: boolean }>`
   width: 105px;
   height: 32px;
   display: flex;
@@ -41,7 +42,8 @@ const StyledButton = styled.button`
     font-size: 1.2rem;
   }
   ${onMobile} {
-    position: absolute;
+    ${({ $hasItems }) => $hasItems && 'position: absolute;'}
+
     right: 0;
     top: 44px;
   }

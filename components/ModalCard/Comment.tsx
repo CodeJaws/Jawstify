@@ -1,31 +1,83 @@
-import { ModalContext } from '@/pages/modalcard';
+import useComment from '@/hooks/useComment';
+import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import dateTimeFormat from '@/utils/dateTimeFormat';
 import Image from 'next/image';
-import { useContext } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import BasicInput from '../Input/ModalInputContainer/BasicInput';
 
 function Comment() {
-  const { userProfileImg, userName, createdAt, comment } = useContext(ModalContext);
+  const {
+    value,
+    comment,
+    updatedCommentMap,
+    hasMore,
+    isUpdateMap,
+    isOpenComment,
+    handleUpdateInputChange,
+    handleUpdateButtonClick,
+    handleChange,
+    submitComment,
+    deleteComment,
+    fetchHasMore,
+  } = useComment();
+
   return (
     <StyledContainer>
-      <BasicInput onChange={() => {}} label="댓글" />
-      <StyledInCommentWrapper>
-        <StyledImage width={34} height={34} src={userProfileImg} alt="프로필 이미지" />
-        <StyledCommentContent>
-          <StyledInComment>
-            <StyledUser>{userName}</StyledUser>
-            <StyledDate>{createdAt}</StyledDate>
-          </StyledInComment>
-          <StyledComment>{comment}</StyledComment>
-          <StyledButtonWrapper>
-            <StyledButton>수정</StyledButton>
-            <StyledButton>삭제</StyledButton>
-          </StyledButtonWrapper>
-        </StyledCommentContent>
-      </StyledInCommentWrapper>
+      <BasicInput
+        label="댓글"
+        inputValue={value}
+        onChange={(label, value) => {
+          handleChange(value);
+        }}
+        onButtonClick={() => {
+          submitComment();
+        }}
+      />
+
+      <StyledCommentWrapper>
+        <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
+          {comment?.map((val) => (
+            <StyledInCommentWrapper key={val.id}>
+              {val.author.profileImageUrl ? (
+                <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
+              ) : (
+                <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
+              )}
+              <StyledCommentContent>
+                <StyledInComment>
+                  <StyledUser>{val.author.nickname}</StyledUser>
+                  <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
+                </StyledInComment>
+                {isUpdateMap[val.id] ? (
+                  <StyledInputWrapper>
+                    <StyledInput
+                      value={updatedCommentMap[val.id] || val.content}
+                      onChange={(e) => handleUpdateInputChange(val.id, e)}
+                      placeholder="수정할 내용을 입력하세요."
+                    />
+                    <StyledButtonInWrapper>
+                      <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
+                      <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
+                    </StyledButtonInWrapper>
+                  </StyledInputWrapper>
+                ) : (
+                  <StyledComment>{val.content}</StyledComment>
+                )}
+                {!isUpdateMap[val.id] && (
+                  <StyledButtonWrapper>
+                    <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
+                    <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
+                  </StyledButtonWrapper>
+                )}
+              </StyledCommentContent>
+            </StyledInCommentWrapper>
+          ))}
+        </InfiniteScroll>
+      </StyledCommentWrapper>
     </StyledContainer>
   );
 }
@@ -37,15 +89,47 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   margin-top: 24px;
+
+  ${onTablet} {
+    gap: 30px;
+  }
+
+  ${onMobile} {
+    overflow: hidden;
+    gap: 16px;
+    margin-top: 19px;
+  }
+`;
+
+const StyledCommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  overflow-y: scroll;
+  height: 80px;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: ${COLORS.GRAY_D9};
+  }
+  ${onMobile} {
+    height: 74px;
+  }
 `;
 
 const StyledInCommentWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  margin-bottom: 15px;
 `;
 
 const StyledImage = styled(Image)`
+  border-radius: 20px;
   ${onMobile} {
     width: 26px;
     height: 26px;
@@ -55,10 +139,21 @@ const StyledImage = styled(Image)`
 const StyledCommentContent = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 2;
   gap: 6px;
 `;
 
 const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 6px;
+`;
+
+const StyledButtonInWrapper = styled.div`
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
   display: flex;
   justify-content: flex-start;
   gap: 12px;
@@ -106,4 +201,19 @@ const StyledComment = styled.p`
     font-size: 1.2rem;
   }
   color: ${COLORS.GRAY_9F};
+`;
+
+const StyledInputWrapper = styled.div`
+  position: relative;
+`;
+
+const StyledInput = styled.textarea`
+  width: 100%;
+  height: auto;
+  resize: none;
+  padding: 8px 8px;
+  border-radius: 8px;
+  border: 1px solid ${COLORS.VIOLET_55};
+  background-color: ${COLORS.WHITE_FF};
+  color: ${COLORS.BLACK_33};
 `;
