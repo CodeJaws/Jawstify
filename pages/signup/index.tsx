@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import useAuth from '@/hooks/useAuth';
+import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import api from '@/apis/api';
@@ -14,37 +14,17 @@ import * as C from '@/constants/SignValidate';
 import * as L from '../login';
 import Modal from '@/components/Modal/Modal';
 
-interface FormValue {
-  email?: string;
-  nickname?: string;
-  password?: string;
-  pwdcheck?: string;
-  errors: {
-    email: {
-      message: string;
-    };
-    nickname: {
-      message: string;
-    };
-    password: {
-      message: string;
-    };
-    pwdcheck: {
-      message: string;
-    };
-  };
-}
 function SignUp() {
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<FormValue>({ mode: 'onBlur' });
+  } = useForm<SignUpFormValue>({ mode: 'onBlur' });
 
   const {
     isBtnActive,
-    setAlertMessage,
+    onSignUpSubmit,
     alertMessage,
     handleChange,
     isModalOpen,
@@ -58,28 +38,6 @@ function SignUp() {
   const passwordRef = useRef<string | null | undefined>(null);
   passwordRef.current = getValues('password');
 
-  const onSubmit = async (data: FormValue) => {
-    if (!isAgreeChecked) {
-      setAlertMessage({ ...alertMessage, noCheck: '이용약관에 동의하셔야 합니다.' });
-      return;
-    } else {
-      setAlertMessage({ ...alertMessage, noCheck: '' });
-    }
-
-    let response;
-    try {
-      response = await api.users.signup({
-        email: data.email as string,
-        nickname: data.nickname as string,
-        password: data.password as string,
-      });
-      setAlertMessage({ ...alertMessage, serverMessage: C.SIGNUP_SUCCESS_MSG });
-    } catch (e: any) {
-      setIsModalOpen(true);
-      setAlertMessage({ ...alertMessage, serverMessage: e?.data?.message });
-    }
-  };
-
   return (
     <StyledContainer>
       <L.StyledLogoContainer>
@@ -88,7 +46,7 @@ function SignUp() {
         <L.StyledDescription>첫 방문을 환영합니다!</L.StyledDescription>
       </L.StyledLogoContainer>
 
-      <StyledForm2 onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm2 onSubmit={handleSubmit(onSignUpSubmit)}>
         <FormInput
           label="이메일"
           register={register('email', {
