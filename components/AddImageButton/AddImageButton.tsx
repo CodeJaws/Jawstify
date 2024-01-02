@@ -1,16 +1,16 @@
+import Image from 'next/image';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
+import { css, styled } from 'styled-components';
+
 import Add from '@/public/assets/icons/Add.svg';
 import Edit from '@/public/assets/icons/EditImage.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 
-import Image from 'next/image';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
-import { css, styled } from 'styled-components';
-
 interface Props {
   type: 'modal' | 'profile';
-  image: string | null;
+  image: string | null | ArrayBuffer;
   previewImage: string | ArrayBuffer | null;
   setPreviewImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
   setImage: Dispatch<SetStateAction<File | undefined>>;
@@ -18,7 +18,6 @@ interface Props {
 
 function AddImageButton({ type, image, previewImage, setPreviewImage, setImage }: Props) {
   const imgSrc = previewImage as string;
-
   const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -44,14 +43,18 @@ function AddImageButton({ type, image, previewImage, setPreviewImage, setImage }
         {!imgSrc ? (
           <label>
             <StyledCover $type={type}>
-              <input type="file" accept="image/*" onChange={handleImageSelect} />
+              <input type="file" accept="image/gif, image/jpeg, image/png, image/jpg" onChange={handleImageSelect} />
               <StyledAddImage $type={type} width={28} height={28} src={Add} alt="이미지 추가 버튼" />
             </StyledCover>
           </label>
         ) : (
           <label>
             <StyledEditCover $type={type}>
-              <StyledEditButton type="file" accept="image/*" onChange={handleImageSelect} />
+              <StyledEditButton
+                type="file"
+                accept="image/gif, image/jpeg, image/png, image/jpg"
+                onChange={handleImageSelect}
+              />
               <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />
             </StyledEditCover>
             <StyledSelectImage $type={type} width={76} height={76} src={imgSrc} priority={true} alt="이미지 미리보기" />
@@ -147,28 +150,32 @@ const StyledEditButton = styled.input`
 `;
 
 const StyledEditCover = styled.div<{ $type: string }>`
-  width: 76px;
-  height: 76px;
   position: absolute;
+  top: 0;
+  left: 0;
   border-radius: 6px;
   transition: background-color 0.2s ease-in-out;
   background-color: transparent;
   cursor: pointer;
 
-  ${onMobile} {
-    width: 58px;
-    height: 58px;
-  }
   ${({ $type }) =>
-    $type === 'profile' &&
-    css`
-      width: 182px;
-      height: 182px;
-      ${onMobile} {
-        width: 100px;
-        height: 100px;
-      }
-    `}
+    $type === 'profile'
+      ? css`
+          width: 182px;
+          height: 182px;
+          ${onMobile} {
+            width: 100px;
+            height: 100px;
+          }
+        `
+      : css`
+          width: 76px;
+          height: 76px;
+          ${onMobile} {
+            width: 58px;
+            height: 58px;
+          }
+        `}
 `;
 
 const StyledAddButton = styled.div<{ $type: string }>`

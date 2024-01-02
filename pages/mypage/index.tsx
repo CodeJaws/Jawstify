@@ -14,10 +14,13 @@ import { styled } from 'styled-components';
 function MyPage() {
   const { user } = useUserData();
   const [nickname, setNickName] = useState('');
+  const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
 
   useEffect(() => {
     setNickName(user.nickname);
+    setPreviewImage(user.profileImageUrl);
   }, [user]);
+
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} />
@@ -28,8 +31,9 @@ function MyPage() {
           <ProfileBox
             email={user.email}
             nickname={nickname}
-            profileImg={user.profileImageUrl}
+            profileImg={previewImage}
             setNickName={setNickName}
+            setPreviewImage={setPreviewImage}
           />
           <PasswordManagerBox />
         </StyledInWrapper>

@@ -13,6 +13,7 @@ import useDeviceType from '@/hooks/useDeviceType';
 
 function Profile() {
   const { user } = useUserData();
+
   const [showUser, setShowUser] = useState<UserType>({
     createdAt: '',
     email: '',
@@ -38,17 +39,17 @@ function Profile() {
 
   useEffect(() => {
     setShowUser(user);
-  }, []);
+  }, [user]);
 
   return (
     <>
       <StyledContainer onBlur={(e) => handleBlur(e)}>
         <label onMouseDown={handleClickDropdown}>
           <StyledImageWrapper>
-            <StyledImage fill src={profileImageUrl || Codeit} alt="프로필" onClick={handleClickDropdown} />
+            <StyledImage fill sizes="100%" src={profileImageUrl || Codeit} alt="프로필" onClick={handleClickDropdown} />
           </StyledImageWrapper>
           <StyledNameWrapper>
-            <button>{showUser.nickname}</button>
+            <button>{nickname}</button>
           </StyledNameWrapper>
         </label>
         <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />

@@ -2,89 +2,103 @@ import API from '@/apis/api';
 import { IMG_URL_ERROR, NICKNAME_ERROR, NICKNAME_IMG_ERROR } from '@/constants/ErrorMsg';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import axios from 'axios';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { styled } from 'styled-components';
 import AddImageButton from '../AddImageButton/AddImageButton';
 import BasicInput from '../Input/ModalInputContainer/BasicInput';
 import Button from '../common/Button/Button';
+import useUserData from '@/hooks/global/useUserData';
 
 interface Props {
   email: string;
   nickname: string;
-  profileImg: string | null;
+  profileImg: string | ArrayBuffer | null;
   setNickName: Dispatch<SetStateAction<string>>;
+  setPreviewImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 }
 
-function ProfileBox({ email, nickname, profileImg, setNickName }: Props) {
+function ProfileBox({ email, nickname, profileImg, setNickName, setPreviewImage }: Props) {
+  const { setUser, user } = useUserData();
   const [image, setImage] = useState<File>();
-  const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const changeProfile = async () => {
     if (!image) {
-      const profileImageUrl = profileImg;
-      await API.users
-        .correctMyInfo({ profileImageUrl, nickname })
-        .then(() => alert('프로필 업데이트 완료 🍀'))
-        .catch((error) => {
-          console.log(error.data.message);
-          switch (error.data.message) {
-            case NICKNAME_ERROR:
-              alert(NICKNAME_ERROR);
-              break;
-            case NICKNAME_IMG_ERROR:
-              alert(NICKNAME_IMG_ERROR);
-              break;
-            case IMG_URL_ERROR:
-              alert(IMG_URL_ERROR);
-              break;
-          }
-        });
+      try {
+        await API.users.correctMyInfo({ nickname });
+        alert('프로필 업데이트 완료 🍀');
+        user.nickname = nickname;
+        setUser(user);
+      } catch (e: any) {
+        switch (e.data.message) {
+          case NICKNAME_ERROR:
+            setErrorMsg(NICKNAME_ERROR);
+            break;
+          case NICKNAME_IMG_ERROR:
+            setErrorMsg(NICKNAME_IMG_ERROR);
+            break;
+          case IMG_URL_ERROR:
+            setErrorMsg(IMG_URL_ERROR);
+            break;
+          default:
+            setErrorMsg(e.data.message);
+            break;
+        }
+      }
+
       return;
     } else {
       const formData = new FormData();
       formData.append('image', image);
 
-      const response = await axios.post('https://sp-taskify-api.vercel.app/1-4/users/me/image', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          withCredentials: true,
-        },
-      });
-      const { profileImageUrl } = response.data;
-
-      await API.users
-        .correctMyInfo({ profileImageUrl, nickname })
-        .then(() => alert('프로필 업데이트 완료 🍀'))
-        .catch((error) => {
-          switch (error.data.message) {
+      if (image.type !== 'image/svg+xml') {
+        const response = await API.users.profileImgUpload(formData);
+        const { profileImageUrl } = response;
+        try {
+          await API.users.correctMyInfo({ profileImageUrl, nickname });
+          alert('프로필 업데이트 완료 🍀');
+          user.profileImageUrl = profileImageUrl;
+          user.nickname = nickname;
+          setUser(user);
+        } catch (e: any) {
+          switch (e.data.message) {
             case NICKNAME_ERROR:
-              alert(NICKNAME_ERROR);
+              setErrorMsg(NICKNAME_ERROR);
               break;
             case NICKNAME_IMG_ERROR:
-              alert(NICKNAME_IMG_ERROR);
+              setErrorMsg(NICKNAME_IMG_ERROR);
               break;
             case IMG_URL_ERROR:
-              alert(IMG_URL_ERROR);
+              setErrorMsg(IMG_URL_ERROR);
+              break;
+            default:
+              setErrorMsg(e.data.message);
               break;
           }
-        });
+        }
+      } else {
+        alert('형식에 맞는 이미지만 사용가능합니다.');
+      }
     }
   };
 
   return (
     <StyledContainer>
       <AddImageButton
-        type={'profile'}
+        type="profile"
         image={profileImg}
-        previewImage={previewImage}
-        setPreviewImage={setPreviewImage}
         setImage={setImage}
+        previewImage={profileImg}
+        setPreviewImage={setPreviewImage}
       />
       <StyledWrapper>
         <BasicInput label="이메일" inputValue={email} disabled />
-        <BasicInput label="닉네임" inputValue={nickname} onChange={(label, value) => setNickName(value)} />
+        <BasicInput
+          label="닉네임"
+          inputValue={nickname}
+          onChange={(label, value) => setNickName(value)}
+          errorMessage={errorMsg}
+        />
         <StyledButton text={'저장'} size={'small'} isViolet={true} onClick={changeProfile} />
       </StyledWrapper>
     </StyledContainer>
