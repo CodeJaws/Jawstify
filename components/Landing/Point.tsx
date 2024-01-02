@@ -54,7 +54,7 @@ const StyledPointSectionContainer = styled.div`
 const StyledPoint1SectionWrapper = styled.div`
   width: 343px;
   height: 686px;
-  background-color: ${COLORS.VIOLET_F1};
+  background-color: var(--bg-second);
   border-radius: 8px;
   position: relative;
 
@@ -105,7 +105,7 @@ const StyledPoint1SectionImageContainer = styled.div`
 const StyledPoint2SectionWrapper = styled.div`
   width: 343px;
   height: 686px;
-  background-color: ${COLORS.VIOLET_F1};
+  background-color: var(--bg-second);
   border-radius: 8px;
   position: relative;
   display: grid;
@@ -143,7 +143,7 @@ const StyledPoint2SectionTextContainer = styled.div`
 `;
 
 const StyledPointSectionText1 = styled.div`
-  color: ${COLORS.BLACK_33};
+  color: var(--text-second);
   font-feature-settings:
     'clig' off,
     'liga' off;
@@ -167,7 +167,7 @@ const StyledPointSectionText2 = styled.div`
 
 
   ${onMobile} {
-    color: ${COLORS.BLACK_17};
+    color: var(--text-main);;
     font-feature-settings:
     'clig' off,
     'liga' off;
