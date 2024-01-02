@@ -24,7 +24,7 @@ const ColorEllipse = [
 ];
 
 function ColorChip({ onChange, color }: ColorChipProps) {
-  const [selectedColor, setSelectedColor] = useState(-1);
+  const [selectedColor, setSelectedColor] = useState(0);
 
   const toggleSelectedColor = (index: number) => {
     setSelectedColor((prevSelectedColor) => (prevSelectedColor === index ? -1 : index));
@@ -35,6 +35,10 @@ function ColorChip({ onChange, color }: ColorChipProps) {
   useEffect(() => {
     setSelectedColor(ColorEllipse.find((x) => x.color === color)?.id as number);
   }, [color]);
+
+  useEffect(() => {
+    setSelectedColor(0);
+  }, []);
 
   return (
     <StyledContainer>

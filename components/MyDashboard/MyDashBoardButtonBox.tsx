@@ -1,5 +1,6 @@
 import API from '@/apis/api';
 import Modal from '@/components/Modal/Modal';
+import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
 import usePagination from '@/hooks/usePagination';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
@@ -24,32 +25,24 @@ interface MyDashBoardButtonBoxProps {
   refreshPaginationToggle: boolean;
 }
 
-const limit = 5;
+const LIMIT = 5;
 
 function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }: MyDashBoardButtonBoxProps) {
   const { handlePagination, pageNum, allItems, totalPages } = usePagination({
     size: 10,
-    showItemNum: limit,
+    showItemNum: LIMIT,
     type: 'dashboard',
     refreshPaginationToggle,
     resetToFirst,
   }) as usePaginationProps;
   const [isOpen, setIsOpen] = useState(false);
-  const [values, setValues] = useState({
-    '대시보드 이름': '',
-    색상: '',
-  });
+  const [values, setValues] = useState(INIT_CREATE_DASHBOARD);
 
-  const setModalValue = (
-    values = {
-      '대시보드 이름': '',
-      색상: '',
-    },
-  ) => {
+  const setModalValue = (values = INIT_CREATE_DASHBOARD) => {
     setValues(values); // value = modal에 입력된 input value들의 집합
   };
 
-  const showItems = allItems.slice((pageNum - 1) * limit, (pageNum - 1) * limit + limit);
+  const showItems = allItems.slice((pageNum - 1) * LIMIT, (pageNum - 1) * LIMIT + LIMIT);
 
   const handleCreate = async () => {
     await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
