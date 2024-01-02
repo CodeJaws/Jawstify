@@ -1,4 +1,3 @@
-import profileImg from '@/public/assets/icons/GreenEllipse.svg';
 import calendar from '@/public/assets/icons/calendar.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
@@ -7,11 +6,10 @@ import dateFormat from '@/utils/dateFormat';
 import Image from 'next/image';
 import styled from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
-import { useState } from 'react';
-import Modal from '../Modal/Modal';
-import ModalCard from '../ModalCard/ModalCard';
+import { useRouter } from 'next/router';
 
 interface Props {
+  cardInfoData: { dashboardId: number; cardId: number };
   title: string;
   // description: string;
   tags: string[];
@@ -24,12 +22,11 @@ interface Props {
   imageUrl: string;
 }
 
-function Card({ title, dueDate, imageUrl, tags, assignee }: Props) {
-  const [isCardDetailModalOpen, setIsCardDetailModalOpen] = useState(false);
+function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, cardInfoData }: Props) {
+  const router = useRouter();
 
   const handleCardDetailModalOpen = () => {
-    console.log('카드 상세 모달');
-    setIsCardDetailModalOpen(true);
+    router.push(`/${cardInfoData.dashboardId}?cardId=${cardInfoData.cardId}`); // 카드 상세 모달 오픈
   };
 
   const date = dateFormat(dueDate);
@@ -38,7 +35,13 @@ function Card({ title, dueDate, imageUrl, tags, assignee }: Props) {
     <StyledContainer onClick={handleCardDetailModalOpen}>
       {imageUrl ? (
         <StyledImageContainer>
-          <Image src={imageUrl} fill alt="카드 이미지" />{' '}
+          <Image
+            src={imageUrl}
+            width={1000}
+            height={1000}
+            style={{ width: 'auto', height: '100%' }}
+            alt="카드 이미지"
+          />{' '}
         </StyledImageContainer>
       ) : (
         <></>
@@ -64,9 +67,10 @@ function Card({ title, dueDate, imageUrl, tags, assignee }: Props) {
           </StyledInfoDate>
         </StyledInfoWrapper>
       </StyledInfoContainer>
-      <StyledInfoProfile></StyledInfoProfile>
+      <StyledInfoProfile>
+        <Image src={profileImageUrl as string} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
+      </StyledInfoProfile>
     </StyledContainer>
-    // {isCardDetailModalOpen && } 카드 상세 모달
   );
 }
 
@@ -104,8 +108,9 @@ const StyledContainer = styled.div`
 
 const StyledImageContainer = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
   width: 100%;
-  /* height: 100%; */
   height: 160px;
   border-radius: 6px;
 
@@ -184,9 +189,6 @@ const StyledInfoProfile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${fontStyle(10, 600)};
-  font-family: Montserrat;
-  background: url(${profileImg.src}) no-repeat center center;
 
   ${onMobile} {
     width: 22px;
