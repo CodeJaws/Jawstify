@@ -37,7 +37,10 @@ interface Props {
 function FormInput({ label = '', placeholder, errorMessage = '', register }: Props) {
   const [isVisible, setIsVisible] = useState(false);
 
-  const isPassword = label.slice(0, 4).includes('비밀번호');
+  let isPassword = label.slice(0, 4).includes('비밀번호');
+  if (label === '현재 비밀번호' || label === '새 비밀번호' || label === '새 비밀번호 확인') {
+    isPassword = true;
+  }
   const hasError = errorMessage !== '';
 
   const handleVisibility = () => setIsVisible((prev) => !prev);
