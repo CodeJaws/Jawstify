@@ -18,6 +18,7 @@ interface Props extends ModalCommonProps {
   description?: string;
   isSingleButton?: boolean;
   defaultValue?: typeof INIT_EDIT_TODO | typeof INIT_MANAGE_COLUMN | typeof INIT_BASIC;
+  dashboardInfos?: { columnId: number; dashboardId: number };
   onDeleteClick?: () => void;
 }
 
@@ -30,6 +31,7 @@ function Modal({
   onCancelClick,
   onDeleteClick = () => {},
   getValue = () => {},
+  dashboardInfos,
 }: Props) {
   const [value, setValue] = useState({});
 
@@ -57,7 +59,14 @@ function Modal({
       case '새로운 대시보드':
         return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 생성':
-        return <CreateToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
+        return (
+          <CreateToDo
+            dashboardInfos={dashboardInfos ?? { columnId: 0, dashboardId: 0 }}
+            onOkClick={onOkClick}
+            onCancelClick={onCancelClick}
+            getValue={setModalInputValue}
+          />
+        );
       case '할 일 수정':
         return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
