@@ -36,7 +36,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledWrapper = styled.div`
-  background: ${COLORS.GRAY_FA};
+  background: var(--content-bg);
   position: absolute;
   top: 70px;
   left: 300px;

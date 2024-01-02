@@ -48,7 +48,7 @@ const StyledPageButton = styled.button<{ $direction: string }>`
   align-items: center;
   border-radius: ${({ $direction }) => ($direction === 'left' ? '4px 0 0 4px' : '0 4px 4px 0')};
   border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.WHITE_FF};
+  background: var(--dashboardButton-color);
 
   ${onMobile} {
     width: 36px;

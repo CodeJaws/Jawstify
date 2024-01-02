@@ -38,6 +38,7 @@ export const theme = css`
     --input-label: #333326;
 
     --sign-bg: #fafafa;
+    --dashboardButton-color: #ffffff;
 
   }
 
@@ -65,7 +66,6 @@ export const theme = css`
     --content-main: #eeeeee;
     --content-second: #eeeeee;
 
-
     --sidebar-hover: #303134;
     --sidebar-border: 1px solid #555555;
     --sidebar-bg: #191919;
@@ -75,6 +75,7 @@ export const theme = css`
 
     --input-label: #ffffff;
 
+    --dashboardButton-color: #ffffff;
   }
 
 `;

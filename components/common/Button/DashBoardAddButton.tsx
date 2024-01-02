@@ -28,7 +28,7 @@ const StyledButton = styled.button`
   gap: 12px;
   border-radius: 8px;
   border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.WHITE_FF};
+  background: var(--dashboardButton-color);
   color: ${COLORS.BLACK_33};
   ${fontStyle(16, 600)};
 
