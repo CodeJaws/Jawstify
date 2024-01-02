@@ -1,13 +1,13 @@
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { ModalCommonProps } from '@/types/modal';
-import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
 import Basic from './ModalContent/Basic';
-import CreateDashboard from './ModalContent/CreateDashboard';
 import CreateToDo from './ModalContent/Create&EditToDo';
+import CreateDashboard from './ModalContent/CreateDashboard';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
 
@@ -99,8 +99,8 @@ export default Modal;
 
 const StyledModalBackdrop = styled.div`
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;
