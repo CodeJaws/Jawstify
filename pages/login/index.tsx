@@ -50,7 +50,7 @@ function Login() {
       response = await api.auth.login({ email: data.email as string, password: data.password as string });
       localStorageSetItem('accessToken', response.accessToken);
       await setUser(response.user);
-      response.accessToken && router.push('/boards');
+      response.accessToken && router.push('/mydashboard');
       throw Error;
     } catch (e: any) {
       setIsModalOpen(true);
