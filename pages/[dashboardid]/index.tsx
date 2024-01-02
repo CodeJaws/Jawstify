@@ -6,9 +6,8 @@ import useCardId from '@/hooks/ModalCard/useCardId';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import useRefresh from '@/hooks/useRefresh';
 import { GetServerSidePropsContext } from 'next';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
-
-const cardId = 328;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!context.params) {
@@ -29,10 +28,13 @@ interface DashboardEditPageProps {
 
 function BoardID({ dashboardId }: DashboardEditPageProps) {
   const { setCardData } = useCardData();
-  const { setCardId } = useCardId();
   const { setTasks } = useDashBoard();
   const { setMembers } = useGetMember();
+  const { setCardId, cardId: card } = useCardId();
   const { refresh } = useRefresh();
+
+  const params = useSearchParams();
+  const cardId = params.get('cardId') as unknown as number;
 
   const testAPI = useCallback(async () => {
     const test = await API.cards.getCardDetails({ cardId });
@@ -42,7 +44,7 @@ function BoardID({ dashboardId }: DashboardEditPageProps) {
 
     setCardData(test);
 
-    setCardId(cardId);
+    setCardId(Number(cardId));
     setTasks(dashBoard);
     setMembers(getMember);
   }, [dashboardId, setCardData, setCardId, setMembers, setTasks]);
