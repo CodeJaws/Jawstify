@@ -10,13 +10,13 @@ import { css, styled } from 'styled-components';
 
 interface Props {
   type: 'modal' | 'profile';
-  profileImg: string | null;
+  image: string | null;
   previewImage: string | ArrayBuffer | null;
   setPreviewImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
   setImage: Dispatch<SetStateAction<File | undefined>>;
 }
 
-function AddImageButton({ type, profileImg, previewImage, setPreviewImage, setImage }: Props) {
+function AddImageButton({ type, image, previewImage, setPreviewImage, setImage }: Props) {
   const imgSrc = previewImage as string;
 
   const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,8 +34,8 @@ function AddImageButton({ type, profileImg, previewImage, setPreviewImage, setIm
   };
 
   useEffect(() => {
-    setPreviewImage(profileImg);
-  }, [profileImg, setPreviewImage]);
+    setPreviewImage(image);
+  }, [image, setPreviewImage]);
 
   return (
     <StyledContainer $type={type}>

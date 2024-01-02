@@ -1,26 +1,34 @@
-import { ModalContext } from '@/pages/modalcard';
+import useCardData from '@/hooks/ModalCard/useCardData';
+import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import dateTimeFormat from '@/utils/dateTimeFormat';
 import Image from 'next/image';
-import { useContext } from 'react';
 import styled from 'styled-components';
 
 function Manager() {
-  const { manager, managerImg, deadLine } = useContext(ModalContext);
+  const { cardData } = useCardData();
+  const { dueDate } = cardData;
+  const { nickname, profileImageUrl } = cardData.assignee;
+
   return (
     <StyledContainer>
       <StyledInMangerWrapper>
         <StyledMangerWrapper>
           <StyledManger>담당자</StyledManger>
           <StyledMangerProfile>
-            <StyledImage width={34} height={34} src={managerImg} alt="프로필 이미지" />
-            <StyledMangerName>{manager}</StyledMangerName>
+            {profileImageUrl ? (
+              <StyledImage width={34} height={34} src={profileImageUrl} alt="프로필 이미지" />
+            ) : (
+              <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
+            )}
+            <StyledMangerName>{nickname}</StyledMangerName>
           </StyledMangerProfile>
         </StyledMangerWrapper>
         <StyledDeadLineWrapper>
           <StyledDeadLineName>마감일</StyledDeadLineName>
-          <StyledDeadLine>{deadLine}</StyledDeadLine>
+          <StyledDeadLine>{dateTimeFormat(dueDate)}</StyledDeadLine>
         </StyledDeadLineWrapper>
       </StyledInMangerWrapper>
     </StyledContainer>
@@ -60,6 +68,8 @@ const StyledMangerProfile = styled.div`
 `;
 
 const StyledImage = styled(Image)`
+  border-radius: 20px;
+
   ${onMobile} {
     width: 26px;
     height: 26px;
