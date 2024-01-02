@@ -481,7 +481,7 @@ export interface GetMyInfoItem {
 
 export interface CorrectMyInfoProps {
   nickname: string;
-  profileImageUrl: string | ArrayBuffer | null;
+  profileImageUrl?: string | ArrayBuffer | null;
 }
 
 export interface CorrectMyInfoItem {
@@ -493,9 +493,7 @@ export interface CorrectMyInfoItem {
   updatedAt: string;
 }
 
-export interface ProfileImgUploadProps {
-  formData: FormData;
-}
+export type ProfileImgUploadProps = FormData;
 
 export interface ProfileImgUploadItem {
   profileImageUrl: string;

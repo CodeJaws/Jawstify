@@ -51,7 +51,7 @@ function DropDownMenu({ type, isOpen, filterData, setIsOpen }: DropDownMenuProps
     setImgSrc(imgSrc);
   };
 
-  const filterColumnId = tasks.data.filter((val) => val.id === cardData.columnId)[0].id;
+  const filterColumnId = tasks.data.filter((val) => val.id === cardData.columnId)[0]?.id;
 
   useEffect(() => {
     setColumnId(filterColumnId);
