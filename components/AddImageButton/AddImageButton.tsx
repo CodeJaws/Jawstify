@@ -57,15 +57,7 @@ function AddImageButton({ type, image, previewImage, setPreviewImage, setImage }
               />
               <StyledEditImage $type={type} width={30} height={30} src={Edit} alt="이미지 수정 버튼" />
             </StyledEditCover>
-            <StyledSelectImage
-              $type={type}
-              width={76}
-              height={76}
-              src={imgSrc}
-              priority={true}
-              alt="이미지 미리보기"
-              layout="responsive"
-            />
+            <StyledSelectImage $type={type} width={76} height={76} src={imgSrc} priority={true} alt="이미지 미리보기" />
           </label>
         )}
       </StyledAddButton>
