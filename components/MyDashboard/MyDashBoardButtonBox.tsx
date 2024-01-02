@@ -45,8 +45,12 @@ function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }
   const showItems = allItems.slice((pageNum - 1) * LIMIT, (pageNum - 1) * LIMIT + LIMIT);
 
   const handleCreate = async () => {
-    await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
-    refresh();
+    try {
+      await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
+      refresh();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
