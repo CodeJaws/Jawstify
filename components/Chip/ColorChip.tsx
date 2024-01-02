@@ -24,17 +24,21 @@ const ColorEllipse = [
 ];
 
 function ColorChip({ onChange, color }: ColorChipProps) {
-  const [selectedColor, setSelectedColor] = useState(-1);
+  const [selectedColor, setSelectedColor] = useState(0);
 
   const toggleSelectedColor = (index: number) => {
-    setSelectedColor((prev) => (prev === index ? -1 : index));
-    const selectedColorText = ColorEllipse[index]?.alt || '';
+    setSelectedColor((prevSelectedColor) => (prevSelectedColor === index ? -1 : index));
+    const selectedColorText = ColorEllipse[index]?.color || '';
     onChange('색상', selectedColorText);
   };
 
   useEffect(() => {
     setSelectedColor(ColorEllipse.find((x) => x.color === color)?.id as number);
   }, [color]);
+
+  useEffect(() => {
+    setSelectedColor(0);
+  }, []);
 
   return (
     <StyledContainer>
