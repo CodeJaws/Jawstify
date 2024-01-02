@@ -4,29 +4,16 @@ import { onTablet, onPc } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Columns from '@/components/Columns/Columns';
-import { localStorageSetItem } from '@/utils/localStorage';
-import { useEffect } from 'react';
-import API from '@/apis/api';
 
 function DashBoardID() {
   const router = useRouter();
-  const { dashboardid: id } = router.query;
-
-  const loginFunc = async () => {
-    const a = await API.auth.login({ email: 'test5@codeit.com', password: 'test123456' });
-    localStorageSetItem('accessToken', a.accessToken);
-  };
-
-  useEffect(() => {
-    loginFunc();
-  }, []);
-
+  const dashboardid = router.asPath.slice(11);
   return (
     <StyledContainer>
       <Sidebar />
-      <DashboardNavbar isMyDashboard={false} isOwner={true} title="비브리지" />
+      <DashboardNavbar isMyDashboard={false} />
       <StyledWrapper>
-        <Columns dashboardId={Number(id)} />
+        <Columns dashboardId={Number(dashboardid)} />
       </StyledWrapper>
     </StyledContainer>
   );
