@@ -116,7 +116,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 40px;
-  background-color: ${COLORS.GRAY_FA};
+  background-color: var(--sign-bg);
 `;
 
 export const StyledLogoContainer = styled.div`
@@ -162,6 +162,7 @@ export const StyledForm = styled.form`
 
 const StyledBottomTextContainer = styled.div`
   margin-top: -15px;
+  color: var(--sign-main);
 `;
 
 export const StyledLink = styled(Link)`

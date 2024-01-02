@@ -37,15 +37,17 @@ export const theme = css`
 
     --input-label: #333326;
 
+    --sign-bg: #fafafa;
+
   }
 
   body[data-theme='dark'] {
     // landingPage
-    --bg-main: #000000;
+    --bg-main: #111111;
     --bg-second: ${COLORS.BLACK_17};
     --bg-third: ${COLORS.BLACK_4B};
     --bg-fourth: ${COLORS.BLACK_17};
-    --bg-footer: ${COLORS.BLACK_00};
+    --bg-footer: #111111;
 
     --text-main: #eeeeee;
     --text-second: ${COLORS.GRAY_9F};;
@@ -67,6 +69,9 @@ export const theme = css`
     --sidebar-hover: #303134;
     --sidebar-border: 1px solid #555555;
     --sidebar-bg: #191919;
+
+    --sign-bg: #111111;
+    --sign-main: #eeeeee;
 
     --input-label: #ffffff;
 
