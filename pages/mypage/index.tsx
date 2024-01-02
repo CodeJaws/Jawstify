@@ -3,12 +3,10 @@ import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useUserData from '@/hooks/global/useUserData';
-import useUser from '@/hooks/useUser';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { UserType } from '@/types/apiType';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
@@ -16,11 +14,11 @@ import { styled } from 'styled-components';
 function MyPage() {
   const { user } = useUserData();
   const [nickname, setNickName] = useState('');
-  const [profileImage, setProfileImg] = useState<string | ArrayBuffer | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
 
   useEffect(() => {
     setNickName(user.nickname);
-    setProfileImg(user.profileImageUrl);
+    setPreviewImage(user.profileImageUrl);
   }, [user]);
 
   return (
@@ -30,7 +28,13 @@ function MyPage() {
       <StyledWrapper>
         <StyledInWrapper>
           <StyledBackWrapper href={'/mydashboard'}>돌아가기</StyledBackWrapper>
-          <ProfileBox email={user.email} nickname={nickname} profileImg={profileImage} setNickName={setNickName} />
+          <ProfileBox
+            email={user.email}
+            nickname={nickname}
+            profileImg={previewImage}
+            setNickName={setNickName}
+            setPreviewImage={setPreviewImage}
+          />
           <PasswordManagerBox />
         </StyledInWrapper>
       </StyledWrapper>
