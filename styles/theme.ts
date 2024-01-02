@@ -39,6 +39,8 @@ export const theme = css`
 
     --sign-bg: #fafafa;
     --dashboardButton-color: #ffffff;
+    --modal-bg: #ffffff;
+    --modal-title: #333236;
 
   }
 
@@ -76,6 +78,10 @@ export const theme = css`
     --input-label: #ffffff;
 
     --dashboardButton-color: #ffffff;
+
+    --modal-bg: #171717;
+    --modal-title: #5534DA;
+
   }
 
 `;
