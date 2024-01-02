@@ -99,7 +99,7 @@ function MembersTable({ dashboardId, refresh }: MembersTableProps) {
         <h1>{tableTitle}</h1>
         <StyledPaginationWrapper>
           <div>
-            {totalPages}페이지 중 {pageNum}
+            {totalPages} 페이지 중 {pageNum}
           </div>
           <div>
             <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
@@ -128,8 +128,8 @@ const StyledContainer = styled.div`
 
   height: 404px;
   border-radius: 8px;
-  background: #303134;
-  border: 1px solid #555555;
+  background: var(--content-color);
+  border: var(--content-border);
 
   ${onTablet} {
     width: 100%;
@@ -147,7 +147,7 @@ const StyledNameText = styled.p`
   color: ${COLORS.GRAY_9F};
   ${fontStyle(16, 400)};
   margin-top: 27px;
-  color: ${COLORS.WHITE_FF};
+  
 
   margin-left: 28px;
   /* margin-top: 14px; */
@@ -165,17 +165,16 @@ const StyledTopWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 28px;
+
   h1 {
-    color: ${COLORS.BLACK_33};
-    color: #ffffff;
+    color: var(--content-main);
     ${fontStyle(24, 700)};
   }
   margin-top: 26px;
 
   ${onMobile} {
     h1 {
-      color: ${COLORS.BLACK_33};
-      color: #ffffff;
+      color: var(--content-main);
       ${fontStyle(20, 700)};
     }
     padding: 0 20px;
@@ -187,11 +186,12 @@ const StyledPaginationWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+
   div {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${COLORS.BLACK_33};
+    color: var(--content-text);
     ${fontStyle(14, 400)};
   }
 
@@ -225,8 +225,7 @@ const StyledMemberBoxProfileWrapper = styled.div`
   gap: 12px;
 
   p {
-    color: ${COLORS.BLACK_33};
-    color: #ffffff;
+    color: var(--content-main);
     ${fontStyle(16, 400)};
   }
 
@@ -234,7 +233,6 @@ const StyledMemberBoxProfileWrapper = styled.div`
     gap: 8px;
     p {
       ${fontStyle(14, 400)};
-      color: #ffffff;
     }
   }
 `;
@@ -256,6 +254,5 @@ const StyledSeperator = styled.div`
   width: 100%;
   height: 0;
   flex-shrink: 0;
-  border: 1px solid ${COLORS.GRAY_EE};
-  border: 0.5px solid #555555;
+  border: var(--content-divider);
 `;

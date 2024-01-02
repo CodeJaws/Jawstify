@@ -95,11 +95,11 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledInWrapper = styled.div`
+  background-color: var(--content-back);
   position: absolute;
   top: 70px;
   left: 300px;
   width: calc(100% - 300px);
-  height: 100%;
   padding: 20px;
 
   ${onTablet} {
@@ -120,6 +120,7 @@ const StyledLink = styled(Link)`
   background-repeat: no-repeat;
   background-position: 0px 50%;
   padding-left: 20px;
+  color: var(--content-main);
   ${onMobile} {
     font-size: 1.4rem;
   }

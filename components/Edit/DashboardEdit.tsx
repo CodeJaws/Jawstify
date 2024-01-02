@@ -135,8 +135,8 @@ const StyledContainer = styled.div`
   height: 256px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: #303134;
-  border: 1px solid #555555;
+  background: var(--content-color);
+  border: var(--content-border);
   
   ${onTablet} {
     width: 100%;
@@ -158,7 +158,7 @@ const StyledTitleWrapper = styled.div`
   h3 {
     color: ${COLORS.BLACK_33};
     ${fontStyle(20, 700)};
-    color: #ffffff;
+    color: var(--content-main);
   }
 
 `;

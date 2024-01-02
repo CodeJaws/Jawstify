@@ -118,10 +118,9 @@ const StyledDashboardContainer = styled.div<{ $isActive: boolean }>`
 
   &:hover {
     border-radius: 4px;
-    background: ${COLORS.VIOLET_F1};
+    background: var(--sidebar-hover);
   }
   background: ${({ $isActive }) => ($isActive ? `${COLORS.VIOLET_F1}` : 'transparent')};
-  background: #303134;
   
   ${onPc} {
     padding: 0 12px;

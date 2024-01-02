@@ -47,8 +47,8 @@ const StyledContainer = styled.div`
   height: 100vh;
   min-height: 1080px;
   flex-shrink: 0;
-  background: var(--nav-bg);
-  border-right: 1px solid #555555;
+  background: var(--sidebar-bg);
+  border-right: var(--sidebar-border);
   
   ${onPc} {
     width: 300px;

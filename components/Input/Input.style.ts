@@ -38,11 +38,10 @@ export const StyledInput = styled.input<{ $error: boolean }>`
 `;
 
 export const StyledLabel = styled.h5`
-  color: ${COLORS.BLACK_33};
+  color: var(--input-label);
   margin-bottom: 10px;
   display: flex;
   ${fontStyle(18, 500)};
-  color: #ffffff;
 
   ${onMobile} {
     font-size: 1.6rem;
