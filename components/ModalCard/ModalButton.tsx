@@ -10,7 +10,7 @@ function ModalButton() {
   return (
     <StyledContainer>
       <Menu />
-      <StyledClose onClick={() => router.push(`/dashboard/${dashboardId}`)} />
+      <StyledClose onClick={() => router.push(`/dashboard${dashboardId}`)} />
     </StyledContainer>
   );
 }
