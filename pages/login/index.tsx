@@ -14,6 +14,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import useUserData from '@/hooks/global/useUserData';
+import { localStorageSetItem } from '@/utils/localStorage';
 
 interface FormValue {
   email?: string;
@@ -41,11 +43,13 @@ function Login() {
   ]);
 
   const router = useRouter();
-
+  const { setUser } = useUserData();
   const onSubmit = async (data: FormValue) => {
     let response;
     try {
       response = await api.auth.login({ email: data.email as string, password: data.password as string });
+      localStorageSetItem('accessToken', response.accessToken);
+      await setUser(response.user);
       response.accessToken && router.push('/boards');
       throw Error;
     } catch (e: any) {

@@ -1,0 +1,10 @@
+export const INVALID_EMAIL_ERROR = '이메일 형식이 올바르지 않습니다.';
+export const INVITE_AUTH_ERROR = '대시보드 초대 권한이 없습니다.';
+export const ABORT_INVITE_AUTH_ERROR = '대시보드 초대 취소 권한이 없습니다.';
+export const NO_DASHBOARD_ERROR = '대시보드가 존재하지 않습니다.';
+export const NO_USER_ERROR = '존재하지 않는 유저입니다.';
+export const ALREADY_INVITE_ERROR = '이미 대시보드에 초대된 멤버입니다.';
+export const NO_AUTH_CORRECT_DASHBOARD_ERROR = '대시보드 수정 권한이 없습니다.';
+export const INVALID_COLOR_FORMAT_ERROR = '색상 코드 형식이 올바르지 않습니다.';
+export const NO_CONTENT_FOR_CORRECTION_ERROR = '수정할 내용을 입력해주세요.';
+export const NO_EXIST_INVITE_ERROR = '존재하지 않는 초대입니다.';

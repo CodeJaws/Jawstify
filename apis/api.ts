@@ -72,7 +72,9 @@ const members = {
  */
 const invitations = {
   getInvitationList: async ({ size = 10, cursorId = 0, title }: T.GetInvitationListProps) =>
-    await request.get<T.GetInvitationListItem>(`invitations?size=${size}&cursorId=${cursorId}&title=${title}`),
+    await request.get<T.GetInvitationListItem>(
+      `invitations?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}${title ? `&title=${title}` : ''}`,
+    ),
   responseInvitation: async ({ invitationId, inviteAccepted = true }: T.ResponseInvitationProps) =>
     await request.put<T.ResponseInvitationItem>(`invitations/${invitationId}`, { inviteAccepted }),
 };
@@ -128,7 +130,9 @@ const cards = {
 const comments = {
   createComment: async (body: T.CreateCommentProps) => await request.post<T.CreateCommentItem>('comments', body),
   getCommentList: async ({ size = 10, cursorId = 0, cardId }: T.GetCommentListProps) =>
-    await request.get<T.GetCommentListItem>(`comments?cardId=${cardId}&size=${size}&cursorId=${cursorId}`),
+    await request.get<T.GetCommentListItem>(
+      `comments?cardId=${cardId}&size=${size}${cursorId && `&cursorId=${cursorId}`}`,
+    ),
   correctComment: async ({ commentId, content }: T.CorrectCommentProps) =>
     await request.put<T.CorrectCommentItem>(`comments/${commentId}`, { content }),
   deleteComment: async ({ commentId }: T.DeleteCommentProps) => await request.delete(`comments/${commentId}`),

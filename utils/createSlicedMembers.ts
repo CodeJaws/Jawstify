@@ -1,8 +1,9 @@
+import { GetMembersInDashboardItem } from '@/types/api';
+
+type MemberType = GetMembersInDashboardItem['members'][0];
+
 interface createSlicedMembersProps {
-  members: {
-    profileImageUrl: string;
-    id: number;
-  }[];
+  members: MemberType[];
   deviceType: string | undefined;
 }
 
