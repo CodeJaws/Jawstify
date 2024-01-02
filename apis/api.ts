@@ -105,8 +105,18 @@ const cards = {
   createCard: async (body: T.CreateCardProps) => await request.post<T.CreateCardItem>('cards', body),
   checkCardList: async ({ size = 10, cursorId = 0, columnId }: T.CheckCardListProps) =>
     await request.get<T.CheckCardListItem>(`cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`),
-  correctCard: async ({ cardId, assigneeUserId, title, description, dueDate, tags, imageUrl }: T.CorrectCardProps) =>
+  correctCard: async ({
+    cardId,
+    columnId,
+    assigneeUserId,
+    title,
+    description,
+    dueDate,
+    tags,
+    imageUrl,
+  }: T.CorrectCardProps) =>
     await request.put<T.CorrectCardItem>(`cards/${cardId}`, {
+      columnId,
       assigneeUserId,
       title,
       description,
@@ -127,9 +137,9 @@ const cards = {
  */
 const comments = {
   createComment: async (body: T.CreateCommentProps) => await request.post<T.CreateCommentItem>('comments', body),
-  getCommentList: async ({ size = 10, cursorId = 0, cardId }: T.GetCommentListProps) =>
+  getCommentList: async ({ size = 4, cursorId = 0, cardId }: T.GetCommentListProps) =>
     await request.get<T.GetCommentListItem>(
-      `comments?cardId=${cardId}&size=${size}${cursorId && `&cursorId=${cursorId}`}`,
+      `comments?cardId=${cardId}&size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}`,
     ),
   correctComment: async ({ commentId, content }: T.CorrectCommentProps) =>
     await request.put<T.CorrectCommentItem>(`comments/${commentId}`, { content }),

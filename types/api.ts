@@ -78,7 +78,8 @@ export interface CheckCardListItem {
 }
 
 export interface CorrectCardProps {
-  cardId: string;
+  cardId: number;
+  columnId: number;
   assigneeUserId?: number;
   title: string;
   description: string;
@@ -106,7 +107,7 @@ export interface CorrectCardItem {
 }
 
 export interface GetCardDetailsProps {
-  cardId: string;
+  cardId: number;
 }
 
 export interface GetCardDetailsItem {
@@ -116,19 +117,20 @@ export interface GetCardDetailsItem {
   tags: string[];
   dueDate: string;
   assignee: {
-    profileImageUrl: string | null;
+    profileImageUrl: string;
     nickname: string;
     id: number;
   };
   imageUrl: string;
   teamId: string;
   columnId: number;
+  dashboardId: number;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface DeleteCardProps {
-  cardId: string;
+  cardId: number;
 }
 
 export interface CreateColumnProps {
@@ -145,7 +147,7 @@ export interface CreateColumnItem {
 }
 
 export interface GetColumnListProps {
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface GetColumnListItem {
@@ -199,7 +201,7 @@ export interface CreateCommentItem {
 
 export interface GetCommentListProps {
   size?: number;
-  cursorId?: number;
+  cursorId?: number | null;
   cardId: number;
 }
 
@@ -212,7 +214,7 @@ export interface GetCommentListItem {
     updatedAt: string;
     cardId: number;
     author: {
-      profileImageUrl: string | null;
+      profileImageUrl: string;
       nickname: string;
       id: number;
     };
@@ -220,7 +222,7 @@ export interface GetCommentListItem {
 }
 
 export interface CorrectCommentProps {
-  commentId: string;
+  commentId: number;
   content: string;
 }
 
@@ -238,7 +240,7 @@ export interface CorrectCommentItem {
 }
 
 export interface DeleteCommentProps {
-  commentId: string;
+  commentId: number;
 }
 
 export interface CreateDashboardProps {
@@ -441,7 +443,7 @@ export interface GetMembersInDashboardItem {
       userId: number;
       email: string;
       nickname: string;
-      profileImageUrl: string | null;
+      profileImageUrl: string;
       createdAt: string;
       updatedAt: string;
       isOwner: boolean;
