@@ -16,6 +16,7 @@ import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import Modal from '@/components/Modal/Modal';
 import useUserData from '@/hooks/global/useUserData';
 import { localStorageSetItem } from '@/utils/localStorage';
+import GoogleLoginButton from '@/components/GoogleLogin/GoogleLogin';
 
 interface FormValue {
   email?: string;
@@ -86,6 +87,7 @@ function Login() {
         />
         <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit" margin="7px 0 0 "></LoginButton>
       </StyledForm>
+      <GoogleLoginButton />
 
       <StyledBottomTextContainer>
         <StyledBottomText>
@@ -158,6 +160,7 @@ export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-bottom: -17px;
 `;
 
 const StyledBottomTextContainer = styled.div`
