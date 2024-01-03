@@ -1,19 +1,19 @@
-import API from '@/apis/api';
+import { default as API, default as api } from '@/apis/api';
+import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import setting from '@/public/assets/icons/setting.svg';
+
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import CountChip from '../Chip/CountChip';
+import Modal from '../Modal/Modal';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
-import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
-import Modal from '../Modal/Modal';
-import api from '@/apis/api';
-import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
-import InfiniteScroll from 'react-infinite-scroller';
 
 interface Props extends GetColumnListProps {
   columnId: number;
@@ -61,9 +61,8 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
-  // Modal Input Values Submit Events
   const handleColumnDelete = async () => {
-    const response = await api.columns.deleteColumn({ columnId: String(columnId) });
+    await api.columns.deleteColumn({ columnId: String(columnId) });
     await applyColumnDelete(dashboardId);
   };
 

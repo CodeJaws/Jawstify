@@ -42,7 +42,7 @@ function Columns({ dashboardId }: GetColumnListProps) {
 
   // 새 컬럼 추가하기
   const createColumnFunc = async (title: string, dashboardId: number) => {
-    const response = await API.columns.createColumn({
+    await API.columns.createColumn({
       title: title,
       dashboardId: dashboardId,
     });
