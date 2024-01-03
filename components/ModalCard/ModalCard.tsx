@@ -13,7 +13,7 @@ import Manager from './Manager';
 import ModalButton from './ModalButton';
 
 function ModalCard() {
-  const { cardData, description, deviceType, imageUrl, title } = useModalCard();
+  const { cardData, description, deviceType, imageUrl, title, status } = useModalCard();
 
   return (
     <StyledContainer>

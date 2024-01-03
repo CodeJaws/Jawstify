@@ -44,7 +44,7 @@ function useModalCard() {
     setStatus(status);
   }, [setStatus, status]);
 
-  return { deviceType, title, cardData, description, imageUrl };
+  return { deviceType, title, cardData, description, imageUrl, status };
 }
 
 export default useModalCard;
