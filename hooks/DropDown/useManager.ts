@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
 interface Props {
-  manager: number;
+  manager: number | null;
   setManager: (e: number) => void;
 }
 
 const useManager = create<Props>((set) => ({
-  manager: 0,
+  manager: null,
   setManager: (value: number) => set({ manager: value }),
 }));
 
