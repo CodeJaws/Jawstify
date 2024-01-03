@@ -36,6 +36,8 @@ export const theme = css`
     --content-second: #9FA6B2;
 
     --input-label: #333326;
+    --input-bg: #ffffff;
+    --input-border: #d9d9d9;
 
     --sign-bg: #fafafa;
 
@@ -78,6 +80,8 @@ export const theme = css`
     --sign-main: #eeeeee;
 
     --input-label: #ffffff;
+    --input-bg: #171717;
+    --input-border: #444444;
 
     --dashboardButton-bg: #222222;
     --dashboardButton-color: #5534DA;

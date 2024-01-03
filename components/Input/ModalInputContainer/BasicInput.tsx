@@ -99,7 +99,7 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
   resize: none;
   border-radius: 8px;
   border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
-  background-color: ${COLORS.WHITE_FF};
+  background-color: var(--input-bg);
   color: ${COLORS.BLACK_33};
   ${fontStyle(14, 400)}
 

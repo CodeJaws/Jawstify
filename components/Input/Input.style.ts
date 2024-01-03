@@ -13,16 +13,16 @@ export const StyledInput = styled.input<{ $error: boolean }>`
   width: 100%;
   padding: 15px 16px;
   border-radius: 8px;
-  border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
-  background-color: ${COLORS.WHITE_FF};
-  color: ${COLORS.BLACK_33};
+  border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : 'var(--input-border)')};
+  background-color: var(--input-bg);
+  color: var(--content-main);
   ${fontStyle(16, 400)}
 
   &:hover,
   &:focus,
   &:active {
     border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
-    color: ${COLORS.BLACK_33};
+    color: var(--content-main);
     outline: none;
   }
 
