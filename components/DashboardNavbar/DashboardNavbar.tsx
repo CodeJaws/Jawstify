@@ -15,7 +15,7 @@ import Members from './Members';
 import Profile from './Profile';
 import { MemberType } from './Members';
 import { GetDashboardDetailedItem } from '@/types/api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '../Modal/Modal';
 import API from '@/apis/api';
 import {
@@ -31,15 +31,10 @@ interface DashboardNavbarProps {
   totalMembers?: number;
   dashboard?: GetDashboardDetailedItem;
   isMyDashboard: boolean;
+  refreshInvite?: () => void;
 }
 
-/**
- * 대시보드의 Navbar Component
- * @param {boolean} isMyDashboard 자신의 대시보드(내 대시보드)인지 확인
- * @param {boolean} isOwner 자신이 작성한 대시보드인지 확인
- * @param {string} title 대시보드 이름
- */
-function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: DashboardNavbarProps) {
+function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refreshInvite }: DashboardNavbarProps) {
   const router = useRouter();
   const dashboardTitle = isMyDashboard
     ? '내 대시보드'
@@ -56,11 +51,33 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
   const inviteFetch = async () => {
     if (!dashboard) return;
 
+    //  백엔드에서 API 해결해줘야하는 코드 - 원래 막혀있었는데 언제 다시 뚫렸네요 - 시작
+    try {
+      const { invitations } = await API.dashboard.loadInviteDashboard({
+        dashboardId: Number(dashboard.id),
+        size: 100,
+      });
+      for (let i = 0; i < invitations.length; i++) {
+        if (email === invitations[i].invitee.email) {
+          alert(ALREADY_INVITE_ERROR);
+          return;
+        }
+      }
+    } catch (e: any) {
+      alert(e.data.message);
+      return;
+    }
+    //  백엔드에서 API 해결해줘야하는 코드 - 원래 막혀있었는데 언제 다시 뚫렸네요 - 끝
+
     try {
       await API.dashboard.inviteDashboard({
         dashboardId: Number(dashboard.id),
         email,
       });
+      if (refreshInvite) {
+        refreshInvite();
+      }
+
       alert('성공적으로 초대하기 메세지를 보냈습니다.');
     } catch (e: any) {
       switch (e.data.message) {
