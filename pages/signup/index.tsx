@@ -13,6 +13,7 @@ import mainLogoText from '@/public/assets/icons/logoText.svg';
 import * as C from '@/constants/SignValidate';
 import * as L from '../login';
 import Modal from '@/components/Modal/Modal';
+import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 
 interface FormValue {
   email?: string;
@@ -35,6 +36,9 @@ interface FormValue {
   };
 }
 function SignUp() {
+  useRedriectByLogin();
+
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -52,8 +56,6 @@ function SignUp() {
     isAgreeChecked,
     setIsAgreeChecked,
   } = useAuth(getValues, ['email', 'password', 'nickname', 'pwdcheck']);
-
-  const router = useRouter();
 
   const passwordRef = useRef<string | null | undefined>(null);
   passwordRef.current = getValues('password');
