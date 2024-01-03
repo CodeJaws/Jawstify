@@ -50,7 +50,7 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
   const deleteDashboard = async () => {
     if (confirm('정말 대시보드를 삭제하시겠습니까?')) {
       try {
-        await API.dashboard.deleteDashboard({ dashboardId: dashboardId });
+        await API.dashboard.deleteDashboard({ dashboardId: Number(dashboardId) });
         router.push('/mydashboard');
       } catch (e: any) {
         switch (e.data.message) {
