@@ -17,9 +17,10 @@ interface SidebarProps {
   reset?: boolean;
   setReset?: Dispatch<SetStateAction<boolean>>;
   refreshToggle?: boolean;
+  refresh?: () => void;
 }
 
-function Sidebar({ reset, boardId, setReset, refreshToggle }: SidebarProps) {
+function Sidebar({ reset, boardId, setReset, refreshToggle, refresh }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [values, setValues] = useState({
     '대시보드 이름': '',
@@ -37,6 +38,9 @@ function Sidebar({ reset, boardId, setReset, refreshToggle }: SidebarProps) {
 
   const handleCreate = async () => {
     await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
+    if (refresh) {
+      refresh();
+    }
     if (setReset) {
       setReset((prev) => !prev);
     }
@@ -62,7 +66,7 @@ function Sidebar({ reset, boardId, setReset, refreshToggle }: SidebarProps) {
             <Image width={20} height={20} src={AddBox} alt="추가하기" />
           </button>
         </StyledTitleWrapper>
-        <Dashboard reset={reset} boardId={boardId} refreshToggle={refreshToggle} />
+        <Dashboard reset={reset} boardId={boardId} refreshToggle={refreshToggle} refresh={refresh} />
       </StyledContainer>
       {isOpen && (
         <Modal

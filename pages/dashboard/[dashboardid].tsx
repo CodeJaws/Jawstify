@@ -8,6 +8,7 @@ import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 import { GetServerSideProps } from 'next';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 interface DashBoardIDProps {
@@ -33,11 +34,12 @@ function DashBoardID({ dashboardId }: DashBoardIDProps) {
   useRedirectByDashboardId({ dashboardId });
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
   const { isCardOpen, setIsCardOpen } = useCardOpen();
+  const [reset, setReset] = useState(false);
 
   return (
     <>
       <StyledContainer>
-        <Sidebar />
+        <Sidebar reset={reset} setReset={setReset} />
         <DashboardNavbar
           members={members}
           totalMembers={totalMembers}
