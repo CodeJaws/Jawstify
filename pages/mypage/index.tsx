@@ -55,8 +55,8 @@ const StyledWrapper = styled.div`
   width: 100%;
   height: 100vh;
   min-height: 1080px;
-  background-color: ${COLORS.GRAY_EE};
-  background-color: #000000;
+  /* background-color: ${COLORS.GRAY_EE};
+  background-color: #000000; */
 `;
 
 const StyledInWrapper = styled.div`

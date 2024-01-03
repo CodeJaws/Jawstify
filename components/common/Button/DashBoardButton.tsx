@@ -49,9 +49,9 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  border: var(--dashboardButton-border);
-  background-color: var(--dashboardButton-bg);
-  color: var(--dashboardButton-color);
+  border: var(--button-border);
+  background-color: var(--button-bg);
+  color: var(--button-color);
   ${fontStyle(16, 600)};
 
   ${onTablet} {
@@ -106,6 +106,7 @@ const StyledCircleImage = styled(Image)`
   height: 8px;
 `;
 const StyledPageImage = styled(Image)`
+  color: var(--button-color);
   width: 18px;
   height: 18px;
 `;

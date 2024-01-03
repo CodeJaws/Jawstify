@@ -27,9 +27,9 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 12px;
   border-radius: 8px;
-  border: var(--dashboardButton-border);
-  background: var(--dashboardButton-bg);
-  color: var(--dashboardButton-color);
+  border: var(--button-border);
+  background: var(--button-bg);
+  color: var(--button-color);
   ${fontStyle(16, 600)};
 
   ${onTablet} {

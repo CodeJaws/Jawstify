@@ -87,7 +87,7 @@ const StyledContainer = styled.div`
   gap: 10px;
   border-radius: 6px;
   border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.WHITE_FF};
+  background: var(--content-color);
   position: relative;
   cursor: pointer;
 

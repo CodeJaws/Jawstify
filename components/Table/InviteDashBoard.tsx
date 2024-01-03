@@ -214,8 +214,8 @@ const StyledDiv = styled.div<{ $data: any }>`
   width: 1023px;
   height: 600px;
   border-radius: 8px;
-  background: #1a1a1a;
-  border: var(--content-border);
+  background: var(--content-color);
+  border: var(--content-border); 
 
   ${onTablet} {
     width: 504px;
@@ -240,7 +240,7 @@ const StyledDiv = styled.div<{ $data: any }>`
 `;
 
 const StyledP = styled.p`
-  color: #5534DA;
+  color: var(--invite-title);
   padding: 32px 0 0 28px;
   ${fontStyle(24, 700)};
   ${onMobile} {
@@ -258,8 +258,9 @@ const StyledInputDiv = styled.div`
   height: 40px;
   border-radius: 6px;
   margin: 20px 28px 0;
-  border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.WHITE_FF};
+  border: var(--input-border);
+  background: var(--input-bg);
+
   ${onTablet} {
     width: 448px;
     height: 40px;
@@ -275,6 +276,9 @@ const StyledInput = styled.input`
   width: 800px;
   height: 38px;
   ${fontStyle(16, 400)}
+  background-color: var(--input-bg);
+  color: var(--input-color);
+
   ${onTablet} {
     width: 390px;
     height: 35px;

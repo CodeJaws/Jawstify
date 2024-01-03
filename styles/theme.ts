@@ -32,6 +32,7 @@ export const theme = css`
 
     --sidebar-hover: #F1EFFD;
     --sidebar-border: 1px solid #d9d9d9;
+    --sidebar-bg: #ffffff;
 
     --content-color: #ffffff;
     --content-back: #fafafa;
@@ -43,15 +44,19 @@ export const theme = css`
     --input-label: #333326;
     --input-bg: #ffffff;
     --input-border: #d9d9d9;
+    --input-color: #9fa6b2;
 
     --sign-bg: #fafafa;
 
-    --dashboardButton-bg: #ffffff;
-    --dashboardButton-color: #333236;
-    --dashboardButton-border: 1px solid #d9d9d9;
+    --button-bg: #ffffff;
+    --button-color: #333236;
+    --button-border: 1px solid #d9d9d9;
     
     --modal-bg: #ffffff;
     --modal-title: #333236;
+
+    --invite-title: #333246;
+
   }
 
   body[data-theme='dark'] {
@@ -91,13 +96,14 @@ export const theme = css`
     --input-bg: #171717;
     --input-border: #444444;
 
-    --dashboardButton-bg: #222222;
-    /* --dashboardButton-color: #5534DA; */
-    --dashboardButton-color: #dddddd;
-    --dashboardButton-border: 0.5px solid #444444;
+    --button-bg: #222222;
+    --button-color: #dddddd;
+    --button-border: 0.5px solid #444444;
 
     --modal-bg: #171717;
     --modal-title: #5534DA;
+
+    --invite-title: #5534da;
   }
 
 `;

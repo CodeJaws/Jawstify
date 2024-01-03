@@ -23,8 +23,9 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.WHITE_FF};
+  border: var(--button-border);
+  background: var(--button-bg);
+  
 
   ${onTablet} {
     width: 544px;
