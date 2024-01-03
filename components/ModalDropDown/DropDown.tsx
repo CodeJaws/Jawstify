@@ -76,6 +76,7 @@ function DropDown({ type, onChange }: ModalDropdownProps) {
         <StyledInputWrapper>
           <StyledInput
             value={inputData}
+            onClick={() => setIsOpen(true)}
             onChange={openDropDown}
             placeholder="이름을 입력해주세요"
             $imgSrc={imgSrc ?? Emoji}
