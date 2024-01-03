@@ -1,6 +1,8 @@
+import { COLORS } from '@/styles/palettes';
+
 export const INIT_CREATE_DASHBOARD = {
   '대시보드 이름': '',
-  색상: '',
+  색상: COLORS.GREEN_7A,
 };
 
 export const INIT_CREATE_TODO = {
