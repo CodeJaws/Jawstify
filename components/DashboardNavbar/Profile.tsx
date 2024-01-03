@@ -65,7 +65,7 @@ const StyledNameWrapper = styled.div`
 const StyledButton = styled.button`
   display: flex;
   align-items: center;
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   cursor: pointer;
 `;
 
@@ -108,8 +108,4 @@ const StyledImageWrapper = styled.div`
     width: 34px;
     height: 34px;
   }
-`;
-
-const StyledButton = styled.button`
-  color: var(--content-main);
 `;
