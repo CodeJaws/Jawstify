@@ -32,14 +32,12 @@ function ModalCard() {
   const { tasks } = useDashBoard();
   const deviceType = useDeviceType();
 
-  const testAPI = useCallback(async () => {
+  const getDetailCardData = useCallback(async () => {
     const getCards = await API.cards.getCardDetails({ cardId });
-
     const dashBoard = await API.columns.getColumnList({ dashboardId });
     const getMember = await API.members.getMembersInDashboard({ dashboardId });
 
     setCardData(getCards);
-
     setCardId(Number(cardId));
     setTasks(dashBoard);
     setMembers(getMember);
@@ -51,8 +49,8 @@ function ModalCard() {
   const status = filterColumn[0].title;
 
   useEffect(() => {
-    testAPI();
-  }, [refresh, testAPI]);
+    getDetailCardData();
+  }, [refresh, getDetailCardData]);
 
   useEffect(() => {
     setStatus(status);
