@@ -10,13 +10,13 @@ import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
 import MembersTable from '@/components/Table/MembersTable';
 import DeleteButton from '@/components/common/Button/DeleteButton';
 import useDashboard from '@/hooks/useDashboard';
+import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
+import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import useRedriectByLogin from '@/hooks/useRedriectByLogin';
-import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 
 interface BoardEditProps {
   dashboardid: number;
@@ -95,7 +95,6 @@ const StyledContainer = styled.div`
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
-  min-height: 1080px;
 `;
 
 const StyledInWrapper = styled.div`
