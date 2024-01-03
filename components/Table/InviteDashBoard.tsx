@@ -258,8 +258,9 @@ const StyledInputDiv = styled.div`
   height: 40px;
   border-radius: 6px;
   margin: 20px 28px 0;
-  border: var(--input-border);
+  border: 1px solid var(--input-border);
   background: var(--input-bg);
+  color: var(--input-color);
 
   ${onTablet} {
     width: 448px;

@@ -25,9 +25,9 @@ export const theme = css`
     --nav-border: 1px solid #d9d9d9;
     --nav-imgBorder: 2px solid #ffffff;
     --nav-Dropdown-bg: #ffffff;
-    --nav-Dropdown-border: 1px solid #444444;
+    --nav-Dropdown-border: 1px solid #d9d9d9;
     --nav-Dropdown-hover: #F1EFFD;
-    --nav-Dropdown-color: #787486;
+    --nav-Dropdown-color: #171717;
 
     --sidebar-border: 1px solid #d9d9d9;
     --sidebar-bg: #ffffff;
