@@ -135,6 +135,7 @@ const StyledModalContainer = styled.div<{ $isTightVersion: boolean }>`
   box-shadow: 0 2pc 12px 0px rgba(0, 0, 0, 0.08);
   padding: 32px 28px;
   gap: 28px;
+  border: var(--modal-border);
 
   ${onMobile} {
     width: 330px;

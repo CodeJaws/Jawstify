@@ -22,91 +22,93 @@ export const theme = css`
 
 
     --nav-bg: ${COLORS.WHITE_FF};
-    --nav-border: 1px solid #d9d9d9;
-    --nav-imgBorder: 2px solid #ffffff;
-    --nav-Dropdown-bg: #ffffff;
-    --nav-Dropdown-border: 1px solid #d9d9d9;
+    --nav-border: 1px solid ${COLORS.GRAY_D9};
+    --nav-imgBorder: 2px solid ${COLORS.WHITE_FF};
+    --nav-Dropdown-bg: ${COLORS.WHITE_FF};
+    --nav-Dropdown-border: 1px solid ${COLORS.GRAY_D9};
     --nav-Dropdown-hover: #F1EFFD;
-    --nav-Dropdown-color: #171717;
+    --nav-Dropdown-color: ${COLORS.BLACK_17};
 
-    --sidebar-border: 1px solid #d9d9d9;
-    --sidebar-bg: #ffffff;
+    --sidebar-border: 1px solid ${COLORS.GRAY_D9};
+    --sidebar-bg: ${COLORS.WHITE_FF};
     --sidebar-hover: #F1EFFD;
 
-    --content-color: #ffffff;
+    --content-color: ${COLORS.WHITE_FF};
     --content-back: #fafafa;
     --content-border: 1px solid transparent;
-    --content-divider: 1px solid #eeeeee;
-    --content-main: #333236;
-    --content-second: #9FA6B2;
+    --content-divider: 1px solid ${COLORS.GRAY_EE};
+    --content-main: ${COLORS.BLACK_33};
+    --content-second: ${COLORS.GRAY_9F};
 
-    --input-label: #333326;
-    --input-bg: #ffffff;
-    --input-border: #d9d9d9;
-    --input-color: #9fa6b2;
+    --input-label: ${COLORS.BLACK_33};
+    --input-bg: ${COLORS.WHITE_FF};
+    --input-border: ${COLORS.GRAY_D9};
+    --input-color: ${COLORS.GRAY_9F};
 
     --sign-bg: #fafafa;
-    --sign-main: #eeeeee;
+    --sign-main: ${COLORS.GRAY_EE};
 
-    --button-bg: #ffffff;
-    --button-color: #333236;
-    --button-border: 1px solid #d9d9d9;
+    --button-bg: ${COLORS.WHITE_FF};
+    --button-color: ${COLORS.BLACK_33};
+    --button-border: 1px solid ${COLORS.GRAY_D9};
     
-    --modal-bg: #ffffff;
-    --modal-title: #333236;
+    --modal-bg: ${COLORS.WHITE_FF};
+    --modal-title: ${COLORS.BLACK_33};
+    --modal-borderborder: 1px solid transparent;
   
-    --invite-title: #333246;
+    --invite-title: ${COLORS.BLACK_33};
 
   }
 
   body[data-theme='dark'] {
     // landingPage
-    --bg-main: #111111;
+    --bg-main: ${COLORS.BLACK_17};
     --bg-second: ${COLORS.BLACK_17};
     --bg-third: ${COLORS.BLACK_4B};
     --bg-fourth: ${COLORS.BLACK_17};
-    --bg-footer: #111111;
+    --bg-footer: ${COLORS.BLACK_17};
 
-    --text-main: #eeeeee;
+    --text-main: ${COLORS.GRAY_EE};
     --text-second: ${COLORS.GRAY_9F};;
     --text-third: ${COLORS.WHITE_FF};
 
-
-    --nav-bg : #191919;
+    --nav-bg : ${COLORS.BLACK_17};
     --nav-border: 1px solid #555555;
-    --nav-imgBorder: 2px solid #d9d9d9;
-    --nav-Dropdown-bg: #171717;
-    --nav-Dropdown-border: 0.5px solid #444444;
+    --nav-imgBorder: 2px solid ${COLORS.GRAY_D9};
+    --nav-Dropdown-bg: ${COLORS.BLACK_17};
+    --nav-Dropdown-border: 0.5px solid ${COLORS.BLACK_4B};
     --nav-Dropdown-hover: #303134;
-    --nav-Dropdown-color: #787486;
+    --nav-Dropdown-color: ${COLORS.GRAY_9F};
 
     --sidebar-border: 1px solid #555555;
-    --sidebar-bg: #191919;
+    --sidebar-bg: ${COLORS.BLACK_17};
     --sidebar-hover: #303134;
 
     --content-color: #28282b;
-    --content-back: #111111;
-    --content-border: 1px solid #444444;
-    --content-divider: 0.5px solid #444444;
-    --content-main: #eeeeee;
-    --content-second: #eeeeee;
+    --content-back: ${COLORS.BLACK_17};
+    --content-border: 1px solid ${COLORS.BLACK_4B};
+    --content-divider: 0.5px solid ${COLORS.BLACK_4B};
+    --content-main: ${COLORS.GRAY_EE};
+    --content-second: ${COLORS.GRAY_EE};
 
-    --input-label: #ffffff;
-    --input-bg: #171717;
-    --input-border: #444444;
-    --input-color: #9fa6b2;
+    --input-label: ${COLORS.WHITE_FF};
+    --input-bg: ${COLORS.BLACK_17};
+    --input-border: ${COLORS.BLACK_4B};
+    --input-color: ${COLORS.GRAY_9F};
 
-    --sign-bg: #111111;
-    --sign-main: #eeeeee;
+    --sign-bg: ${COLORS.BLACK_17};
+    --sign-main: ${COLORS.GRAY_EE};
 
     --button-bg: #222222;
-    --button-color: #dddddd;
-    --button-border: 0.5px solid #444444;
+    --button-color: ${COLORS.GRAY_D9};
+    --button-border: 0.5px solid ${COLORS.BLACK_4B};
 
-    --modal-bg: #171717;
-    --modal-title: #5534DA;
+    --modal-bg: ${COLORS.BLACK_17};
+    --modal-title: ${COLORS.VIOLET_55};
+    --modal-border: 1px solid #4b4b4b;
 
-    --invite-title: #5534da;
+
+    --invite-title: ${COLORS.VIOLET_55};
   }
 
 `;
