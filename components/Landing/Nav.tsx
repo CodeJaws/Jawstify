@@ -16,12 +16,12 @@ function Nav() {
     <StyledLandingHeaderContainer>
       <StyledLandingHeaderInner>
         <StyledLogoLinkContainer href="/">
-          <LogoImageWrapper>
+          <StyledLogoImageWrapper>
             <Image src={logoImage} fill alt="logoImage" />
-          </LogoImageWrapper>
-          <LogoTextWrapper>
+          </StyledLogoImageWrapper>
+          <StyledLogoTextWrapper>
             <Image src={logoText} fill alt="logoText" />
-          </LogoTextWrapper>
+          </StyledLogoTextWrapper>
         </StyledLogoLinkContainer>
         <StyledLinkButton>
           <div onClick={() => toggleThemeMode()}>
@@ -66,7 +66,7 @@ const StyledLogoLinkContainer = styled(Link)`
   align-items: center;
 `
 
-const LogoImageWrapper = styled.div`
+const StyledLogoImageWrapper = styled.div`
   position: relative;
   width: 24px;
   height: 27px;
@@ -77,7 +77,7 @@ const LogoImageWrapper = styled.div`
   }
 `
 
-const LogoTextWrapper = styled.div`
+const StyledLogoTextWrapper = styled.div`
   display: none;
   position: relative;
   width: 80px;
