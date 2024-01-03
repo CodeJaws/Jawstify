@@ -67,7 +67,7 @@ function BoardEdit({ dashboardid: dashboardId }: BoardEditProps) {
   return (
     <StyledContainer>
       <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
-      <Sidebar />
+      <Sidebar refreshToggle={refreshToggle} />
       <StyledWrapper>
         <StyledInWrapper>
           <StyledLink href={`/dashboard/${dashboardId}`}>돌아가기</StyledLink>
@@ -95,7 +95,6 @@ const StyledContainer = styled.div`
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
-  min-height: 1080px;
 `;
 
 const StyledInWrapper = styled.div`
