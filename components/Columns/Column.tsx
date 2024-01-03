@@ -36,7 +36,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   const [manageColModalVals, setManageColModalVals] = useState<typeof INIT_MANAGE_COLUMN>(INIT_MANAGE_COLUMN);
 
-  // 무한스크롤로 카드 리스트 가져오기 - TODO: ERROR!
+  // 무한스크롤로 카드 리스트 가져오기
   const fetchHasMore = () => {
     if (columnCardList.length < cardListInfos.totalCount) {
       loadColumnCardList();
@@ -56,8 +56,8 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   // 컬럼 카드 리스트 데이터 api 요청 및 받은 데이터 렌더링
   const loadColumnCardList = async () => {
-    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
-    setColumnCardList(res.cards);
+    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 4 });
+    setColumnCardList((prev) => [...prev, ...res.cards]);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 

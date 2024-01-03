@@ -8,6 +8,7 @@ import Columns from '@/components/Columns/Columns';
 function DashBoardID() {
   const router = useRouter();
   const dashboardid = router.asPath.slice(11);
+
   return (
     <StyledContainer>
       <Sidebar />
