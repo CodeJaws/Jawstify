@@ -16,10 +16,11 @@ interface SidebarProps {
   boardId?: number;
   reset?: boolean;
   setReset?: Dispatch<SetStateAction<boolean>>;
+  refreshToggle?: boolean;
   refresh?: () => void;
 }
 
-function Sidebar({ reset, boardId, setReset, refresh }: SidebarProps) {
+function Sidebar({ reset, boardId, setReset, refreshToggle, refresh }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [values, setValues] = useState({
     '대시보드 이름': '',
@@ -62,7 +63,7 @@ function Sidebar({ reset, boardId, setReset, refresh }: SidebarProps) {
             <Image width={20} height={20} src={AddBox} alt="추가하기" />
           </button>
         </StyledTitleWrapper>
-        <Dashboard reset={reset} boardId={boardId} refresh={refresh} />
+        <Dashboard reset={reset} boardId={boardId} refreshToggle={refreshToggle} refresh={refresh} />
       </StyledContainer>
       {isOpen && (
         <Modal

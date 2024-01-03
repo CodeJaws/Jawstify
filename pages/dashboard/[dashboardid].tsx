@@ -1,29 +1,44 @@
 import Columns from '@/components/Columns/Columns';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import useDashboard from '@/hooks/useDashboard';
 import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
-import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onPc, onTablet } from '@/styles/mediaQuery';
-import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-function DashBoardID() {
-  useRedriectByLogin();
-  const router = useRouter();
-  const dashboardid = router.asPath.slice(11);
-  const { dashboardid: id } = router.query;
-  const [reset, setReset] = useState(false);
+interface DashBoardIDProps {
+  dashboardId: number;
+}
 
-  useRedriectByLogin();
-  useRedirectByDashboardId({ dashboardId: Number(id) });
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { dashboardid: dashboardId } = context.query;
+
+  if (!dashboardId) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      dashboardId,
+    },
+  };
+};
+
+function DashBoardID({ dashboardId }: DashBoardIDProps) {
+  useRedirectByLogin();
+  useRedirectByDashboardId({ dashboardId });
+  const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
+  const [reset, setReset] = useState(false);
 
   return (
     <StyledContainer>
       <Sidebar reset={reset} setReset={setReset} />
-      <DashboardNavbar isMyDashboard={false} />
+      <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
       <StyledWrapper>
-        <Columns dashboardId={Number(dashboardid)} />
+        <Columns dashboardId={Number(dashboardId)} />
       </StyledWrapper>
     </StyledContainer>
   );

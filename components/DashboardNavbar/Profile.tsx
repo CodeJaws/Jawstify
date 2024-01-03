@@ -44,14 +44,12 @@ function Profile() {
   return (
     <>
       <StyledContainer onBlur={(e) => handleBlur(e)}>
-        <label onMouseDown={handleClickDropdown}>
+        <StyledButton onMouseDown={handleClickDropdown}>
           <StyledImageWrapper>
-            <StyledImage fill sizes="100%" src={profileImageUrl || Codeit} alt="프로필" onClick={handleClickDropdown} />
+            <StyledImage fill sizes="100%" src={profileImageUrl || Codeit} alt="프로필" />
           </StyledImageWrapper>
-          <StyledNameWrapper>
-            <button>{nickname}</button>
-          </StyledNameWrapper>
-        </label>
+          <StyledNameWrapper>{nickname}</StyledNameWrapper>
+        </StyledButton>
         <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
       </StyledContainer>
     </>
@@ -61,9 +59,15 @@ function Profile() {
 export default Profile;
 
 const StyledNameWrapper = styled.div`
-  button {
-    ${fontStyle(16, 500)};
-  }
+  margin-left: 12px;
+  ${fontStyle(16, 500)};
+`;
+
+const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  color: ${COLORS.BLACK_33};
+  cursor: pointer;
 `;
 
 const StyledContainer = styled.div`
@@ -72,16 +76,6 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 12px;
-
-  label {
-    display: flex;
-    align-items: center;
-    color: ${COLORS.BLACK_33};
-  }
-
-  label > button {
-    cursor: pointer;
-  }
 
   ${onPc} {
     margin-right: 80px;

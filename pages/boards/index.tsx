@@ -1,7 +1,7 @@
-import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 
 function Boards() {
-  useRedriectByLogin();
+  useRedirectByLogin();
   return <div>Boards page</div>;
 }
 

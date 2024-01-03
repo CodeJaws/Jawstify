@@ -16,12 +16,14 @@ function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () =>
     });
   };
 
-  const onAlert = () => {
-    alert('10글자 이하로 작성해 주세요.');
-  };
-
-  const onEmptyAlert = () => {
-    alert('값을 입력해 주세요.');
+  const handleSubmit = () => {
+    if (values['대시보드 이름'].length === 0) {
+      alert('값을 입력해 주세요.');
+    } else if (values['대시보드 이름'].length > 10) {
+      alert('10글자 이하로 작성해 주세요.');
+    } else {
+      onOkClick();
+    }
   };
 
   useEffect(() => {
@@ -46,13 +48,7 @@ function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () =>
           text2="생성"
           size="large"
           onLeftClick={onCancelClick}
-          onRightClick={
-            values['대시보드 이름'].length === 0
-              ? onEmptyAlert
-              : values['대시보드 이름'].length > 10
-                ? onAlert
-                : onOkClick
-          }
+          onRightClick={handleSubmit}
         ></StyledTwinButton>
       </StyledButtonContainer>
     </>
