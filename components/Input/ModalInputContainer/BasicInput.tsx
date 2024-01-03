@@ -100,7 +100,6 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
   border-radius: 8px;
   border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
   background-color: var(--input-bg);
-  color: ${COLORS.BLACK_33};
   ${fontStyle(14, 400)}
 
   ${onMobile} {
@@ -111,7 +110,7 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
   &:focus,
   &:active {
     border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
-    color: ${COLORS.BLACK_33};
+    color: var(--input-color);
     outline: none;
   }
 
