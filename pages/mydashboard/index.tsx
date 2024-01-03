@@ -36,15 +36,15 @@ export default MyDashBoard;
 
 const StyledContainer = styled.div`
   width: 100%;
+  height: 100vh;
 `;
 
 const StyledWrapper = styled.div`
-  background: var(--content-bg);
+  background: var(--content-back);
   position: absolute;
   top: 70px;
   left: 300px;
   width: 100%;
-  height: 100%;
   padding: 40px;
   ${onTablet} {
     left: 160px;
