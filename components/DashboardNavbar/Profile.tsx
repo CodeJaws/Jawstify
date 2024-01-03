@@ -49,7 +49,7 @@ function Profile() {
             <StyledImage fill sizes="100%" src={profileImageUrl || Codeit} alt="프로필" onClick={handleClickDropdown} />
           </StyledImageWrapper>
           <StyledNameWrapper>
-            <button>{nickname}</button>
+            <StyledButton>{nickname}</StyledButton>
           </StyledNameWrapper>
         </label>
         <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
@@ -115,4 +115,8 @@ const StyledImageWrapper = styled.div`
     width: 34px;
     height: 34px;
   }
+`;
+
+const StyledButton = styled.button`
+  color: var(--content-main);
 `;
