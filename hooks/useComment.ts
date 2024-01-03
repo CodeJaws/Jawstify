@@ -1,7 +1,7 @@
 import API from '@/apis/api';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useCardData from './ModalCard/useCardData';
-import useCardId from './ModalCard/useCardId';
 import useRefresh from './useRefresh';
 
 interface Props {
@@ -18,9 +18,9 @@ interface Props {
 }
 
 function useComment() {
+  const router = useRouter();
   const [comment, setComment] = useState<Props[]>([]);
   const { cardData } = useCardData();
-  const { cardId } = useCardId();
   const { refresh, setRefresh } = useRefresh();
   const [cursorId, setCursorId] = useState<number | null>(0);
   const [hasMore, setHasMore] = useState(true);
@@ -28,6 +28,9 @@ function useComment() {
   const [isUpdateMap, setIsUpdateMap] = useState<{ [key: number]: boolean }>({});
   const [updatedCommentMap, setUpdatedCommentMap] = useState<{ [key: number]: string }>({});
   const [value, setValues] = useState('');
+
+  const dashboardId = Number(router.asPath.slice(1, router.asPath.indexOf('?')));
+  const cardId = Number(router.asPath.slice(router.asPath.indexOf('=') + 1));
 
   const isOpenComment = (commentId: number) => {
     setIsUpdateMap((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
@@ -53,7 +56,7 @@ function useComment() {
       content: value,
       cardId: cardId,
       columnId: cardData.columnId,
-      dashboardId: 325, // @TODO 대시보드 아이디 가져오기
+      dashboardId: dashboardId,
     };
 
     await API.comments.createComment(body);
@@ -77,7 +80,7 @@ function useComment() {
   };
 
   const loadComment = async () => {
-    const response = await API.comments.getCommentList({ size: 2, cardId: 328 });
+    const response = await API.comments.getCommentList({ size: 3, cardId: cardId });
     setComment(response.comments);
     setCursorId(response.cursorId);
   };

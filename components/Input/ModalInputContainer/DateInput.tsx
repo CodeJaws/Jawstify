@@ -11,6 +11,7 @@ import { StyledInputContainer, StyledLabel } from '../Input.style';
 interface Props {
   label?: string;
   placeholder?: string;
+  defaultValue?: string | null;
   onChange: (inputLabel: string, value: string) => void;
 }
 
@@ -19,7 +20,7 @@ interface Props {
  * @param label input 라벨 텍스트
  * @param placeholder input placeholder 텍스트
  * */
-function DateInput({ label = '마감일', placeholder = DEFAULT_PLACEHOLDER.DATE, onChange }: Props) {
+function DateInput({ label = '마감일', placeholder = DEFAULT_PLACEHOLDER.DATE, defaultValue, onChange }: Props) {
   const [dates, setDates] = useState<Dayjs | null>();
   const { cardData } = useCardData();
 
@@ -69,7 +70,7 @@ function DateInput({ label = '마감일', placeholder = DEFAULT_PLACEHOLDER.DATE
             border: 'none',
           }}
           value={dates}
-          defaultValue={dayjs(cardData.dueDate)}
+          defaultValue={defaultValue ? dayjs(defaultValue) : null}
           disablePast
           closeOnSelect
           format="YYYY.MM.DD hh:mm A"

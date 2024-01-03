@@ -53,7 +53,6 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   const InviteContainerRef = useRef<HTMLDivElement>(null);
 
   const fetchHasMore = () => {
-    console.log(hasMore);
     if (cursor) {
       if (dataSource.length !== 0) {
         handleLoadMore();
@@ -92,7 +91,6 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
       InviteContainerRef.current.scrollTop = 0;
       setHasMore((prev) => !prev);
     }
-    console.log(hasMore);
   }, [refresh]);
 
   const showItems = dataSource.filter((item) => item.dashboard.title.includes(searchText));

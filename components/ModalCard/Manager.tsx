@@ -132,6 +132,7 @@ const StyledDeadLineName = styled.p`
 const StyledDeadLine = styled.p`
   ${fontStyle(14, 400)};
   color: ${COLORS.BLACK_33};
+  white-space: nowrap;
 
   ${onMobile} {
     font-size: 1.2rem;

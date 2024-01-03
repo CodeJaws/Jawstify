@@ -103,10 +103,13 @@ const columns = {
  * @param correctCard 카드 수정
  * @param getCardDetails 카드 상세 조회
  */
+
 const cards = {
   createCard: async (body: T.CreateCardProps) => await request.post<T.CreateCardItem>('cards', body),
-  checkCardList: async ({ size = 10, cursorId = 0, columnId }: T.CheckCardListProps) =>
-    await request.get<T.CheckCardListItem>(`cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`),
+  checkCardList: async ({ size = 10, cursorId, columnId }: T.CheckCardListProps) =>
+    await request.get<T.CheckCardListItem>(
+      `cards?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}&columnId=${columnId}`,
+    ),
   correctCard: async ({
     cardId,
     columnId,

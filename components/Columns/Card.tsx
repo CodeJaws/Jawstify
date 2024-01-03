@@ -1,41 +1,76 @@
-import styled from 'styled-components';
-import Image from 'next/image';
+import calendar from '@/public/assets/icons/calendar.svg';
+import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import calendar from '@/public/assets/icons/calendar.svg';
+import dateFormat from '@/utils/dateFormat';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
-import cardImg from '@/public/assets/images/cardImage.png';
-import profileImg from '@/public/assets/icons/GreenEllipse.svg';
 
-function Card() {
+interface Props {
+  cardInfoData: { dashboardId: number; cardId: number };
+  title: string;
+  // description: string;
+  tags: string[];
+  dueDate: string;
+  assignee: {
+    profileImageUrl: string;
+    nickname: string;
+    id: number;
+  };
+  imageUrl: string;
+}
 
-  const handleClickCard = () => {
-    // 카드 상세 모달 
-    console.log('카드 상세 모달');
-  }
+function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, cardInfoData }: Props) {
+  const router = useRouter();
+
+  const handleCardDetailModalOpen = () => {
+    router.push(`/${cardInfoData.dashboardId}?cardId=${cardInfoData.cardId}`); // 카드 상세 모달 오픈
+  };
+
+  const date = dateFormat(dueDate);
 
   return (
-    <StyledContainer onClick={handleClickCard}>
-      {/* <StyledImageContainer>
-        <Image src={cardImg} fill alt='카드 이미지' />
-      </StyledImageContainer> */}
+    <StyledContainer onClick={handleCardDetailModalOpen}>
+      {imageUrl ? (
+        <StyledImageContainer>
+          <Image
+            src={imageUrl}
+            width={1000}
+            height={1000}
+            style={{ width: 'auto', height: '100%' }}
+            alt="카드 이미지"
+          />{' '}
+        </StyledImageContainer>
+      ) : (
+        <></>
+      )}
       <StyledInfoContainer>
-        <StyledInfoTitle>Taskify 프로젝트</StyledInfoTitle>
+        <StyledInfoTitle>{title}</StyledInfoTitle>
         <StyledInfoWrapper>
           <StyledInfoChips>
-            <ContentChip text='백엔드' color='red' backgroundColor='pink' />
-            <ContentChip text='상' color='green' backgroundColor='yellowgreen' />
+            {tags.map((val) => (
+              <ContentChip
+                key={val}
+                text={val.substring(0, val.indexOf('/'))}
+                color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
+                backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
+              />
+            ))}
           </StyledInfoChips>
           <StyledInfoDate>
             <StyledCalendarIconContainer>
-              <Image src={calendar} fill alt='캘린더 아이콘' />
+              <Image src={calendar} fill alt="캘린더 아이콘" />
             </StyledCalendarIconContainer>
-            2024.01.05
+            {date}
           </StyledInfoDate>
         </StyledInfoWrapper>
       </StyledInfoContainer>
-      <StyledInfoProfile></StyledInfoProfile>
+      <StyledInfoProfile>
+        <Image src={profileImageUrl ?? Emoji} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
+      </StyledInfoProfile>
     </StyledContainer>
   );
 }
@@ -44,8 +79,6 @@ export default Card;
 
 const StyledContainer = styled.div`
   width: 284px;
-  /* height: 257px; */
-  /* height: 97px; */
   height: auto;
   padding: 12px;
   display: flex;
@@ -60,7 +93,6 @@ const StyledContainer = styled.div`
 
   ${onTablet} {
     width: 544px;
-    /* height: 96px; */
     padding: 20px;
     flex-direction: row;
     align-items: flex-start;
@@ -69,7 +101,7 @@ const StyledContainer = styled.div`
 
   ${onPc} {
     width: 314px;
-    /* height: 297px; */
+
     padding: 20px;
     gap: 12px;
   }
@@ -77,8 +109,9 @@ const StyledContainer = styled.div`
 
 const StyledImageContainer = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
   width: 100%;
-  /* height: 100%; */
   height: 160px;
   border-radius: 6px;
 
@@ -98,7 +131,7 @@ const StyledInfoContainer = styled.div`
 `;
 
 const StyledInfoTitle = styled.div`
-  color: ${COLORS.BLACK_33}; 
+  color: ${COLORS.BLACK_33};
   ${fontStyle(16, 500)};
   margin-bottom: 10px;
 
@@ -113,13 +146,12 @@ const StyledInfoWrapper = styled.div`
   display: grid;
   align-items: center;
   grid-row-gap: 6px;
-  grid-template-areas: 
+  grid-template-areas:
     'chips'
     'date';
 
   ${onTablet} {
-    grid-template-areas: 
-    'chips date';
+    grid-template-areas: 'chips date';
     justify-content: flex-start;
     grid-column-gap: 16px;
   }
@@ -127,7 +159,7 @@ const StyledInfoWrapper = styled.div`
 
 const StyledInfoChips = styled.div`
   grid-area: chips;
-  display: flex;
+  display: block;
   justify-content: flex-start;
   gap: 6px;
 `;
@@ -140,7 +172,7 @@ const StyledInfoDate = styled.div`
   grid-area: date;
   ${fontStyle(12, 500)};
   color: ${COLORS.GRAY_78};
-  
+
   ${onMobile} {
     gap: 4px;
     ${fontStyle(10, 500)};
@@ -154,13 +186,10 @@ const StyledInfoProfile = styled.div`
   right: 20px;
   width: 24px;
   height: 24px;
-  border-radius: 50%; 
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  ${fontStyle(10, 600)};
-  font-family: Montserrat;
-  background: url(${profileImg.src}) no-repeat center center;
 
   ${onMobile} {
     width: 22px;

@@ -6,16 +6,19 @@ import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Basic from './ModalContent/Basic';
-import CreateDashboard from './ModalContent/CreateDashboard';
 import CreateToDo from './ModalContent/CreateToDo';
 import EditToDo from './ModalContent/EditToDo';
+import CreateDashboard from './ModalContent/CreateDashboard';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
+import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
   title: '' | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 컬럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
   isSingleButton?: boolean;
+  defaultValue?: typeof INIT_EDIT_TODO | typeof INIT_MANAGE_COLUMN | typeof INIT_BASIC;
+  dashboardInfos?: { columnId: number; dashboardId: number };
   onDeleteClick?: () => void;
 }
 
@@ -23,10 +26,12 @@ function Modal({
   title,
   description = '',
   isSingleButton = false,
+  defaultValue,
   onOkClick,
   onCancelClick,
   onDeleteClick = () => {},
   getValue = () => {},
+  dashboardInfos,
 }: Props) {
   const [value, setValue] = useState({});
 
@@ -54,7 +59,14 @@ function Modal({
       case '새로운 대시보드':
         return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 생성':
-        return <CreateToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
+        return (
+          <CreateToDo
+            dashboardInfos={dashboardInfos ?? { columnId: 0, dashboardId: 0 }}
+            onOkClick={onOkClick}
+            onCancelClick={onCancelClick}
+            getValue={setModalInputValue}
+          />
+        );
       case '할 일 수정':
         return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
@@ -64,6 +76,7 @@ function Modal({
             onCancelClick={onCancelClick}
             onDeleteClick={onDeleteClick}
             getValue={setModalInputValue}
+            defaultValue={defaultValue as typeof INIT_MANAGE_COLUMN}
           />
         );
       default:

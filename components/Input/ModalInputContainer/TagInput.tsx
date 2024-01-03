@@ -1,6 +1,5 @@
 import ContentChip from '@/components/Chip/ContentChip';
 import { TAG_COLOR } from '@/constants/ModalInput';
-import useCardData from '@/hooks/ModalCard/useCardData';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import { ChangeEvent, KeyboardEvent, MouseEvent, useEffect, useState } from 'react';
@@ -10,6 +9,7 @@ import { StyledLabel } from '../Input.style';
 export interface TagProps {
   inputValue?: string;
   label?: string;
+  defaultValue?: string[] | null;
   onChange: (inputLabel: string, value: Tag[]) => void;
   onButtonClick?: (e: MouseEvent<HTMLElement>) => void;
 }
@@ -24,19 +24,23 @@ export interface Tag {
  * @param label input 라벨 텍스트
  * @param onChange 부모 컴포넌트에서 제어하는 input onChange 함수
  * */
-function TagInput({ label = '태그', onChange }: TagProps) {
+function TagInput({ label = '태그', onChange, defaultValue: defaultTagStringList }: TagProps) {
   const [tags, setTags] = useState<Tag[]>([]);
   const [value, setValue] = useState<string>('');
-  const { cardData } = useCardData();
+  // const { cardData } = useCardData();
 
-  const getTag = cardData.tags;
+  // const getTag = cardData.tags;
 
-  const splitTag = getTag.map((val) => val.split('/'));
-  const formatTag = splitTag.map((val) => ({
-    value: val[0],
-    color: val[1],
-    backgroundColor: val[2],
-  }));
+  const getFormattedTagEl = () => {
+    if (!defaultTagStringList) return;
+    const splitTag = defaultTagStringList.map((val) => val.split('/'));
+    const formattedTag = splitTag.map((val) => ({
+      value: val[0],
+      color: val[1],
+      backgroundColor: val[2],
+    }));
+    return formattedTag;
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -62,7 +66,10 @@ function TagInput({ label = '태그', onChange }: TagProps) {
   };
 
   useEffect(() => {
-    setTags(formatTag);
+    if (defaultTagStringList) {
+      const formmatedTags = getFormattedTagEl() as Tag[];
+      setTags(formmatedTags);
+    }
   }, []);
 
   useEffect(() => {
