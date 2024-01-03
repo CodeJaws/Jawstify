@@ -1,16 +1,16 @@
-import Image from 'next/image';
-import emoji from '@/public/assets/images/emoji.webp';
-import { styled } from 'styled-components';
-import { fontStyle } from '@/styles/fontStyle';
 import Button from '@/components/common/Button/Button';
-import Link from 'next/link';
+import DefaultImg from '@/public/assets/images/jaws.png';
+import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+import Image from 'next/image';
+import Link from 'next/link';
+import { styled } from 'styled-components';
 
 function NotFound() {
   return (
     <StyledContainer>
       <Styled404Text>404</Styled404Text>
-      <Styled404Image width={200} height={200} src={emoji} alt="crying emoji"></Styled404Image>
+      <Styled404Image width={200} height={200} src={DefaultImg} alt="crying emoji" />
       <StyledText>OOPS! PAGE NOT BE FOUND</StyledText>
       <Link href="/">
         <Button text="Back to Home" size="large" onClick={() => {}}></Button>

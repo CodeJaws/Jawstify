@@ -6,6 +6,7 @@ import TagInput, { Tag, TagProps } from '@/components/Input/ModalInputContainer/
 import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
+import { DefaultCardImg } from '@/constants/ModalInput';
 import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
@@ -77,7 +78,7 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
       description: values.설명, // 필수 입력 요소
       dueDate: values.마감일 ?? null,
       tags: formatedTagData ?? null,
-      imageUrl: CardContentImgUrl ?? null,
+      imageUrl: CardContentImgUrl ?? DefaultCardImg,
     };
 
     const response = await api.cards.createCard(body).catch((error) => alert(error.data.message));

@@ -1,4 +1,4 @@
-import Emoji from '@/public/assets/images/emoji.webp';
+import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -48,11 +48,7 @@ function ModalCard() {
               );
             })}
           </StyledContent>
-          {imageUrl ? (
-            <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />
-          ) : (
-            <StyledImage width={450} height={262} src={Emoji} alt="카드 기본 이미지" />
-          )}
+          <StyledImage width={450} height={262} src={imageUrl || DefaultImg} alt="카드 이미지" />
         </StyledContentWrapper>
         <Comment />
       </StyledLeftContainer>
