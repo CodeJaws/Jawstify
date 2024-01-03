@@ -37,17 +37,17 @@ function BoardID({ dashboardId }: DashboardEditPageProps) {
   const cardId = params.get('cardId') as unknown as number;
 
   const testAPI = useCallback(async () => {
-    const test = await API.cards.getCardDetails({ cardId });
+    const getCards = await API.cards.getCardDetails({ cardId });
 
     const dashBoard = await API.columns.getColumnList({ dashboardId });
     const getMember = await API.members.getMembersInDashboard({ dashboardId });
 
-    setCardData(test);
+    setCardData(getCards);
 
     setCardId(Number(cardId));
     setTasks(dashBoard);
     setMembers(getMember);
-  }, [dashboardId, setCardData, setCardId, setMembers, setTasks]);
+  }, [cardId, dashboardId, setCardData, setCardId, setMembers, setTasks]);
 
   useEffect(() => {
     testAPI();
