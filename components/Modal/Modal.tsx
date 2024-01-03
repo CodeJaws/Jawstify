@@ -102,10 +102,14 @@ function Modal({
   return ReactDOM.createPortal(
     <>
       {title !== '할 일 수정' && <StyledModalBackdrop onClick={onCancelClick} />}
-      <StyledModalContainer $isTightVersion={isTightVersion}>
-        <StyledTitle>{title}</StyledTitle>
-        {renderModalContent(title)}
-      </StyledModalContainer>
+      {title === '카드' ? (
+        <>{renderModalContent(title)}</>
+      ) : (
+        <StyledModalContainer title={title} $isTightVersion={isTightVersion}>
+          <StyledTitle>{title}</StyledTitle>
+          {renderModalContent(title)}
+        </StyledModalContainer>
+      )}
     </>,
     portalDiv,
   );
