@@ -122,6 +122,6 @@ const StyledWrapper2 = styled.div`
   }
 
   ${onPc} {
-    padding: 68px 0 0 20px;
+    padding: 42px 0 0 20px;
   }
 `;
