@@ -4,7 +4,11 @@ import { onMobile } from '@/styles/mediaQuery';
 import { styled } from 'styled-components';
 import Menu from './Menu';
 
-function ModalButton() {
+interface Props {
+  onCancelClick: () => void;
+}
+
+function ModalButton({ onCancelClick }: Props) {
   const { setIsCardOpen } = useCardOpen();
   return (
     <StyledContainer>

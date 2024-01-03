@@ -32,7 +32,7 @@ function DashBoardID({ dashboardId }: DashBoardIDProps) {
   useRedirectByLogin();
   useRedirectByDashboardId({ dashboardId });
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
-  const { isCardOpen } = useCardOpen();
+  const { isCardOpen, setIsCardOpen } = useCardOpen();
 
   return (
     <>
@@ -48,7 +48,7 @@ function DashBoardID({ dashboardId }: DashBoardIDProps) {
           <Columns dashboardId={Number(dashboardId)} />
         </StyledWrapper>
       </StyledContainer>
-      {isCardOpen && <Modal title="카드" onOkClick={() => {}} />}
+      {isCardOpen && <Modal title="카드" onOkClick={() => {}} onCancelClick={() => setIsCardOpen(false)} />}
     </>
   );
 }

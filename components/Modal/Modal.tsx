@@ -70,7 +70,7 @@ function Modal({
           />
         );
       case '카드':
-        return <ModalCard />;
+        return <ModalCard onCancelClick={onCancelClick} />;
       case '할 일 수정':
         return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
