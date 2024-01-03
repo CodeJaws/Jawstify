@@ -24,6 +24,8 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
   const [image, setImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
   const [values, setValues] = useState(INIT_CREATE_TODO);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { setInputData } = useInputData();
   const { setImgSrc } = useImgSrc();
 
@@ -63,6 +65,8 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
   };
 
   const handleCreateToDoSubmit = async () => {
+    setIsLoading(true);
+
     const formatedTagData: string[] = values.태그.map((tagEl: Tag) =>
       [tagEl.value, tagEl.color, tagEl.backgroundColor].join('/'),
     );
@@ -81,6 +85,8 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
     };
 
     const response = await api.cards.createCard(body).catch((error) => alert(error.data.message));
+    setIsLoading(false);
+
     // api post request succeed
     if (response) onOkClick(); // Column의 onOkClick 함수 실행
   };
@@ -117,6 +123,8 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
           size="large"
           onLeftClick={onCancelClick}
           onRightClick={handleCreateToDoSubmit}
+          isDisabled={isLoading}
+          isLoading={isLoading}
         ></StyledTwinButton>
       </StyledButtonContainer>
     </>
