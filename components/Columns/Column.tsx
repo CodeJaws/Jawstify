@@ -132,6 +132,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
                 hasMore={hasMore}
                 useWindow={false}
                 initialLoad={false}
+                style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
               >
                 {columnCardList.map((card) => (
                   <li key={card.id}>
@@ -163,6 +164,9 @@ const StyledBlank = styled.div`
 const StyledDiv = styled.div`
   height: 90vh;
   overflow: scroll;
+  display: flex;
+  gap: 10px;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -174,7 +178,6 @@ const StyledDiv = styled.div`
   }
 
   ${onTablet} {
-    height: fit-content;
     width: 100%;
     height: 20vh;
     overflow: scroll;
