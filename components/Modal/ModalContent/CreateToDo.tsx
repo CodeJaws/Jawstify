@@ -1,5 +1,4 @@
-import api from '@/apis/api';
-import API from '@/apis/api';
+import { default as API, default as api } from '@/apis/api';
 import AddImageButton from '@/components/AddImageButton/AddImageButton';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import DateInput from '@/components/Input/ModalInputContainer/DateInput';
@@ -8,6 +7,8 @@ import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
 import useGetMember from '@/hooks/DropDown/useGetMember';
+import useImgSrc from '@/hooks/DropDown/useImgSrc';
+import useInputData from '@/hooks/DropDown/useInputData';
 import useManager from '@/hooks/DropDown/useManager';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
@@ -23,6 +24,8 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
   const [image, setImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
   const [values, setValues] = useState(INIT_CREATE_TODO);
+  const { setInputData } = useInputData();
+  const { setImgSrc } = useImgSrc();
 
   const { manager } = useManager();
   const { setMembers } = useGetMember();
@@ -77,17 +80,14 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
       imageUrl: CardContentImgUrl ?? null,
     };
 
-    try {
-      const response = await api.cards.createCard(body);
-      // api post request succeed
-      if (response) onOkClick(); // Column의 onOkClick 함수 실행
-    } catch (e) {
-      // api post request failed
-      console.log('error!', e);
-    }
+    const response = await api.cards.createCard(body).catch((error) => alert(error.data.message));
+    // api post request succeed
+    if (response) onOkClick(); // Column의 onOkClick 함수 실행
   };
 
   useEffect(() => {
+    setImgSrc('');
+    setInputData('');
     handleSetMembers();
   }, []);
 

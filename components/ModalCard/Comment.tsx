@@ -38,46 +38,50 @@ function Comment() {
         }}
       />
 
-      <StyledCommentWrapper>
-        <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
-          {comment?.map((val) => (
-            <StyledInCommentWrapper key={val.id}>
-              {val.author.profileImageUrl ? (
-                <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
-              ) : (
-                <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
-              )}
-              <StyledCommentContent>
-                <StyledInComment>
-                  <StyledUser>{val.author.nickname}</StyledUser>
-                  <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
-                </StyledInComment>
-                {isUpdateMap[val.id] ? (
-                  <StyledInputWrapper>
-                    <StyledInput
-                      value={updatedCommentMap[val.id] || val.content}
-                      onChange={(e) => handleUpdateInputChange(val.id, e)}
-                      placeholder="수정할 내용을 입력하세요."
-                    />
-                    <StyledButtonInWrapper>
-                      <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
-                      <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
-                    </StyledButtonInWrapper>
-                  </StyledInputWrapper>
+      {comment.length === 0 ? (
+        <></>
+      ) : (
+        <StyledCommentWrapper>
+          <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
+            {comment?.map((val) => (
+              <StyledInCommentWrapper key={val.id}>
+                {val.author.profileImageUrl ? (
+                  <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
                 ) : (
-                  <StyledComment>{val.content}</StyledComment>
+                  <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
                 )}
-                {!isUpdateMap[val.id] && (
-                  <StyledButtonWrapper>
-                    <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
-                    <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
-                  </StyledButtonWrapper>
-                )}
-              </StyledCommentContent>
-            </StyledInCommentWrapper>
-          ))}
-        </InfiniteScroll>
-      </StyledCommentWrapper>
+                <StyledCommentContent>
+                  <StyledInComment>
+                    <StyledUser>{val.author.nickname}</StyledUser>
+                    <StyledDate>{dateTimeFormat(val.createdAt)}</StyledDate>
+                  </StyledInComment>
+                  {isUpdateMap[val.id] ? (
+                    <StyledInputWrapper>
+                      <StyledInput
+                        value={updatedCommentMap[val.id] || val.content}
+                        onChange={(e) => handleUpdateInputChange(val.id, e)}
+                        placeholder="수정할 내용을 입력하세요."
+                      />
+                      <StyledButtonInWrapper>
+                        <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
+                        <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
+                      </StyledButtonInWrapper>
+                    </StyledInputWrapper>
+                  ) : (
+                    <StyledComment>{val.content}</StyledComment>
+                  )}
+                  {!isUpdateMap[val.id] && (
+                    <StyledButtonWrapper>
+                      <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
+                      <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
+                    </StyledButtonWrapper>
+                  )}
+                </StyledCommentContent>
+              </StyledInCommentWrapper>
+            ))}
+          </InfiniteScroll>
+        </StyledCommentWrapper>
+      )}
     </StyledContainer>
   );
 }
@@ -106,7 +110,7 @@ const StyledCommentWrapper = styled.div`
   flex-direction: column;
   row-gap: 15px;
   overflow-y: scroll;
-  height: 80px;
+  height: 160px;
 
   &::-webkit-scrollbar {
     width: 2px;

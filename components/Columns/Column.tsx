@@ -1,19 +1,19 @@
-import API from '@/apis/api';
+import { default as API, default as api } from '@/apis/api';
+import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import setting from '@/public/assets/icons/setting.svg';
+
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import CountChip from '../Chip/CountChip';
+import Modal from '../Modal/Modal';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
-import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
-import Modal from '../Modal/Modal';
-import api from '@/apis/api';
-import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
-import InfiniteScroll from 'react-infinite-scroller';
 
 interface Props extends GetColumnListProps {
   columnId: number;
@@ -56,14 +56,13 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   // 컬럼 카드 리스트 데이터 api 요청 및 받은 데이터 렌더링
   const loadColumnCardList = async () => {
-    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 4 });
+    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
     setColumnCardList((prev) => [...prev, ...res.cards]);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
-  // Modal Input Values Submit Events
   const handleColumnDelete = async () => {
-    const response = await api.columns.deleteColumn({ columnId: String(columnId) });
+    await api.columns.deleteColumn({ columnId: String(columnId) });
     await applyColumnDelete(dashboardId);
   };
 
@@ -112,32 +111,44 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
             }}
           />
         )}
-        <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
-          <StyledSettingIconContainer onClick={() => handleModalsOpen('manageColumn')}>
-            <Image fill src={setting} alt="설정 버튼" />
-          </StyledSettingIconContainer>
 
-          <StyledHeader>
-            <div>{cardListInfos.title}</div>
-            <StyledCountChip content={cardListInfos.totalCount} />
-          </StyledHeader>
-          <StyledWrapper>
-            <AddButton onClick={() => handleModalsOpen('createToDo')} />
+        <StyledSettingIconContainer onClick={() => handleModalsOpen('manageColumn')}>
+          <Image fill src={setting} alt="설정 버튼" />
+        </StyledSettingIconContainer>
 
-            {columnCardList.map((card) => (
-              <li key={card.id}>
-                <Card
-                  cardInfoData={{ dashboardId, cardId: card.id }}
-                  title={card.title}
-                  dueDate={card.dueDate}
-                  tags={card.tags}
-                  assignee={card.assignee}
-                  imageUrl={card.imageUrl}
-                />
-              </li>
-            ))}
-          </StyledWrapper>
-        </InfiniteScroll>
+        <StyledHeader>
+          <div>{cardListInfos.title}</div>
+          <StyledCountChip content={cardListInfos.totalCount} />
+        </StyledHeader>
+        <StyledWrapper>
+          <AddButton onClick={() => handleModalsOpen('createToDo')} />
+          {columnCardList.length === 0 ? (
+            <StyledBlank></StyledBlank>
+          ) : (
+            <StyledDiv>
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={fetchHasMore}
+                hasMore={hasMore}
+                useWindow={false}
+                initialLoad={false}
+              >
+                {columnCardList.map((card) => (
+                  <li key={card.id}>
+                    <Card
+                      cardInfoData={{ dashboardId, cardId: card.id }}
+                      title={card.title}
+                      dueDate={card.dueDate}
+                      tags={card.tags}
+                      assignee={card.assignee}
+                      imageUrl={card.imageUrl}
+                    />
+                  </li>
+                ))}
+              </InfiniteScroll>
+            </StyledDiv>
+          )}
+        </StyledWrapper>
       </StyledContainer>
     </>
   );
@@ -145,76 +156,91 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
 export default Column;
 
-const StyledContainer = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 0.75rem;
-  position: relative;
-  border-bottom: 0.0625rem solid ${COLORS.GRAY_EE};
+const StyledBlank = styled.div`
+  height: 100%;
+`;
+
+const StyledDiv = styled.div`
   height: 90vh;
   overflow: scroll;
-
   &::-webkit-scrollbar {
     display: none;
   }
 
-  ${onTablet} {
-    height: fit-content;
-    padding: 20px;
-    width: 100%;
-  }
-
   ${onPc} {
     width: 354px;
-    padding: 1.25rem;
     border: none;
     border-right: 0.0625rem solid ${COLORS.GRAY_EE};
   }
 
-  ${onMobile} {
+  ${onTablet} {
     height: fit-content;
+    width: 100%;
+    height: 20vh;
+    overflow: scroll;
+  }
+
+  ${onMobile} {
+    height: 40vh;
+  }
+`;
+
+const StyledContainer = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 7.5px 0 7.5px 35px;
+  position: relative;
+  border-bottom: 0.625px solid ${COLORS.GRAY_EE};
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  ${onTablet} {
+    padding: 7.5px 0 7.5px 7.5px;
+  }
+  ${onMobile} {
+    padding: 7.5px;
   }
 `;
 
 const StyledSettingIconContainer = styled.button`
   position: absolute;
-  width: 1.5rem;
-  height: 1.5rem;
-  right: 1.25rem;
-  top: 1.25rem;
+  width: 15px;
+  height: 15px;
+  right: 12.5px;
+  top: 12.5px;
   cursor: pointer;
 
   ${onMobile} {
-    width: 1.375rem;
-    height: 1.375rem;
-    right: 0.75rem;
-    top: 0.75rem;
+    width: 13.75px;
+    height: 13.75px;
+    right: 7.5px;
+    top: 7.5px;
   }
 `;
 
 const StyledHeader = styled.div`
   display: flex;
-  gap: 0.75rem;
+  gap: 7.5px;
   ${fontStyle(18, 700)};
-  margin-bottom: 1.5625rem;
+  margin-bottom: 15.625px;
 
   ${onMobile} {
     ${fontStyle(16, 700)};
-    margin-bottom: 1.0625rem;
+    margin-bottom: 10.625px;
   }
 `;
 
 const StyledCountChip = styled(CountChip)`
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 12.5px;
+  height: 12.5px;
 `;
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 10px;
 
   ${onMobile} {
-    gap: 0.625rem;
+    gap: 6.25px;
   }
 `;

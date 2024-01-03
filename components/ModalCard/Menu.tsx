@@ -38,7 +38,7 @@ function Menu() {
     try {
       if (confirm('카드를 삭제 하시겠습니까?')) {
         await API.cards.deleteCard({ cardId });
-        router.push('/myboard');
+        router.back();
       }
     } catch (error) {
       console.log(error);
