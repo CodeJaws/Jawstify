@@ -24,6 +24,11 @@ export const theme = css`
     --nav-bg: ${COLORS.WHITE_FF};
     --nav-border: 1px solid #d9d9d9;
     --nav-imgBorder: 2px solid #ffffff;
+    --nav-Dropdown-bg: #ffffff;
+    --nav-Dropdown-color: 
+    --nav-Dropdown-border: 1px solid #444444;
+    --nav-Dropdown-hover: #F1EFFD;
+    --nav-Dropdown-color: #787486;
 
     --sidebar-hover: #F1EFFD;
     --sidebar-border: 1px solid #d9d9d9;
@@ -64,6 +69,9 @@ export const theme = css`
     --nav-bg : #191919;
     --nav-border: 1px solid #555555;
     --nav-imgBorder: 2px solid #d9d9d9;
+    --nav-Dropdown-bg: #171717;
+    --nav-Dropdown-border: 0.5px solid #444444;
+    --nav-Dropdown-hover: #303134;
 
     --content-color: #28282b;
     --content-back: #111111;
@@ -84,7 +92,7 @@ export const theme = css`
     --input-border: #444444;
 
     --dashboardButton-bg: #222222;
-    --dashboardButton-color: #5534DA;
+    /* --dashboardButton-color: #5534DA; */
     --dashboardButton-color: #dddddd;
     --dashboardButton-border: 0.5px solid #444444;
 

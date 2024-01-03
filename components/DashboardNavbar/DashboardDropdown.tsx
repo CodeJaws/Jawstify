@@ -43,9 +43,9 @@ function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
           </StyledLink>
         </li>
         <StyledSeperator></StyledSeperator>
-        <li>
+        {/* <li>
           <DarkmodeButton />
-        </li>
+        </li> */}
         {/* <li><StyledWrapper onClick={enableDarkmode}>다크모드</StyledWrapper></li> */}
       </ul>
     </StyledContainer>
@@ -57,10 +57,11 @@ export default DashboardDropdown;
 const StyledContainer = styled.div<{ $deviceType: string | undefined; $isOpen: boolean }>`
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   position: absolute;
-  width: 217px;
+  width: 130px;
   height: auto;
-  background-color: ${COLORS.WHITE_FF};
-  border: 1px solid ${COLORS.GRAY_D9};
+  background-color: var(--nav-Dropdown-bg);
+  border: var(--nav-Dropdown-border);
+
   top: 50px;
   /* right: 0px; */
   right: ${({ $deviceType }) => ($deviceType === 'mobile' ? 10 : 10)}px;
@@ -69,26 +70,30 @@ const StyledContainer = styled.div<{ $deviceType: string | undefined; $isOpen: b
   align-items: center;
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
   border-radius: 6px;
-  padding: 13px 8px;
-  z-index: 3;
+  padding: 5px;
+  z-index: 10;
 
   ul {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
   }
 
   ul > li {
     display: flex;
     align-items: center;
-    margin-left: 10px;
-    margin-top: 10px;
-    gap: 10px;
-    width: 100%;
+    width: auto;
+    height: auto;
+    padding: 7px;
+    color: var(--nav-Dropdown-color);
     ${fontStyle(16, 100)}
+    border-radius: 5px;
+
+
     &:hover {
-      background-color: ${COLORS.GRAY_F5};
+      background-color: var(--nav-Dropdown-hover);
+      color: var(--nav-Dropdown-color);
     }
   }
 `;
@@ -97,19 +102,20 @@ const StyledLink = styled(Link)`
   width: 100%;
   ${fontStyle(14, 100)}
   &:hover {
-    background-color: ${COLORS.GRAY_F5};
+    background-color: var(--nav-Dropdown-hover);
   }
+  margin-left: 10px;
 `;
 
-const StyledWrapper = styled.div`
-  cursor: pointer;
-  width: 100%;
-  ${fontStyle(14, 100)}
-  &:hover {
-    background-color: ${COLORS.GRAY_F5};
-  }
-`;
+// const StyledWrapper = styled.div`
+//   cursor: pointer;
+//   width: 100%;
+//   ${fontStyle(14, 100)}
+//   &:hover {
+//     background-color: ${COLORS.GRAY_F5};
+//   }
+// `;
 
 const StyledSeperator = styled.div`
-  border: 1px solid black;
+  border: var(--nav-Dropdown-border);
 `;
