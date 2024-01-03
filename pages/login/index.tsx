@@ -5,6 +5,7 @@ import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useUserData from '@/hooks/global/useUserData';
 import useAuth from '@/hooks/useAuth';
+import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
@@ -30,6 +31,8 @@ interface FormValue {
   };
 }
 function Login() {
+  useRedriectByLogin();
+
   const {
     register,
     handleSubmit,

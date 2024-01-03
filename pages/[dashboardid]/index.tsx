@@ -4,6 +4,7 @@ import useGetMember from '@/hooks/DropDown/useGetMember';
 import useCardData from '@/hooks/ModalCard/useCardData';
 import useCardId from '@/hooks/ModalCard/useCardId';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
+import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import useRefresh from '@/hooks/useRefresh';
 import { GetServerSidePropsContext } from 'next';
 import { useCallback, useEffect } from 'react';
@@ -28,6 +29,8 @@ interface DashboardEditPageProps {
 }
 
 function BoardID({ dashboardId }: DashboardEditPageProps) {
+  useRedriectByLogin();
+
   const { setCardData } = useCardData();
   const { setCardId } = useCardId();
   const { setTasks } = useDashBoard();
