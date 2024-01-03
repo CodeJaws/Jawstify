@@ -57,10 +57,10 @@ function Columns({ dashboardId }: GetColumnListProps) {
     <StyledContainer>
       {isSuccess && (
         <StyledWrapper>
-          {columns.map((column) => {
-            return (
-              <ul key={column.id}>
-                <li>
+          <ul>
+            {columns.map((column) => {
+              return (
+                <li key={column.id}>
                   <Column
                     title={column.title}
                     columnId={column.id}
@@ -68,9 +68,9 @@ function Columns({ dashboardId }: GetColumnListProps) {
                     applyColumnDelete={getColumnListFunc}
                   />
                 </li>
-              </ul>
-            );
-          })}
+              );
+            })}
+          </ul>
         </StyledWrapper>
       )}
       <StyledWrapper2>
