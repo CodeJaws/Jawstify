@@ -1,3 +1,6 @@
+import useCardId from '@/hooks/ModalCard/useCardId';
+import useCardOpen from '@/hooks/ModalCard/useCardOpen';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
 import calendar from '@/public/assets/icons/calendar.svg';
 import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
@@ -5,7 +8,6 @@ import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import dateFormat from '@/utils/dateFormat';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
 
@@ -24,13 +26,17 @@ interface Props {
 }
 
 function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, cardInfoData }: Props) {
-  const router = useRouter();
-
-  const handleCardDetailModalOpen = () => {
-    router.push(`/${cardInfoData.dashboardId}?cardId=${cardInfoData.cardId}`); // 카드 상세 모달 오픈
-  };
+  const { setCardId } = useCardId();
+  const { setDashboardId } = useDashBoardId();
+  const { isCardOpen, setIsCardOpen } = useCardOpen();
 
   const date = dateFormat(dueDate);
+
+  const handleCardDetailModalOpen = () => {
+    setIsCardOpen(true);
+    setCardId(cardInfoData.cardId);
+    setDashboardId(cardInfoData.dashboardId);
+  };
 
   return (
     <StyledContainer onClick={handleCardDetailModalOpen}>
