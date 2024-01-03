@@ -38,10 +38,13 @@ export const theme = css`
     --input-label: #333326;
 
     --sign-bg: #fafafa;
-    --dashboardButton-color: #ffffff;
+
+    --dashboardButton-bg: #ffffff;
+    --dashboardButton-color: #333236;
+    --dashboardButton-border: 1px solid #d9d9d9;
+    
     --modal-bg: #ffffff;
     --modal-title: #333236;
-
   }
 
   body[data-theme='dark'] {
@@ -56,7 +59,6 @@ export const theme = css`
     --text-second: ${COLORS.GRAY_9F};;
     --text-third: ${COLORS.WHITE_FF};
 
-
     --nav-bg : #191919;
     --nav-border: 1px solid #555555;
     --nav-imgBorder: 2px solid #d9d9d9;
@@ -68,20 +70,22 @@ export const theme = css`
     --content-main: #eeeeee;
     --content-second: #eeeeee;
 
-    --sidebar-hover: #303134;
     --sidebar-border: 1px solid #555555;
     --sidebar-bg: #191919;
+    --sidebar-hover: #303134;
 
     --sign-bg: #111111;
     --sign-main: #eeeeee;
 
     --input-label: #ffffff;
 
-    --dashboardButton-color: #ffffff;
+    --dashboardButton-bg: #222222;
+    --dashboardButton-color: #5534DA;
+    --dashboardButton-color: #dddddd;
+    --dashboardButton-border: 0.5px solid #444444;
 
     --modal-bg: #171717;
     --modal-title: #5534DA;
-
   }
 
 `;

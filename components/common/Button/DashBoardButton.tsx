@@ -49,10 +49,9 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.WHITE_FF};
-  background-color: var(--dashboardButton-color);
-  color: ${COLORS.BLACK_33};
+  border: var(--dashboardButton-border);
+  background-color: var(--dashboardButton-bg);
+  color: var(--dashboardButton-color);
   ${fontStyle(16, 600)};
 
   ${onTablet} {

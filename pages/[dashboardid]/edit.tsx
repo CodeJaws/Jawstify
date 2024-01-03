@@ -16,25 +16,27 @@ import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+
 interface BoardEditProps {
-  boardid: number;
+  dashboardid: number;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { boardid } = context.query;
+  const { dashboardid } = context.query;
 
-  if (!boardid) {
+  if (!dashboardid) {
     return { notFound: true };
   }
 
   return {
     props: {
-      boardid,
+      dashboardid,
     },
   };
 };
 
-function BoardEdit({ boardid: dashboardId }: BoardEditProps) {
+function BoardEdit({ dashboardid: dashboardId }: BoardEditProps) {
+
   const router = useRouter();
   const [refreshToggle, setRefreshToggle] = useState(false);
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });

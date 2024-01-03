@@ -216,7 +216,8 @@ const StyledDiv = styled.div<{ $data: any }>`
   width: 1023px;
   height: 600px;
   border-radius: 8px;
-  background: ${COLORS.WHITE_FF};
+  background: #1a1a1a;
+  border: var(--content-border);
 
   ${onTablet} {
     width: 504px;
@@ -241,6 +242,7 @@ const StyledDiv = styled.div<{ $data: any }>`
 `;
 
 const StyledP = styled.p`
+  color: #5534DA;
   padding: 32px 0 0 28px;
   ${fontStyle(24, 700)};
   ${onMobile} {
@@ -334,14 +336,13 @@ const StyleListWrapper = styled.div`
 const StyledListInWrapper = styled.div`
   float: left;
   width: 100%;
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(16, 400)}
 `;
 
 const StyledHr = styled.hr`
-  background: ${COLORS.GRAY_EE};
   height: 1px;
-  border: 0;
+  border: var(--content-divider);
 `;
 
 const StyledMobileContainer = styled.div`
@@ -362,7 +363,7 @@ const StyledMobileRightDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(14, 400)}
 `;
 
