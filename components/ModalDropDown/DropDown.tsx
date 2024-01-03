@@ -41,22 +41,24 @@ function DropDown({ type, onChange }: ModalDropdownProps) {
   const filterData = members.members.filter((manager) => {
     if (inputData) {
       return manager.nickname.toLowerCase().includes(inputData.toLowerCase());
+    } else {
+      return manager.nickname.toLowerCase();
     }
   });
 
   useEffect(() => {
     onChange('상태', status);
-  }, [status]);
+  }, [onChange, status]);
 
   useEffect(() => {
     onChange('담당자', inputData);
-  }, [inputData]);
+  }, [inputData, onChange]);
 
   useEffect(() => {
     setInputData(cardData.assignee.nickname);
 
     setImgSrc(cardData.assignee.profileImageUrl);
-  }, [setInputData, setImgSrc]);
+  }, [setInputData, setImgSrc, cardData.assignee.nickname, cardData.assignee.profileImageUrl]);
 
   return (
     <>
@@ -74,6 +76,7 @@ function DropDown({ type, onChange }: ModalDropdownProps) {
         <StyledInputWrapper>
           <StyledInput
             value={inputData}
+            onClick={() => setIsOpen(true)}
             onChange={openDropDown}
             placeholder="이름을 입력해주세요"
             $imgSrc={imgSrc ?? Emoji}

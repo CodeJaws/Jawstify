@@ -200,6 +200,7 @@ const StyledContent = styled.p`
 `;
 
 const StyledImage = styled(Image)`
+  object-fit: contain;
   ${onTablet} {
     width: 420px;
     height: 245px;

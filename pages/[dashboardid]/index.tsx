@@ -8,9 +8,8 @@ import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import useRefresh from '@/hooks/useRefresh';
 import { GetServerSidePropsContext } from 'next';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
-
-const cardId = 328;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!context.params) {
@@ -34,23 +33,26 @@ function BoardID({ dashboardId }: DashboardEditPageProps) {
   useRedirectByDashboardId({ dashboardId });
 
   const { setCardData } = useCardData();
-  const { setCardId } = useCardId();
   const { setTasks } = useDashBoard();
   const { setMembers } = useGetMember();
+  const { setCardId } = useCardId();
   const { refresh } = useRefresh();
 
+  const params = useSearchParams();
+  const cardId = params.get('cardId') as unknown as number;
+
   const testAPI = useCallback(async () => {
-    const test = await API.cards.getCardDetails({ cardId });
+    const getCards = await API.cards.getCardDetails({ cardId });
 
     const dashBoard = await API.columns.getColumnList({ dashboardId });
     const getMember = await API.members.getMembersInDashboard({ dashboardId });
 
-    setCardData(test);
+    setCardData(getCards);
 
-    setCardId(cardId);
+    setCardId(Number(cardId));
     setTasks(dashBoard);
     setMembers(getMember);
-  }, [dashboardId, setCardData, setCardId, setMembers, setTasks]);
+  }, [cardId, dashboardId, setCardData, setCardId, setMembers, setTasks]);
 
   useEffect(() => {
     testAPI();

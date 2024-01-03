@@ -53,7 +53,7 @@ function Login() {
       response = await api.auth.login({ email: data.email as string, password: data.password as string });
       localStorageSetItem('accessToken', response.accessToken);
       await setUser(response.user);
-      response.accessToken && router.push('/boards');
+      response.accessToken && router.push('/mydashboard');
       throw Error;
     } catch (e: any) {
       setIsModalOpen(true);
@@ -63,7 +63,7 @@ function Login() {
 
   return (
     <StyledContainer>
-      <StyledLogoContainer>
+      <StyledLogoContainer href={'/'}>
         <StyledLogoImg src={mainLogo} height={190} width={165} alt="메인 로고" />
         <StyledLogoText src={mainLogoText} height={55} width={198} alt="메인 로고 텍스트" />
         <StyledDescription>오늘도 만나서 반가워요!</StyledDescription>
@@ -122,7 +122,7 @@ const StyledContainer = styled.div`
   background-color: ${COLORS.GRAY_FA};
 `;
 
-export const StyledLogoContainer = styled.div`
+export const StyledLogoContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;

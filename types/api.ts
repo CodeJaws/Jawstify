@@ -65,10 +65,11 @@ export interface CheckCardListItem {
     tags: string[];
     dueDate: string;
     assignee: {
-      profileImageUrl: string | null;
+      profileImageUrl: string;
       nickname: string;
       id: number;
     };
+    dashboardId: number;
     imageUrl: string;
     teamId: string;
     columnId: number;

@@ -23,7 +23,7 @@ function EditToDo({ onCancelClick = () => {}, getValue = () => {} }: ModalCommon
         </StyledModalContainer>
         <BasicInput isNecessary label="제목" onChange={handleChange} inputValue={values.제목} />
         <BasicInput isNecessary isTextArea label="설명" onChange={handleChange} inputValue={values.설명} />
-        <DateInput onChange={handleChange} />
+        <DateInput onChange={handleChange} defaultValue={cardData.dueDate} />
         <TagInput onChange={handleChange} />
         <AddImageButton
           type="modal"
