@@ -90,9 +90,6 @@ const StyledInDiv = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 const CrownImage = styled(Image)`
   width: 20px;
