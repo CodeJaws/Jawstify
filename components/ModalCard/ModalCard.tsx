@@ -12,17 +12,13 @@ import Comment from './Comment';
 import Manager from './Manager';
 import ModalButton from './ModalButton';
 
-interface Props {
-  onCancelClick: () => void;
-}
-
-function ModalCard({ onCancelClick }: Props) {
+function ModalCard() {
   const { cardData, description, deviceType, imageUrl, title, status } = useModalCard();
 
   return (
     <StyledContainer>
       <StyledLeftContainer>
-        {deviceType === 'mobile' && <ModalButton onCancelClick={onCancelClick} />}
+        {deviceType === 'mobile' && <ModalButton />}
         <StyledTitleWrapper>
           <StyledTitle>{title}</StyledTitle>
           {deviceType === 'mobile' && <Manager />}
@@ -58,7 +54,7 @@ function ModalCard({ onCancelClick }: Props) {
       </StyledLeftContainer>
       {deviceType !== 'mobile' && (
         <StyledRightContainer>
-          <ModalButton onCancelClick={onCancelClick} />
+          <ModalButton />
           <Manager />
         </StyledRightContainer>
       )}
