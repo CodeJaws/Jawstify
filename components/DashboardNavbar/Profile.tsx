@@ -59,6 +59,7 @@ function Profile() {
 export default Profile;
 
 const StyledNameWrapper = styled.div`
+  margin-left: 12px;
   ${fontStyle(16, 500)};
 `;
 

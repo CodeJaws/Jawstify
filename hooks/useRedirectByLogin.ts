@@ -3,7 +3,7 @@ import { localStorageGetItem } from '@/utils/localStorage';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-const useRedriectByLogin = () => {
+const useRedirectByLogin = () => {
   const router = useRouter();
   const checkLoggedIn = async () => {
     if (!localStorageGetItem('accessToken')) return false;
@@ -39,4 +39,4 @@ const useRedriectByLogin = () => {
   return;
 };
 
-export default useRedriectByLogin;
+export default useRedirectByLogin;

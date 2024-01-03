@@ -33,12 +33,8 @@ function ColorChip({ onChange, color }: ColorChipProps) {
   };
 
   useEffect(() => {
-    setSelectedColor(ColorEllipse.find((x) => x.color === color)?.id as number);
+    setSelectedColor((ColorEllipse.find((x) => x.color === color)?.id as number) ?? 0);
   }, [color]);
-
-  useEffect(() => {
-    setSelectedColor(0);
-  }, []);
 
   return (
     <StyledContainer>
