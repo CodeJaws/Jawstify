@@ -1,8 +1,8 @@
 import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 
-function Boards() {
+function DashBoard() {
   useRedriectByLogin();
-  return <div>Boards page</div>;
+  return <div>DashBoard page</div>;
 }
 
-export default Boards;
+export default DashBoard;

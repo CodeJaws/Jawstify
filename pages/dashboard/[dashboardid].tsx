@@ -1,13 +1,20 @@
+import Columns from '@/components/Columns/Columns';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { onTablet, onPc } from '@/styles/mediaQuery';
+import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
+import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import { onPc, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import Columns from '@/components/Columns/Columns';
 
 function DashBoardID() {
+  useRedriectByLogin();
   const router = useRouter();
   const dashboardid = router.asPath.slice(11);
+  const { dashboardid: id } = router.query;
+
+  useRedriectByLogin();
+  useRedirectByDashboardId({ dashboardId: Number(id) });
 
   return (
     <StyledContainer>

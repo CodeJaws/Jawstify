@@ -4,6 +4,7 @@ import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useAuth from '@/hooks/useAuth';
+import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
@@ -35,6 +36,9 @@ interface FormValue {
   };
 }
 function SignUp() {
+  useRedriectByLogin();
+
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -52,8 +56,6 @@ function SignUp() {
     isAgreeChecked,
     setIsAgreeChecked,
   } = useAuth(getValues, ['email', 'password', 'nickname', 'pwdcheck']);
-
-  const router = useRouter();
 
   const passwordRef = useRef<string | null | undefined>(null);
   passwordRef.current = getValues('password');
