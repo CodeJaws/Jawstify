@@ -1,7 +1,7 @@
-import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 
 function DashBoard() {
-  useRedriectByLogin();
+  useRedirectByLogin();
   return <div>DashBoard page</div>;
 }
 
