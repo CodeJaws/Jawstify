@@ -13,10 +13,9 @@ function MyDashBoard() {
 
   const [resetToFirst, setResetToFirst] = useState(false);
   const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
+  const [reset, setReset] = useState(false);
   const refresh = () => setRefreshPaginationToggle((prev) => !prev);
   const refreshToFirst = () => setResetToFirst((prev) => !prev);
-
-  const [reset, setReset] = useState(false);
 
   return (
     <StyledContainer>
@@ -28,7 +27,7 @@ function MyDashBoard() {
           refresh={refresh}
           refreshPaginationToggle={refreshPaginationToggle}
         />
-        <InviteDashBoard refresh={refresh} refreshToFirst={() => refreshToFirst()} />
+        <InviteDashBoard refresh={refresh} refreshToFirst={refreshToFirst} />
       </StyledWrapper>
     </StyledContainer>
   );

@@ -43,6 +43,7 @@ function BoardEdit({ dashboardid: dashboardId }: BoardEditProps) {
   const router = useRouter();
   const [refreshToggle, setRefreshToggle] = useState(false);
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });
+  const [reset, setReset] = useState(false);
 
   const refresh = () => setRefreshToggle((prev) => !prev);
 
@@ -67,7 +68,7 @@ function BoardEdit({ dashboardid: dashboardId }: BoardEditProps) {
   return (
     <StyledContainer>
       <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
-      <Sidebar />
+      <Sidebar reset={reset} setReset={setReset} />
       <StyledWrapper>
         <StyledInWrapper>
           <StyledLink href={`/dashboard/${dashboardId}`}>돌아가기</StyledLink>

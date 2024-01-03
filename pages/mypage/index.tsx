@@ -18,6 +18,7 @@ function MyPage() {
   const { user } = useUserData();
   const [nickname, setNickName] = useState('');
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
+  const [reset, setReset] = useState(false);
 
   useEffect(() => {
     setNickName(user.nickname);
@@ -27,7 +28,7 @@ function MyPage() {
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} />
-      <Sidebar />
+      <Sidebar reset={reset} setReset={setReset} />
       <StyledWrapper>
         <StyledInWrapper>
           <StyledBackWrapper href={'/mydashboard'}>돌아가기</StyledBackWrapper>
