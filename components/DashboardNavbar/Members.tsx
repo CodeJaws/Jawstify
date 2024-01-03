@@ -2,11 +2,11 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import useDeviceType from '@/hooks/useDeviceType';
+import DefaultProfile from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { createSlicedMembers } from '@/utils/createSlicedMembers';
 import { GetMembersInDashboardItem } from '@/types/api';
-import DefaultProfile from '@/public/assets/icons/Codeit.svg';
+import { createSlicedMembers } from '@/utils/createSlicedMembers';
 
 export type MemberType = GetMembersInDashboardItem['members'][0];
 

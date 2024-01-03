@@ -1,5 +1,5 @@
 import useCardData from '@/hooks/ModalCard/useCardData';
-import Emoji from '@/public/assets/images/emoji.webp';
+import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -18,11 +18,7 @@ function Manager() {
         <StyledMangerWrapper>
           <StyledManger>담당자</StyledManger>
           <StyledMangerProfile>
-            {profileImageUrl ? (
-              <StyledImage width={34} height={34} src={profileImageUrl} alt="프로필 이미지" />
-            ) : (
-              <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
-            )}
+            <StyledImage width={34} height={34} src={profileImageUrl || DefaultImg} alt="프로필 이미지" />
             <StyledMangerName>{nickname}</StyledMangerName>
           </StyledMangerProfile>
         </StyledMangerWrapper>
