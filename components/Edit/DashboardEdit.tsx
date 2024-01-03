@@ -41,24 +41,18 @@ function DashboardEdit({ dashboardData, refresh }: DashboardEditProps) {
   });
   const deviceType = useDeviceType();
   const handleChange = (inputLabel: string, inputValue: string) => {
-    let val: string;
-    if (inputLabel === '색상') {
-      val = colorObj[inputValue];
-    } else {
-      val = inputValue;
-    }
     setValues({
       ...values,
-      [inputLabel]: val,
+      [inputLabel]: inputValue,
     });
   };
 
   const handleSubmit = async () => {
-    if (values['대시보드 이름'].length >= 10) {
-      alert('대시보드 이름을 9자 이하로 설정해주세요.');
+    if (values['대시보드 이름'].length > 10) {
+      alert('10글자 이하로 작성해주세요.');
       return;
     } else if (values['대시보드 이름'].length === 0) {
-      alert('대시보드 이름을 입력해주세요.');
+      alert('값을 입력해주세요.');
       return;
     }
     try {
