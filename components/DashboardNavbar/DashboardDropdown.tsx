@@ -29,15 +29,15 @@ function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
     <StyledContainer $deviceType={deviceType} $isOpen={isOpen}>
       <ul>
         <li>
-          <Image width={25} height={25} src={UserImage} alt="내 정보" />
+          <Image width={20} height={20} src={UserImage} alt="내 정보" />
           <StyledLink href="/mypage">내 정보</StyledLink>
         </li>
         <li>
-          <Image width={25} height={25} src={DashboardImage} alt="내 대시보드" />
+          <Image width={20} height={20} src={DashboardImage} alt="내 대시보드" />
           <StyledLink href="/myboard">내 대시보드</StyledLink>
         </li>
         <li>
-          <Image width={25} height={25} src={LogoutImage} alt="로그아웃" />
+          <Image width={20} height={20} src={LogoutImage} alt="로그아웃" />
           <StyledLink href="/" onClick={() => logout()}>
             로그아웃
           </StyledLink>
