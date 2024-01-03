@@ -3,18 +3,18 @@ import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
 
 function NotFound() {
+  const router = useRouter();
+  const back = router.back;
   return (
     <StyledContainer>
       <Styled404Text>404</Styled404Text>
       <Styled404Image width={200} height={200} src={DefaultImg} alt="crying emoji" />
-      <StyledText>OOPS! PAGE NOT BE FOUND</StyledText>
-      <Link href="/">
-        <Button text="Back to Home" size="large" onClick={() => {}}></Button>
-      </Link>
+      <StyledText>조습니다... 잘못 들어오셨습니다 🦈</StyledText>
+      <Button text="뒤로가기" size="large" onClick={back}></Button>
     </StyledContainer>
   );
 }
@@ -27,7 +27,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: ${COLORS.VIOLET_15};
+  background: ${COLORS.VIOLET_55};
 `;
 
 const Styled404Image = styled(Image)`
