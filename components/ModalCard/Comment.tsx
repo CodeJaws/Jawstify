@@ -1,4 +1,5 @@
 import useComment from '@/hooks/useComment';
+import useUser from '@/hooks/useUser';
 import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
@@ -10,6 +11,7 @@ import styled from 'styled-components';
 import BasicInput from '../Input/ModalInputContainer/BasicInput';
 
 function Comment() {
+  const { user } = useUser();
   const {
     value,
     comment,
@@ -70,7 +72,7 @@ function Comment() {
                   ) : (
                     <StyledComment>{val.content}</StyledComment>
                   )}
-                  {!isUpdateMap[val.id] && (
+                  {!isUpdateMap[val.id] && val.author.id === user?.id && (
                     <StyledButtonWrapper>
                       <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
                       <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
@@ -107,10 +109,8 @@ const StyledContainer = styled.div`
 
 const StyledCommentWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  row-gap: 15px;
   overflow-y: scroll;
-  height: 160px;
+  height: 135px;
 
   &::-webkit-scrollbar {
     width: 2px;
@@ -121,7 +121,7 @@ const StyledCommentWrapper = styled.div`
     background: ${COLORS.GRAY_D9};
   }
   ${onMobile} {
-    height: 74px;
+    height: 138px;
   }
 `;
 

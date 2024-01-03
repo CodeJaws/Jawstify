@@ -80,7 +80,7 @@ function useComment() {
   };
 
   const loadComment = async () => {
-    const response = await API.comments.getCommentList({ size: 2, cardId: cardId });
+    const response = await API.comments.getCommentList({ size: 3, cardId: cardId });
     setComment(response.comments);
     setCursorId(response.cursorId);
   };
