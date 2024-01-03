@@ -25,6 +25,7 @@ import {
 
 interface TablePaginationProps {
   dashboardId: number;
+  inviteRefresh: boolean;
 }
 
 interface TableProps {
@@ -32,6 +33,8 @@ interface TableProps {
   dashboardId: number;
   refreshPagination: () => void;
 }
+
+const SHOW_ITEMS_SIZE = 5;
 
 /** 초대 내역 컴포넌트에서 하나의 줄을 의미합니다. */
 function Table({ item, dashboardId, refreshPagination }: TableProps) {
@@ -67,15 +70,14 @@ function Table({ item, dashboardId, refreshPagination }: TableProps) {
   );
 }
 
-function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
+function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps) {
   const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
   const refreshPagination = () => setRefreshPaginationToggle((prev) => !prev);
-  const SHOW_ITEMS_SIZE = 5;
 
   /**
    * @param handlePagination 페이지네이션 OnClick 동작 함수
    * @param pageNum 현재 페이지 넘버
-   * @param showMembers 화면에 보여줄 Items
+   * @param allItems 모든 Items
    * @param totalPages 총 페이지 수
    * @param totalCount 전체 아이템 수 - API에서 받아올 수 있습니다.
    */
@@ -85,6 +87,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
     type: 'invitationDetails',
     dashboardId,
     refreshPaginationToggle,
+    inviteRefresh,
   });
 
   const tableTitle = '초대 내역';
