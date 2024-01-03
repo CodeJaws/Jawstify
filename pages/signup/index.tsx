@@ -4,7 +4,7 @@ import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useAuth from '@/hooks/useAuth';
-import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
@@ -36,7 +36,7 @@ interface FormValue {
   };
 }
 function SignUp() {
-  useRedriectByLogin();
+  useRedirectByLogin();
 
   const router = useRouter();
   const {

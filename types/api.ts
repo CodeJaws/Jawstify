@@ -163,16 +163,16 @@ export interface GetColumnListItem {
 }
 
 export interface CorrectColumnProps {
-  columnId: string;
+  columnId: number;
   title: string;
 }
 
 export interface DeleteColumnProps {
-  columnId: string;
+  columnId: number;
 }
 
 export interface UploadCardImageProps {
-  columnId: string;
+  columnId: number;
   image: string;
 }
 
@@ -297,7 +297,7 @@ export interface GetDashboardDetailedItem {
 export interface CorrectDashboardProps {
   title: string;
   color: string;
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface CorrectDashboardItem {
@@ -311,11 +311,11 @@ export interface CorrectDashboardItem {
 }
 
 export interface DeleteDashboardProps {
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface InviteDashboardProps {
-  dashboardId: string;
+  dashboardId: number;
   email: string;
 }
 
@@ -373,8 +373,8 @@ export interface LoadInviteDashboardItem {
 }
 
 export interface AbortInviteDashboardProps {
-  dashboardId: string;
-  invitationId: string;
+  dashboardId: number;
+  invitationId: number;
 }
 
 export interface GetInvitationListProps {
@@ -454,7 +454,7 @@ export interface GetMembersInDashboardItem {
 }
 
 export interface DeleteMemberInDashboardProps {
-  memberId: string;
+  memberId: number;
 }
 
 export interface SignupProps {

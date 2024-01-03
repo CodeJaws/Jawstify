@@ -5,7 +5,7 @@ import useCardData from '@/hooks/ModalCard/useCardData';
 import useCardId from '@/hooks/ModalCard/useCardId';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
-import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import useRefresh from '@/hooks/useRefresh';
 import { GetServerSidePropsContext } from 'next';
 import { useSearchParams } from 'next/navigation';
@@ -29,7 +29,7 @@ interface DashboardEditPageProps {
 }
 
 function BoardID({ dashboardId }: DashboardEditPageProps) {
-  useRedriectByLogin();
+  useRedirectByLogin();
   useRedirectByDashboardId({ dashboardId });
 
   const { setCardData } = useCardData();

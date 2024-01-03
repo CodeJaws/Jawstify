@@ -30,11 +30,11 @@ function MobileColorChip({ onChange, color }: MobileColorChipProps) {
   const toggleSelectedColor = (index: number) => {
     if (index >= 5) {
       setSelectedColor(index - 5);
-      const selectedColorText = ColorEllipse[index - 5]?.alt || '';
+      const selectedColorText = ColorEllipse[index - 5]?.color || '';
       onChange('색상', selectedColorText);
     } else {
       setSelectedColor(index);
-      const selectedColorText = ColorEllipse[index]?.alt || '';
+      const selectedColorText = ColorEllipse[index]?.color || '';
       onChange('색상', selectedColorText);
     }
   };
