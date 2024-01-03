@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { ModalCommonProps } from '@/types/modal';
+import Button from '@/components/common/Button/Button';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
-import { StyledTwinButton } from './Create&EditToDo';
+import { ModalCommonProps } from '@/types/modal';
+import styled from 'styled-components';
 import { StyledContainer } from './Basic';
-import Button from '@/components/common/Button/Button';
+import { StyledTwinButton } from './CreateToDo';
 
 interface Props extends ModalCommonProps {
   description: string;

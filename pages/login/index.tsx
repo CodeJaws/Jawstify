@@ -5,6 +5,7 @@ import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useUserData from '@/hooks/global/useUserData';
 import useAuth, { LoginFormValue } from '@/hooks/useAuth';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
@@ -18,6 +19,9 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 function Login() {
+  const router = useRouter();
+  useRedirectByLogin();
+
   const {
     register,
     handleSubmit,
@@ -32,7 +36,7 @@ function Login() {
 
   return (
     <StyledContainer>
-      <StyledLogoContainer>
+      <StyledLogoContainer href={'/'}>
         <StyledLogoImg src={mainLogo} height={190} width={165} alt="메인 로고" />
         <StyledLogoText src={mainLogoText} height={55} width={198} alt="메인 로고 텍스트" />
         <StyledDescription>오늘도 만나서 반가워요!</StyledDescription>
@@ -91,7 +95,7 @@ const StyledContainer = styled.div`
   background-color: ${COLORS.GRAY_FA};
 `;
 
-export const StyledLogoContainer = styled.div`
+export const StyledLogoContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;

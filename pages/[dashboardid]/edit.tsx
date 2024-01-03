@@ -1,51 +1,56 @@
-import Link from 'next/link';
-import styled from 'styled-components';
 import { GetServerSideProps } from 'next';
+import styled from 'styled-components';
 
-import { COLORS } from '@/styles/palettes';
+import API from '@/apis/api';
+import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
+import DashboardEdit from '@/components/Edit/DashboardEdit';
+import Sidebar from '@/components/Sidebar/Sidebar';
+import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
+import MembersTable from '@/components/Table/MembersTable';
+import DeleteButton from '@/components/common/Button/DeleteButton';
+import useDashboard from '@/hooks/useDashboard';
+import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
+import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
-import Sidebar from '@/components/Sidebar/Sidebar';
-import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { useRouter } from 'next/router';
-import DashboardEdit from '@/components/Edit/DashboardEdit';
-import useDashboard from '@/hooks/useDashboard';
-import API from '@/apis/api';
-import MembersTable from '@/components/Table/MembersTable';
-import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
 import { useState } from 'react';
-import DeleteButton from '@/components/common/Button/DeleteButton';
 
 interface BoardEditProps {
-  boardid: number;
+  dashboardId: number;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { boardid } = context.query;
+  const { dashboardid: dashboardId } = context.query;
 
-  if (!boardid) {
+  if (!dashboardId) {
     return { notFound: true };
   }
 
   return {
     props: {
-      boardid,
+      dashboardId: Number(dashboardId),
     },
   };
 };
 
-function BoardEdit({ boardid: dashboardId }: BoardEditProps) {
+function BoardEdit({ dashboardId }: BoardEditProps) {
+  useRedirectByDashboardId({ dashboardId });
+  useRedirectByLogin();
+
   const router = useRouter();
   const [refreshToggle, setRefreshToggle] = useState(false);
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });
+  const [reset, setReset] = useState(false);
+  const backHome = () => router.back();
 
   const refresh = () => setRefreshToggle((prev) => !prev);
 
   const deleteDashboard = async () => {
     if (confirm('정말 대시보드를 삭제하시겠습니까?')) {
       try {
-        await API.dashboard.deleteDashboard({ dashboardId: String(dashboardId) });
+        await API.dashboard.deleteDashboard({ dashboardId: Number(dashboardId) });
         router.push('/mydashboard');
       } catch (e: any) {
         switch (e.data.message) {
@@ -63,18 +68,17 @@ function BoardEdit({ boardid: dashboardId }: BoardEditProps) {
   return (
     <StyledContainer>
       <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
-      <Sidebar />
+      <Sidebar refreshToggle={refreshToggle} reset={reset} setReset={setReset} />
       <StyledWrapper>
         <StyledInWrapper>
-          <StyledLink href={`/dashboard/${dashboardId}`}>돌아가기</StyledLink>
+          <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>
           <StyledMainWrapper>
             <DashboardEdit dashboardData={dashboardData} refresh={refresh} />
-            <div style={{ margin: '12px 0' }}>
+            <StyledMainInWrapper>
               <MembersTable dashboardId={Number(dashboardId)} refresh={refresh} />
-            </div>
+            </StyledMainInWrapper>
             <InviteDetailsTable dashboardId={Number(dashboardId)} />
             <DeleteButton onClick={deleteDashboard} />
-            {/* <StyledDeleteButton onClick={}>대시보드 삭제하기</StyledDeleteButton> */}
           </StyledMainWrapper>
         </StyledInWrapper>
       </StyledWrapper>
@@ -91,7 +95,6 @@ const StyledContainer = styled.div`
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
-  min-height: 1080px;
 `;
 
 const StyledInWrapper = styled.div`
@@ -114,7 +117,7 @@ const StyledInWrapper = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledRouterButton = styled.button`
   ${fontStyle(16, 500)}
   background-image: url(${BackImg.src});
   background-repeat: no-repeat;
@@ -128,4 +131,8 @@ const StyledLink = styled(Link)`
 const StyledMainWrapper = styled.div`
   margin-top: 25px;
   gap: 12px;
+`;
+
+const StyledMainInWrapper = styled.div`
+  margin: 12px 0px;
 `;

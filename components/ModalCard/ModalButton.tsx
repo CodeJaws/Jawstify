@@ -1,13 +1,15 @@
+import useCardOpen from '@/hooks/ModalCard/useCardOpen';
 import Close from '@/public/assets/icons/Close.svg';
 import { onMobile } from '@/styles/mediaQuery';
 import { styled } from 'styled-components';
 import Menu from './Menu';
 
 function ModalButton() {
+  const { setIsCardOpen } = useCardOpen();
   return (
     <StyledContainer>
       <Menu />
-      <StyledClose />
+      <StyledClose onClick={() => setIsCardOpen(false)} />
     </StyledContainer>
   );
 }

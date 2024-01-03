@@ -1,20 +1,24 @@
+import api from '@/apis/api';
+import FormInput from '@/components/Input/FormInput';
+import Modal from '@/components/Modal/Modal';
+import LoginButton from '@/components/common/Button/LoginButton';
+import * as C from '@/constants/SignValidate';
+import useAuth from '@/hooks/useAuth';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
+import mainLogoText from '@/public/assets/icons/logoText.svg';
+import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { COLORS } from '@/styles/palettes';
+import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import api from '@/apis/api';
-import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
-import FormInput from '@/components/Input/FormInput';
-import LoginButton from '@/components/common/Button/LoginButton';
-import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
-import mainLogoText from '@/public/assets/icons/logoText.svg';
-import * as C from '@/constants/SignValidate';
 import * as L from '../login';
-import Modal from '@/components/Modal/Modal';
 
 function SignUp() {
+  useRedirectByLogin();
+
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -33,14 +37,12 @@ function SignUp() {
     setIsAgreeChecked,
   } = useAuth(getValues, ['email', 'password', 'nickname', 'pwdcheck']);
 
-  const router = useRouter();
-
   const passwordRef = useRef<string | null | undefined>(null);
   passwordRef.current = getValues('password');
 
   return (
     <StyledContainer>
-      <L.StyledLogoContainer>
+      <L.StyledLogoContainer href={'/'}>
         <L.StyledLogoImg src={mainLogo} height={190} width={165} alt="메인 로고" />
         <L.StyledLogoText src={mainLogoText} height={55} width={198} alt="메인 로고 텍스트" />
         <L.StyledDescription>첫 방문을 환영합니다!</L.StyledDescription>

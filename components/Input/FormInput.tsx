@@ -37,7 +37,10 @@ interface Props {
 function FormInput({ label = '', placeholder, errorMessage = '', register }: Props) {
   const [isVisible, setIsVisible] = useState(false);
 
-  const isPassword = label.slice(0, 4).includes('비밀번호');
+  let isPassword = label.slice(0, 4).includes('비밀번호');
+  if (label === '현재 비밀번호' || label === '새 비밀번호' || label === '새 비밀번호 확인') {
+    isPassword = true;
+  }
   const hasError = errorMessage !== '';
 
   const handleVisibility = () => setIsVisible((prev) => !prev);
@@ -53,7 +56,7 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
       />
       {isPassword && (
         <StyledEyeButton onClick={handleVisibility} type="button">
-          <StyledImage src={isVisible ? eyeOff : eyeOn} width={24} height={24} alt="비밀번호 숨기기" />
+          <StyledImage src={isVisible ? eyeOn : eyeOff} width={24} height={24} alt="비밀번호 숨기기" />
         </StyledEyeButton>
       )}
       {hasError && <StyledErrorText>{errorMessage}</StyledErrorText>}

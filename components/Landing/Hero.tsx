@@ -1,12 +1,12 @@
-import React from 'react';
+import LoginButton from '@/components/common/Button/LoginButton';
+import HeroImg from '@/public/assets/images/landing1.png';
+import { fontStyle } from '@/styles/fontStyle';
+import { onPc, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import React from 'react';
 import styled from 'styled-components';
-import HeroImg from '@/public/assets/images/landing1.png';
-import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
-import { onTablet, onPc } from '@/styles/mediaQuery';
-import LoginButton from '@/components/common/Button/LoginButton';
 
 function HeroSection() {
   const router = useRouter();
@@ -24,7 +24,7 @@ function HeroSection() {
         <StyledHeroText1>새로운 일정 관리</StyledHeroText1>
         <StyledHeroText2>Taskify</StyledHeroText2>
       </StyledHeroTextWrapper>
-      <StyledHeroDescription>서비스의 메인 설명 들어갑니다</StyledHeroDescription>
+      <StyledHeroDescription>일정 조습니다 🦈</StyledHeroDescription>
       <LoginButton usingType="landing" active={true} onClick={handleClick} text="로그인하기" />
     </StyledHeroContainer>
   );
@@ -80,7 +80,7 @@ const StyledHeroTextWrapper = styled.div`
 const StyledHeroText1 = styled.div`
   width: 245px;
   height: 48px;
-  color: ${COLORS.BLACK_17};
+  color: var(--text-main);
   letter-spacing: -2px;
   ${fontStyle(40, 700)};
   white-space: nowrap;

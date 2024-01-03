@@ -1,20 +1,26 @@
+import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { ModalCommonProps } from '@/types/modal';
-import { COLORS } from '@/styles/palettes';
-import { fontStyle } from '@/styles/fontStyle';
-import { onMobile } from '@/styles/mediaQuery';
+
+import ModalCard from '../ModalCard/ModalCard';
 import Basic from './ModalContent/Basic';
 import CreateDashboard from './ModalContent/CreateDashboard';
-import CreateToDo from './ModalContent/Create&EditToDo';
+import CreateToDo from './ModalContent/CreateToDo';
+import EditToDo from './ModalContent/EditToDo';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
 
 interface Props extends ModalCommonProps {
-  title: '' | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 컬럼 생성' | '컬럼 관리' | '초대하기';
+  title: '' | '새로운 대시보드' | '카드' | '할 일 생성' | '할 일 수정' | '새 컬럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
   isSingleButton?: boolean;
+  defaultValue?: typeof INIT_EDIT_TODO | typeof INIT_MANAGE_COLUMN | typeof INIT_BASIC;
+  dashboardInfos?: { columnId: number; dashboardId: number };
   onDeleteClick?: () => void;
 }
 
@@ -22,10 +28,12 @@ function Modal({
   title,
   description = '',
   isSingleButton = false,
+  defaultValue,
   onOkClick,
   onCancelClick,
   onDeleteClick = () => {},
   getValue = () => {},
+  dashboardInfos,
 }: Props) {
   const [value, setValue] = useState({});
 
@@ -35,7 +43,9 @@ function Modal({
     setValue(values); // value = modal에 입력된 input value들의 집합
   };
 
-  getValue(value);
+  useEffect(() => {
+    getValue(value);
+  }, [getValue, value]);
 
   const renderModalContent = (title: Props['title']) => {
     switch (title) {
@@ -52,12 +62,17 @@ function Modal({
         return <CreateDashboard onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '할 일 생성':
         return (
-          <CreateToDo type="create" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
+          <CreateToDo
+            dashboardInfos={dashboardInfos ?? { columnId: 0, dashboardId: 0 }}
+            onOkClick={onOkClick}
+            onCancelClick={onCancelClick}
+            getValue={setModalInputValue}
+          />
         );
+      case '카드':
+        return <ModalCard />;
       case '할 일 수정':
-        return (
-          <CreateToDo type="edit" onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />
-        );
+        return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
         return (
           <ManageColumn
@@ -65,6 +80,7 @@ function Modal({
             onCancelClick={onCancelClick}
             onDeleteClick={onDeleteClick}
             getValue={setModalInputValue}
+            defaultValue={defaultValue as typeof INIT_MANAGE_COLUMN}
           />
         );
       default:
@@ -85,11 +101,15 @@ function Modal({
 
   return ReactDOM.createPortal(
     <>
-      <StyledModalBackdrop onClick={onCancelClick} />
-      <StyledModalContainer $isTightVersion={isTightVersion}>
-        <StyledTitle>{title}</StyledTitle>
-        {renderModalContent(title)}
-      </StyledModalContainer>
+      {title !== '할 일 수정' && <StyledModalBackdrop onClick={onCancelClick} />}
+      {title === '카드' ? (
+        <>{renderModalContent(title)}</>
+      ) : (
+        <StyledModalContainer title={title} $isTightVersion={isTightVersion}>
+          <StyledTitle>{title}</StyledTitle>
+          {renderModalContent(title)}
+        </StyledModalContainer>
+      )}
     </>,
     portalDiv,
   );
@@ -99,8 +119,8 @@ export default Modal;
 
 const StyledModalBackdrop = styled.div`
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;

@@ -21,6 +21,7 @@ function StatusChip({ content }: StatusChipProps) {
 export default StatusChip;
 
 const StyledContainer = styled.div`
+  height: 22px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -29,8 +30,10 @@ const StyledContainer = styled.div`
   font-size: 1.2rem;
   color: ${COLORS.VIOLET_55};
   background-color: ${COLORS.VIOLET_F1};
+  white-space: nowrap;
 
   ${onMobile} {
+    height: 20px;
     font-size: 1rem;
   }
 `;

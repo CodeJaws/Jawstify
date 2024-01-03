@@ -17,6 +17,7 @@
     "jwt-decode": "^4.0.0",
     "next": "14.0.4",
     "react": "^18",
+    "react-content-loader": "^6.2.1",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
     "react-infinite-scroller": "^1.2.6",
