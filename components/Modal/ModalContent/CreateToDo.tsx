@@ -6,11 +6,14 @@ import TagInput, { Tag, TagProps } from '@/components/Input/ModalInputContainer/
 import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
+import { DefaultCardImg, DefaultImg } from '@/constants/ModalInput';
 import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
 import useManager from '@/hooks/DropDown/useManager';
+import useUser from '@/hooks/useUser';
 import { onMobile } from '@/styles/mediaQuery';
+import { CreateCardProps } from '@/types/api';
 import { ModalCommonProps } from '@/types/modal';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -31,6 +34,7 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
 
   const { manager } = useManager();
   const { setMembers } = useGetMember();
+  const { user } = useUser();
 
   const handleChange = (inputLabel: string, inputValue: string | {} | TagProps[] | ArrayBuffer | null) => {
     setValues({
@@ -38,7 +42,6 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
       [inputLabel]: inputValue,
     });
   };
-  getValue(values);
 
   const handleSetMembers = async () => {
     const getMember = await API.members.getMembersInDashboard({ dashboardId: dashboardInfos.dashboardId });
@@ -73,16 +76,16 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
 
     const CardContentImgUrl = await changeProfile().then();
 
-    const body = {
-      assigneeUserId: manager ?? null,
+    let body: CreateCardProps = {
       dashboardId: dashboardInfos.dashboardId, // 필수 입력 요소
       columnId: dashboardInfos.columnId, // 필수 입력 요소
       title: values.제목, // 필수 입력 요소
       description: values.설명, // 필수 입력 요소
-      dueDate: values.마감일 ?? null,
-      tags: formatedTagData ?? null,
-      imageUrl: CardContentImgUrl ?? null,
+      imageUrl: CardContentImgUrl ?? DefaultCardImg,
+      assigneeUserId: manager ?? user?.id,
     };
+    if (values.마감일) body['dueDate'] = values.마감일;
+    if (formatedTagData) body['tags'] = formatedTagData;
 
     const response = await api.cards.createCard(body).catch((error) => alert(error.data.message));
     setIsLoading(false);
@@ -90,6 +93,10 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
     // api post request succeed
     if (response) onOkClick(); // Column의 onOkClick 함수 실행
   };
+
+  useEffect(() => {
+    getValue(values);
+  }, [getValue, values]);
 
   useEffect(() => {
     setImgSrc('');
