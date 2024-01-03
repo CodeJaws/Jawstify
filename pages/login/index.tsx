@@ -176,6 +176,7 @@ export const StyledLink = styled(Link)`
 `;
 
 const StyledBottomText = styled.h5`
+  color: var(--content-main);
   text-align: center;
   ${fontStyle(16, 400)}
 `;

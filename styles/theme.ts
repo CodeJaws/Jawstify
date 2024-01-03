@@ -25,14 +25,13 @@ export const theme = css`
     --nav-border: 1px solid #d9d9d9;
     --nav-imgBorder: 2px solid #ffffff;
     --nav-Dropdown-bg: #ffffff;
-    --nav-Dropdown-color: 
     --nav-Dropdown-border: 1px solid #444444;
     --nav-Dropdown-hover: #F1EFFD;
     --nav-Dropdown-color: #787486;
 
-    --sidebar-hover: #F1EFFD;
     --sidebar-border: 1px solid #d9d9d9;
     --sidebar-bg: #ffffff;
+    --sidebar-hover: #F1EFFD;
 
     --content-color: #ffffff;
     --content-back: #fafafa;
@@ -47,6 +46,7 @@ export const theme = css`
     --input-color: #9fa6b2;
 
     --sign-bg: #fafafa;
+    --sign-main: #eeeeee;
 
     --button-bg: #ffffff;
     --button-color: #333236;
@@ -54,7 +54,7 @@ export const theme = css`
     
     --modal-bg: #ffffff;
     --modal-title: #333236;
-
+  
     --invite-title: #333246;
 
   }
@@ -71,12 +71,18 @@ export const theme = css`
     --text-second: ${COLORS.GRAY_9F};;
     --text-third: ${COLORS.WHITE_FF};
 
+
     --nav-bg : #191919;
     --nav-border: 1px solid #555555;
     --nav-imgBorder: 2px solid #d9d9d9;
     --nav-Dropdown-bg: #171717;
     --nav-Dropdown-border: 0.5px solid #444444;
     --nav-Dropdown-hover: #303134;
+    --nav-Dropdown-color: #787486;
+
+    --sidebar-border: 1px solid #555555;
+    --sidebar-bg: #191919;
+    --sidebar-hover: #303134;
 
     --content-color: #28282b;
     --content-back: #111111;
@@ -85,16 +91,13 @@ export const theme = css`
     --content-main: #eeeeee;
     --content-second: #eeeeee;
 
-    --sidebar-border: 1px solid #555555;
-    --sidebar-bg: #191919;
-    --sidebar-hover: #303134;
-
-    --sign-bg: #111111;
-    --sign-main: #eeeeee;
-
     --input-label: #ffffff;
     --input-bg: #171717;
     --input-border: #444444;
+    --input-color: #9fa6b2;
+
+    --sign-bg: #111111;
+    --sign-main: #eeeeee;
 
     --button-bg: #222222;
     --button-color: #dddddd;
