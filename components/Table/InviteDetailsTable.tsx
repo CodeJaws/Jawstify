@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
@@ -10,7 +11,6 @@ import Button from '../common/Button/Button';
 import InviteButton from './InviteButton';
 import { InvitationType } from '@/types/apiType';
 import NoItem from '@/public/assets/images/noItem.png';
-import { useEffect, useState } from 'react';
 import Modal from '../Modal/Modal';
 import API from '@/apis/api';
 import {
@@ -186,7 +186,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
             <h1>{tableTitle}</h1>
           </StyledNoItemTitleWrapper>
           <StyledNoItemInWrapper>
-            <StyledImage src={NoItem} alt="초대 내역 없음" />
+            <StyledImage src={NoItem} priority alt="초대 내역 없음" />
             <p>초대 내역이 존재하지 않습니다.</p>
             <InviteButton text="초대하기" onClick={() => setIsModalOpen(true)} hasItems={showItems.length !== 0} />
           </StyledNoItemInWrapper>

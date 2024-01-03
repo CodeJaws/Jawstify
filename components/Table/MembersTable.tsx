@@ -57,7 +57,7 @@ function Table({ item, refresh, refreshPagination }: TableProps) {
     <StyledMemberBoxContainer>
       <StyledMemberBoxProfileWrapper>
         <StyledMemberBoxImageWrapper>
-          <Image fill src={profileImageUrl ?? DefaultImage} alt="구성원 프로필" />
+          <StyledMemberImage fill sizes="100%" src={profileImageUrl ?? DefaultImage} priority alt="구성원 프로필" />
         </StyledMemberBoxImageWrapper>
         <p>{nickname}</p>
       </StyledMemberBoxProfileWrapper>
@@ -143,6 +143,10 @@ const StyledContainer = styled.div`
   ${onMobile} {
     height: 377px;
   }
+`;
+
+const StyledMemberImage = styled(Image)`
+  border-radius: 100%;
 `;
 
 const StyledNameText = styled.p`
@@ -240,8 +244,6 @@ const StyledMemberBoxImageWrapper = styled.div`
   position: relative;
   width: 38px;
   height: 38px;
-  border: 1px solid transparent;
-  border-radius: 100%;
 
   ${onMobile} {
     width: 34px;
