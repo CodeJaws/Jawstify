@@ -1,9 +1,8 @@
-import api from '@/apis/api';
+import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
 import FormInput from '@/components/Input/FormInput';
 import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
-import useAuth from '@/hooks/useAuth';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
@@ -14,6 +13,7 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import * as L from '../login';
+import GoogleLoginButton from '@/components/GoogleLogin/GoogleLogin';
 
 function SignUp() {
   useRedirectByLogin();
@@ -49,21 +49,25 @@ function SignUp() {
       </L.StyledLogoContainer>
 
       <StyledForm2 onSubmit={handleSubmit(onSignUpSubmit)}>
-        <FormInput
-          label="이메일"
-          register={register('email', {
-            required: C.NO_VALUE_ERROR,
-            pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
-            onChange: handleChange,
-          })}
-          errorMessage={errors?.email?.message}
-        />
-        {alertMessage.serverMessage && <L.StyledServerErrorText>{alertMessage.serverMessage}</L.StyledServerErrorText>}
-        <FormInput
-          label="닉네임"
-          register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
-          errorMessage={errors?.nickname?.message}
-        />
+        <StyledFormInputContainer>
+          <FormInput
+            label="이메일"
+            register={register('email', {
+              required: C.NO_VALUE_ERROR,
+              pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
+              onChange: handleChange,
+            })}
+            errorMessage={errors?.email?.message}
+          />
+          {alertMessage.serverMessage && (
+            <L.StyledServerErrorText>{alertMessage.serverMessage}</L.StyledServerErrorText>
+          )}
+          <FormInput
+            label="닉네임"
+            register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
+            errorMessage={errors?.nickname?.message}
+          />
+        </StyledFormInputContainer>
         <FormInput
           label="비밀번호"
           register={register('password', {
@@ -96,6 +100,7 @@ function SignUp() {
         {!isAgreeChecked && <StyledAgreeNotCheckedText>{alertMessage.noCheck}</StyledAgreeNotCheckedText>}
         <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit" margin="-3px 0 0" />
       </StyledForm2>
+      <GoogleLoginButton />
 
       <StyledBottomTextContainer>
         <StyledText>
@@ -128,6 +133,11 @@ const StyledContainer = styled.div`
   align-items: center;
   gap: 17px;
   background-color: ${COLORS.GRAY_FA};
+`;
+
+const StyledFormInputContainer = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 const StyledForm2 = styled(L.StyledForm)`
