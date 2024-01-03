@@ -3,6 +3,7 @@ import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useUserData from '@/hooks/global/useUserData';
+import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
@@ -12,6 +13,8 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 function MyPage() {
+  useRedriectByLogin();
+
   const { user } = useUserData();
   const [nickname, setNickName] = useState('');
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
