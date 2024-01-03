@@ -29,7 +29,7 @@ interface TablePaginationProps {
 
 interface TableProps {
   item: InvitationType;
-  dashboardId: string;
+  dashboardId: number;
   refreshPagination: () => void;
 }
 
@@ -40,7 +40,7 @@ function Table({ item, dashboardId, refreshPagination }: TableProps) {
 
   const handleDelete = async () => {
     try {
-      await API.dashboard.abortInviteDashboard({ dashboardId, invitationId: String(item.id) });
+      await API.dashboard.abortInviteDashboard({ dashboardId, invitationId: Number(item.id) });
       refreshPagination();
     } catch (e: any) {
       switch (e.data.message) {
@@ -109,7 +109,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
 
     try {
       await API.dashboard.inviteDashboard({
-        dashboardId: String(dashboardId),
+        dashboardId: Number(dashboardId),
         email,
       });
       refreshPagination();
@@ -173,7 +173,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
             <div key={item.id}>
               <Table
                 item={item as InvitationType}
-                dashboardId={String(dashboardId)}
+                dashboardId={Number(dashboardId)}
                 refreshPagination={refreshPagination}
               />
               {showItems.length - 1 !== index && <StyledSeperator></StyledSeperator>}

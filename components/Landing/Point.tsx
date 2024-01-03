@@ -7,7 +7,6 @@ import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 
 function PointSection() {
-
   return (
     <StyledPointSectionContainer>
       <StyledPoint1SectionWrapper>
@@ -165,12 +164,11 @@ const StyledPointSectionText1 = styled.div`
 const StyledPointSectionText2 = styled.div`
   ${fontStyle(48, 700)};
 
-
   ${onMobile} {
-    color: var(--text-main);;
+    color: var(--text-main);
     font-feature-settings:
-    'clig' off,
-    'liga' off;
+      'clig' off,
+      'liga' off;
     ${fontStyle(36, 700)};
   }
 `;

@@ -32,7 +32,7 @@ function Table({ item, refresh, refreshPagination }: TableProps) {
   const handleDelete = async () => {
     if (confirm(`정말 ${nickname}멤버를 삭제하시겠습니까?`)) {
       try {
-        await API.members.deleteMemberInDashboard({ memberId: String(item.id) });
+        await API.members.deleteMemberInDashboard({ memberId: Number(item.id) });
         refresh();
         refreshPagination();
       } catch (e: any) {
