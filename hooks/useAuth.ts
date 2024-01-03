@@ -9,7 +9,7 @@ import * as C from '@/constants/SignValidate';
 export interface LoginFormValue {
   email?: string;
   password?: string;
-  errors: {
+  errors?: {
     email: {
       message: string;
     };
@@ -24,7 +24,7 @@ export interface SignUpFormValue {
   nickname?: string;
   password?: string;
   pwdcheck?: string;
-  errors: {
+  errors?: {
     email: {
       message: string;
     };
@@ -40,7 +40,7 @@ export interface SignUpFormValue {
   };
 }
 
-const useAuth = <T extends FieldValues>(getValues: UseFormGetValues<T>, inputValues: Path<T>[]) => {
+const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputValues?: Path<T>[]) => {
   const initialErrorMsg = {
     serverMessage: '',
     noCheck: '',
@@ -51,6 +51,7 @@ const useAuth = <T extends FieldValues>(getValues: UseFormGetValues<T>, inputVal
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
   const validateBtnActivation = () => {
+    if (inputValues === undefined || getValues === undefined) return;
     if (inputValues.every((value) => getValues(value))) setIsBtnActive(true);
     else setIsBtnActive(false);
   };
@@ -68,12 +69,8 @@ const useAuth = <T extends FieldValues>(getValues: UseFormGetValues<T>, inputVal
   const { setUser } = useUserData();
 
   const onLoginSubmit = async (data: LoginFormValue) => {
-    let response;
     try {
-      response = await api.auth.login({ email: data.email as string, password: data.password as string });
-      localStorageSetItem('accessToken', response.accessToken);
-      await setUser(response.user);
-      response.accessToken && router.push('mydashboard');
+      await handleLogin(data.email as string, data.password as string);
       throw Error;
     } catch (e: any) {
       setIsModalOpen(true);
@@ -89,18 +86,28 @@ const useAuth = <T extends FieldValues>(getValues: UseFormGetValues<T>, inputVal
       setAlertMessage({ ...alertMessage, noCheck: '' });
     }
 
-    let response;
     try {
-      response = await api.users.signup({
-        email: data.email as string,
-        nickname: data.nickname as string,
-        password: data.password as string,
-      });
+      await handleSignUp(data);
       setAlertMessage({ ...alertMessage, serverMessage: C.SIGNUP_SUCCESS_MSG });
     } catch (e: any) {
       setIsModalOpen(true);
       setAlertMessage({ ...alertMessage, serverMessage: e?.data?.message });
     }
+  };
+
+  const handleLogin = async (email: string, password: string) => {
+    const response = await api.auth.login({ email, password });
+    localStorageSetItem('accessToken', response.accessToken);
+    await setUser(response.user);
+    response.accessToken && router.push('mydashboard');
+  };
+
+  const handleSignUp = async (data: SignUpFormValue) => {
+    const response = await api.users.signup({
+      email: data.email as string,
+      nickname: data.nickname as string,
+      password: data.password as string,
+    });
   };
 
   useEffect(() => {
@@ -111,6 +118,8 @@ const useAuth = <T extends FieldValues>(getValues: UseFormGetValues<T>, inputVal
   return {
     onLoginSubmit,
     onSignUpSubmit,
+    handleLogin,
+    handleSignUp,
     alertMessage,
     setAlertMessage,
     isBtnActive,
