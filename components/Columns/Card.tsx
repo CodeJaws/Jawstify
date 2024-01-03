@@ -30,8 +30,6 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
   const { setDashboardId } = useDashBoardId();
   const { setIsCardOpen } = useCardOpen();
 
-  const date = dateFormat(dueDate);
-
   const handleCardDetailModalOpen = () => {
     setIsCardOpen(true);
     setCardId(cardInfoData.cardId);
@@ -79,7 +77,7 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
             )}
             {date}
             <StyledInfoProfile>
-              <Image src={profileImageUrl ?? Emoji} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
+              <Image src={profileImageUrl ?? DefaultImg} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
             </StyledInfoProfile>
           </StyledInfoDate>
         </StyledInfoWrapper>

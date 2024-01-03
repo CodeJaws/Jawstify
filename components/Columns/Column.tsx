@@ -63,7 +63,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   const handleColumnDelete = async () => {
     if (window.confirm(`${cardListInfos.title} 컬럼을 정말 삭제하시겠습니까?`)) {
-      const res = await api.columns.deleteColumn({ columnId: String(columnId) });
+      const res = await api.columns.deleteColumn({ columnId: columnId });
       await applyColumnDelete(dashboardId);
     }
     return;
