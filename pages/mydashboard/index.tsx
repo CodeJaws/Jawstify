@@ -2,31 +2,32 @@ import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import MyDashBoardButtonBox from '@/components/MyDashboard/MyDashBoardButtonBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDashBoard from '@/components/Table/InviteDashBoard';
-import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 function MyDashBoard() {
-  useRedriectByLogin();
+  useRedirectByLogin();
 
   const [resetToFirst, setResetToFirst] = useState(false);
   const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
+  const [reset, setReset] = useState(false);
   const refresh = () => setRefreshPaginationToggle((prev) => !prev);
   const refreshToFirst = () => setResetToFirst((prev) => !prev);
 
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={true} />
-      <Sidebar />
+      <Sidebar reset={reset} setReset={setReset} refresh={refresh} />
       <StyledWrapper>
         <MyDashBoardButtonBox
           resetToFirst={resetToFirst}
           refresh={refresh}
           refreshPaginationToggle={refreshPaginationToggle}
         />
-        <InviteDashBoard refresh={() => refresh} refreshToFirst={() => refreshToFirst()} />
+        <InviteDashBoard refresh={refresh} refreshToFirst={refreshToFirst} />
       </StyledWrapper>
     </StyledContainer>
   );
@@ -43,8 +44,6 @@ const StyledWrapper = styled.div`
   position: absolute;
   top: 70px;
   left: 300px;
-  width: 100%;
-  height: 100%;
   padding: 40px;
   ${onTablet} {
     left: 160px;

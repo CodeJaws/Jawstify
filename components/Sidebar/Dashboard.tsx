@@ -26,6 +26,8 @@ interface BoardItemProps {
 interface DashboardProps {
   boardId?: number;
   reset?: boolean;
+  refreshToggle?: boolean;
+  refresh?: () => void;
 }
 
 function DashboardItems({ item, boardId }: BoardItemProps) {
@@ -41,7 +43,7 @@ function DashboardItems({ item, boardId }: BoardItemProps) {
   );
 }
 
-function Dashboard({ reset, boardId }: DashboardProps) {
+function Dashboard({ reset, boardId, refreshToggle, refresh }: DashboardProps) {
   const [dataSource, setDataSource] = useState<DashboardType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [dashboardPage, setDashboardPage] = useState(2);
@@ -83,7 +85,7 @@ function Dashboard({ reset, boardId }: DashboardProps) {
         setHasMore((prev) => !prev);
       }
     }
-  }, [reset]);
+  }, [reset, refreshToggle, refresh]);
 
   return (
     <StyledDashboardGroupContainer ref={dashboardContainerRef}>

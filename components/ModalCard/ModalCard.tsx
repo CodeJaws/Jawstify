@@ -1,101 +1,68 @@
-import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
-import useCardData from '@/hooks/ModalCard/useCardData';
-import useDashBoard from '@/hooks/ModalCard/useDashBoard';
-import useDeviceType from '@/hooks/useDeviceType';
-import Emoji from '@/public/assets/images/emoji.webp';
+import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
 import StatusChip from '../Chip/StatusChip';
 
+import useModalCard from '@/hooks/ModalCard/useModalCard';
 import Comment from './Comment';
 import Manager from './Manager';
 import ModalButton from './ModalButton';
 
 function ModalCard() {
-  const { cardData } = useCardData();
-  const { setStatus } = useSelectStatus();
-  const { tasks } = useDashBoard();
-  const deviceType = useDeviceType();
-
-  const { title, description, imageUrl } = cardData;
-
-  const filterColumn = tasks.data.filter((val) => val.id === cardData.columnId);
-  const status = filterColumn[0].title;
-
-  useEffect(() => {
-    setStatus(status);
-  }, [setStatus, status]);
+  const { cardData, description, deviceType, imageUrl, title, status } = useModalCard();
 
   return (
-    <>
-      <StyledModalBackdrop />
-      <StyledContainer>
-        <StyledLeftContainer>
-          {deviceType === 'mobile' && <ModalButton />}
-          <StyledTitleWrapper>
-            <StyledTitle>{title}</StyledTitle>
-            {deviceType === 'mobile' && <Manager />}
-            <StyledTag>
-              <StatusChip content={status} />
-              <StyledDivision />
-              <StyledColorChipWrapper>
-                {cardData.tags.map((val) => (
-                  <ContentChip
-                    key={val}
-                    text={val.substring(0, val.indexOf('/'))}
-                    color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
-                    backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
-                  />
-                ))}
-              </StyledColorChipWrapper>
-            </StyledTag>
-          </StyledTitleWrapper>
-          <StyledContentWrapper>
-            <StyledContent>
-              {description.split('\n').map((val) => {
-                return (
-                  <>
-                    {val}
-                    <br />
-                  </>
-                );
-              })}
-            </StyledContent>
-            {imageUrl ? (
-              <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />
-            ) : (
-              <StyledImage width={450} height={262} src={Emoji} alt="카드 기본 이미지" />
-            )}
-          </StyledContentWrapper>
-          <Comment />
-        </StyledLeftContainer>
-        {deviceType !== 'mobile' && (
-          <StyledRightContainer>
-            <ModalButton />
-            <Manager />
-          </StyledRightContainer>
-        )}
-      </StyledContainer>
-    </>
+    <StyledContainer>
+      <StyledLeftContainer>
+        {deviceType === 'mobile' && <ModalButton />}
+        <StyledTitleWrapper>
+          <StyledTitle>{title}</StyledTitle>
+          {deviceType === 'mobile' && <Manager />}
+          <StyledTag>
+            <StatusChip content={status} />
+            <StyledDivision />
+            <StyledColorChipWrapper>
+              {cardData.tags.map((val) => (
+                <ContentChip
+                  key={val}
+                  text={val.substring(0, val.indexOf('/'))}
+                  color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
+                  backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
+                />
+              ))}
+            </StyledColorChipWrapper>
+          </StyledTag>
+        </StyledTitleWrapper>
+        <StyledContentWrapper>
+          <StyledContent>
+            {description.split('\n').map((val) => {
+              return (
+                <div key={val}>
+                  {val}
+                  <br />
+                </div>
+              );
+            })}
+          </StyledContent>
+          <StyledImage width={450} height={262} src={imageUrl || DefaultImg} alt="카드 이미지" />
+        </StyledContentWrapper>
+        <Comment />
+      </StyledLeftContainer>
+      {deviceType !== 'mobile' && (
+        <StyledRightContainer>
+          <ModalButton />
+          <Manager />
+        </StyledRightContainer>
+      )}
+    </StyledContainer>
   );
 }
 
 export default ModalCard;
-
-const StyledModalBackdrop = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  top: 0;
-  left: 0;
-  z-index: 10;
-`;
 
 const StyledContainer = styled.div`
   position: fixed;

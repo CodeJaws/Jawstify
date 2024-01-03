@@ -71,7 +71,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   const handleManageColumnSubmit = async () => {
     const response = (await api.columns.correctColumn({
-      columnId: String(columnId),
+      columnId: Number(columnId),
       title: manageColModalVals.이름,
     })) as { title: '' };
     setCardListInfos({ ...cardListInfos, title: response.title });

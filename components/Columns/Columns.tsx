@@ -59,14 +59,16 @@ function Columns({ dashboardId }: GetColumnListProps) {
         <StyledWrapper>
           {columns.map((column) => {
             return (
-              <li key={column.id}>
-                <Column
-                  title={column.title}
-                  columnId={column.id}
-                  dashboardId={dashboardId}
-                  applyColumnDelete={getColumnListFunc}
-                />
-              </li>
+              <ul key={column.id}>
+                <li>
+                  <Column
+                    title={column.title}
+                    columnId={column.id}
+                    dashboardId={dashboardId}
+                    applyColumnDelete={getColumnListFunc}
+                  />
+                </li>
+              </ul>
             );
           })}
         </StyledWrapper>

@@ -58,7 +58,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
 
     try {
       await API.dashboard.inviteDashboard({
-        dashboardId: String(dashboard.id),
+        dashboardId: Number(dashboard.id),
         email,
       });
       alert('성공적으로 초대하기 메세지를 보냈습니다.');
@@ -110,7 +110,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
           <>
             <StyledButtonWrapper>
               {dashboard && dashboard.createdByMe && (
-                <Link href={`/dashboard/${dashboard.id}/edit`}>
+                <Link href={`/${dashboard.id}/edit`}>
                   <Button imageUrl={setting} altText="관리">
                     관리
                   </Button>
