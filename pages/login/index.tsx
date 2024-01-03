@@ -1,9 +1,8 @@
-import api from '@/apis/api';
+import GoogleLoginButton from '@/components/GoogleLogin/GoogleLogin';
 import FormInput from '@/components/Input/FormInput';
 import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
-import useUserData from '@/hooks/global/useUserData';
 import useAuth, { LoginFormValue } from '@/hooks/useAuth';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
@@ -11,15 +10,12 @@ import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { localStorageSetItem } from '@/utils/localStorage';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 function Login() {
-  const router = useRouter();
   useRedirectByLogin();
 
   const {
@@ -60,8 +56,15 @@ function Login() {
           })}
           errorMessage={errors?.password?.message}
         />
-        <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit" margin="7px 0 0 "></LoginButton>
+        <LoginButton
+          active={isBtnActive}
+          usingType="login"
+          text="로그인"
+          type="submit"
+          margin="7px 0 -15px "
+        ></LoginButton>
       </StyledForm>
+      <GoogleLoginButton />
 
       <StyledBottomTextContainer>
         <StyledBottomText>
