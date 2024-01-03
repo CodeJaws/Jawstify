@@ -60,7 +60,7 @@ function Login() {
 
   return (
     <StyledContainer>
-      <StyledLogoContainer>
+      <StyledLogoContainer href={'/'}>
         <StyledLogoImg src={mainLogo} height={190} width={165} alt="메인 로고" />
         <StyledLogoText src={mainLogoText} height={55} width={198} alt="메인 로고 텍스트" />
         <StyledDescription>오늘도 만나서 반가워요!</StyledDescription>
@@ -119,7 +119,7 @@ const StyledContainer = styled.div`
   background-color: ${COLORS.GRAY_FA};
 `;
 
-export const StyledLogoContainer = styled.div`
+export const StyledLogoContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
