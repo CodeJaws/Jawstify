@@ -18,7 +18,7 @@ function DashBoardID() {
 
   return (
     <StyledContainer>
-      <Sidebar />
+      <Sidebar boardId={Number(dashboardid)} />
       <DashboardNavbar isMyDashboard={false} />
       <StyledWrapper>
         <Columns dashboardId={Number(dashboardid)} />
