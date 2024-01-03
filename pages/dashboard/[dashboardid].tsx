@@ -3,30 +3,49 @@ import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import Modal from '@/components/Modal/Modal';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useCardOpen from '@/hooks/ModalCard/useCardOpen';
+import useDashboard from '@/hooks/useDashboard';
 import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import { onPc, onTablet } from '@/styles/mediaQuery';
-import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 import styled from 'styled-components';
 
-function DashBoardID() {
+interface DashBoardIDProps {
+  dashboardId: number;
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { dashboardid: dashboardId } = context.query;
+
+  if (!dashboardId) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      dashboardId,
+    },
+  };
+};
+
+function DashBoardID({ dashboardId }: DashBoardIDProps) {
   useRedriectByLogin();
-  const router = useRouter();
+  useRedirectByDashboardId({ dashboardId });
+  const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
   const { isCardOpen } = useCardOpen();
-
-  const dashboardid = router.asPath.slice(11);
-  const { dashboardid: id } = router.query;
-
-  useRedriectByLogin();
-  useRedirectByDashboardId({ dashboardId: Number(id) });
 
   return (
     <>
       <StyledContainer>
         <Sidebar />
-        <DashboardNavbar isMyDashboard={false} />
+        <DashboardNavbar
+          members={members}
+          totalMembers={totalMembers}
+          dashboard={dashboardData}
+          isMyDashboard={false}
+        />
         <StyledWrapper>
-          <Columns dashboardId={Number(dashboardid)} />
+          <Columns dashboardId={Number(dashboardId)} />
         </StyledWrapper>
       </StyledContainer>
       {isCardOpen && <Modal title="카드" onOkClick={() => {}} />}
