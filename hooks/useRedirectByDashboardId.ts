@@ -11,8 +11,7 @@ const useRedirectByDashboardId = ({ dashboardId }: useRedirectByDashboardIdProps
 
   const IsDashboardMember = async () => {
     try {
-      const res = await API.dashboard.getDashboardDetailed({ dashboardId });
-      if (!res.title) return true;
+      await API.dashboard.getDashboardDetailed({ dashboardId });
       return true;
     } catch {
       return false;
