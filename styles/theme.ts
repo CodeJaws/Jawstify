@@ -53,9 +53,9 @@ export const theme = css`
     --button-border: 1px solid ${COLORS.GRAY_D9};
     
     --modal-bg: ${COLORS.WHITE_FF};
+    --modal-border: 1px solid transparent;
     --modal-title: ${COLORS.BLACK_33};
-    --modal-borderborder: 1px solid transparent;
-  
+
     --invite-title: ${COLORS.BLACK_33};
 
   }

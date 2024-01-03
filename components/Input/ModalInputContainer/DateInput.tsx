@@ -55,7 +55,7 @@ function DateInput({ label = '마감일', placeholder = DEFAULT_PLACEHOLDER.DATE
               fontWeight: 400,
               borderColor: `${COLORS.BLUE_DB}`,
               height: '52px',
-              border: `1px solid ${COLORS.GRAY_D9}`,
+              border: `1px solid var(--input-border)`,
               ':hover': {
                 borderColor: `${COLORS.VIOLET_55}`,
               },

@@ -98,7 +98,7 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
   padding: 15px 16px 45px;
   resize: none;
   border-radius: 8px;
-  border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.GRAY_D9)};
+  border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : 'var(--input-border)')};
   background-color: var(--input-bg);
   ${fontStyle(14, 400)}
 

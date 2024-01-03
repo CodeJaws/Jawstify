@@ -122,7 +122,7 @@ const StyledInputContainer = styled.div`
   width: 100%;
   padding-left: 5px;
   border-radius: 8px;
-  border: 1px solid ${COLORS.GRAY_D9};
+  border: 1px solid var(--input-border);
   color: ${COLORS.BLACK_33};
   ${fontStyle(16, 400)};
   overflow-x: scroll;
