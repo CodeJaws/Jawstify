@@ -19,24 +19,24 @@ import useRedriectByLogin from '@/hooks/useRedriectByLogin';
 import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 
 interface BoardEditProps {
-  boardid: number;
+  dashboardid: number;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { boardid } = context.query;
+  const { dashboardid } = context.query;
 
-  if (!boardid) {
+  if (!dashboardid) {
     return { notFound: true };
   }
 
   return {
     props: {
-      boardid,
+      dashboardid,
     },
   };
 };
 
-function BoardEdit({ boardid: dashboardId }: BoardEditProps) {
+function BoardEdit({ dashboardid: dashboardId }: BoardEditProps) {
   useRedirectByDashboardId({ dashboardId });
   useRedriectByLogin();
 
