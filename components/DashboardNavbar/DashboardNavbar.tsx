@@ -110,7 +110,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
           <>
             <StyledButtonWrapper>
               {dashboard && dashboard.createdByMe && (
-                <Link href={`/dashboard/${dashboard.id}/edit`}>
+                <Link href={`/${dashboard.id}/edit`}>
                   <Button imageUrl={setting} altText="관리">
                     관리
                   </Button>
