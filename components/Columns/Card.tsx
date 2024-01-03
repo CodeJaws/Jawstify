@@ -1,12 +1,13 @@
 import calendar from '@/public/assets/icons/calendar.svg';
+import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import dateFormat from '@/utils/dateFormat';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
-import { useRouter } from 'next/router';
 
 interface Props {
   cardInfoData: { dashboardId: number; cardId: number };
@@ -15,7 +16,7 @@ interface Props {
   tags: string[];
   dueDate: string;
   assignee: {
-    profileImageUrl: string | null;
+    profileImageUrl: string;
     nickname: string;
     id: number;
   };
@@ -68,7 +69,7 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
         </StyledInfoWrapper>
       </StyledInfoContainer>
       <StyledInfoProfile>
-        <Image src={profileImageUrl as string} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
+        <Image src={profileImageUrl ?? Emoji} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
       </StyledInfoProfile>
     </StyledContainer>
   );
