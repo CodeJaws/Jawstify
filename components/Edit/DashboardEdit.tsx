@@ -63,7 +63,7 @@ function DashboardEdit({ dashboardData, refresh }: DashboardEditProps) {
     }
     try {
       await API.dashboard.correctDashboard({
-        dashboardId: String(dashboardData.id),
+        dashboardId: Number(dashboardData.id),
         title: values['대시보드 이름'],
         color: values['색상'],
       });
