@@ -23,7 +23,7 @@ function Nav() {
             <Image src={logoText} fill alt="logoText" />
           </LogoTextWrapper>
         </StyledLogoLinkContainer>
-        <LinkButton>
+        <StyledLinkButton>
           <div onClick={() => toggleThemeMode()}>
             {themeMode === 'dark' ? (
               <StyledThemeModeIcon src={sunIcon} width={20} height={20} alt="라이트 모드로 변경"/>
@@ -33,7 +33,7 @@ function Nav() {
           </div>
           <Link href="/login">로그인</Link>
           <Link href="/signup">회원가입</Link>
-        </LinkButton>
+        </StyledLinkButton>
       </StyledLandingHeaderInner>
     </StyledLandingHeaderContainer>
   )
@@ -93,7 +93,7 @@ const LogoTextWrapper = styled.div`
 
 `
 
-const LinkButton = styled.div`
+const StyledLinkButton = styled.div`
   display: flex;
   gap: 20px;
   color: var(--text-main);
