@@ -1,60 +1,19 @@
-import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
-import useCardData from '@/hooks/ModalCard/useCardData';
-import useDashBoard from '@/hooks/ModalCard/useDashBoard';
-import useDeviceType from '@/hooks/useDeviceType';
 import Emoji from '@/public/assets/images/emoji.webp';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { useCallback, useEffect } from 'react';
 import { styled } from 'styled-components';
 import ContentChip from '../Chip/ContentChip';
 import StatusChip from '../Chip/StatusChip';
 
-import API from '@/apis/api';
-import useGetMember from '@/hooks/DropDown/useGetMember';
-import useCardId from '@/hooks/ModalCard/useCardId';
-import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
-import useRefresh from '@/hooks/useRefresh';
+import useModalCard from '@/hooks/ModalCard/useModalCard';
 import Comment from './Comment';
 import Manager from './Manager';
 import ModalButton from './ModalButton';
 
 function ModalCard() {
-  const { cardData, setCardData } = useCardData();
-  const { setTasks } = useDashBoard();
-  const { setMembers } = useGetMember();
-  const { setStatus } = useSelectStatus();
-  const { cardId, setCardId } = useCardId();
-  const { dashboardId } = useDashBoardId();
-  const { refresh } = useRefresh();
-  const { tasks } = useDashBoard();
-  const deviceType = useDeviceType();
-
-  const getDetailCardData = useCallback(async () => {
-    const getCards = await API.cards.getCardDetails({ cardId });
-    const dashBoard = await API.columns.getColumnList({ dashboardId });
-    const getMember = await API.members.getMembersInDashboard({ dashboardId });
-
-    setCardData(getCards);
-    setCardId(Number(cardId));
-    setTasks(dashBoard);
-    setMembers(getMember);
-  }, [cardId, dashboardId, setCardData, setCardId, setMembers, setTasks]);
-
-  const { title, description, imageUrl } = cardData;
-
-  const filterColumn = tasks.data.filter((val) => val.id === cardData.columnId);
-  const status = filterColumn[0].title;
-
-  useEffect(() => {
-    getDetailCardData();
-  }, [refresh, getDetailCardData]);
-
-  useEffect(() => {
-    setStatus(status);
-  }, [setStatus, status]);
+  const { cardData, description, deviceType, imageUrl, title } = useModalCard();
 
   return (
     <StyledContainer>
