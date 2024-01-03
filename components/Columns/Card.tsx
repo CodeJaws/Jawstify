@@ -86,7 +86,7 @@ const StyledContainer = styled.div`
   justify-content: flex-start;
   gap: 10px;
   border-radius: 6px;
-  border: 1px solid ${COLORS.GRAY_D9};
+  border: var(--content-border);
   background: var(--content-color);
   position: relative;
   cursor: pointer;
@@ -131,7 +131,7 @@ const StyledInfoContainer = styled.div`
 `;
 
 const StyledInfoTitle = styled.div`
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(16, 500)};
   margin-bottom: 10px;
 
