@@ -16,6 +16,7 @@ import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useRedriectByLogin from '@/hooks/useRedriectByLogin';
+import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 
 interface BoardEditProps {
   boardid: number;
@@ -36,7 +37,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function BoardEdit({ boardid: dashboardId }: BoardEditProps) {
+  useRedirectByDashboardId({ dashboardId });
   useRedriectByLogin();
+
   const router = useRouter();
   const [refreshToggle, setRefreshToggle] = useState(false);
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });

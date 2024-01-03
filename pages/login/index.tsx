@@ -31,6 +31,7 @@ interface FormValue {
   };
 }
 function Login() {
+  const router = useRouter();
   useRedriectByLogin();
 
   const {
@@ -45,7 +46,6 @@ function Login() {
     'password',
   ]);
 
-  const router = useRouter();
   const { setUser } = useUserData();
   const onSubmit = async (data: FormValue) => {
     let response;
