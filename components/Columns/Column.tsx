@@ -39,8 +39,8 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   // 무한스크롤로 카드 리스트 가져오기
   const fetchHasMore = () => {
-    if (columnCardList.length < cardListInfos.totalCount) {
-      loadColumnCardList(false);
+    if (cardListInfos.cursorId !== 0) {
+      loadColunCardList();
     } else {
       setHasMore(false);
     }
@@ -55,15 +55,15 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
     }
   };
 
-  // 컬럼 카드 리스트 데이터 api 요청 및 받은 데이터 렌더링
-  const loadColumnCardList = async (resetLoad = true) => {
+  const firstFetch = async () => {
+    const res = await API.cards.checkCardList({ columnId, size: 5 });
+    setColumnCardList(res.cards);
+    setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
+  };
+
+  const loadColunCardList = async () => {
     const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 5 });
-    if (resetLoad) {
-      setColumnCardList(res.cards);
-      setHasMore(true);
-    } else {
-      setColumnCardList((prev) => [...prev, ...res.cards]);
-    }
+    setColumnCardList((prev) => [...prev, ...res.cards]);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
@@ -84,7 +84,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   };
 
   useEffect(() => {
-    loadColumnCardList(true);
+    firstFetch();
   }, [columnId]);
 
   return (
@@ -115,7 +115,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
             onOkClick={() => {
-              loadColumnCardList(true); // createToDo 모달에서 필요한 api 요청 처리
+              firstFetch(); // createToDo 모달에서 필요한 api 요청 처리
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
           />
