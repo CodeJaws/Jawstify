@@ -85,7 +85,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   useEffect(() => {
     loadColumnCardList(true);
-  }, [columnId, refresh]);
+  }, [columnId]);
 
   return (
     <>
