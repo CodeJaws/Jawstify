@@ -1,13 +1,13 @@
-import logoImage from '@/public/assets/icons/logoImage.svg';
-import logoText from '@/public/assets/icons/logoText.svg';
-import styled from 'styled-components';
+import useTheme from '@/hooks/useTheme';
+import moonIcon from '@/public/assets/icons/moon.svg';
+import sunIcon from '@/public/assets/icons/sun.svg';
+import logoText from '@/public/assets/images/title.png';
+import logoImage from '@/public/assets/images/transJaws.png';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import Image from 'next/image';
 import Link from 'next/link';
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { fontStyle } from '@/styles/fontStyle';
-import sunIcon from '@/public/assets/icons/sun.svg';
-import moonIcon from '@/public/assets/icons/moon.svg';
-import useTheme from '@/hooks/useTheme';
+import styled from 'styled-components';
 
 function Nav() {
   const { themeMode, toggleThemeMode } = useTheme();
@@ -80,8 +80,9 @@ const StyledLogoImageWrapper = styled.div`
 const StyledLogoTextWrapper = styled.div`
   display: none;
   position: relative;
-  width: 80px;
+  width: 95px;
   height: 22px;
+  margin-top: 5px;
 
   ${onTablet} {
     display: block;

@@ -4,8 +4,8 @@ import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
-import mainLogoText from '@/public/assets/icons/logoText.svg';
-import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
+import mainLogoText from '@/public/assets/images/title.png';
+import mainLogo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import { useRouter } from 'next/router';
@@ -43,9 +43,9 @@ function SignUp() {
   return (
     <StyledContainer>
       <L.StyledLogoContainer href={'/'}>
-        <L.StyledLogoImg src={mainLogo} height={190} width={165} alt="메인 로고" />
-        <L.StyledLogoText src={mainLogoText} height={55} width={198} alt="메인 로고 텍스트" />
-        <L.StyledDescription>첫 방문을 환영합니다!</L.StyledDescription>
+        <L.StyledLogoImg src={mainLogo} height={190} width={190} alt="메인 로고" />
+        <L.StyledLogoText src={mainLogoText} height={55} width={240} alt="메인 로고 텍스트" />
+        <L.StyledDescription>첫 방문 조습니다!</L.StyledDescription>
       </L.StyledLogoContainer>
 
       <StyledForm2 onSubmit={handleSubmit(onSignUpSubmit)}>
@@ -95,7 +95,7 @@ function SignUp() {
               setIsAgreeChecked((prev) => !prev);
             }}
           />
-          <StyledText>이용약관에 동의합니다.</StyledText>
+          <StyledText>이용약관 조습니다.</StyledText>
         </StyledCheckBoxContainer>
         {!isAgreeChecked && <StyledAgreeNotCheckedText>{alertMessage.noCheck}</StyledAgreeNotCheckedText>}
         <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit" margin="-3px 0 0" />

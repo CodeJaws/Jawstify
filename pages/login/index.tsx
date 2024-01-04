@@ -5,8 +5,8 @@ import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useAuth, { LoginFormValue } from '@/hooks/useAuth';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
-import mainLogoText from '@/public/assets/icons/logoText.svg';
-import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
+import mainLogoText from '@/public/assets/images/title.png';
+import mainLogo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -33,9 +33,9 @@ function Login() {
   return (
     <StyledContainer>
       <StyledLogoContainer href={'/'}>
-        <StyledLogoImg src={mainLogo} height={190} width={165} alt="메인 로고" />
-        <StyledLogoText src={mainLogoText} height={55} width={198} alt="메인 로고 텍스트" />
-        <StyledDescription>오늘도 만나서 반가워요!</StyledDescription>
+        <StyledLogoImg src={mainLogo} height={190} width={190} alt="메인 로고" />
+        <StyledLogoText src={mainLogoText} height={55} width={240} alt="메인 로고 텍스트" />
+        <StyledDescription>오늘도 만나서 조습니다!</StyledDescription>
       </StyledLogoContainer>
 
       <StyledForm onSubmit={handleSubmit(onLoginSubmit)}>
@@ -109,17 +109,15 @@ export const StyledLogoContainer = styled(Link)`
 `;
 
 export const StyledLogoImg = styled(Image)`
-  margin-left: 36px;
   ${onMobile} {
-    width: 100px;
+    width: 120px;
     height: 115px;
-    margin-left: 22px;
   }
 `;
 
 export const StyledLogoText = styled(Image)`
   ${onMobile} {
-    width: 119px;
+    width: 130px;
     height: 33px;
   }
 `;

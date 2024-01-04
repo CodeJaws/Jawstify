@@ -1,8 +1,8 @@
 import API from '@/apis/api';
 import Modal from '@/components/Modal/Modal';
-import Logo from '@/public/assets/icons/LogoSidebar.svg';
-import LogoTitle from '@/public/assets/icons/LogoSidebarTitle.svg';
 import AddBox from '@/public/assets/icons/invite.svg';
+import LogoTitle from '@/public/assets/images/title.png';
+import Logo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -51,8 +51,8 @@ function Sidebar({ reset, boardId, setReset, refreshToggle, refresh }: SidebarPr
       <StyledContainer>
         <StyledImageWrapper>
           <Link href="/mydashboard">
-            <StyledImage src={Logo} alt="사이드바 로고" />
-            <StyledImage src={LogoTitle} alt="사이드바 로고 제목" />
+            <StyledImage width={30} height={30} src={Logo} alt="사이드바 로고" />
+            <StyledImage width={95} height={22} src={LogoTitle} alt="사이드바 로고 제목" />
           </Link>
         </StyledImageWrapper>
 
@@ -114,7 +114,7 @@ const StyledContainer = styled.div`
 
 const StyledImage = styled(Image)`
   &:nth-child(2) {
-    margin-top: 8.01px;
+    margin-bottom: 2px;
     ${onMobile} {
       display: none;
     }
@@ -123,6 +123,7 @@ const StyledImage = styled(Image)`
 
 const StyledImageWrapper = styled.div`
   display: flex;
+  align-items: center;
   margin-top: 20px;
 
   ${onPc} {
