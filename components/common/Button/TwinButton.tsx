@@ -14,6 +14,7 @@ interface TwinButtonProps {
   onLeftClick: (e: MouseEvent<HTMLElement>) => void;
   onRightClick: (e: MouseEvent<HTMLElement>) => void;
   leftViolet?: boolean;
+  isLoading?: boolean;
 }
 
 function TwinButton({
@@ -26,7 +27,8 @@ function TwinButton({
   isDisabled,
   onLeftClick,
   onRightClick,
-  leftViolet,
+  leftViolet = false,
+  isLoading = false,
 }: TwinButtonProps) {
   return (
     <StyledDiv className={className}>
@@ -35,7 +37,7 @@ function TwinButton({
         $isViolet={isViolet}
         $size={size}
         onClick={onLeftClick}
-        $background={leftViolet ? COLORS.VIOLET_55 : COLORS.WHITE_FF}
+        $background={isLoading ? COLORS.GRAY_D9 : leftViolet ? COLORS.VIOLET_55 : COLORS.WHITE_FF}
       >
         {text1}
       </StyledButton>
@@ -44,7 +46,9 @@ function TwinButton({
         disabled={isDisabled}
         $size={size}
         onClick={onRightClick}
-        $background={isDisabled ? COLORS.GRAY_9F : leftViolet ? COLORS.WHITE_FF : COLORS.VIOLET_55}
+        $background={
+          isLoading ? COLORS.VIOLET_15 : isDisabled ? COLORS.GRAY_9F : leftViolet ? COLORS.WHITE_FF : COLORS.VIOLET_55
+        }
       >
         {text2}
       </StyledButton>

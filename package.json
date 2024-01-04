@@ -11,8 +11,10 @@
   "dependencies": {
     "@mui/material": "^5.15.0",
     "@mui/x-date-pickers": "^6.18.5",
+    "@react-oauth/google": "^0.12.1",
     "axios": "^1.6.2",
     "dayjs": "^1.11.10",
+    "jwt-decode": "^4.0.0",
     "next": "14.0.4",
     "react": "^18",
     "react-content-loader": "^6.2.1",

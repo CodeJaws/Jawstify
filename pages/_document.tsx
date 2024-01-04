@@ -1,3 +1,5 @@
+import { METADATA } from '@/constants/Metadata';
+import { Metadata } from 'next';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -31,10 +33,34 @@ class MyDocument extends Document {
       sheet.seal();
     }
   }
+
+  metadata: Metadata = {
+    metadataBase: new URL('https://taskify3.vercel.app/'),
+    title: METADATA.title,
+    description: METADATA.description,
+    openGraph: {
+      title: METADATA.title,
+      description: METADATA.description,
+      url: METADATA.url,
+      siteName: METADATA.title,
+      images: [
+        {
+          url: METADATA.image,
+          width: 388,
+          height: 388,
+        },
+      ],
+      locale: METADATA.locale,
+      type: 'website',
+    },
+  };
+
   render() {
     return (
       <Html lang="ko">
-        <Head></Head>
+        <Head>
+          <link rel="icon" href={METADATA.image} sizes="any" />
+        </Head>
         <body>
           <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />
           <Main />
