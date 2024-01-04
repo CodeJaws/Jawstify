@@ -15,14 +15,14 @@ export const StyledInput = styled.input<{ $error: boolean }>`
   border-radius: 8px;
   border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : 'var(--input-border)')};
   background-color: var(--input-bg);
-  color: var(--input-color);
+  color: var(--content-main);
   ${fontStyle(16, 400)}
 
   &:hover,
   &:focus,
   &:active {
     border: 1px solid ${({ $error }) => ($error ? COLORS.RED_D6 : COLORS.VIOLET_55)};
-    color: var(--input-color);
+    color: var(--content-main);
     outline: none;
   }
 

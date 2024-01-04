@@ -5,7 +5,7 @@ export const theme = css`
   body {
     background-color: var(--bg-main);
     color: var(--text-main);
-    transition: background 0.2s ease-in, color 0.2s ease-in;
+    transition: color 0.2s ease-in;
   }
 
   body[data-theme='light'] {
