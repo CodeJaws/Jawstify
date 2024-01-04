@@ -62,7 +62,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   };
 
   const loadColunCardList = async () => {
-    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 5 });
+    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
     setColumnCardList((prev) => [...prev, ...res.cards]);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
