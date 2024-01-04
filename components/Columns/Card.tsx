@@ -30,13 +30,13 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
   const { setDashboardId } = useDashBoardId();
   const { setIsCardOpen } = useCardOpen();
 
-  const date = dateFormat(dueDate);
-
   const handleCardDetailModalOpen = () => {
     setIsCardOpen(true);
     setCardId(cardInfoData.cardId);
     setDashboardId(cardInfoData.dashboardId);
   };
+
+  const date = dueDate ? dateFormat(dueDate) : null;
 
   return (
     <StyledContainer onClick={handleCardDetailModalOpen}>
@@ -56,27 +56,33 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
       <StyledInfoContainer>
         <StyledInfoTitle>{title}</StyledInfoTitle>
         <StyledInfoWrapper>
-          <StyledInfoChips>
-            {tags.map((val) => (
-              <ContentChip
-                key={val}
-                text={val.substring(0, val.indexOf('/'))}
-                color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
-                backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
-              />
-            ))}
-          </StyledInfoChips>
+          {tags.length > 0 && (
+            <StyledInfoChips>
+              {tags.map((val) => (
+                <ContentChip
+                  key={val}
+                  text={val.substring(0, val.indexOf('/'))}
+                  color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
+                  backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
+                  margin={'0 4px 3px 0'}
+                />
+              ))}
+            </StyledInfoChips>
+          )}
+
           <StyledInfoDate>
-            <StyledCalendarIconContainer>
-              <Image src={calendar} fill alt="캘린더 아이콘" />
-            </StyledCalendarIconContainer>
+            {date && (
+              <StyledCalendarIconContainer>
+                <Image src={calendar} fill alt="캘린더 아이콘" />
+              </StyledCalendarIconContainer>
+            )}
             {date}
+            <StyledInfoProfile>
+              <Image src={profileImageUrl ?? DefaultImg} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
+            </StyledInfoProfile>
           </StyledInfoDate>
         </StyledInfoWrapper>
       </StyledInfoContainer>
-      <StyledInfoProfile>
-        <Image src={profileImageUrl ?? DefaultImg} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
-      </StyledInfoProfile>
     </StyledContainer>
   );
 }
@@ -101,7 +107,7 @@ const StyledContainer = styled.div`
     width: 544px;
     padding: 20px;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     gap: 20px;
   }
 
@@ -128,6 +134,7 @@ const StyledImageContainer = styled.div`
 `;
 
 const StyledInfoContainer = styled.div`
+  display: grid;
   width: 100%;
   height: auto;
 
@@ -139,11 +146,12 @@ const StyledInfoContainer = styled.div`
 const StyledInfoTitle = styled.div`
   color: var(--content-main);
   ${fontStyle(16, 500)};
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${onMobile} {
     ${fontStyle(14, 500)};
-    margin-bottom: 6px;
   }
 `;
 
@@ -151,13 +159,11 @@ const StyledInfoWrapper = styled.div`
   width: 100%;
   display: grid;
   align-items: center;
-  grid-row-gap: 6px;
   grid-template-areas:
     'chips'
     'date';
 
   ${onTablet} {
-    grid-template-areas: 'chips date';
     justify-content: flex-start;
     grid-column-gap: 16px;
   }
@@ -168,6 +174,7 @@ const StyledInfoChips = styled.div`
   display: block;
   justify-content: flex-start;
   gap: 6px;
+  margin-bottom: 5px;
 `;
 
 const StyledInfoDate = styled.div`

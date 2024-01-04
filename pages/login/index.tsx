@@ -1,37 +1,21 @@
-import api from '@/apis/api';
+import GoogleLoginButton from '@/components/GoogleLogin/GoogleLogin';
 import FormInput from '@/components/Input/FormInput';
 import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
-import useUserData from '@/hooks/global/useUserData';
-import useAuth from '@/hooks/useAuth';
+import useAuth, { LoginFormValue } from '@/hooks/useAuth';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import mainLogoText from '@/public/assets/icons/logoText.svg';
 import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { localStorageSetItem } from '@/utils/localStorage';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-interface FormValue {
-  email?: string;
-  password?: string;
-  errors: {
-    email: {
-      message: string;
-    };
-    password: {
-      message: string;
-    };
-  };
-}
 function Login() {
-  const router = useRouter();
   useRedirectByLogin();
 
   const {
@@ -39,27 +23,12 @@ function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<FormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
+  } = useForm<LoginFormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
 
-  const { isBtnActive, setAlertMessage, alertMessage, handleChange, isModalOpen, setIsModalOpen } = useAuth(getValues, [
+  const { isBtnActive, onLoginSubmit, alertMessage, handleChange, isModalOpen, setIsModalOpen } = useAuth(getValues, [
     'email',
     'password',
   ]);
-
-  const { setUser } = useUserData();
-  const onSubmit = async (data: FormValue) => {
-    let response;
-    try {
-      response = await api.auth.login({ email: data.email as string, password: data.password as string });
-      localStorageSetItem('accessToken', response.accessToken);
-      await setUser(response.user);
-      response.accessToken && router.push('/mydashboard');
-      throw Error;
-    } catch (e: any) {
-      setIsModalOpen(true);
-      setAlertMessage({ ...alertMessage, serverMessage: e?.data?.message });
-    }
-  };
 
   return (
     <StyledContainer>
@@ -69,7 +38,7 @@ function Login() {
         <StyledDescription>오늘도 만나서 반가워요!</StyledDescription>
       </StyledLogoContainer>
 
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(onLoginSubmit)}>
         <FormInput
           label="이메일"
           register={register('email', {
@@ -87,8 +56,15 @@ function Login() {
           })}
           errorMessage={errors?.password?.message}
         />
-        <LoginButton active={isBtnActive} usingType="login" text="로그인" type="submit" margin="7px 0 0 "></LoginButton>
+        <LoginButton
+          active={isBtnActive}
+          usingType="login"
+          text="로그인"
+          type="submit"
+          margin="7px 0 -15px "
+        ></LoginButton>
       </StyledForm>
+      <GoogleLoginButton />
 
       <StyledBottomTextContainer>
         <StyledBottomText>

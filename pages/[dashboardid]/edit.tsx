@@ -44,6 +44,8 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
   const [refreshToggle, setRefreshToggle] = useState(false);
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });
   const [reset, setReset] = useState(false);
+  const [inviteRefresh, setInviteRefresh] = useState(false);
+  const refreshInvite = () => setInviteRefresh((prev) => !prev);
   const backHome = () => router.back();
 
   const refresh = () => setRefreshToggle((prev) => !prev);
@@ -68,7 +70,13 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
 
   return (
     <StyledContainer>
-      <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
+      <DashboardNavbar
+        members={members}
+        totalMembers={totalMembers}
+        dashboard={dashboardData}
+        isMyDashboard={false}
+        refreshInvite={refreshInvite}
+      />
       <Sidebar refreshToggle={refreshToggle} reset={reset} setReset={setReset} />
       <StyledWrapper>
         <StyledInWrapper>
@@ -78,7 +86,7 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
             <StyledMainInWrapper>
               <MembersTable dashboardId={Number(dashboardId)} refresh={refresh} />
             </StyledMainInWrapper>
-            <InviteDetailsTable dashboardId={Number(dashboardId)} />
+            <InviteDetailsTable dashboardId={Number(dashboardId)} inviteRefresh={inviteRefresh} />
             <DeleteButton onClick={deleteDashboard} />
           </StyledMainWrapper>
         </StyledInWrapper>

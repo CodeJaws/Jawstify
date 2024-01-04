@@ -11,6 +11,7 @@ interface usePaginationProps {
   dashboardId?: number;
   refreshPaginationToggle?: boolean;
   resetToFirst?: boolean;
+  inviteRefresh?: boolean;
 }
 
 interface usePaginationReturn {
@@ -33,6 +34,7 @@ const usePagination = ({
   dashboardId,
   refreshPaginationToggle,
   resetToFirst,
+  inviteRefresh,
 }: usePaginationProps): usePaginationReturn => {
   const [pageNum, setPageNum] = useState(1);
   const [allItems, setAllItems] = useState<AllItemTypes>([]);
@@ -41,6 +43,7 @@ const usePagination = ({
   const totalPages = Math.ceil(totalCount / showItemNum); // 총 페이지 수
 
   const [checkRefresh, setCheckRefresh] = useState(true);
+  const [checkInviteRefresh, setCheckInviteRefresh] = useState(false);
 
   const handlePagination = async (num: number) => {
     if (loading) return;
@@ -104,11 +107,12 @@ const usePagination = ({
   }, [type, size, showItemNum, dashboardId, allItems]);
 
   useEffect(() => {
-    if (refreshPaginationToggle !== checkRefresh) {
+    if (refreshPaginationToggle !== checkRefresh || inviteRefresh !== checkInviteRefresh) {
       firstFetch();
     }
     setCheckRefresh(refreshPaginationToggle as boolean);
-  }, [refreshPaginationToggle, firstFetch, checkRefresh]);
+    setCheckInviteRefresh(inviteRefresh as boolean);
+  }, [refreshPaginationToggle, firstFetch, checkRefresh, inviteRefresh]);
 
   useEffect(() => {
     firstFetch();
