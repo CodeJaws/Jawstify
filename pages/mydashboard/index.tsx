@@ -13,20 +13,21 @@ function MyDashBoard() {
 
   const [resetToFirst, setResetToFirst] = useState(false);
   const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
+  const [reset, setReset] = useState(false);
   const refresh = () => setRefreshPaginationToggle((prev) => !prev);
   const refreshToFirst = () => setResetToFirst((prev) => !prev);
 
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={true} />
-      <Sidebar />
+      <Sidebar reset={reset} setReset={setReset} refresh={refresh} />
       <StyledWrapper>
         <MyDashBoardButtonBox
           resetToFirst={resetToFirst}
           refresh={refresh}
           refreshPaginationToggle={refreshPaginationToggle}
         />
-        <InviteDashBoard refresh={() => refresh} refreshToFirst={() => refreshToFirst()} />
+        <InviteDashBoard refresh={refresh} refreshToFirst={refreshToFirst} />
       </StyledWrapper>
     </StyledContainer>
   );
@@ -44,7 +45,6 @@ const StyledWrapper = styled.div`
   position: absolute;
   top: 70px;
   left: 300px;
-  width: 100%;
   padding: 40px;
   ${onTablet} {
     left: 160px;

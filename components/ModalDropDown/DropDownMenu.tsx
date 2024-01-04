@@ -7,7 +7,7 @@ import useCardData from '@/hooks/ModalCard/useCardData';
 import useColumnId from '@/hooks/ModalCard/useColumnId';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import Check from '@/public/assets/icons/GrayCheck.svg';
-import Emoji from '@/public/assets/images/emoji.webp';
+import DefaultImg from '@/public/assets/images/jaws.png';
 import { COLORS } from '@/styles/palettes';
 
 import Image from 'next/image';
@@ -81,7 +81,7 @@ function DropDownMenu({ type, isOpen, filterData, setIsOpen }: DropDownMenuProps
                   {val.profileImageUrl ? (
                     <Image width={26} height={26} src={val.profileImageUrl} alt="담당자 이미지" />
                   ) : (
-                    <Image width={26} height={26} src={Emoji} alt="담당자 기본 이미지" />
+                    <Image width={26} height={26} src={DefaultImg} alt="담당자 기본 이미지" />
                   )}
                   {val.nickname}
                 </StyledMangerList>

@@ -1,16 +1,15 @@
+import useCardOpen from '@/hooks/ModalCard/useCardOpen';
 import Close from '@/public/assets/icons/Close.svg';
 import { onMobile } from '@/styles/mediaQuery';
-import { usePathname, useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 import Menu from './Menu';
 
 function ModalButton() {
-  const router = useRouter();
-  const dashboardId = usePathname();
+  const { setIsCardOpen } = useCardOpen();
   return (
     <StyledContainer>
       <Menu />
-      <StyledClose onClick={() => router.push(`/dashboard${dashboardId}`)} />
+      <StyledClose onClick={() => setIsCardOpen(false)} />
     </StyledContainer>
   );
 }

@@ -1,6 +1,6 @@
 import useComment from '@/hooks/useComment';
 import useUser from '@/hooks/useUser';
-import Emoji from '@/public/assets/images/emoji.webp';
+import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -47,11 +47,12 @@ function Comment() {
           <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
             {comment?.map((val) => (
               <StyledInCommentWrapper key={val.id}>
-                {val.author.profileImageUrl ? (
-                  <StyledImage width={34} height={34} src={val.author.profileImageUrl} alt="프로필 이미지" />
-                ) : (
-                  <StyledImage width={34} height={34} src={Emoji} alt="프로필 이미지" />
-                )}
+                <StyledImage
+                  width={34}
+                  height={34}
+                  src={val?.author?.profileImageUrl || DefaultImg}
+                  alt="프로필 이미지"
+                />
                 <StyledCommentContent>
                   <StyledInComment>
                     <StyledUser>{val.author.nickname}</StyledUser>
@@ -109,6 +110,7 @@ const StyledContainer = styled.div`
 
 const StyledCommentWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   overflow-y: scroll;
   height: 135px;
 

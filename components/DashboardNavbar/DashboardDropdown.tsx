@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { fontStyle } from '@/styles/fontStyle';
 import { localStorageClear } from '@/utils/localStorage';
 
-import UserImage from '@/public/assets/icons/User.svg';
-import LogoutImage from '@/public/assets/icons/Logout.svg';
 import DashboardImage from '@/public/assets/icons/Dashboard.svg';
+import LogoutImage from '@/public/assets/icons/Logout.svg';
+import UserImage from '@/public/assets/icons/User.svg';
 import Image from 'next/image';
 import { onMobile } from '@/styles/mediaQuery';
 
@@ -31,8 +31,8 @@ function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
           <StyledLink href="/mypage">내 정보</StyledLink>
         </li>
         <li>
-          <Image width={15} height={15} src={DashboardImage} alt="내 대시보드" />
-          <StyledLink href="/myboard">내 대시보드</StyledLink>
+          <Image width={25} height={25} src={DashboardImage} alt="내 대시보드" />
+          <StyledLink href="/mydashboard">내 대시보드</StyledLink>
         </li>
         <li>
           <Image width={15} height={15} src={LogoutImage} alt="로그아웃" />

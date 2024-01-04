@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
 import styled from 'styled-components';
 
 import API from '@/apis/api';
@@ -10,13 +9,13 @@ import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
 import MembersTable from '@/components/Table/MembersTable';
 import DeleteButton from '@/components/common/Button/DeleteButton';
 import useDashboard from '@/hooks/useDashboard';
+import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import useRedirectByLogin from '@/hooks/useRedirectByLogin';
-import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 
 
 interface BoardEditProps {
@@ -44,6 +43,7 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
   const router = useRouter();
   const [refreshToggle, setRefreshToggle] = useState(false);
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });
+  const [reset, setReset] = useState(false);
   const backHome = () => router.back();
 
   const refresh = () => setRefreshToggle((prev) => !prev);
@@ -69,7 +69,7 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
   return (
     <StyledContainer>
       <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
-      <Sidebar refreshToggle={refreshToggle} />
+      <Sidebar refreshToggle={refreshToggle} reset={reset} setReset={setReset} />
       <StyledWrapper>
         <StyledInWrapper>
           <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>

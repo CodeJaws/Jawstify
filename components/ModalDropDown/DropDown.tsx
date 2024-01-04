@@ -4,7 +4,7 @@ import Arrow from '@/public/assets/icons/ArrowDropdown.svg';
 import { COLORS } from '@/styles/palettes';
 import { ModalDropdownProps } from '@/types/dropdown';
 
-import { Emoji } from '@/constants/ModalInput';
+import { DefaultImg } from '@/constants/ModalInput';
 import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
@@ -73,13 +73,13 @@ function DropDown({ type, onChange }: ModalDropdownProps) {
           <DropDownMenu type={type} isOpen={isOpen} setIsOpen={setIsOpen} />
         </StyledContainer>
       ) : (
-        <StyledInputWrapper>
+        <StyledInputWrapper onBlur={handleBlur}>
           <StyledInput
             value={inputData}
             onClick={() => setIsOpen(true)}
             onChange={openDropDown}
             placeholder="이름을 입력해주세요"
-            $imgSrc={imgSrc ?? Emoji}
+            $imgSrc={imgSrc ?? DefaultImg}
           />
           {filterData.length !== 0 && (
             <>

@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { ModalCommonProps } from '@/types/modal';
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
+import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { StyledButtonContainer, StyledTwinButton } from './CreateToDo';
 
 function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () => {} }: ModalCommonProps) {
@@ -14,6 +14,16 @@ function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () =>
       ...values,
       [inputLabel]: inputValue,
     });
+  };
+
+  const handleSubmit = () => {
+    if (values['대시보드 이름'].length === 0) {
+      alert('값을 입력해 주세요.');
+    } else if (values['대시보드 이름'].length > 10) {
+      alert('10글자 이하로 작성해 주세요.');
+    } else {
+      onOkClick();
+    }
   };
 
   useEffect(() => {
@@ -38,7 +48,7 @@ function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () =>
           text2="생성"
           size="large"
           onLeftClick={onCancelClick}
-          onRightClick={onOkClick}
+          onRightClick={handleSubmit}
         ></StyledTwinButton>
       </StyledButtonContainer>
     </>

@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import useUserData from '@/hooks/global/useUserData';
+import useDeviceType from '@/hooks/useDeviceType';
+import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import Codeit from '@/public/assets/icons/Codeit.svg';
-import useUserData from '@/hooks/global/useUserData';
-import { FocusEvent, useEffect, useState } from 'react';
 import { UserType } from '@/types/apiType';
+import { FocusEvent, useEffect, useState } from 'react';
 import DashboardDropdown from './DashboardDropdown';
-import useDeviceType from '@/hooks/useDeviceType';
 
 function Profile() {
   const { user } = useUserData();
@@ -46,7 +46,7 @@ function Profile() {
       <StyledContainer onBlur={(e) => handleBlur(e)}>
         <StyledButton onMouseDown={handleClickDropdown}>
           <StyledImageWrapper>
-            <StyledImage fill sizes="100%" src={profileImageUrl || Codeit} alt="프로필" />
+            <StyledImage fill sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필" />
           </StyledImageWrapper>
           <StyledNameWrapper>{nickname}</StyledNameWrapper>
         </StyledButton>

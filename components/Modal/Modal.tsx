@@ -1,3 +1,4 @@
+import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -5,16 +6,17 @@ import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+
+import ModalCard from '../ModalCard/ModalCard';
 import Basic from './ModalContent/Basic';
+import CreateDashboard from './ModalContent/CreateDashboard';
 import CreateToDo from './ModalContent/CreateToDo';
 import EditToDo from './ModalContent/EditToDo';
-import CreateDashboard from './ModalContent/CreateDashboard';
 import ManageColumn from './ModalContent/ManageColumn';
 import NoTitle from './ModalContent/NoTitle';
-import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 
 interface Props extends ModalCommonProps {
-  title: '' | '새로운 대시보드' | '할 일 생성' | '할 일 수정' | '새 컬럼 생성' | '컬럼 관리' | '초대하기';
+  title: '' | '새로운 대시보드' | '카드' | '할 일 생성' | '할 일 수정' | '새 컬럼 생성' | '컬럼 관리' | '초대하기';
   description?: string;
   isSingleButton?: boolean;
   defaultValue?: typeof INIT_EDIT_TODO | typeof INIT_MANAGE_COLUMN | typeof INIT_BASIC;
@@ -67,6 +69,8 @@ function Modal({
             getValue={setModalInputValue}
           />
         );
+      case '카드':
+        return <ModalCard />;
       case '할 일 수정':
         return <EditToDo onOkClick={onOkClick} onCancelClick={onCancelClick} getValue={setModalInputValue} />;
       case '컬럼 관리':
@@ -98,10 +102,14 @@ function Modal({
   return ReactDOM.createPortal(
     <>
       {title !== '할 일 수정' && <StyledModalBackdrop onClick={onCancelClick} />}
-      <StyledModalContainer $isTightVersion={isTightVersion}>
-        <StyledTitle>{title}</StyledTitle>
-        {renderModalContent(title)}
-      </StyledModalContainer>
+      {title === '카드' ? (
+        <>{renderModalContent(title)}</>
+      ) : (
+        <StyledModalContainer title={title} $isTightVersion={isTightVersion}>
+          <StyledTitle>{title}</StyledTitle>
+          {renderModalContent(title)}
+        </StyledModalContainer>
+      )}
     </>,
     portalDiv,
   );

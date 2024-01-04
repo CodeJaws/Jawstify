@@ -27,10 +27,8 @@ function DashBoardButton({ text, color, king, onClick, id }: DashBoardButtonProp
         <StyledWrapper>
           <StyledDiv>
             <StyledCircleWrapper $color={color}></StyledCircleWrapper>
-            <StyledInDiv>
-              {text}
-              {king && <CrownImage src={crown} alt="왕관" />}
-            </StyledInDiv>
+            <StyledInDiv>{text}</StyledInDiv>
+            {king && <CrownImage src={crown} alt="왕관" />}
           </StyledDiv>
           <StyledPageImage src={rightPage} alt="화살표" />
         </StyledWrapper>
@@ -79,9 +77,13 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledDiv = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 16px;
+  ${onTablet} {
+    gap: 10px;
+  }
 `;
 const StyledInDiv = styled.div`
   display: flex;
