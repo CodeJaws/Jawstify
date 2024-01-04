@@ -10,7 +10,7 @@ export const theme = css`
 
   body[data-theme='light'] {
     // landingPage
-    --bg-main: ${COLORS.WHITE_FF};
+    --bg-main: #fafafa;
     --bg-second: ${COLORS.VIOLET_F1};
     --bg-third: ${COLORS.VIOLET_F1};
     --bg-fourth: ${COLORS.VIOLET_15};
