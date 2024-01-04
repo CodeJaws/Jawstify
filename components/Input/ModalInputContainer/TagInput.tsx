@@ -27,9 +27,6 @@ export interface Tag {
 function TagInput({ label = '태그', onChange, defaultValue: defaultTagStringList }: TagProps) {
   const [tags, setTags] = useState<Tag[]>([]);
   const [value, setValue] = useState<string>('');
-  // const { cardData } = useCardData();
-
-  // const getTag = cardData.tags;
 
   const getFormattedTagEl = () => {
     if (!defaultTagStringList) return;

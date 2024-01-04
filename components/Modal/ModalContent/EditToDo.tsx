@@ -7,12 +7,15 @@ import TwinButton from '@/components/common/Button/TwinButton';
 import useEditTodo from '@/hooks/ModalCard/useEditTodo';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 function EditToDo({ onCancelClick = () => {}, getValue = () => {} }: ModalCommonProps) {
   const { values, cardData, setImage, previewImage, setPreviewImage, changeProfile, handleChange } = useEditTodo();
 
-  getValue(values);
+  useEffect(() => {
+    getValue(values);
+  }, [getValue, values]);
 
   return (
     <>
@@ -24,7 +27,7 @@ function EditToDo({ onCancelClick = () => {}, getValue = () => {} }: ModalCommon
         <BasicInput isNecessary label="제목" onChange={handleChange} inputValue={values.제목} />
         <BasicInput isNecessary isTextArea label="설명" onChange={handleChange} inputValue={values.설명} />
         <DateInput onChange={handleChange} defaultValue={cardData.dueDate} />
-        <TagInput onChange={handleChange} />
+        <TagInput onChange={handleChange} defaultValue={cardData.tags} />
         <AddImageButton
           type="modal"
           image={cardData.imageUrl}
