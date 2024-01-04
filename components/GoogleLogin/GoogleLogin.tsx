@@ -1,8 +1,9 @@
 import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
-import { GoogleLogin } from '@react-oauth/google';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import styled from 'styled-components';
 
 const GoogleLoginButton = () => {
   const { handleLogin, handleSignUp } = useAuth();
@@ -77,8 +78,8 @@ const GoogleLoginButton = () => {
   return (
     <>
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ''}>
-        <GoogleLogin
-          width={400}
+        <StyledGoogleLogin
+          width={230}
           onSuccess={(credentialResponse) => {
             const decodedUserInfo: { email: string; sub: string; name: string; picture: string } = jwtDecode(
               credentialResponse.credential ?? '',
@@ -95,3 +96,13 @@ const GoogleLoginButton = () => {
 };
 
 export default GoogleLoginButton;
+
+const StyledGoogleLogin = styled(GoogleLogin)`
+  width: 600px;
+  ${onTablet} {
+    width: 200px;
+  }
+  ${onMobile} {
+    width: 150px;
+  }
+`;
