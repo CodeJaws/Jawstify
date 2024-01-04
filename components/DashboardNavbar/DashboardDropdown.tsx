@@ -16,7 +16,6 @@ interface DashboardDropdownProps {
 }
 
 function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
-
   const logout = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       localStorageClear();
@@ -27,16 +26,18 @@ function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
     <StyledContainer $deviceType={deviceType} $isOpen={isOpen}>
       <ul>
         <li>
-          <Image width={15} height={15} src={UserImage} alt="내 정보" />
-          <StyledLink href="/mypage">내 정보</StyledLink>
+          <StyledLink href="/mypage">
+            <StyledImage width={15} height={15} src={UserImage} alt="내 정보" /> 내 정보
+          </StyledLink>
         </li>
         <li>
-          <Image width={15} height={15} src={DashboardImage} alt="내 대시보드" />
-          <StyledLink href="/mydashboard">내 대시보드</StyledLink>
+          <StyledLink href="/mydashboard">
+            <StyledImage width={15} height={15} src={DashboardImage} alt="내 대시보드" /> 내 대시보드
+          </StyledLink>
         </li>
         <li>
-          <Image width={15} height={15} src={LogoutImage} alt="로그아웃" />
           <StyledLink href="/" onClick={() => logout()}>
+            <StyledImage width={15} height={15} src={LogoutImage} alt="로그아웃" />
             로그아웃
           </StyledLink>
         </li>
@@ -82,21 +83,23 @@ const StyledContainer = styled.div<{ $deviceType: string | undefined; $isOpen: b
     ${fontStyle(16, 100)}
     border-radius: 5px;
 
-
     &:hover {
       background-color: var(--nav-Dropdown-hover);
       color: var(--nav-Dropdown-color);
     }
-
   }
 `;
 
 const StyledLink = styled(Link)`
   width: 100%;
+  display: flex;
+  align-items: center;
   ${fontStyle(14, 100)}
   &:hover {
     background-color: var(--nav-Dropdown-hover);
   }
-  margin-left: 10px;
 `;
 
+const StyledImage = styled(Image)`
+  margin-right: 11px;
+`;
