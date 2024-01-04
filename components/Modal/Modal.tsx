@@ -1,7 +1,6 @@
 import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { ModalCommonProps } from '@/types/modal';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';

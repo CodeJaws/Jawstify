@@ -9,19 +9,17 @@ import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Dashboard from './Dashboard';
 
 interface SidebarProps {
   boardId?: number;
-  reset?: boolean;
-  setReset?: Dispatch<SetStateAction<boolean>>;
   refreshToggle?: boolean;
   refresh?: () => void;
 }
 
-function Sidebar({ reset, boardId, setReset, refreshToggle, refresh }: SidebarProps) {
+function Sidebar({ boardId, refreshToggle, refresh }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [values, setValues] = useState(INIT_CREATE_DASHBOARD);
 
@@ -33,9 +31,6 @@ function Sidebar({ reset, boardId, setReset, refreshToggle, refresh }: SidebarPr
     await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
     if (refresh) {
       refresh();
-    }
-    if (setReset) {
-      setReset((prev) => !prev);
     }
   };
 
@@ -59,7 +54,7 @@ function Sidebar({ reset, boardId, setReset, refreshToggle, refresh }: SidebarPr
             <Image width={20} height={20} src={AddBox} alt="추가하기" />
           </button>
         </StyledTitleWrapper>
-        <Dashboard reset={reset} boardId={boardId} refreshToggle={refreshToggle} refresh={refresh} />
+        <Dashboard boardId={boardId} refreshToggle={refreshToggle} refresh={refresh} />
       </StyledContainer>
       {isOpen && (
         <Modal
@@ -90,7 +85,7 @@ const StyledContainer = styled.div`
   flex-shrink: 0;
   background: var(--sidebar-bg);
   border-right: var(--sidebar-border);
-  
+
   ${onPc} {
     width: 300px;
   }

@@ -34,12 +34,13 @@ function DashBoardID({ dashboardId }: DashBoardIDProps) {
   useRedirectByDashboardId({ dashboardId });
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
   const { isCardOpen, setIsCardOpen } = useCardOpen();
-  const [reset, setReset] = useState(false);
+  const [, setRefreshPaginationToggle] = useState(false);
+  const refresh = () => setRefreshPaginationToggle((prev) => !prev);
 
   return (
     <>
       <StyledContainer>
-        <Sidebar boardId={Number(dashboardId)} reset={reset} setReset={setReset} />
+        <Sidebar boardId={Number(dashboardId)} refresh={refresh} />
         <DashboardNavbar
           members={members}
           totalMembers={totalMembers}

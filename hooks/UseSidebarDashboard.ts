@@ -1,6 +1,5 @@
 import API from '@/apis/api';
 import { DashboardProps } from '@/components/Sidebar/Dashboard';
-import { reset } from '@/styles/reset';
 import { DashboardType } from '@/types/apiType';
 import { useEffect, useRef, useState } from 'react';
 
@@ -46,7 +45,7 @@ function useSidebarDashboard({ refreshToggle, refresh }: DashboardProps) {
         setHasMore((prev) => !prev);
       }
     }
-  }, [reset, refreshToggle, refresh]);
+  }, [refreshToggle, refresh]);
   return { dashboardContainerRef, fetchHasMore, hasMore, dataSource };
 }
 

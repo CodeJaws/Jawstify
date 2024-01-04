@@ -5,18 +5,17 @@ import InviteDashBoard from '@/components/Table/InviteDashBoard';
 import useMyDashboard from '@/hooks/useMyDashboard';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import styled from 'styled-components';
 
 function MyDashBoard() {
   useRedirectByLogin();
 
-  const { reset, setReset, refresh, resetToFirst, refreshPaginationToggle, refreshToFirst } = useMyDashboard();
+  const { refresh, resetToFirst, refreshPaginationToggle, refreshToFirst } = useMyDashboard();
 
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={true} />
-      <Sidebar reset={reset} setReset={setReset} refresh={refresh} />
+      <Sidebar refresh={refresh} />
       <StyledWrapper>
         <MyDashBoardButtonBox
           resetToFirst={resetToFirst}
