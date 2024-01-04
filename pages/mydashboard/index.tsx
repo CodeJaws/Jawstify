@@ -6,6 +6,7 @@ import useMyDashboard from '@/hooks/useMyDashboard';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 function MyDashBoard() {
   useRedirectByLogin();
@@ -13,18 +14,23 @@ function MyDashBoard() {
   const { refresh, resetToFirst, refreshPaginationToggle, refreshToFirst } = useMyDashboard();
 
   return (
-    <StyledContainer>
-      <DashboardNavbar isMyDashboard={true} />
-      <Sidebar refresh={refresh} />
-      <StyledWrapper>
-        <MyDashBoardButtonBox
-          resetToFirst={resetToFirst}
-          refresh={refresh}
-          refreshPaginationToggle={refreshPaginationToggle}
-        />
-        <InviteDashBoard refresh={refresh} refreshToFirst={refreshToFirst} />
-      </StyledWrapper>
-    </StyledContainer>
+    <>
+      <Helmet>
+        <title>내 대시보드 - Jawstify</title>
+      </Helmet>
+      <StyledContainer>
+        <DashboardNavbar isMyDashboard={true} />
+        <Sidebar refresh={refresh} />
+        <StyledWrapper>
+          <MyDashBoardButtonBox
+            resetToFirst={resetToFirst}
+            refresh={refresh}
+            refreshPaginationToggle={refreshPaginationToggle}
+          />
+          <InviteDashBoard refresh={refresh} refreshToFirst={refreshToFirst} />
+        </StyledWrapper>
+      </StyledContainer>
+    </>
   );
 }
 
