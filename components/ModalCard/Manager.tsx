@@ -2,7 +2,6 @@ import useCardData from '@/hooks/ModalCard/useCardData';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import dateTimeFormat from '@/utils/dateTimeFormat';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -18,7 +17,7 @@ function Manager() {
         <StyledManagerWrapper>
           <StyledManager>담당자</StyledManager>
           <StyledManagerProfile>
-            <StyledImage width={34} height={34} src={profileImageUrl || DefaultImg} alt="프로필 이미지" />
+            <StyledImage width={34} height={34} sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필 이미지" />
             <StyledManagerName>{nickname}</StyledManagerName>
           </StyledManagerProfile>
         </StyledManagerWrapper>

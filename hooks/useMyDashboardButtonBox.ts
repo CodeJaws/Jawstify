@@ -35,8 +35,8 @@ function useMyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggl
     try {
       await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
       refresh();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error(error);
     }
   };
   return { setIsOpen, showItems, totalPages, pageNum, handlePagination, isOpen, setModalValue, handleCreate };

@@ -35,7 +35,7 @@ function DashboardItems({ item, boardId }: BoardItemProps) {
       <StyledDashboardContainer $isActive={isActive}>
         <StyledColorWrapper $color={item.color}></StyledColorWrapper>
         <StyledTitleWrapper>{item.title}</StyledTitleWrapper>
-        {item.createdByMe && <StyledImage width={17.59} height={14} src={crown} alt="방장" />}
+        {item.createdByMe && <StyledImage width={17} height={14} sizes="100%" src={crown} alt="방장" />}
       </StyledDashboardContainer>
     </Link>
   );

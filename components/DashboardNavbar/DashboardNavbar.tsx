@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import styled from 'styled-components';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
 import crown from '@/public/assets/icons/crown.svg';
 import invite from '@/public/assets/icons/invite.svg';
@@ -9,14 +9,6 @@ import setting from '@/public/assets/icons/setting.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 
-import { COLORS } from '@/styles/palettes';
-import Button from './Button';
-import Members from './Members';
-import Profile from './Profile';
-import { MemberType } from './Members';
-import { GetDashboardDetailedItem } from '@/types/api';
-import { useEffect, useState } from 'react';
-import Modal from '../Modal/Modal';
 import API from '@/apis/api';
 import {
   ALREADY_INVITE_ERROR,
@@ -25,7 +17,13 @@ import {
   NO_DASHBOARD_ERROR,
   NO_USER_ERROR,
 } from '@/constants/ApiError';
+import { GetDashboardDetailedItem } from '@/types/api';
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
+import Button from './Button';
 import DarkModeToggleButton from './DarkModeToggleButton';
+import Members, { MemberType } from './Members';
+import Profile from './Profile';
 
 interface DashboardNavbarProps {
   members?: MemberType[];
@@ -120,7 +118,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refr
       <StyledTitleContainer>
         <h3>{dashboardTitle}</h3>
         {!isMyDashboard && dashboard && dashboard.createdByMe && (
-          <Image width={21} height={16} src={crown} alt="본인 계정" />
+          <Image width={21} height={16} src={crown} sizes="100%" alt="본인 계정" />
         )}
       </StyledTitleContainer>
       <StyledWrapper>

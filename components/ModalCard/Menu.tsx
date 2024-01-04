@@ -41,7 +41,7 @@ function Menu() {
         router.back();
       }
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
 

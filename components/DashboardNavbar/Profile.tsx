@@ -6,7 +6,6 @@ import useDeviceType from '@/hooks/useDeviceType';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { UserType } from '@/types/apiType';
 import { FocusEvent, useEffect, useState } from 'react';
 import DashboardDropdown from './DashboardDropdown';

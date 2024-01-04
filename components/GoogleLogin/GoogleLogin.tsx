@@ -40,7 +40,6 @@ const GoogleLoginButton = () => {
           }),
       );
 
-  // ***Here is code for converting "Base64" to javascript "File Object".***
   function dataURLtoFile(dataurl: any, filename: any) {
     var arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
@@ -56,9 +55,7 @@ const GoogleLoginButton = () => {
   const handleProfileImgUpload = (url: string) => {
     let fileData: File;
     toDataURL(url).then(async (dataUrl) => {
-      console.log('Here is Base64 Url', dataUrl);
       fileData = dataURLtoFile(dataUrl, 'imageName.jpg');
-      console.log('Here is JavaScript File Object', fileData);
 
       const formData = new FormData();
       formData.append('image', fileData);

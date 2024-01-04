@@ -141,16 +141,18 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
               style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
             >
               {columnCardList.map((card) => (
-                <li key={card.id}>
-                  <Card
-                    cardInfoData={{ dashboardId, cardId: card.id }}
-                    title={card.title}
-                    dueDate={card.dueDate}
-                    tags={card.tags}
-                    assignee={card.assignee}
-                    imageUrl={card.imageUrl}
-                  />
-                </li>
+                <ul key={card.id}>
+                  <li>
+                    <Card
+                      cardInfoData={{ dashboardId, cardId: card.id }}
+                      title={card.title}
+                      dueDate={card.dueDate}
+                      tags={card.tags}
+                      assignee={card.assignee}
+                      imageUrl={card.imageUrl}
+                    />
+                  </li>
+                </ul>
               ))}
             </InfiniteScroll>
           </StyledDiv>

@@ -46,6 +46,7 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
             src={imageUrl}
             width={1000}
             height={1000}
+            priority={true}
             style={{ width: 'auto', height: '100%' }}
             alt="카드 이미지"
           />{' '}
@@ -78,7 +79,13 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
             )}
             {date}
             <StyledInfoProfile>
-              <Image src={profileImageUrl ?? DefaultImg} fill style={{ borderRadius: '50%' }} alt={'프로필'} />
+              <Image
+                src={profileImageUrl ?? DefaultImg}
+                fill
+                sizes="100%"
+                style={{ borderRadius: '50%' }}
+                alt={'프로필'}
+              />
             </StyledInfoProfile>
           </StyledInfoDate>
         </StyledInfoWrapper>
