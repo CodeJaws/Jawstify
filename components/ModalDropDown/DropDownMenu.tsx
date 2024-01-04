@@ -147,5 +147,5 @@ const StyledMangerList = styled.div`
   justify-content: center;
   align-items: center;
   gap: 6px;
-  color: var(--input-color);
+  color: var(--content-main);
 `;

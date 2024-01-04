@@ -204,7 +204,7 @@ const StyledInputDiv = styled.div`
   margin: 20px 28px 0;
   border: 1px solid var(--input-border);
   background: var(--input-bg);
-  color: var(--input-color);
+  color: var(--content-main);
 
   ${onTablet} {
     width: 448px;
@@ -222,7 +222,7 @@ const StyledInput = styled.input`
   height: 38px;
   ${fontStyle(16, 400)}
   background-color: var(--input-bg);
-  color: var(--input-color);
+  color: var(--content-main);
 
   ${onTablet} {
     width: 390px;

@@ -127,7 +127,7 @@ const StyledInput = styled.input<{ $imgSrc: any }>`
   border-radius: 6px;
   background: var(--input-bg);
   padding: 0 10px;
-  color: var(--input-color);
+  color: var(--content-main);
 
   ${({ $imgSrc }) =>
     $imgSrc &&
