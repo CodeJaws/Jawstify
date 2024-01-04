@@ -44,6 +44,7 @@ export const theme = css`
     --input-bg: ${COLORS.WHITE_FF};
     --input-border: ${COLORS.GRAY_D9};
     --input-color: ${COLORS.GRAY_9F};
+    --input-color-tag: transparent;
 
     --sign-bg: #fafafa;
     --sign-main: ${COLORS.GRAY_EE};
@@ -92,9 +93,10 @@ export const theme = css`
     --content-second: ${COLORS.GRAY_EE};
 
     --input-label: ${COLORS.WHITE_FF};
-    --input-bg: ${COLORS.BLACK_17};
+    --input-bg: #222222;
     --input-border: ${COLORS.BLACK_4B};
     --input-color: ${COLORS.GRAY_9F};
+    --input-color-tag: #222222;
 
     --sign-bg: ${COLORS.BLACK_17};
     --sign-main: ${COLORS.GRAY_EE};

@@ -86,7 +86,7 @@ const StyledContainer = styled.div`
   justify-content: flex-start;
   gap: 10px;
   border-radius: 6px;
-  border: var(--content-border);
+  border: 1px solid var(--input-border);
   background: var(--content-color);
   position: relative;
   cursor: pointer;

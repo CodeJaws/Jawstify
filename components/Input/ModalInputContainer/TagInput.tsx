@@ -110,7 +110,6 @@ export default TagInput;
 
 const StyledInput = styled.input`
   width: auto;
-  background-color: var(--input-bg);
   color: var(--input-color);
   ${fontStyle(16, 400)}
   border: none;
@@ -123,6 +122,7 @@ const StyledInputContainer = styled.div`
   padding-left: 5px;
   border-radius: 8px;
   border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
   color: ${COLORS.BLACK_33};
   ${fontStyle(16, 400)};
   overflow-x: scroll;

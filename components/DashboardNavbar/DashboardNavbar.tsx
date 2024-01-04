@@ -25,6 +25,7 @@ import {
   NO_DASHBOARD_ERROR,
   NO_USER_ERROR,
 } from '@/constants/ApiError';
+import DarkModeToggleButton from './DarkModeToggleButton';
 
 interface DashboardNavbarProps {
   members?: MemberType[];
@@ -125,6 +126,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
           </>
         ) : null}
         <Profile />
+        <DarkModeToggleButton />
       </StyledWrapper>
     </StyledContainer>
   );

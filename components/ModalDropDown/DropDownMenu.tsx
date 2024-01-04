@@ -103,12 +103,12 @@ const StyledContainer = styled.div<{ $isOpen: boolean }>`
   left: 0;
   width: 217px;
   height: auto;
-  border: 1px solid ${COLORS.GRAY_D9};
   border-radius: 6px;
-  background: ${COLORS.WHITE_FF};
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
   padding: 13px 8px;
-  z-index: 3;
+  z-index: 10;
 `;
 
 const StyledWrapper = styled.div`
@@ -117,6 +117,8 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledInWrapper = styled.div`
+  background: var(--input--bg);
+
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -145,4 +147,5 @@ const StyledMangerList = styled.div`
   justify-content: center;
   align-items: center;
   gap: 6px;
+  color: var(--input-color);
 `;

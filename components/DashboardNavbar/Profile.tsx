@@ -78,11 +78,11 @@ const StyledContainer = styled.div`
   gap: 12px;
 
   ${onPc} {
-    margin-right: 80px;
+    margin-right: 12px;
   }
 
   ${onTablet} {
-    margin-right: 40px;
+    margin-right: 12px;
   }
   ${onMobile} {
     margin-right: 12px;

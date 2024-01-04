@@ -107,7 +107,7 @@ const StyledManager = styled.p`
 
 const StyledManagerName = styled.p`
   ${fontStyle(14, 400)};
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
 
   ${onMobile} {
     font-size: 1.2rem;
@@ -132,7 +132,7 @@ const StyledDeadLineName = styled.p`
 
 const StyledDeadLine = styled.p`
   ${fontStyle(14, 400)};
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   white-space: nowrap;
 
   ${onMobile} {

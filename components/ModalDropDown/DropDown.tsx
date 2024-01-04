@@ -103,7 +103,7 @@ const StyledContainer = styled.div<{ $isPressed: boolean }>`
   height: 48px;
   border: 1px solid ${({ $isPressed }) => ($isPressed ? COLORS.VIOLET_55 : COLORS.GRAY_D9)};
   border-radius: 6px;
-  background: ${COLORS.WHITE_FF};
+  background: var(--input--bg);
   padding: 0 10px;
 `;
 
@@ -123,9 +123,9 @@ const StyledInputWrapper = styled.div`
 const StyledInput = styled.input<{ $imgSrc: any }>`
   width: 217px;
   height: 48px;
-  border: 1px solid ${COLORS.GRAY_D9};
+  border: 1px solid var(--input-border);
   border-radius: 6px;
-  background: ${COLORS.WHITE_FF};
+  background: var(--input-bg);
   padding: 0 10px;
 
   ${({ $imgSrc }) =>

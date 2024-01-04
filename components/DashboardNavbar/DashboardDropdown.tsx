@@ -2,14 +2,13 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
 import { localStorageClear } from '@/utils/localStorage';
 
 import UserImage from '@/public/assets/icons/User.svg';
 import LogoutImage from '@/public/assets/icons/Logout.svg';
 import DashboardImage from '@/public/assets/icons/Dashboard.svg';
 import Image from 'next/image';
-import DarkmodeButton from './DarkmodeButton';
+import { onMobile } from '@/styles/mediaQuery';
 
 interface DashboardDropdownProps {
   deviceType: string | undefined;
@@ -17,13 +16,12 @@ interface DashboardDropdownProps {
 }
 
 function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
+
   const logout = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       localStorageClear();
     }
   };
-
-  const enableDarkmode = () => {};
 
   return (
     <StyledContainer $deviceType={deviceType} $isOpen={isOpen}>
@@ -42,11 +40,6 @@ function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
             로그아웃
           </StyledLink>
         </li>
-        <StyledSeperator></StyledSeperator>
-        {/* <li>
-          <DarkmodeButton />
-        </li> */}
-        {/* <li><StyledWrapper onClick={enableDarkmode}>다크모드</StyledWrapper></li> */}
       </ul>
     </StyledContainer>
   );
@@ -57,14 +50,14 @@ export default DashboardDropdown;
 const StyledContainer = styled.div<{ $deviceType: string | undefined; $isOpen: boolean }>`
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   position: absolute;
-  width: 130px;
+  width: 120px;
   height: auto;
   background-color: var(--nav-Dropdown-bg);
   border: var(--nav-Dropdown-border);
 
   top: 50px;
   /* right: 0px; */
-  right: ${({ $deviceType }) => ($deviceType === 'mobile' ? 10 : 10)}px;
+  right: ${({ $deviceType }) => ($deviceType === 'mobile' ? -10 : 10)}px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -77,7 +70,6 @@ const StyledContainer = styled.div<{ $deviceType: string | undefined; $isOpen: b
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* gap: 10px; */
   }
 
   ul > li {
@@ -95,6 +87,7 @@ const StyledContainer = styled.div<{ $deviceType: string | undefined; $isOpen: b
       background-color: var(--nav-Dropdown-hover);
       color: var(--nav-Dropdown-color);
     }
+
   }
 `;
 
@@ -107,15 +100,3 @@ const StyledLink = styled(Link)`
   margin-left: 10px;
 `;
 
-// const StyledWrapper = styled.div`
-//   cursor: pointer;
-//   width: 100%;
-//   ${fontStyle(14, 100)}
-//   &:hover {
-//     background-color: ${COLORS.GRAY_F5};
-//   }
-// `;
-
-const StyledSeperator = styled.div`
-  border: var(--nav-Dropdown-border);
-`;
