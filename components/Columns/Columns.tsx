@@ -6,6 +6,7 @@ import { GetColumnListProps } from '@/types/api';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal/Modal';
+import { COLORS } from '@/styles/palettes';
 
 interface ColumnProps {
   id: number;
@@ -104,9 +105,18 @@ const StyledContainer = styled.div`
     flex-direction: row;
     align-items: flex-start;
   }
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    height: 2.5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1px solid grey;
+    border-radius: 10px;
+  }
 `;
 
 const StyledWrapper = styled.div`
+  height: 93.5vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

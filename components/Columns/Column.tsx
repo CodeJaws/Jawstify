@@ -164,12 +164,8 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
 export default Column;
 
-const StyledBlank = styled.div`
-  height: 100%;
-`;
-
 const StyledDiv = styled.div<{ $length: number }>`
-  height: 77vh;
+  height: 82vh;
   overflow: scroll;
   display: flex;
   gap: 10px;
@@ -189,7 +185,7 @@ const StyledDiv = styled.div<{ $length: number }>`
   }
 
   ${onMobile} {
-    height: 40vh;
+    height: ${({ $length }) => ($length < 2 ? '100%' : '40vh')};
   }
 `;
 

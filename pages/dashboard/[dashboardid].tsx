@@ -65,6 +65,7 @@ const StyledContainer = styled.div`
 const StyledWrapper = styled.div`
   width: -webkit-fill-available;
   position: absolute;
+
   top: 70px;
   left: 67px;
 
