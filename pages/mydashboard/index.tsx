@@ -2,20 +2,16 @@ import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import MyDashBoardButtonBox from '@/components/MyDashboard/MyDashBoardButtonBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDashBoard from '@/components/Table/InviteDashBoard';
+import useMyDashboard from '@/hooks/useMyDashboard';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { useState } from 'react';
 import styled from 'styled-components';
 
 function MyDashBoard() {
   useRedirectByLogin();
 
-  const [resetToFirst, setResetToFirst] = useState(false);
-  const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
-  const [reset, setReset] = useState(false);
-  const refresh = () => setRefreshPaginationToggle((prev) => !prev);
-  const refreshToFirst = () => setResetToFirst((prev) => !prev);
+  const { reset, setReset, refresh, resetToFirst, refreshPaginationToggle, refreshToFirst } = useMyDashboard();
 
   return (
     <StyledContainer>

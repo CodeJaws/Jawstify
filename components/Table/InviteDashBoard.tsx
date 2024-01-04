@@ -1,110 +1,54 @@
-import API from '@/apis/api';
 import useDeviceType from '@/hooks/useDeviceType';
+import useInviteDashBoard from '@/hooks/useInviteDashBoard';
 import search from '@/public/assets/icons/Search.svg';
 import NoContent from '@/public/assets/images/NoContent.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
 
-interface GetInvitationListProps {
-  id: number;
-  inviter: {
-    id: number;
-    email: string;
-    nickname: string;
-  };
-  teamId: string;
-  dashboard: {
-    title: string;
-    id: number;
-  };
-  invitee: {
-    nickname: string;
-    email: string;
-    id: number;
-  };
-  inviteAccepted: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface GetAcceptProps {
-  acceptid: number;
-  accept: boolean;
-}
-
-interface InviteDashBoardProps {
+export interface InviteDashBoardProps {
   refresh: () => void;
   refreshToFirst: () => void;
 }
 
 function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
-  const [dataSource, setDataSource] = useState<GetInvitationListProps[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [searchText, setSearchText] = useState('');
-  const [cursor, setCursor] = useState(0);
   const windowSize = useDeviceType();
   const width = windowSize === 'pc' || windowSize === 'tablet';
-  const InviteContainerRef = useRef<HTMLDivElement>(null);
+  const {
+    dataSource,
+    searchText,
+    handleChange,
+    handleKeyDown,
+    InviteContainerRef,
+    fetchHasMore,
+    hasMore,
+    handleAccept,
+  } = useInviteDashBoard({ refresh, refreshToFirst });
 
-  const fetchHasMore = () => {
-    if (cursor) {
-      if (dataSource.length !== 0) {
-        handleLoadMore();
-      }
-    } else {
-      setHasMore((prev) => !prev);
-    }
-  };
-
-  const handleLoadMore = async () => {
-    const b = await API.invitations.getInvitationList({ cursorId: cursor });
-    setDataSource((prev) => [...prev, ...b.invitations]);
-    setCursor(b.cursorId as number);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
-
-  const getItems = async () => {
-    const a = await API.invitations.getInvitationList({});
-    setDataSource(a.invitations);
-    setCursor(a.cursorId as number);
-  };
-
-  const handleAccept = async ({ acceptid, accept }: GetAcceptProps) => {
-    await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
-    setDataSource(dataSource.filter((item) => item.id !== acceptid));
-    refresh();
-    refreshToFirst();
-  };
-
-  useEffect(() => {
-    getItems();
-    if (InviteContainerRef.current) {
-      InviteContainerRef.current.scrollTop = 0;
-      setHasMore((prev) => !prev);
-    }
-  }, [refresh]);
-
-  const showItems = dataSource.filter((item) => item.dashboard.title.includes(searchText));
   return (
     <StyledDiv $data={dataSource}>
       <StyledP>초대받은 대시보드</StyledP>
       {dataSource.length !== 0 ? (
         <div>
-          <StyledInputDiv>
-            <label htmlFor="search">
-              <StyledSearchImage src={search} alt="search" />
-            </label>
-            <StyledInput id="search" placeholder="검색" onChange={handleChange} autoComplete='off' />
-          </StyledInputDiv>
+          <form>
+            <StyledInputDiv>
+              <label htmlFor="search">
+                <StyledSearchImage src={search} alt="search" />
+              </label>
+              <StyledInput
+                id="search"
+                value={searchText}
+                placeholder="검색"
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+              />
+            </StyledInputDiv>
+          </form>
+
           {!(windowSize === 'mobile') && windowSize !== undefined && (
             <StyledWrapper>
               <StyledInWrapper>이름</StyledInWrapper>
@@ -120,8 +64,8 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
               useWindow={false}
               initialLoad={false}
             >
-              {showItems.length !== 0 ? (
-                showItems.map((item) => {
+              {dataSource.length !== 0 ? (
+                dataSource.map((item) => {
                   return (
                     <div key={item.id}>
                       {windowSize === 'mobile' && (
@@ -195,7 +139,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
 export default InviteDashBoard;
 
 const Div = styled.div`
-  height: 400px;
+  height: 430px;
   overflow-x: hidden;
   ${onMobile} {
     height: 700px;
@@ -212,10 +156,10 @@ const Div = styled.div`
 
 const StyledDiv = styled.div<{ $data: any }>`
   width: 1023px;
-  height: 600px;
+  height: 630px;
   border-radius: 8px;
   background: var(--content-color);
-  border: var(--content-border); 
+  border: var(--content-border);
 
   ${onTablet} {
     width: 504px;

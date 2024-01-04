@@ -124,6 +124,9 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
         font-size: 1.2rem;
       }
     `}
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const StyledInputButton = styled(Button)`

@@ -25,6 +25,7 @@ function Comment() {
     submitComment,
     deleteComment,
     fetchHasMore,
+    CommentWrapperRef,
   } = useComment();
 
   return (
@@ -43,7 +44,7 @@ function Comment() {
       {comment.length === 0 ? (
         <></>
       ) : (
-        <StyledCommentWrapper>
+        <StyledCommentWrapper ref={CommentWrapperRef}>
           <InfiniteScroll pageStart={0} loadMore={fetchHasMore} hasMore={hasMore} useWindow={false} initialLoad={false}>
             {comment?.map((val) => (
               <StyledInCommentWrapper key={val.id}>

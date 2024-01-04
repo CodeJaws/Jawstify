@@ -151,7 +151,7 @@ const StyledContentWrapper = styled.div`
   gap: 16px;
 `;
 
-const StyledContent = styled.p`
+const StyledContent = styled.div`
   ${fontStyle(14, 400)}
   line-height: 24px;
   word-break: break-all;

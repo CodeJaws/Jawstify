@@ -1,5 +1,6 @@
 import API from '@/apis/api';
 import Modal from '@/components/Modal/Modal';
+import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
 import AddBox from '@/public/assets/icons/invite.svg';
 import LogoTitle from '@/public/assets/images/title.png';
 import Logo from '@/public/assets/images/transJaws.png';
@@ -22,17 +23,9 @@ interface SidebarProps {
 
 function Sidebar({ reset, boardId, setReset, refreshToggle, refresh }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [values, setValues] = useState({
-    '대시보드 이름': '',
-    색상: '',
-  });
+  const [values, setValues] = useState(INIT_CREATE_DASHBOARD);
 
-  const setModalValue = (
-    values = {
-      '대시보드 이름': '',
-      색상: '',
-    },
-  ) => {
+  const setModalValue = (values = INIT_CREATE_DASHBOARD) => {
     setValues(values);
   };
 

@@ -1,8 +1,9 @@
-import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
+import GoogleLoginButton from '@/components/GoogleLogin/GoogleLogin';
 import FormInput from '@/components/Input/FormInput';
 import Modal from '@/components/Modal/Modal';
 import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
+import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import mainLogoText from '@/public/assets/images/title.png';
 import mainLogo from '@/public/assets/images/transJaws.png';
@@ -13,7 +14,6 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import * as L from '../login';
-import GoogleLoginButton from '@/components/GoogleLogin/GoogleLogin';
 
 function SignUp() {
   useRedirectByLogin();
@@ -104,7 +104,7 @@ function SignUp() {
 
       <StyledBottomTextContainer>
         <StyledText>
-          이미 가입하셨나요? <L.StyledLink href="/login">가입하기</L.StyledLink>
+          이미 가입하셨나요? <L.StyledLink href="/login">로그인하러 가기</L.StyledLink>
         </StyledText>
       </StyledBottomTextContainer>
       {isModalOpen && (

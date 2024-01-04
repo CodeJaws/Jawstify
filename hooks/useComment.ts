@@ -1,6 +1,6 @@
 import API from '@/apis/api';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useCardData from './ModalCard/useCardData';
 import useCardId from './ModalCard/useCardId';
 import useDashBoardId from './ModalCard/useDashBoardId';
@@ -32,6 +32,7 @@ function useComment() {
   const [isUpdateMap, setIsUpdateMap] = useState<{ [key: number]: boolean }>({});
   const [updatedCommentMap, setUpdatedCommentMap] = useState<{ [key: number]: string }>({});
   const [value, setValues] = useState('');
+  const CommentWrapperRef = useRef<HTMLDivElement>(null);
 
   const isOpenComment = (commentId: number) => {
     setIsUpdateMap((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
@@ -94,6 +95,12 @@ function useComment() {
 
   useEffect(() => {
     loadComment();
+    if (CommentWrapperRef.current) {
+      CommentWrapperRef.current.scrollTop = 0;
+      if (hasMore === false) {
+        setHasMore((prev) => !prev);
+      }
+    }
   }, [refresh]);
 
   return {
@@ -109,6 +116,7 @@ function useComment() {
     submitComment,
     deleteComment,
     fetchHasMore,
+    CommentWrapperRef,
   };
 }
 

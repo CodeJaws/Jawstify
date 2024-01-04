@@ -1,6 +1,5 @@
 import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
-import { GoogleLogin } from '@react-oauth/google';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
@@ -41,7 +40,6 @@ const GoogleLoginButton = () => {
           }),
       );
 
-  // ***Here is code for converting "Base64" to javascript "File Object".***
   function dataURLtoFile(dataurl: any, filename: any) {
     var arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
@@ -57,9 +55,7 @@ const GoogleLoginButton = () => {
   const handleProfileImgUpload = (url: string) => {
     let fileData: File;
     toDataURL(url).then(async (dataUrl) => {
-      console.log('Here is Base64 Url', dataUrl);
       fileData = dataURLtoFile(dataUrl, 'imageName.jpg');
-      console.log('Here is JavaScript File Object', fileData);
 
       const formData = new FormData();
       formData.append('image', fileData);
@@ -78,7 +74,7 @@ const GoogleLoginButton = () => {
     <>
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ''}>
         <GoogleLogin
-          width={400}
+          width={230}
           onSuccess={(credentialResponse) => {
             const decodedUserInfo: { email: string; sub: string; name: string; picture: string } = jwtDecode(
               credentialResponse.credential ?? '',
