@@ -107,7 +107,7 @@ export default TagInput;
 
 const StyledInput = styled.input`
   width: auto;
-  color: var(--input-color);
+  color: var(--content-main);
   ${fontStyle(16, 400)}
   border: none;
   background: transparent;
@@ -132,7 +132,7 @@ const StyledInputContainer = styled.div`
   &:focus,
   &:active {
     border: 1px solid ${COLORS.VIOLET_55};
-    color: var(--input-color);
+    color: var(--content-main);
     outline: none;
   }
 `;
