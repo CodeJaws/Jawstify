@@ -1,5 +1,4 @@
 import API from '@/apis/api';
-import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useCardData from './ModalCard/useCardData';
 import useCardId from './ModalCard/useCardId';
@@ -20,7 +19,6 @@ interface Props {
 }
 
 function useComment() {
-  const router = useRouter();
   const [comment, setComment] = useState<Props[]>([]);
   const { cardId } = useCardId();
   const { dashboardId } = useDashBoardId();
