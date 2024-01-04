@@ -1,7 +1,7 @@
 import { default as API, default as api } from '@/apis/api';
 import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import setting from '@/public/assets/icons/setting.svg';
-
+import BlueEllipse from '@/public/assets/icons/BlueEllipse.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -115,13 +115,13 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
           />
         )}
 
-        <StyledSettingIconContainer onClick={() => handleModalsOpen('manageColumn')}>
-          <Image fill src={setting} alt="설정 버튼" />
-        </StyledSettingIconContainer>
-
         <StyledHeader>
+          <Image src={BlueEllipse} width={8} height={8} alt={'파란색 원'} />
           <div>{cardListInfos.title}</div>
           <StyledCountChip content={cardListInfos.totalCount} />
+          <StyledSettingIconContainer onClick={() => handleModalsOpen('manageColumn')}>
+            <Image fill src={setting} alt="설정 버튼" />
+          </StyledSettingIconContainer>
         </StyledHeader>
         <StyledWrapper>
           <AddButton onClick={() => handleModalsOpen('createToDo')} />
@@ -165,7 +165,7 @@ const StyledBlank = styled.div`
 `;
 
 const StyledDiv = styled.div`
-  height: 90vh;
+  height: 77vh;
   overflow: scroll;
   display: flex;
   gap: 10px;
@@ -175,9 +175,7 @@ const StyledDiv = styled.div`
   }
 
   ${onPc} {
-    width: 354px;
     border: none;
-    border-right: 0.0625rem solid ${COLORS.GRAY_EE};
   }
 
   ${onTablet} {
@@ -194,12 +192,16 @@ const StyledDiv = styled.div`
 const StyledContainer = styled.div`
   width: 100%;
   height: auto;
-  padding: 7.5px 0 7.5px 35px;
-  position: relative;
-  border-bottom: 0.625px solid ${COLORS.GRAY_EE};
+  padding: 20px 35px 7.5px;
+
   &::-webkit-scrollbar {
     display: none;
   }
+
+  ${onPc} {
+    border-right: 0.0625rem solid #eeeeee;
+  }
+
   ${onTablet} {
     padding: 7.5px 0 7.5px 7.5px;
   }
@@ -210,10 +212,10 @@ const StyledContainer = styled.div`
 
 const StyledSettingIconContainer = styled.button`
   position: absolute;
-  width: 15px;
-  height: 15px;
-  right: 12.5px;
-  top: 12.5px;
+  width: 24px;
+  height: 24px;
+  right: 0.5px;
+  top: 2.5px;
   cursor: pointer;
 
   ${onMobile} {
@@ -226,9 +228,12 @@ const StyledSettingIconContainer = styled.button`
 
 const StyledHeader = styled.div`
   display: flex;
-  gap: 7.5px;
+  align-items: center;
+  position: relative;
+  width: 314px;
+  gap: 8.5px;
   ${fontStyle(18, 700)};
-  margin-bottom: 15.625px;
+  margin-bottom: 20px;
 
   ${onMobile} {
     ${fontStyle(16, 700)};
