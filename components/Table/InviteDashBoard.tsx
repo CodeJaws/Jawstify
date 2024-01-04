@@ -6,7 +6,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
 import TwinButton from '../common/Button/TwinButton';
@@ -43,6 +43,12 @@ interface InviteDashBoardProps {
   refreshToFirst: () => void;
 }
 
+interface GetInvitationSearchListProps {
+  size?: number;
+  cursorId?: number | null;
+  title?: string;
+}
+
 function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   const [dataSource, setDataSource] = useState<GetInvitationListProps[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -63,9 +69,9 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   };
 
   const handleLoadMore = async () => {
-    const b = await API.invitations.getInvitationList({ cursorId: cursor });
-    setDataSource((prev) => [...prev, ...b.invitations]);
-    setCursor(b.cursorId as number);
+    const item = await API.invitations.getInvitationList({ cursorId: cursor });
+    setDataSource((prev) => [...prev, ...item.invitations]);
+    setCursor(item.cursorId as number);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,9 +79,9 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   };
 
   const getItems = async () => {
-    const a = await API.invitations.getInvitationList({});
-    setDataSource(a.invitations);
-    setCursor(a.cursorId as number);
+    const item = await API.invitations.getInvitationList({});
+    setDataSource(item.invitations);
+    setCursor(item.cursorId as number);
   };
 
   const handleAccept = async ({ acceptid, accept }: GetAcceptProps) => {
@@ -83,6 +89,19 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
     setDataSource(dataSource.filter((item) => item.id !== acceptid));
     refresh();
     refreshToFirst();
+  };
+
+  const handleSearch = async (searchText: string) => {
+    const searchItem = await API.invitations.getInvitationList({ title: searchText });
+    setDataSource(searchItem.invitations);
+    setCursor(searchItem.cursorId as number);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch(searchText);
+    }
   };
 
   useEffect(() => {
@@ -93,18 +112,20 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
     }
   }, [refresh]);
 
-  const showItems = dataSource.filter((item) => item.dashboard.title.includes(searchText));
   return (
     <StyledDiv $data={dataSource}>
       <StyledP>초대받은 대시보드</StyledP>
       {dataSource.length !== 0 ? (
         <div>
-          <StyledInputDiv>
-            <label htmlFor="search">
-              <StyledSearchImage src={search} alt="search" />
-            </label>
-            <StyledInput id="search" placeholder="검색" onChange={handleChange} />
-          </StyledInputDiv>
+          <form>
+            <StyledInputDiv>
+              <label htmlFor="search">
+                <StyledSearchImage src={search} alt="search" />
+              </label>
+              <StyledInput id="search" placeholder="검색" onChange={handleChange} onKeyDown={handleKeyDown} />
+            </StyledInputDiv>
+          </form>
+
           {!(windowSize === 'mobile') && windowSize !== undefined && (
             <StyledWrapper>
               <StyledInWrapper>이름</StyledInWrapper>
@@ -120,8 +141,8 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
               useWindow={false}
               initialLoad={false}
             >
-              {showItems.length !== 0 ? (
-                showItems.map((item) => {
+              {dataSource.length !== 0 ? (
+                dataSource.map((item) => {
                   return (
                     <div key={item.id}>
                       {windowSize === 'mobile' && (

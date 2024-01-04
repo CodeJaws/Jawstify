@@ -71,7 +71,7 @@ const members = {
  * @param responseInvitation 초대 응답
  */
 const invitations = {
-  getInvitationList: async ({ size = 10, cursorId = 0, title }: T.GetInvitationListProps) =>
+  getInvitationList: async ({ size = 8, cursorId = 0, title }: T.GetInvitationListProps) =>
     await request.get<T.GetInvitationListItem>(
       `invitations?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}${title ? `&title=${title}` : ''}`,
     ),
