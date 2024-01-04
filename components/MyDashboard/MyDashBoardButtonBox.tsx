@@ -108,7 +108,7 @@ const PaginationWrapper = styled.div`
 `;
 
 const PaginationPage = styled.div`
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(14, 400)}
   ${onMobile} {
     font-size: 12px;

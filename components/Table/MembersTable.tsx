@@ -99,7 +99,7 @@ function MembersTable({ dashboardId, refresh }: MembersTableProps) {
         <h1>{tableTitle}</h1>
         <StyledPaginationWrapper>
           <div>
-            {totalPages}페이지 중 {pageNum}
+            {totalPages} 페이지 중 {pageNum}
           </div>
           <div>
             <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
@@ -128,20 +128,18 @@ const StyledContainer = styled.div`
 
   height: 404px;
   border-radius: 8px;
-  background: ${COLORS.WHITE_FF};
+  background: var(--content-color);
+  border: var(--content-border);
 
   ${onTablet} {
     width: 100%;
   }
 
   ${onMobile} {
-    width: 100%;
     /* width: 284px; */
-    height: 337px;
-  }
-
-  ${onMobile} {
-    height: 377px;
+    /* height: 337px; */
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -153,6 +151,7 @@ const StyledNameText = styled.p`
   color: ${COLORS.GRAY_9F};
   ${fontStyle(16, 400)};
   margin-top: 27px;
+  
 
   margin-left: 28px;
   /* margin-top: 14px; */
@@ -170,15 +169,16 @@ const StyledTopWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 28px;
+
   h1 {
-    color: ${COLORS.BLACK_33};
+    color: var(--content-main);
     ${fontStyle(24, 700)};
   }
   margin-top: 26px;
 
   ${onMobile} {
     h1 {
-      color: ${COLORS.BLACK_33};
+      color: var(--content-main);
       ${fontStyle(20, 700)};
     }
     padding: 0 20px;
@@ -190,11 +190,12 @@ const StyledPaginationWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+
   div {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${COLORS.BLACK_33};
+    color: var(--content-text);
     ${fontStyle(14, 400)};
   }
 
@@ -228,7 +229,7 @@ const StyledMemberBoxProfileWrapper = styled.div`
   gap: 12px;
 
   p {
-    color: ${COLORS.BLACK_33};
+    color: var(--content-main);
     ${fontStyle(16, 400)};
   }
 
@@ -255,5 +256,5 @@ const StyledSeperator = styled.div`
   width: 100%;
   height: 0;
   flex-shrink: 0;
-  border: 1px solid ${COLORS.GRAY_EE};
+  border: var(--content-divider);
 `;

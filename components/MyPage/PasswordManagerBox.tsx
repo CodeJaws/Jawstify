@@ -122,6 +122,7 @@ const StyledContainer = styled.div`
   padding: 32px 28px 28px 28px;
   border-radius: 8px;
   background: ${COLORS.WHITE_FF};
+  background: var(--content-color);
 
   ${onTablet} {
     width: 100%;

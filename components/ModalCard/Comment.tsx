@@ -189,7 +189,7 @@ const StyledUser = styled.p`
     font-size: 1.2rem;
   }
 
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
 `;
 
 const StyledDate = styled.p`

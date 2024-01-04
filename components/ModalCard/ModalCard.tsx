@@ -75,7 +75,8 @@ const StyledContainer = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
-  background-color: ${COLORS.WHITE_FF};
+  background-color: var(--content-color);
+  border: var(--content-border);
   border-radius: 10px;
   box-shadow: 0 2pc 12px 0px rgba(0, 0, 0, 0.08);
   padding: 32px 28px;
@@ -113,12 +114,7 @@ const StyledLeftContainer = styled.div`
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 2px;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 30%;
-    border-radius: 10px;
-    background: ${COLORS.GRAY_D9};
+    display: none;
   }
 
   ${onTablet} {

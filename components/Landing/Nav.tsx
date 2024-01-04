@@ -16,14 +16,14 @@ function Nav() {
     <StyledLandingHeaderContainer>
       <StyledLandingHeaderInner>
         <StyledLogoLinkContainer href="/">
-          <LogoImageWrapper>
+          <StyledLogoImageWrapper>
             <Image src={logoImage} fill alt="logoImage" />
-          </LogoImageWrapper>
-          <LogoTextWrapper>
+          </StyledLogoImageWrapper>
+          <StyledLogoTextWrapper>
             <Image src={logoText} fill alt="logoText" />
-          </LogoTextWrapper>
+          </StyledLogoTextWrapper>
         </StyledLogoLinkContainer>
-        <LinkButton>
+        <StyledLinkButton>
           <div onClick={() => toggleThemeMode()}>
             {themeMode === 'dark' ? (
               <StyledThemeModeIcon src={sunIcon} width={20} height={20} alt="라이트 모드로 변경" />
@@ -33,7 +33,7 @@ function Nav() {
           </div>
           <Link href="/login">로그인</Link>
           <Link href="/signup">회원가입</Link>
-        </LinkButton>
+        </StyledLinkButton>
       </StyledLandingHeaderInner>
     </StyledLandingHeaderContainer>
   );
@@ -66,7 +66,7 @@ const StyledLogoLinkContainer = styled(Link)`
   align-items: center;
 `;
 
-const LogoImageWrapper = styled.div`
+const StyledLogoImageWrapper = styled.div`
   position: relative;
   width: 24px;
   height: 27px;
@@ -77,7 +77,7 @@ const LogoImageWrapper = styled.div`
   }
 `;
 
-const LogoTextWrapper = styled.div`
+const StyledLogoTextWrapper = styled.div`
   display: none;
   position: relative;
   width: 95px;
@@ -93,7 +93,7 @@ const LogoTextWrapper = styled.div`
   }
 `;
 
-const LinkButton = styled.div`
+const StyledLinkButton = styled.div`
   display: flex;
   gap: 20px;
   color: var(--text-main);

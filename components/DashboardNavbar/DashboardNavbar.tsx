@@ -25,6 +25,7 @@ import {
   NO_DASHBOARD_ERROR,
   NO_USER_ERROR,
 } from '@/constants/ApiError';
+import DarkModeToggleButton from './DarkModeToggleButton';
 
 interface DashboardNavbarProps {
   members?: MemberType[];
@@ -142,6 +143,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refr
           </>
         ) : null}
         <Profile />
+        <DarkModeToggleButton />
       </StyledWrapper>
     </StyledContainer>
   );
@@ -165,7 +167,7 @@ const StyledTitleContainer = styled.div`
     }
   }
   h3 {
-    color: ${COLORS.BLACK_33};
+    color: var(--content-main);
     ${fontStyle(20, 700)}
   }
 `;
@@ -178,8 +180,8 @@ const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
   height: 70px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${COLORS.GRAY_D9};
-  background-color: ${COLORS.WHITE_FF};
+  border-bottom: var(--nav-border);
+  background-color: var(--nav-bg);
   z-index: 2;
 
   justify-content: ${({ $isMyDashboard }) => ($isMyDashboard ? 'space-between' : 'flex-end')};
@@ -227,7 +229,7 @@ const StyledSeperatorWrapper = styled.div`
   position: relative;
   height: 38px;
   flex-shrink: 0;
-  border: 1px solid var(--gray-gray_D9D9D9, #d9d9d9);
+  border: var(--content-divider);
   margin-left: 32px;
 
   ${onPc} {

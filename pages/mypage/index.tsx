@@ -52,13 +52,13 @@ export default MyPage;
 
 const StyledContainer = styled.div`
   width: 100%;
-`;
+  background-color: var(--content-back);
+  `;
 
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100vh;
   min-height: 1080px;
-  background-color: ${COLORS.GRAY_EE};
 `;
 
 const StyledInWrapper = styled.div`
@@ -86,6 +86,7 @@ const StyledBackWrapper = styled.button`
   background-repeat: no-repeat;
   background-position: 0px 50%;
   padding-left: 20px;
+  color: var(--content-main);
 
   ${onMobile} {
     background-size: 18px 18px;

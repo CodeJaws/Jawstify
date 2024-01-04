@@ -53,6 +53,7 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
         placeholder={placeholder || PLACEHOLDER[label]}
         $error={hasError}
         {...register}
+        autoComplete='off'
       />
       {isPassword && (
         <StyledEyeButton onClick={handleVisibility} type="button">

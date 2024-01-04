@@ -14,19 +14,19 @@ function Manager() {
 
   return (
     <StyledContainer>
-      <StyledInMangerWrapper>
-        <StyledMangerWrapper>
-          <StyledManger>담당자</StyledManger>
-          <StyledMangerProfile>
+      <StyledInManagerWrapper>
+        <StyledManagerWrapper>
+          <StyledManager>담당자</StyledManager>
+          <StyledManagerProfile>
             <StyledImage width={34} height={34} src={profileImageUrl || DefaultImg} alt="프로필 이미지" />
-            <StyledMangerName>{nickname}</StyledMangerName>
-          </StyledMangerProfile>
-        </StyledMangerWrapper>
+            <StyledManagerName>{nickname}</StyledManagerName>
+          </StyledManagerProfile>
+        </StyledManagerWrapper>
         <StyledDeadLineWrapper>
           <StyledDeadLineName>마감일</StyledDeadLineName>
           <StyledDeadLine>{dateTimeFormat(dueDate)}</StyledDeadLine>
         </StyledDeadLineWrapper>
-      </StyledInMangerWrapper>
+      </StyledInManagerWrapper>
     </StyledContainer>
   );
 }
@@ -36,9 +36,9 @@ export default Manager;
 const StyledContainer = styled.div`
   width: 200px;
   height: 155px;
-  border: 1px solid ${COLORS.GRAY_D9};
+  border: 1px solid var(--input-border);
   border-radius: 8px;
-  background-color: ${COLORS.WHITE_FF};
+  background-color: var(--input-bg);
 
   ${onMobile} {
     display: flex;
@@ -50,7 +50,7 @@ const StyledContainer = styled.div`
   }
 `;
 
-const StyledMangerProfile = styled.div`
+const StyledManagerProfile = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -72,7 +72,7 @@ const StyledImage = styled(Image)`
   }
 `;
 
-const StyledInMangerWrapper = styled.div`
+const StyledInManagerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -84,14 +84,15 @@ const StyledInMangerWrapper = styled.div`
   }
 `;
 
-const StyledMangerWrapper = styled.div`
+const StyledManagerWrapper = styled.div`
   ${onMobile} {
     display: flex;
     flex-direction: column;
   }
 `;
 
-const StyledManger = styled.p`
+const StyledManager = styled.p`
+  color: var(--input-label);
   ${fontStyle(12, 600)};
   line-height: 20px;
 
@@ -100,9 +101,9 @@ const StyledManger = styled.p`
   }
 `;
 
-const StyledMangerName = styled.p`
+const StyledManagerName = styled.p`
   ${fontStyle(14, 400)};
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
 
   ${onMobile} {
     font-size: 1.2rem;
@@ -127,7 +128,7 @@ const StyledDeadLineName = styled.p`
 
 const StyledDeadLine = styled.p`
   ${fontStyle(14, 400)};
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   white-space: nowrap;
 
   ${onMobile} {

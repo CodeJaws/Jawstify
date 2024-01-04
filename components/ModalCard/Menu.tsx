@@ -85,9 +85,9 @@ const StyledMenu = styled.div`
   width: 93px;
   height: 82px;
   padding: 6px;
-  border: 1px solid ${COLORS.GRAY_D9};
+  border: 1px solid var(--input-border);
   border-radius: 6px;
-  background-color: ${COLORS.WHITE_FF};
+  background-color: var(--content-color);
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
 
   ${onMobile} {
@@ -101,12 +101,12 @@ const StyledButton = styled.div`
   ${fontStyle(14, 400)};
   text-align: center;
   line-height: 24px;
-  color: ${COLORS.BLACK_33};
+  color: var(--button-color);
 
   &:hover {
     border-radius: 4px;
     color: ${COLORS.VIOLET_55};
-    background: ${COLORS.VIOLET_F1};
+    background: var(--button-hover);
   }
 
   ${onMobile} {

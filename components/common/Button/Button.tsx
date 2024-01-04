@@ -33,7 +33,7 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  border: 1px solid ${COLORS.GRAY_D9};
+  border: var(--button-border);
   background: ${({ $isViolet }) => ($isViolet ? `${COLORS.VIOLET_55}` : `${COLORS.WHITE_FF}`)};
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
