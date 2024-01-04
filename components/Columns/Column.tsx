@@ -39,7 +39,6 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   // 무한스크롤로 카드 리스트 가져오기
   const fetchHasMore = () => {
-    console.log(cardListInfos.cursorId);
     if (cardListInfos.cursorId !== 0) {
       loadColunCardList();
     } else {
