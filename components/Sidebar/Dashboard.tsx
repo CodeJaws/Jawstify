@@ -23,7 +23,6 @@ interface BoardItemProps {
 
 export interface DashboardProps {
   boardId?: number;
-  reset?: boolean;
   refreshToggle?: boolean;
   refresh?: () => void;
 }
@@ -41,7 +40,7 @@ function DashboardItems({ item, boardId }: BoardItemProps) {
   );
 }
 
-function Dashboard({ reset, boardId, refreshToggle, refresh }: DashboardProps) {
+function Dashboard({ boardId, refreshToggle, refresh }: DashboardProps) {
   const { dashboardContainerRef, fetchHasMore, hasMore, dataSource } = useSidebarDashboard({ refreshToggle, refresh });
 
   return (

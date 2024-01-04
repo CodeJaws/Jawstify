@@ -7,7 +7,6 @@ import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
@@ -20,7 +19,8 @@ function MyPage() {
   const { user } = useUserData();
   const [nickname, setNickName] = useState('');
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
-  const [reset, setReset] = useState(false);
+  const [, setRefreshPaginationToggle] = useState(false);
+  const refresh = () => setRefreshPaginationToggle((prev) => !prev);
 
   useEffect(() => {
     setNickName(user.nickname);
@@ -30,7 +30,7 @@ function MyPage() {
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} />
-      <Sidebar reset={reset} setReset={setReset} />
+      <Sidebar refresh={refresh} />
       <StyledWrapper>
         <StyledInWrapper>
           <StyledBackWrapper onClick={backHome}>돌아가기</StyledBackWrapper>
@@ -53,7 +53,7 @@ export default MyPage;
 const StyledContainer = styled.div`
   width: 100%;
   background-color: var(--content-back);
-  `;
+`;
 
 const StyledWrapper = styled.div`
   width: 100%;

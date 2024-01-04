@@ -17,7 +17,6 @@ import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-
 interface BoardEditProps {
   dashboardId: number;
 }
@@ -43,7 +42,6 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
   const router = useRouter();
   const [refreshToggle, setRefreshToggle] = useState(false);
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });
-  const [reset, setReset] = useState(false);
   const [inviteRefresh, setInviteRefresh] = useState(false);
   const refreshInvite = () => setInviteRefresh((prev) => !prev);
   const backHome = () => router.back();
@@ -77,7 +75,7 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
         isMyDashboard={false}
         refreshInvite={refreshInvite}
       />
-      <Sidebar refreshToggle={refreshToggle} reset={reset} setReset={setReset} />
+      <Sidebar refreshToggle={refreshToggle} refresh={refresh} />
       <StyledWrapper>
         <StyledInWrapper>
           <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>
