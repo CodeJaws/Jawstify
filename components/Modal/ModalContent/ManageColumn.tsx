@@ -1,20 +1,27 @@
-import styled from 'styled-components';
+import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { StyledTwinButton } from './Create&EditToDo';
-import { StyledContainer } from './Basic';
-import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import { ModalCommonProps } from '@/types/modal';
-import { useState } from 'react';
-import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { StyledContainer } from './Basic';
+import { StyledTwinButton } from './CreateToDo';
 
 interface Props extends ModalCommonProps {
   onDeleteClick: () => void;
+  defaultValue: { 이름: string };
 }
 
-function ManageColumn({ onOkClick, onCancelClick = () => {}, onDeleteClick = () => {}, getValue = () => {} }: Props) {
-  const [values, setValues] = useState(INIT_MANAGE_COLUMN);
+function ManageColumn({
+  onOkClick,
+  onCancelClick = () => {},
+  onDeleteClick = () => {},
+  getValue = () => {},
+  defaultValue,
+}: Props) {
+  const [values, setValues] = useState(defaultValue || INIT_MANAGE_COLUMN);
 
   const handleChange = (inputLabel: string, inputValue: string) => {
     setValues({
@@ -23,7 +30,9 @@ function ManageColumn({ onOkClick, onCancelClick = () => {}, onDeleteClick = () 
     });
   };
 
-  getValue(values);
+  useEffect(() => {
+    getValue(values);
+  }, [getValue, values]);
 
   return (
     <>

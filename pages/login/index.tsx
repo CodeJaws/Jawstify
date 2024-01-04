@@ -1,21 +1,22 @@
-import { useForm } from 'react-hook-form';
-import useAuth from '@/hooks/useAuth';
-import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import Link from 'next/link';
 import api from '@/apis/api';
+import FormInput from '@/components/Input/FormInput';
+import Modal from '@/components/Modal/Modal';
+import LoginButton from '@/components/common/Button/LoginButton';
+import * as C from '@/constants/SignValidate';
+import useUserData from '@/hooks/global/useUserData';
+import useAuth from '@/hooks/useAuth';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
+import mainLogoText from '@/public/assets/icons/logoText.svg';
+import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import * as C from '@/constants/SignValidate';
-import FormInput from '@/components/Input/FormInput';
-import LoginButton from '@/components/common/Button/LoginButton';
-import mainLogoText from '@/public/assets/icons/logoText.svg';
-import mainLogo from '@/public/assets/icons/mainPurpleLogo.svg';
-import Modal from '@/components/Modal/Modal';
-import useUserData from '@/hooks/global/useUserData';
 import { localStorageSetItem } from '@/utils/localStorage';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
 interface FormValue {
   email?: string;
@@ -30,6 +31,9 @@ interface FormValue {
   };
 }
 function Login() {
+  const router = useRouter();
+  useRedirectByLogin();
+
   const {
     register,
     handleSubmit,
@@ -42,7 +46,6 @@ function Login() {
     'password',
   ]);
 
-  const router = useRouter();
   const { setUser } = useUserData();
   const onSubmit = async (data: FormValue) => {
     let response;
@@ -50,7 +53,7 @@ function Login() {
       response = await api.auth.login({ email: data.email as string, password: data.password as string });
       localStorageSetItem('accessToken', response.accessToken);
       await setUser(response.user);
-      response.accessToken && router.push('/boards');
+      response.accessToken && router.push('/mydashboard');
       throw Error;
     } catch (e: any) {
       setIsModalOpen(true);
@@ -60,7 +63,7 @@ function Login() {
 
   return (
     <StyledContainer>
-      <StyledLogoContainer>
+      <StyledLogoContainer href={'/'}>
         <StyledLogoImg src={mainLogo} height={190} width={165} alt="메인 로고" />
         <StyledLogoText src={mainLogoText} height={55} width={198} alt="메인 로고 텍스트" />
         <StyledDescription>오늘도 만나서 반가워요!</StyledDescription>
@@ -119,7 +122,7 @@ const StyledContainer = styled.div`
   background-color: ${COLORS.GRAY_FA};
 `;
 
-export const StyledLogoContainer = styled.div`
+export const StyledLogoContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;

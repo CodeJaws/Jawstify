@@ -3,33 +3,43 @@ import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useUserData from '@/hooks/global/useUserData';
+import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 function MyPage() {
+  useRedirectByLogin();
+
+  const router = useRouter();
+  const backHome = () => router.back();
   const { user } = useUserData();
   const [nickname, setNickName] = useState('');
+  const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
+  const [reset, setReset] = useState(false);
 
   useEffect(() => {
     setNickName(user.nickname);
+    setPreviewImage(user.profileImageUrl);
   }, [user]);
+
   return (
     <StyledContainer>
       <DashboardNavbar isMyDashboard={false} />
-      <Sidebar />
+      <Sidebar reset={reset} setReset={setReset} />
       <StyledWrapper>
         <StyledInWrapper>
-          <StyledBackWrapper href={'/mydashboard'}>돌아가기</StyledBackWrapper>
+          <StyledBackWrapper onClick={backHome}>돌아가기</StyledBackWrapper>
           <ProfileBox
             email={user.email}
             nickname={nickname}
-            profileImg={user.profileImageUrl}
+            profileImg={previewImage}
             setNickName={setNickName}
+            setPreviewImage={setPreviewImage}
           />
           <PasswordManagerBox />
         </StyledInWrapper>
@@ -70,7 +80,7 @@ const StyledInWrapper = styled.div`
   }
 `;
 
-const StyledBackWrapper = styled(Link)`
+const StyledBackWrapper = styled.button`
   ${fontStyle(16, 500)}
   background-image: url(${BackImg.src});
   background-repeat: no-repeat;

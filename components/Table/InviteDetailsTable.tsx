@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
@@ -10,7 +11,6 @@ import Button from '../common/Button/Button';
 import InviteButton from './InviteButton';
 import { InvitationType } from '@/types/apiType';
 import NoItem from '@/public/assets/images/noItem.png';
-import { useEffect, useState } from 'react';
 import Modal from '../Modal/Modal';
 import API from '@/apis/api';
 import {
@@ -25,13 +25,16 @@ import {
 
 interface TablePaginationProps {
   dashboardId: number;
+  inviteRefresh: boolean;
 }
 
 interface TableProps {
   item: InvitationType;
-  dashboardId: string;
+  dashboardId: number;
   refreshPagination: () => void;
 }
+
+const SHOW_ITEMS_SIZE = 5;
 
 /** 초대 내역 컴포넌트에서 하나의 줄을 의미합니다. */
 function Table({ item, dashboardId, refreshPagination }: TableProps) {
@@ -40,7 +43,7 @@ function Table({ item, dashboardId, refreshPagination }: TableProps) {
 
   const handleDelete = async () => {
     try {
-      await API.dashboard.abortInviteDashboard({ dashboardId, invitationId: String(item.id) });
+      await API.dashboard.abortInviteDashboard({ dashboardId, invitationId: Number(item.id) });
       refreshPagination();
     } catch (e: any) {
       switch (e.data.message) {
@@ -67,15 +70,14 @@ function Table({ item, dashboardId, refreshPagination }: TableProps) {
   );
 }
 
-function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
+function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps) {
   const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
   const refreshPagination = () => setRefreshPaginationToggle((prev) => !prev);
-  const SHOW_ITEMS_SIZE = 5;
 
   /**
    * @param handlePagination 페이지네이션 OnClick 동작 함수
    * @param pageNum 현재 페이지 넘버
-   * @param showMembers 화면에 보여줄 Items
+   * @param allItems 모든 Items
    * @param totalPages 총 페이지 수
    * @param totalCount 전체 아이템 수 - API에서 받아올 수 있습니다.
    */
@@ -85,6 +87,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
     type: 'invitationDetails',
     dashboardId,
     refreshPaginationToggle,
+    inviteRefresh,
   });
 
   const tableTitle = '초대 내역';
@@ -109,7 +112,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
 
     try {
       await API.dashboard.inviteDashboard({
-        dashboardId: String(dashboardId),
+        dashboardId: Number(dashboardId),
         email,
       });
       refreshPagination();
@@ -173,7 +176,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
             <div key={item.id}>
               <Table
                 item={item as InvitationType}
-                dashboardId={String(dashboardId)}
+                dashboardId={Number(dashboardId)}
                 refreshPagination={refreshPagination}
               />
               {showItems.length - 1 !== index && <StyledSeperator></StyledSeperator>}
@@ -186,7 +189,7 @@ function InviteDetailsTable({ dashboardId }: TablePaginationProps) {
             <h1>{tableTitle}</h1>
           </StyledNoItemTitleWrapper>
           <StyledNoItemInWrapper>
-            <StyledImage src={NoItem} alt="초대 내역 없음" />
+            <StyledImage src={NoItem} priority alt="초대 내역 없음" />
             <p>초대 내역이 존재하지 않습니다.</p>
             <InviteButton text="초대하기" onClick={() => setIsModalOpen(true)} hasItems={showItems.length !== 0} />
           </StyledNoItemInWrapper>

@@ -5,9 +5,9 @@ import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import { localStorageClear } from '@/utils/localStorage';
 
-import UserImage from '@/public/assets/icons/User.svg';
-import LogoutImage from '@/public/assets/icons/Logout.svg';
 import DashboardImage from '@/public/assets/icons/Dashboard.svg';
+import LogoutImage from '@/public/assets/icons/Logout.svg';
+import UserImage from '@/public/assets/icons/User.svg';
 import Image from 'next/image';
 import DarkmodeButton from './DarkmodeButton';
 
@@ -34,7 +34,7 @@ function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
         </li>
         <li>
           <Image width={25} height={25} src={DashboardImage} alt="내 대시보드" />
-          <StyledLink href="/myboard">내 대시보드</StyledLink>
+          <StyledLink href="/mydashboard">내 대시보드</StyledLink>
         </li>
         <li>
           <Image width={25} height={25} src={LogoutImage} alt="로그아웃" />

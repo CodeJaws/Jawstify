@@ -1,6 +1,6 @@
 import API from '@/apis/api';
 import { DashboardType, InvitationType, MemberType } from '@/types/apiType';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type AllItemTypes = DashboardType[] | MemberType[] | InvitationType[];
 
@@ -10,6 +10,8 @@ interface usePaginationProps {
   type: 'dashboard' | 'members' | 'invitationDetails';
   dashboardId?: number;
   refreshPaginationToggle?: boolean;
+  resetToFirst?: boolean;
+  inviteRefresh?: boolean;
 }
 
 interface usePaginationReturn {
@@ -31,6 +33,8 @@ const usePagination = ({
   type,
   dashboardId,
   refreshPaginationToggle,
+  resetToFirst,
+  inviteRefresh,
 }: usePaginationProps): usePaginationReturn => {
   const [pageNum, setPageNum] = useState(1);
   const [allItems, setAllItems] = useState<AllItemTypes>([]);
@@ -39,6 +43,7 @@ const usePagination = ({
   const totalPages = Math.ceil(totalCount / showItemNum); // 총 페이지 수
 
   const [checkRefresh, setCheckRefresh] = useState(true);
+  const [checkInviteRefresh, setCheckInviteRefresh] = useState(false);
 
   const handlePagination = async (num: number) => {
     if (loading) return;
@@ -99,14 +104,20 @@ const usePagination = ({
     }
     setAllItems(fetchedItems);
     setLoading(false);
-  }, [type, size, showItemNum, dashboardId]);
+  }, [type, size, showItemNum, dashboardId, allItems]);
 
   useEffect(() => {
-    if (refreshPaginationToggle !== checkRefresh) {
+    if (refreshPaginationToggle !== checkRefresh || inviteRefresh !== checkInviteRefresh) {
       firstFetch();
     }
     setCheckRefresh(refreshPaginationToggle as boolean);
-  }, [refreshPaginationToggle, firstFetch, checkRefresh]);
+    setCheckInviteRefresh(inviteRefresh as boolean);
+  }, [refreshPaginationToggle, firstFetch, checkRefresh, inviteRefresh]);
+
+  useEffect(() => {
+    firstFetch();
+    setPageNum(1);
+  }, [resetToFirst]);
 
   return { handlePagination, pageNum, totalPages, allItems };
 };

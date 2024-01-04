@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-import { onMobile, onTablet } from '@/styles/mediaQuery';
-import usePagination from '@/hooks/usePagination';
-import PaginationButton from '../common/Button/PaginationButton';
-import Button from '../common/Button/Button';
-import { MemberType } from '@/types/apiType';
-import DefaultImage from '@/public/assets/icons/Codeit.svg';
 import API from '@/apis/api';
+import usePagination from '@/hooks/usePagination';
+import DefaultImage from '@/public/assets/icons/Codeit.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { MemberType } from '@/types/apiType';
 import { useState } from 'react';
+import Button from '../common/Button/Button';
+import PaginationButton from '../common/Button/PaginationButton';
 
 interface MembersTableProps {
   dashboardId: number;
@@ -32,7 +32,7 @@ function Table({ item, refresh, refreshPagination }: TableProps) {
   const handleDelete = async () => {
     if (confirm(`정말 ${nickname}멤버를 삭제하시겠습니까?`)) {
       try {
-        await API.members.deleteMemberInDashboard({ memberId: String(item.id) });
+        await API.members.deleteMemberInDashboard({ memberId: Number(item.id) });
         refresh();
         refreshPagination();
       } catch (e: any) {
@@ -57,7 +57,7 @@ function Table({ item, refresh, refreshPagination }: TableProps) {
     <StyledMemberBoxContainer>
       <StyledMemberBoxProfileWrapper>
         <StyledMemberBoxImageWrapper>
-          <Image fill src={profileImageUrl ?? DefaultImage} alt="구성원 프로필" />
+          <StyledMemberImage fill sizes="100%" src={profileImageUrl ?? DefaultImage} priority alt="구성원 프로필" />
         </StyledMemberBoxImageWrapper>
         <p>{nickname}</p>
       </StyledMemberBoxProfileWrapper>
@@ -143,6 +143,10 @@ const StyledContainer = styled.div`
   ${onMobile} {
     height: 377px;
   }
+`;
+
+const StyledMemberImage = styled(Image)`
+  border-radius: 100%;
 `;
 
 const StyledNameText = styled.p`
@@ -240,8 +244,6 @@ const StyledMemberBoxImageWrapper = styled.div`
   position: relative;
   width: 38px;
   height: 38px;
-  border: 1px solid transparent;
-  border-radius: 100%;
 
   ${onMobile} {
     width: 34px;

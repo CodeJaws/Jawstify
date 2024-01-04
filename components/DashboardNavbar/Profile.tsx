@@ -1,18 +1,19 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import useUserData from '@/hooks/global/useUserData';
+import useDeviceType from '@/hooks/useDeviceType';
+import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import Codeit from '@/public/assets/icons/Codeit.svg';
-import useUserData from '@/hooks/global/useUserData';
-import { FocusEvent, useEffect, useState } from 'react';
 import { UserType } from '@/types/apiType';
+import { FocusEvent, useEffect, useState } from 'react';
 import DashboardDropdown from './DashboardDropdown';
-import useDeviceType from '@/hooks/useDeviceType';
 
 function Profile() {
   const { user } = useUserData();
+
   const [showUser, setShowUser] = useState<UserType>({
     createdAt: '',
     email: '',
@@ -38,19 +39,17 @@ function Profile() {
 
   useEffect(() => {
     setShowUser(user);
-  }, []);
+  }, [user]);
 
   return (
     <>
       <StyledContainer onBlur={(e) => handleBlur(e)}>
-        <label onMouseDown={handleClickDropdown}>
+        <StyledButton onMouseDown={handleClickDropdown}>
           <StyledImageWrapper>
-            <StyledImage fill src={profileImageUrl || Codeit} alt="프로필" onClick={handleClickDropdown} />
+            <StyledImage fill sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필" />
           </StyledImageWrapper>
-          <StyledNameWrapper>
-            <button>{showUser.nickname}</button>
-          </StyledNameWrapper>
-        </label>
+          <StyledNameWrapper>{nickname}</StyledNameWrapper>
+        </StyledButton>
         <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
       </StyledContainer>
     </>
@@ -60,9 +59,15 @@ function Profile() {
 export default Profile;
 
 const StyledNameWrapper = styled.div`
-  button {
-    ${fontStyle(16, 500)};
-  }
+  margin-left: 12px;
+  ${fontStyle(16, 500)};
+`;
+
+const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  color: ${COLORS.BLACK_33};
+  cursor: pointer;
 `;
 
 const StyledContainer = styled.div`
@@ -71,16 +76,6 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 12px;
-
-  label {
-    display: flex;
-    align-items: center;
-    color: ${COLORS.BLACK_33};
-  }
-
-  label > button {
-    cursor: pointer;
-  }
 
   ${onPc} {
     margin-right: 80px;
