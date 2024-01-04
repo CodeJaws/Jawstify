@@ -1,12 +1,10 @@
-import API from '@/apis/api';
+import useSidebarDashboard from '@/hooks/UseSidebarDashboard';
 import crown from '@/public/assets/icons/crown.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { DashboardType } from '@/types/apiType';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { styled } from 'styled-components';
 
@@ -23,7 +21,7 @@ interface BoardItemProps {
   boardId?: number;
 }
 
-interface DashboardProps {
+export interface DashboardProps {
   boardId?: number;
   reset?: boolean;
   refreshToggle?: boolean;
@@ -44,48 +42,7 @@ function DashboardItems({ item, boardId }: BoardItemProps) {
 }
 
 function Dashboard({ reset, boardId, refreshToggle, refresh }: DashboardProps) {
-  const [dataSource, setDataSource] = useState<DashboardType[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [dashboardPage, setDashboardPage] = useState(2);
-  const [totlaCount, setTotalCount] = useState(0);
-  const dashboardContainerRef = useRef<HTMLDivElement>(null);
-
-  const getItems = async () => {
-    const item = await API.dashboard.getDashboardList({ navigationMethod: 'infiniteScroll', size: 18 });
-    setDataSource(item.dashboards);
-    setTotalCount(item.totalCount);
-  };
-
-  const fetchHasMore = () => {
-    if (dataSource.length < totlaCount) {
-      if (dataSource.length !== 0) {
-        handleLoadMore(dashboardPage);
-      }
-    } else {
-      setHasMore((prev) => !prev);
-    }
-  };
-
-  const handleLoadMore = async (dashboardPage: number) => {
-    const item = await API.dashboard.getDashboardList({
-      navigationMethod: 'pagination',
-      page: dashboardPage,
-      size: 18,
-    });
-    setDataSource((prev) => [...prev, ...item.dashboards]);
-    setDashboardPage((prev) => prev + 1);
-  };
-
-  useEffect(() => {
-    getItems();
-    if (dashboardContainerRef.current) {
-      dashboardContainerRef.current.scrollTop = 0;
-      if (hasMore === false) {
-        setDashboardPage(2);
-        setHasMore((prev) => !prev);
-      }
-    }
-  }, [reset, refreshToggle, refresh]);
+  const { dashboardContainerRef, fetchHasMore, hasMore, dataSource } = useSidebarDashboard({ refreshToggle, refresh });
 
   return (
     <StyledDashboardGroupContainer ref={dashboardContainerRef}>

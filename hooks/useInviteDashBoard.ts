@@ -69,7 +69,13 @@ function useInviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
       refresh();
       refreshToFirst();
     } else {
+      if (InviteContainerRef.current) {
+        InviteContainerRef.current.scrollTop = 0;
+      }
       getItems();
+      if (hasMore === false) {
+        setHasMore((prev) => !prev);
+      }
     }
   };
 

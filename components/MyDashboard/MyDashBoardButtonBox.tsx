@@ -1,57 +1,22 @@
-import API from '@/apis/api';
 import Modal from '@/components/Modal/Modal';
-import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
-import usePagination from '@/hooks/usePagination';
+import useMyDashBoardButtonBox from '@/hooks/useMyDashboardButtonBox';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { DashboardType } from '@/types/apiType';
-import { useState } from 'react';
 import styled from 'styled-components';
 import DashBoardAddButton from '../common/Button/DashBoardAddButton';
 import DashBoardButton from '../common/Button/DashBoardButton';
 import PaginationButton from '../common/Button/PaginationButton';
 
-interface usePaginationProps {
-  handlePagination: (val: number) => void;
-  pageNum: number;
-  allItems: DashboardType[];
-  totalPages: number;
-}
-
-interface MyDashBoardButtonBoxProps {
+export interface MyDashBoardButtonBoxProps {
   resetToFirst: boolean;
   refresh: () => void;
   refreshPaginationToggle: boolean;
 }
 
-const LIMIT = 5;
-
 function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }: MyDashBoardButtonBoxProps) {
-  const { handlePagination, pageNum, allItems, totalPages } = usePagination({
-    size: 10,
-    showItemNum: LIMIT,
-    type: 'dashboard',
-    refreshPaginationToggle,
-    resetToFirst,
-  }) as usePaginationProps;
-  const [isOpen, setIsOpen] = useState(false);
-  const [values, setValues] = useState(INIT_CREATE_DASHBOARD);
-
-  const setModalValue = (values = INIT_CREATE_DASHBOARD) => {
-    setValues(values); // value = modal에 입력된 input value들의 집합
-  };
-
-  const showItems = allItems.slice((pageNum - 1) * LIMIT, (pageNum - 1) * LIMIT + LIMIT);
-
-  const handleCreate = async () => {
-    try {
-      await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
-      refresh();
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const { setIsOpen, showItems, totalPages, pageNum, handlePagination, isOpen, setModalValue, handleCreate } =
+    useMyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle });
 
   return (
     <div>
