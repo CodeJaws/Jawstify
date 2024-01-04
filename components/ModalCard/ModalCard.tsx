@@ -114,12 +114,7 @@ const StyledLeftContainer = styled.div`
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 2px;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 30%;
-    border-radius: 10px;
-    background: ${COLORS.GRAY_D9};
+    display: none;
   }
 
   ${onTablet} {
