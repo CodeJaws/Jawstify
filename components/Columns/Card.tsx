@@ -64,6 +64,7 @@ function Card({ title, dueDate, imageUrl, tags, assignee: { profileImageUrl }, c
                   text={val.substring(0, val.indexOf('/'))}
                   color={val.substring(val.indexOf('/') + 1, val.indexOf('/', val.indexOf('/') + 1))}
                   backgroundColor={val.substring(val.lastIndexOf('/') + 1)}
+                  margin={'0 4px 3px 0'}
                 />
               ))}
             </StyledInfoChips>
@@ -146,6 +147,8 @@ const StyledInfoTitle = styled.div`
   color: ${COLORS.BLACK_33};
   ${fontStyle(16, 500)};
   margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${onMobile} {
     ${fontStyle(14, 500)};

@@ -114,6 +114,12 @@ const StyledWrapper = styled.div`
   ${onPc} {
     flex-direction: row;
   }
+
+  & > ul {
+    ${onPc} {
+      border-right: 0.0625rem solid #d3d0d0;
+    }
+  }
 `;
 
 const StyledWrapper2 = styled.div`

@@ -14,6 +14,8 @@ import CountChip from '../Chip/CountChip';
 import Modal from '../Modal/Modal';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
+import useEditTodo from '@/hooks/ModalCard/useEditTodo';
+import useRefresh from '@/hooks/useRefresh';
 
 interface Props extends GetColumnListProps {
   columnId: number;
@@ -33,13 +35,14 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
     totalCount: 0,
     cursorId: 0,
   });
-
   const [manageColModalVals, setManageColModalVals] = useState<typeof INIT_MANAGE_COLUMN>(INIT_MANAGE_COLUMN);
+
+  const { refresh } = useRefresh();
 
   // 무한스크롤로 카드 리스트 가져오기
   const fetchHasMore = () => {
     if (columnCardList.length < cardListInfos.totalCount) {
-      loadColumnCardList();
+      loadColumnCardList(false);
     } else {
       setHasMore(false);
     }
@@ -55,9 +58,14 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   };
 
   // 컬럼 카드 리스트 데이터 api 요청 및 받은 데이터 렌더링
-  const loadColumnCardList = async () => {
-    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
-    setColumnCardList((prev) => [...prev, ...res.cards]);
+  const loadColumnCardList = async (resetLoad = true) => {
+    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 5 });
+    if (resetLoad) {
+      setColumnCardList(res.cards);
+      setHasMore(true);
+    } else {
+      setColumnCardList((prev) => [...prev, ...res.cards]);
+    }
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
@@ -78,8 +86,8 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   };
 
   useEffect(() => {
-    loadColumnCardList();
-  }, [columnId]);
+    loadColumnCardList(true);
+  }, [columnId, refresh]);
 
   return (
     <>
@@ -109,7 +117,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
             onOkClick={() => {
-              loadColumnCardList(); // createToDo 모달에서 필요한 api 요청 처리
+              loadColumnCardList(true); // createToDo 모달에서 필요한 api 요청 처리
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
           />
@@ -117,7 +125,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
         <StyledHeader>
           <Image src={BlueEllipse} width={8} height={8} alt={'파란색 원'} />
-          <div>{cardListInfos.title}</div>
+          <StyledTitle>{cardListInfos.title}</StyledTitle>
           <StyledCountChip content={cardListInfos.totalCount} />
           <StyledSettingIconContainer onClick={() => handleModalsOpen('manageColumn')}>
             <Image fill src={setting} alt="설정 버튼" />
@@ -198,31 +206,35 @@ const StyledContainer = styled.div`
     display: none;
   }
 
-  ${onPc} {
-    border-right: 0.0625rem solid #eeeeee;
-  }
-
   ${onTablet} {
-    padding: 7.5px 0 7.5px 7.5px;
+    padding: 20px 0 7.5px;
   }
   ${onMobile} {
-    padding: 7.5px;
+    padding: 17px 0 10px;
   }
 `;
 
+const StyledTitle = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 const StyledSettingIconContainer = styled.button`
   position: absolute;
   width: 24px;
   height: 24px;
-  right: 0.5px;
-  top: 2.5px;
+  right: -42px;
+  top: -2px;
   cursor: pointer;
 
   ${onMobile} {
     width: 13.75px;
     height: 13.75px;
-    right: 7.5px;
-    top: 7.5px;
+    right: -30px;
+    top: 3px;
+  }
+
+  ${onTablet} {
+    right: -40px;
   }
 `;
 
@@ -230,13 +242,19 @@ const StyledHeader = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  width: 314px;
+  width: 274px;
   gap: 8.5px;
   ${fontStyle(18, 700)};
   margin-bottom: 20px;
+  margin-right: 40px;
+
+  ${onTablet} {
+    width: 504px;
+  }
 
   ${onMobile} {
     ${fontStyle(16, 700)};
+    width: 254px;
     margin-bottom: 10.625px;
   }
 `;
