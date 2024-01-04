@@ -153,7 +153,7 @@ const StyledModalContainer = styled.div<{ $isTightVersion: boolean }>`
 `;
 
 const StyledTitle = styled.h3`
-  color: var(--modal-title);
+  color: var(--content-main);
   ${fontStyle(24, 700)}
   ${onMobile} {
     ${fontStyle(20, 700)}

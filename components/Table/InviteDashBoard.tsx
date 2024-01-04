@@ -103,7 +103,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
             <label htmlFor="search">
               <StyledSearchImage src={search} alt="search" />
             </label>
-            <StyledInput id="search" placeholder="검색" onChange={handleChange} />
+            <StyledInput id="search" placeholder="검색" onChange={handleChange} autoComplete='off' />
           </StyledInputDiv>
           {!(windowSize === 'mobile') && windowSize !== undefined && (
             <StyledWrapper>
@@ -240,7 +240,7 @@ const StyledDiv = styled.div<{ $data: any }>`
 `;
 
 const StyledP = styled.p`
-  color: var(--invite-title);
+  color: var(--content-main);
   padding: 32px 0 0 28px;
   ${fontStyle(24, 700)};
   ${onMobile} {
@@ -378,7 +378,7 @@ const StyledMobileButtonWrapper = styled.div`
 `;
 
 const StyledErrorDiv = styled.div`
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(16, 400)};
   display: flex;
   justify-content: center;

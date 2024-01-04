@@ -31,7 +31,7 @@ function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
           <StyledLink href="/mypage">내 정보</StyledLink>
         </li>
         <li>
-          <Image width={25} height={25} src={DashboardImage} alt="내 대시보드" />
+          <Image width={15} height={15} src={DashboardImage} alt="내 대시보드" />
           <StyledLink href="/mydashboard">내 대시보드</StyledLink>
         </li>
         <li>

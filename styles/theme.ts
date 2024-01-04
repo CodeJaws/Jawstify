@@ -20,7 +20,7 @@ export const theme = css`
     --text-second: ${COLORS.BLACK_33};
     --text-third: ${COLORS.BLACK_17};
 
-
+    // nav
     --nav-bg: ${COLORS.WHITE_FF};
     --nav-border: 1px solid ${COLORS.GRAY_D9};
     --nav-imgBorder: 2px solid ${COLORS.WHITE_FF};
@@ -29,6 +29,7 @@ export const theme = css`
     --nav-Dropdown-hover: #F1EFFD;
     --nav-Dropdown-color: ${COLORS.BLACK_17};
 
+    // sidebar
     --sidebar-border: 1px solid ${COLORS.GRAY_D9};
     --sidebar-bg: ${COLORS.WHITE_FF};
     --sidebar-hover: #F1EFFD;
@@ -52,7 +53,8 @@ export const theme = css`
     --button-bg: ${COLORS.WHITE_FF};
     --button-color: ${COLORS.BLACK_33};
     --button-border: 1px solid ${COLORS.GRAY_D9};
-    
+    --button-hover: #F1EFFD;
+
     --modal-bg: ${COLORS.WHITE_FF};
     --modal-border: 1px solid transparent;
     --modal-title: ${COLORS.BLACK_33};
@@ -104,11 +106,11 @@ export const theme = css`
     --button-bg: #222222;
     --button-color: ${COLORS.GRAY_D9};
     --button-border: 0.5px solid ${COLORS.BLACK_4B};
+    --button-hover: #303134;
 
     --modal-bg: ${COLORS.BLACK_17};
     --modal-title: ${COLORS.VIOLET_55};
     --modal-border: 1px solid #4b4b4b;
-
 
     --invite-title: ${COLORS.VIOLET_55};
   }
