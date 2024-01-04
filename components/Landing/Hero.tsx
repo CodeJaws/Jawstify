@@ -22,7 +22,7 @@ function HeroSection() {
       </StyledHeroImageWrapper>
       <StyledHeroTextWrapper>
         <StyledHeroText1>새로운 일정 관리</StyledHeroText1>
-        <StyledHeroText2>Taskify</StyledHeroText2>
+        <StyledHeroText2>Jawstify</StyledHeroText2>
       </StyledHeroTextWrapper>
       <StyledHeroDescription>일정 조습니다 🦈</StyledHeroDescription>
       <LoginButton usingType="landing" active={true} onClick={handleClick} text="로그인하기" />

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import API from '@/apis/api';
 import usePagination from '@/hooks/usePagination';
-import DefaultImage from '@/public/assets/icons/Codeit.svg';
+import DefaultImage from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

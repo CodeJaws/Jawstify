@@ -1,10 +1,10 @@
 import { default as API, default as api } from '@/apis/api';
 import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
-import setting from '@/public/assets/icons/setting.svg';
+import useRefresh from '@/hooks/useRefresh';
 import BlueEllipse from '@/public/assets/icons/BlueEllipse.svg';
+import setting from '@/public/assets/icons/setting.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -14,8 +14,6 @@ import CountChip from '../Chip/CountChip';
 import Modal from '../Modal/Modal';
 import AddButton from '../common/Button/AddButton';
 import Card from './Card';
-import useEditTodo from '@/hooks/ModalCard/useEditTodo';
-import useRefresh from '@/hooks/useRefresh';
 
 interface Props extends GetColumnListProps {
   columnId: number;
@@ -133,33 +131,29 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
         </StyledHeader>
         <StyledWrapper>
           <AddButton onClick={() => handleModalsOpen('createToDo')} />
-          {columnCardList.length === 0 ? (
-            <StyledBlank></StyledBlank>
-          ) : (
-            <StyledDiv>
-              <InfiniteScroll
-                pageStart={0}
-                loadMore={fetchHasMore}
-                hasMore={hasMore}
-                useWindow={false}
-                initialLoad={false}
-                style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
-              >
-                {columnCardList.map((card) => (
-                  <li key={card.id}>
-                    <Card
-                      cardInfoData={{ dashboardId, cardId: card.id }}
-                      title={card.title}
-                      dueDate={card.dueDate}
-                      tags={card.tags}
-                      assignee={card.assignee}
-                      imageUrl={card.imageUrl}
-                    />
-                  </li>
-                ))}
-              </InfiniteScroll>
-            </StyledDiv>
-          )}
+          <StyledDiv $length={columnCardList.length}>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={fetchHasMore}
+              hasMore={hasMore}
+              useWindow={false}
+              initialLoad={false}
+              style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
+            >
+              {columnCardList.map((card) => (
+                <li key={card.id}>
+                  <Card
+                    cardInfoData={{ dashboardId, cardId: card.id }}
+                    title={card.title}
+                    dueDate={card.dueDate}
+                    tags={card.tags}
+                    assignee={card.assignee}
+                    imageUrl={card.imageUrl}
+                  />
+                </li>
+              ))}
+            </InfiniteScroll>
+          </StyledDiv>
         </StyledWrapper>
       </StyledContainer>
     </>
@@ -172,7 +166,7 @@ const StyledBlank = styled.div`
   height: 100%;
 `;
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.div<{ $length: number }>`
   height: 77vh;
   overflow: scroll;
   display: flex;
@@ -188,7 +182,7 @@ const StyledDiv = styled.div`
 
   ${onTablet} {
     width: 100%;
-    height: 20vh;
+    height: ${({ $length }) => ($length < 2 ? '100%' : '19.5vh')};
     overflow: scroll;
   }
 
