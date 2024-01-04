@@ -1,6 +1,8 @@
 import API from '@/apis/api';
 import useModalOpen from '@/hooks/DropDown/useModalOpen';
 import useCardId from '@/hooks/ModalCard/useCardId';
+import useCardOpen from '@/hooks/ModalCard/useCardOpen';
+import useRefresh from '@/hooks/useRefresh';
 import MenuImg from '@/public/assets/icons/MenuButton.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
@@ -14,6 +16,8 @@ function Menu() {
   const [isOpen, setIsOpen] = useState(false);
   const { isModalOpen, setIsModalOpen } = useModalOpen();
   const { cardId } = useCardId();
+  const { isCardOpen, setIsCardOpen } = useCardOpen();
+  const { refresh, setRefresh } = useRefresh();
 
   const router = useRouter();
 
@@ -38,7 +42,8 @@ function Menu() {
     try {
       if (confirm('카드를 삭제 하시겠습니까?')) {
         await API.cards.deleteCard({ cardId });
-        router.back();
+        setRefresh(!refresh);
+        setIsCardOpen(!isCardOpen);
       }
     } catch (error) {
       console.error;
