@@ -39,7 +39,7 @@ function DashBoardID({ dashboardId }: DashBoardIDProps) {
   return (
     <>
       <StyledContainer>
-        <Sidebar reset={reset} setReset={setReset} />
+        <Sidebar boardId={Number(dashboardId)} reset={reset} setReset={setReset} />
         <DashboardNavbar
           members={members}
           totalMembers={totalMembers}
