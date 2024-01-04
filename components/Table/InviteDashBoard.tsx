@@ -103,7 +103,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
             <label htmlFor="search">
               <StyledSearchImage src={search} alt="search" />
             </label>
-            <StyledInput id="search" placeholder="검색" onChange={handleChange} />
+            <StyledInput id="search" placeholder="검색" onChange={handleChange} autoComplete='off' />
           </StyledInputDiv>
           {!(windowSize === 'mobile') && windowSize !== undefined && (
             <StyledWrapper>
@@ -214,7 +214,8 @@ const StyledDiv = styled.div<{ $data: any }>`
   width: 1023px;
   height: 600px;
   border-radius: 8px;
-  background: ${COLORS.WHITE_FF};
+  background: var(--content-color);
+  border: var(--content-border); 
 
   ${onTablet} {
     width: 504px;
@@ -239,6 +240,7 @@ const StyledDiv = styled.div<{ $data: any }>`
 `;
 
 const StyledP = styled.p`
+  color: var(--content-main);
   padding: 32px 0 0 28px;
   ${fontStyle(24, 700)};
   ${onMobile} {
@@ -256,8 +258,10 @@ const StyledInputDiv = styled.div`
   height: 40px;
   border-radius: 6px;
   margin: 20px 28px 0;
-  border: 1px solid ${COLORS.GRAY_D9};
-  background: ${COLORS.WHITE_FF};
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--input-color);
+
   ${onTablet} {
     width: 448px;
     height: 40px;
@@ -273,6 +277,9 @@ const StyledInput = styled.input`
   width: 800px;
   height: 38px;
   ${fontStyle(16, 400)}
+  background-color: var(--input-bg);
+  color: var(--input-color);
+
   ${onTablet} {
     width: 390px;
     height: 35px;
@@ -332,14 +339,13 @@ const StyleListWrapper = styled.div`
 const StyledListInWrapper = styled.div`
   float: left;
   width: 100%;
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(16, 400)}
 `;
 
 const StyledHr = styled.hr`
-  background: ${COLORS.GRAY_EE};
   height: 1px;
-  border: 0;
+  border: var(--content-divider);
 `;
 
 const StyledMobileContainer = styled.div`
@@ -360,7 +366,7 @@ const StyledMobileRightDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(14, 400)}
 `;
 
@@ -372,7 +378,7 @@ const StyledMobileButtonWrapper = styled.div`
 `;
 
 const StyledErrorDiv = styled.div`
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   ${fontStyle(16, 400)};
   display: flex;
   justify-content: center;

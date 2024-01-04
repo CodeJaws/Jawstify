@@ -25,7 +25,7 @@ const StyledContainer = styled.div`
 
 const StyledLabel = styled.label`
   ${fontStyle(18, 500)}
-  color: ${COLORS.BLACK_33};
+  color: var(--input-label);
 
   ${onMobile} {
     ${fontStyle(16, 500)}

@@ -36,11 +36,12 @@ function MyDashBoard() {
 export default MyDashBoard;
 
 const StyledContainer = styled.div`
+  background: var(--content-back);
   width: 100%;
+  height: 100vh;
 `;
 
 const StyledWrapper = styled.div`
-  background: ${COLORS.GRAY_FA};
   position: absolute;
   top: 70px;
   left: 300px;

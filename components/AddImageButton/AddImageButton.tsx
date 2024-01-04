@@ -84,6 +84,10 @@ const StyledContainer = styled.div<{ $type: string }>`
 `;
 
 const StyledCover = styled.div<{ $type: string }>`
+  background-color: var(--input-bg);
+  border: 0.5px solid var(--input-border);
+  border-radius: 4px;
+  overflow: hidden;
   width: 76px;
   height: 76px;
   cursor: pointer;

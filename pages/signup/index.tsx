@@ -132,7 +132,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 17px;
-  background-color: ${COLORS.GRAY_FA};
+  background-color: var(--sign-bg);
 `;
 
 const StyledFormInputContainer = styled.div`

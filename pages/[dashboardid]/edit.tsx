@@ -17,6 +17,7 @@ import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+
 interface BoardEditProps {
   dashboardId: number;
 }
@@ -98,6 +99,7 @@ export default BoardEdit;
 
 const StyledContainer = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const StyledWrapper = styled.div`
@@ -106,11 +108,11 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledInWrapper = styled.div`
+  background-color: var(--content-back);
   position: absolute;
   top: 70px;
   left: 300px;
   width: calc(100% - 300px);
-  height: 100vh;
   padding: 20px;
 
   ${onTablet} {
@@ -131,6 +133,7 @@ const StyledRouterButton = styled.button`
   background-repeat: no-repeat;
   background-position: 0px 50%;
   padding-left: 20px;
+  color: var(--content-main);
   ${onMobile} {
     font-size: 1.4rem;
   }

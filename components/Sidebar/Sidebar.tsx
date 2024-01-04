@@ -89,14 +89,15 @@ export default Sidebar;
 
 const StyledContainer = styled.div`
   position: fixed;
-  z-index: 7;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   height: 100%;
   min-height: 1080px;
   flex-shrink: 0;
-  background: ${COLORS.WHITE_FF};
-  border: 1px solid ${COLORS.GRAY_D9};
+  background: var(--sidebar-bg);
+  border-right: var(--sidebar-border);
+  
   ${onPc} {
     width: 300px;
   }

@@ -66,7 +66,7 @@ const StyledNameWrapper = styled.div`
 const StyledButton = styled.button`
   display: flex;
   align-items: center;
-  color: ${COLORS.BLACK_33};
+  color: var(--content-main);
   cursor: pointer;
 `;
 
@@ -78,11 +78,11 @@ const StyledContainer = styled.div`
   gap: 12px;
 
   ${onPc} {
-    margin-right: 80px;
+    margin-right: 12px;
   }
 
   ${onTablet} {
-    margin-right: 40px;
+    margin-right: 12px;
   }
   ${onMobile} {
     margin-right: 12px;
@@ -102,7 +102,7 @@ const StyledImageWrapper = styled.div`
   height: 38px;
   flex-shrink: 0;
   border-radius: 100%;
-  border: 2px solid ${COLORS.WHITE_FF};
+  border: var(--nav-imgBorder);
   overflow: hidden;
 
   ${onMobile} {

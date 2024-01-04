@@ -138,11 +138,12 @@ const StyledModalContainer = styled.div<{ $isTightVersion: boolean }>`
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
-  background-color: ${COLORS.WHITE_FF};
+  background-color: var(--modal-bg);
   border-radius: 10px;
   box-shadow: 0 2pc 12px 0px rgba(0, 0, 0, 0.08);
   padding: 32px 28px;
   gap: 28px;
+  border: var(--modal-border);
 
   ${onMobile} {
     width: 330px;
@@ -152,6 +153,7 @@ const StyledModalContainer = styled.div<{ $isTightVersion: boolean }>`
 `;
 
 const StyledTitle = styled.h3`
+  color: var(--content-main);
   ${fontStyle(24, 700)}
   ${onMobile} {
     ${fontStyle(20, 700)}
