@@ -80,14 +80,13 @@ const GoogleLoginButton = () => {
         <GoogleLogin
           width={400}
           onSuccess={(credentialResponse) => {
-            console.log(jwtDecode(credentialResponse.credential ?? ''));
             const decodedUserInfo: { email: string; sub: string; name: string; picture: string } = jwtDecode(
               credentialResponse.credential ?? '',
             );
             handleGoogleLogin(decodedUserInfo);
           }}
           onError={() => {
-            console.log('ss');
+            alert('구글 로그인 중 에러가 발생했습니다. 이메일로 다시 로그인 해주세요');
           }}
         />
       </GoogleOAuthProvider>
