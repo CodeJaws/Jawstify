@@ -59,7 +59,7 @@ npm run dev
 
 ### Front-End
 
-<img src="https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1704290167752?alt=media&token=baaada7c-9e06-4b7f-b7e5-110acbfc9ab4" alt="stackticon" />
+[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1704352824107?alt=media&token=49f3a32b-9d10-4b14-95a9-6dc476d8c6cc)](https://github.com/msdio/stackticon)
 
 ### Communication
 
