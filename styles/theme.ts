@@ -61,6 +61,8 @@ export const theme = css`
 
     --invite-title: ${COLORS.BLACK_33};
 
+    --columns-border-right: 0.0625rem solid #d3d0d0;
+
   }
 
   body[data-theme='dark'] {
@@ -113,6 +115,8 @@ export const theme = css`
     --modal-border: 1px solid #4b4b4b;
 
     --invite-title: ${COLORS.VIOLET_55};
+
+    --columns-border-right: 0.0625rem solid ${COLORS.BLACK_4B};
   }
 
 `;

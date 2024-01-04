@@ -117,7 +117,7 @@ const StyledWrapper = styled.div`
 
   & > ul {
     ${onPc} {
-      border-right: 0.0625rem solid #d3d0d0;
+      border-right: var(--columns-border-right);
     }
   }
 `;
