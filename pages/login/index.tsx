@@ -68,7 +68,7 @@ function Login() {
 
       <StyledBottomTextContainer>
         <StyledBottomText>
-          회원이 아니신가요? <StyledLink href="/signup">회원가입하기</StyledLink>
+          회원이 아니신가요? <StyledLink href="/signup">회원가입 하기</StyledLink>
         </StyledBottomText>
       </StyledBottomTextContainer>
       {isModalOpen && (
