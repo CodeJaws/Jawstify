@@ -1,12 +1,12 @@
 ## Jawstify 🦈
 
-개발기간: 2023.11.03 ~ 2023.11.17
+개발기간: 2023.12.18 ~ 2024.01.05
 
 <Br />
 
 ### ℹ️ Project Introduction
 
-**언제나 좋은 마음으로 질문과 답변을 통해 마음을 열고 대화 나누는 소통 플랫폼 입니다.**
+**스마트하게 나의 일정을 칸반보드로 관리할 수 있는 플랫폼입니다.**
 
 <Br />
 
@@ -69,6 +69,10 @@ npm run dev
 
 [![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1704290550464?alt=media&token=b890cdac-ac5e-4b38-86f9-19a254fd6f82)](https://github.com/msdio/stackticon)
 
+### State Management
+
+<img src="https://images.velog.io/post-images/augusty/7dc27aa0-0563-11ea-8b40-6b6b6ae34645/bear.png" width="800" height="500">
+
 ## 📁 폴더 구조
 
 ```
@@ -99,7 +103,7 @@ npm run dev
 
 - Convention 정리(PR, Commit, Naming)
 - Ground Rule 정리
-- Git branch 전략 정리(Git Flow 전략 사용)
+- Git branch 전략 정리(Github Flow 전략 사용)
 
 ### 회의
 
