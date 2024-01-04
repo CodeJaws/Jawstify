@@ -43,12 +43,6 @@ interface InviteDashBoardProps {
   refreshToFirst: () => void;
 }
 
-interface GetInvitationSearchListProps {
-  size?: number;
-  cursorId?: number | null;
-  title?: string;
-}
-
 function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
   const [dataSource, setDataSource] = useState<GetInvitationListProps[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -93,8 +87,14 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
 
   const handleSearch = async (searchText: string) => {
     const searchItem = await API.invitations.getInvitationList({ title: searchText });
-    setDataSource(searchItem.invitations);
-    setCursor(searchItem.cursorId as number);
+    if (searchItem.invitations.length > 0) {
+      setDataSource(searchItem.invitations);
+      setCursor(searchItem.cursorId as number);
+    } else {
+      alert('검색된 데이터가 없습니다.');
+      getItems();
+      setSearchText('');
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -122,7 +122,13 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
               <label htmlFor="search">
                 <StyledSearchImage src={search} alt="search" />
               </label>
-              <StyledInput id="search" placeholder="검색" onChange={handleChange} onKeyDown={handleKeyDown} />
+              <StyledInput
+                id="search"
+                value={searchText}
+                placeholder="검색"
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+              />
             </StyledInputDiv>
           </form>
 
@@ -216,7 +222,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
 export default InviteDashBoard;
 
 const Div = styled.div`
-  height: 400px;
+  height: 430px;
   overflow-x: hidden;
   ${onMobile} {
     height: 700px;
@@ -233,7 +239,7 @@ const Div = styled.div`
 
 const StyledDiv = styled.div<{ $data: any }>`
   width: 1023px;
-  height: 600px;
+  height: 630px;
   border-radius: 8px;
   background: ${COLORS.WHITE_FF};
 
