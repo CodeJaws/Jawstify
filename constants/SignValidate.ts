@@ -21,7 +21,7 @@ export const PWD_CHECK_ERROR = {
 };
 
 export const DEFAULT_PLACEHOLDER = {
-  EMAIL: '이메일을 입력해 주세요',
+  EMAIL: '이메일을 입력하세요',
   PWD: '8자 이상 입력해 주세요',
   PWD_CHECK: '비밀번호를 한번 더 입력해 주세요',
   NOW_PWD: '현재 비밀번호 입력',
@@ -30,7 +30,7 @@ export const DEFAULT_PLACEHOLDER = {
   COMMENT: '댓글 작성하기',
   DATE: '날짜를 입력해 주세요',
   TAG: '입력 후 Enter',
-  NICKNAME: '닉네임을 입력해 주세요',
+  NICKNAME: '닉네임을 입력하세요',
 };
 
 export const SIGNUP_SUCCESS_MSG = '가입이 완료되었습니다';
