@@ -202,7 +202,7 @@ const StyledInfoDate = styled.div`
 const StyledInfoProfile = styled.div`
   grid-area: profile;
   position: absolute;
-  bottom: 20px;
+  bottom: 13px;
   right: 20px;
   width: 24px;
   height: 24px;

@@ -24,7 +24,7 @@ function HeroSection() {
         <StyledHeroText1>새로운 일정 관리</StyledHeroText1>
         <StyledHeroText2>Jawstify</StyledHeroText2>
       </StyledHeroTextWrapper>
-      <StyledHeroDescription>일정 조습니다 🦈</StyledHeroDescription>
+      <StyledHeroDescription>조스티파이와 함께 일정을 스마트하게 계획하고 관리 해 보세요. 🦈</StyledHeroDescription>
       <LoginButton usingType="landing" active={true} onClick={handleClick} text="로그인하기" />
     </StyledHeroContainer>
   );
@@ -36,18 +36,14 @@ const StyledHeroContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 80px 0;
-
-  ${onPc} {
-    padding: 94px 0;
-  }
+  margin: 60px 0 150px;
 `;
 
 const StyledHeroImageWrapper = styled.div`
   position: relative;
   width: 287px;
   height: 168px;
-  margin-bottom: 26px;
+  margin-bottom: 40px;
 
   ${onTablet} {
     width: 537px;
@@ -135,7 +131,7 @@ const StyledHeroDescription = styled.p`
   }
 
   ${onPc} {
-    margin: 24px 0 66px;
+    margin: 24px 0 50px;
     ${fontStyle(18, 400)};
   }
 `;

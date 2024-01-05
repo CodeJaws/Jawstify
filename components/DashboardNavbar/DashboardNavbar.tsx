@@ -140,8 +140,8 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refr
             <StyledSeperatorWrapper></StyledSeperatorWrapper>
           </>
         ) : null}
-        <Profile />
         <DarkModeToggleButton />
+        <Profile />
       </StyledWrapper>
     </StyledContainer>
   );
@@ -231,7 +231,7 @@ const StyledSeperatorWrapper = styled.div`
   margin-left: 32px;
 
   ${onPc} {
-    margin-right: 32px;
+    margin-right: 23px;
   }
   ${onTablet} {
     margin-right: 24px;
