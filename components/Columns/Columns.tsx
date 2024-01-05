@@ -6,7 +6,6 @@ import { GetColumnListProps } from '@/types/api';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal/Modal';
-import { COLORS } from '@/styles/palettes';
 
 interface ColumnProps {
   id: number;

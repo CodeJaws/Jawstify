@@ -56,7 +56,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   };
 
   const firstFetch = async () => {
-    const res = await API.cards.checkCardList({ columnId, size: 10 });
+    const res = await API.cards.checkCardList({ columnId, size: 14 });
     setColumnCardList(res.cards);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
@@ -180,13 +180,13 @@ const StyledDiv = styled.div<{ $length: number }>`
 
   ${onTablet} {
     width: 100%;
-    height: ${({ $length }) => ($length < 2 ? '100%' : '19.5vh')};
+    height: ${({ $length }) => ($length < 4 ? '100%' : '21vh')};
     overflow: scroll;
   }
 
   ${onMobile} {
     height: 100%;
-    max-height: 40vh;
+    max-height: 30vh;
   }
 `;
 
