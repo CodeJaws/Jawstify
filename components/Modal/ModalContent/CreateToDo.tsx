@@ -81,9 +81,10 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
       columnId: dashboardInfos.columnId, // 필수 입력 요소
       title: values.제목, // 필수 입력 요소
       description: values.설명, // 필수 입력 요소
-      imageUrl: CardContentImgUrl ?? DefaultCardImg,
+      // imageUrl: CardContentImgUrl ?? DefaultCardImg,
       assigneeUserId: manager ?? user?.id,
     };
+    if (CardContentImgUrl) body['imageUrl'] = CardContentImgUrl;
     if (values.마감일) body['dueDate'] = values.마감일;
     if (formatedTagData) body['tags'] = formatedTagData;
 

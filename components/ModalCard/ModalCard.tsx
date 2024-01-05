@@ -48,7 +48,7 @@ function ModalCard() {
               );
             })}
           </StyledContent>
-          <StyledImage width={450} height={262} src={imageUrl || DefaultImg} alt="카드 이미지" />
+          {imageUrl && <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />}
         </StyledContentWrapper>
         <Comment />
       </StyledLeftContainer>
@@ -68,8 +68,8 @@ const StyledContainer = styled.div`
   position: fixed;
   display: flex;
   width: 730px;
-  height: 764px;
-  justify-content: center;
+  height: fit-content;
+  justify-content: space-between;
   gap: 24px;
   left: 50%;
   top: 50%;
@@ -83,14 +83,14 @@ const StyledContainer = styled.div`
 
   ${onTablet} {
     width: 680px;
-    height: 770px;
+    max-height: 770px;
   }
 
   ${onMobile} {
     display: block;
     width: 327px;
-    height: 708px;
-    padding: 15px;
+    max-height: 708px;
+    padding: 25px 15px;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       width: 2px;
@@ -134,6 +134,7 @@ const StyledTitleWrapper = styled.div`
   flex-direction: column;
   gap: 24px;
   ${onMobile} {
+    margin-top: 7px;
     gap: 16px;
   }
 `;

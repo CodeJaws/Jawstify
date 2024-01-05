@@ -116,13 +116,14 @@ const StyledContainer = styled.div`
 `;
 
 const StyledWrapper = styled.div`
-  height: 93.5vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 
   ${onPc} {
     flex-direction: row;
+    height: 91.5vh;
   }
 
   & > ul {
@@ -133,7 +134,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledWrapper2 = styled.div`
-  padding: 12px 0 12px;
+  padding: 25px 0 15px;
 
   ${onTablet} {
     padding: 20px 0 20px;
