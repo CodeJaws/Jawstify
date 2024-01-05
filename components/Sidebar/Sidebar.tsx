@@ -119,7 +119,7 @@ const StyledImageWrapper = styled.div`
   }
 
   ${onTablet} {
-    margin-left: 26px;
+    margin-left: 14px;
   }
 `;
 

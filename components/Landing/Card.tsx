@@ -16,7 +16,6 @@ interface CardContainerProps {
 }
 
 function CardSection() {
-  
   return (
     <StyledCardSectionContainer>
       <StyledCardSectionWrapper>
@@ -49,7 +48,7 @@ function CardSection() {
   );
 }
 
-function CardContainer ({ cardImg, imgAlt, text1, text2, type }: CardContainerProps) {
+function CardContainer({ cardImg, imgAlt, text1, text2, type }: CardContainerProps) {
   return (
     <StyledCardContainer>
       <StyledCardImageContainer>
@@ -68,7 +67,7 @@ function CardContainer ({ cardImg, imgAlt, text1, text2, type }: CardContainerPr
 export default CardSection;
 
 const StyledCardSectionContainer = styled.div`
-  margin: 90px 0;
+  margin: 270px 0 180px;
   display: flex;
 `;
 

@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import styled from 'styled-components';
-
+import { Helmet } from 'react-helmet';
 import API from '@/apis/api';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import DashboardEdit from '@/components/Edit/DashboardEdit';
@@ -67,29 +67,34 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
   };
 
   return (
-    <StyledContainer>
-      <DashboardNavbar
-        members={members}
-        totalMembers={totalMembers}
-        dashboard={dashboardData}
-        isMyDashboard={false}
-        refreshInvite={refreshInvite}
-      />
-      <Sidebar refreshToggle={refreshToggle} refresh={refresh} />
-      <StyledWrapper>
-        <StyledInWrapper>
-          <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>
-          <StyledMainWrapper>
-            <DashboardEdit dashboardData={dashboardData} refresh={refresh} />
-            <StyledMainInWrapper>
-              <MembersTable dashboardId={Number(dashboardId)} refresh={refresh} />
-            </StyledMainInWrapper>
-            <InviteDetailsTable dashboardId={Number(dashboardId)} inviteRefresh={inviteRefresh} />
-            <DeleteButton onClick={deleteDashboard} />
-          </StyledMainWrapper>
-        </StyledInWrapper>
-      </StyledWrapper>
-    </StyledContainer>
+    <>
+      <Helmet>
+        <title>대시보드 수정 - Jawstify</title>
+      </Helmet>
+      <StyledContainer>
+        <DashboardNavbar
+          members={members}
+          totalMembers={totalMembers}
+          dashboard={dashboardData}
+          isMyDashboard={false}
+          refreshInvite={refreshInvite}
+        />
+        <Sidebar refreshToggle={refreshToggle} refresh={refresh} />
+        <StyledWrapper>
+          <StyledInWrapper>
+            <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>
+            <StyledMainWrapper>
+              <DashboardEdit dashboardData={dashboardData} refresh={refresh} />
+              <StyledMainInWrapper>
+                <MembersTable dashboardId={Number(dashboardId)} refresh={refresh} />
+              </StyledMainInWrapper>
+              <InviteDetailsTable dashboardId={Number(dashboardId)} inviteRefresh={inviteRefresh} />
+              <DeleteButton onClick={deleteDashboard} />
+            </StyledMainWrapper>
+          </StyledInWrapper>
+        </StyledWrapper>
+      </StyledContainer>
+    </>
   );
 }
 

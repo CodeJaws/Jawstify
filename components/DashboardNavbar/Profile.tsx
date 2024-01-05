@@ -77,7 +77,7 @@ const StyledContainer = styled.div`
   gap: 12px;
 
   ${onPc} {
-    margin-right: 12px;
+    margin-right: 30px;
   }
 
   ${onTablet} {

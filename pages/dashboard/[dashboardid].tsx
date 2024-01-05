@@ -10,6 +10,7 @@ import { onPc, onTablet } from '@/styles/mediaQuery';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 interface DashBoardIDProps {
   dashboardId: number;
@@ -39,6 +40,9 @@ function DashBoardID({ dashboardId }: DashBoardIDProps) {
 
   return (
     <>
+      <Helmet>
+        <title>{`${dashboardData.title} - Jawstify`}</title>
+      </Helmet>
       <StyledContainer>
         <Sidebar boardId={Number(dashboardId)} refresh={refresh} />
         <DashboardNavbar

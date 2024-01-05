@@ -9,6 +9,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { styled } from 'styled-components';
 
 function MyPage() {
@@ -28,23 +29,28 @@ function MyPage() {
   }, [user]);
 
   return (
-    <StyledContainer>
-      <DashboardNavbar isMyDashboard={false} />
-      <Sidebar refresh={refresh} />
-      <StyledWrapper>
-        <StyledInWrapper>
-          <StyledBackWrapper onClick={backHome}>돌아가기</StyledBackWrapper>
-          <ProfileBox
-            email={user.email}
-            nickname={nickname}
-            profileImg={previewImage}
-            setNickName={setNickName}
-            setPreviewImage={setPreviewImage}
-          />
-          <PasswordManagerBox />
-        </StyledInWrapper>
-      </StyledWrapper>
-    </StyledContainer>
+    <>
+      <Helmet>
+        <title>계정 관리 - Jawstify</title>
+      </Helmet>
+      <StyledContainer>
+        <DashboardNavbar isMyDashboard={false} />
+        <Sidebar refresh={refresh} />
+        <StyledWrapper>
+          <StyledInWrapper>
+            <StyledBackWrapper onClick={backHome}>돌아가기</StyledBackWrapper>
+            <ProfileBox
+              email={user.email}
+              nickname={nickname}
+              profileImg={previewImage}
+              setNickName={setNickName}
+              setPreviewImage={setPreviewImage}
+            />
+            <PasswordManagerBox />
+          </StyledInWrapper>
+        </StyledWrapper>
+      </StyledContainer>
+    </>
   );
 }
 
