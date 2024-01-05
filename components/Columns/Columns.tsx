@@ -6,6 +6,7 @@ import { GetColumnListProps } from '@/types/api';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal/Modal';
+import { COLORS } from '@/styles/palettes';
 
 interface ColumnProps {
   id: number;
@@ -104,15 +105,25 @@ const StyledContainer = styled.div`
     flex-direction: row;
     align-items: flex-start;
   }
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    height: 2.5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1px solid grey;
+    border-radius: 10px;
+  }
 `;
 
 const StyledWrapper = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 
   ${onPc} {
     flex-direction: row;
+    height: 91.5vh;
   }
 
   & > ul {
@@ -123,7 +134,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledWrapper2 = styled.div`
-  padding: 12px 0 12px;
+  padding: 25px 0 15px;
 
   ${onTablet} {
     padding: 20px 0 20px;

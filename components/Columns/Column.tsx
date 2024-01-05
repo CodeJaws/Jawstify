@@ -56,13 +56,13 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   };
 
   const firstFetch = async () => {
-    const res = await API.cards.checkCardList({ columnId, size: 5 });
+    const res = await API.cards.checkCardList({ columnId, size: 10 });
     setColumnCardList(res.cards);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
   const loadColunCardList = async () => {
-    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 5 });
+    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
     setColumnCardList((prev) => [...prev, ...res.cards]);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
@@ -85,7 +85,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
   useEffect(() => {
     firstFetch();
-  }, [columnId]);
+  }, [columnId, refresh]);
 
   return (
     <>
@@ -164,10 +164,6 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
 
 export default Column;
 
-const StyledBlank = styled.div`
-  height: 100%;
-`;
-
 const StyledDiv = styled.div<{ $length: number }>`
   height: 77vh;
   overflow: scroll;
@@ -189,7 +185,8 @@ const StyledDiv = styled.div<{ $length: number }>`
   }
 
   ${onMobile} {
-    height: 40vh;
+    height: 100%;
+    max-height: 40vh;
   }
 `;
 
@@ -206,7 +203,7 @@ const StyledContainer = styled.div`
     padding: 20px 0 7.5px;
   }
   ${onMobile} {
-    padding: 17px 0 10px;
+    padding: 17px 0 20px;
   }
 `;
 

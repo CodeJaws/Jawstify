@@ -92,7 +92,7 @@ function BasicInput({
 export default BasicInput;
 
 export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boolean }>`
-  width: 100%;
+  width: 448px;
   height: ${({ $isComment }) => ($isComment ? '110px' : '96px')};
   position: relative;
   padding: 15px 16px 45px;
@@ -105,6 +105,11 @@ export const StyledTextarea = styled.textarea<{ $error: boolean; $isComment: boo
 
   ${onMobile} {
     ${fontStyle(12, 400)}
+    width: 292px;
+  }
+
+  ${onTablet} {
+    width: 398px;
   }
 
   &:hover,

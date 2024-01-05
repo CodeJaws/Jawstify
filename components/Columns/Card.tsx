@@ -112,7 +112,7 @@ const StyledContainer = styled.div`
 
   ${onTablet} {
     width: 544px;
-    padding: 20px;
+    padding: 20px 20px 17px;
     flex-direction: row;
     align-items: center;
     gap: 20px;
