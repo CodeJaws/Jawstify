@@ -5,8 +5,9 @@ import InviteDashBoard from '@/components/Table/InviteDashBoard';
 import useMyDashboard from '@/hooks/useMyDashboard';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import styled from 'styled-components';
+
 import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
 
 function MyDashBoard() {
   useRedirectByLogin();
@@ -47,10 +48,12 @@ const StyledWrapper = styled.div`
   top: 70px;
   left: 300px;
   padding: 40px;
+
   ${onTablet} {
     left: 160px;
     width: calc(100% - 160px);
   }
+
   ${onMobile} {
     left: 66px;
     width: calc(100% - 66px);

@@ -1,5 +1,6 @@
 import API from '@/apis/api';
 import Modal from '@/components/Modal/Modal';
+import Dashboard from '@/components/Sidebar/Dashboard';
 import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
 import AddBox from '@/public/assets/icons/invite.svg';
 import LogoTitle from '@/public/assets/images/title.png';
@@ -7,11 +8,11 @@ import Logo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import styled from 'styled-components';
-import Dashboard from './Dashboard';
 
 interface SidebarProps {
   boardId?: number;
@@ -103,6 +104,7 @@ const StyledContainer = styled.div`
 const StyledImage = styled(Image)`
   &:nth-child(2) {
     margin-bottom: 2px;
+
     ${onMobile} {
       display: none;
     }
@@ -128,6 +130,7 @@ const StyledTitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   h3 {
     color: ${COLORS.GRAY_78};
     ${fontStyle(12, 700)};

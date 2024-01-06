@@ -1,10 +1,11 @@
 import ColorChip from '@/components/Chip/ColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import { StyledButtonContainer, StyledTwinButton } from '@/components/Modal/ModalContent/CreateToDo';
 import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
 import { ModalCommonProps } from '@/types/modal';
+
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { StyledButtonContainer, StyledTwinButton } from './CreateToDo';
 
 function CreateDashboard({ onCancelClick = () => {}, onOkClick, getValue = () => {} }: ModalCommonProps) {
   const [values, setValues] = useState(INIT_CREATE_DASHBOARD);

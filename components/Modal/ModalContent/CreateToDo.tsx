@@ -6,7 +6,6 @@ import TagInput, { Tag, TagProps } from '@/components/Input/ModalInputContainer/
 import ModalDropDown from '@/components/ModalDropDown/ModalDropDown';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
-import { DefaultCardImg, DefaultImg } from '@/constants/ModalInput';
 import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
@@ -15,6 +14,7 @@ import useUser from '@/hooks/useUser';
 import { onMobile } from '@/styles/mediaQuery';
 import { CreateCardProps } from '@/types/api';
 import { ModalCommonProps } from '@/types/modal';
+
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -70,29 +70,30 @@ function CreateToDo({ dashboardInfos, onCancelClick = () => {}, onOkClick, getVa
   const handleCreateToDoSubmit = async () => {
     setIsLoading(true);
 
-    const formatedTagData: string[] = values.태그.map((tagEl: Tag) =>
+    const formatTagData: string[] = values.태그.map((tagEl: Tag) =>
       [tagEl.value, tagEl.color, tagEl.backgroundColor].join('/'),
     );
 
     const CardContentImgUrl = await changeProfile().then();
 
+    /**
+     * 필수 입력 요소: dashboardId, columnId, title, description
+     */
     let body: CreateCardProps = {
-      dashboardId: dashboardInfos.dashboardId, // 필수 입력 요소
-      columnId: dashboardInfos.columnId, // 필수 입력 요소
-      title: values.제목, // 필수 입력 요소
-      description: values.설명, // 필수 입력 요소
-      // imageUrl: CardContentImgUrl ?? DefaultCardImg,
+      dashboardId: dashboardInfos.dashboardId,
+      columnId: dashboardInfos.columnId,
+      title: values.제목,
+      description: values.설명,
       assigneeUserId: manager ?? user?.id,
     };
     if (CardContentImgUrl) body['imageUrl'] = CardContentImgUrl;
     if (values.마감일) body['dueDate'] = values.마감일;
-    if (formatedTagData) body['tags'] = formatedTagData;
+    if (formatTagData) body['tags'] = formatTagData;
 
     const response = await api.cards.createCard(body).catch((error) => alert(error.data.message));
     setIsLoading(false);
 
-    // api post request succeed
-    if (response) onOkClick(); // Column의 onOkClick 함수 실행
+    if (response) onOkClick();
   };
 
   useEffect(() => {

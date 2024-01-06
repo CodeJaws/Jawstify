@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import { ReactNode } from 'react';
-import styled from 'styled-components';
-
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
+import Image from 'next/image';
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
 interface ButtonProps {
   imageUrl: string;
@@ -61,6 +61,7 @@ const StyledButton = styled.button`
 
   ${onMobile} {
     height: 30px;
+
     ${StyledImage} {
       display: none;
     }

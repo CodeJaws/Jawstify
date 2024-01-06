@@ -1,7 +1,7 @@
 import plus from '@/public/assets/icons/plus.svg';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
+
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -25,7 +25,6 @@ const StyledButton = styled.button`
   border-radius: 6px;
   border: var(--button-border);
   background: var(--button-bg);
-  
 
   ${onTablet} {
     width: 544px;

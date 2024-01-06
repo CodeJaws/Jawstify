@@ -1,10 +1,11 @@
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import { StyledButtonContainer } from '@/components/Modal/ModalContent/CreateToDo';
 import TwinButton from '@/components/common/Button/TwinButton';
 import { INIT_BASIC } from '@/constants/InitialModalValues';
 import { ModalCommonProps } from '@/types/modal';
+
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { StyledButtonContainer } from './CreateToDo';
 
 interface Props extends ModalCommonProps {
   type: '초대하기' | '새 컬럼 생성';

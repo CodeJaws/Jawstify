@@ -1,14 +1,12 @@
-import Link from 'next/link';
-import styled from 'styled-components';
-
-import { fontStyle } from '@/styles/fontStyle';
-import { localStorageClear } from '@/utils/localStorage';
-
 import DashboardImage from '@/public/assets/icons/Dashboard.svg';
 import LogoutImage from '@/public/assets/icons/Logout.svg';
 import UserImage from '@/public/assets/icons/User.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { localStorageClear } from '@/utils/localStorage';
+
 import Image from 'next/image';
-import { onMobile } from '@/styles/mediaQuery';
+import Link from 'next/link';
+import styled from 'styled-components';
 
 interface DashboardDropdownProps {
   deviceType: string | undefined;
@@ -57,7 +55,6 @@ const StyledContainer = styled.div<{ $deviceType: string | undefined; $isOpen: b
   border: var(--nav-Dropdown-border);
 
   top: 50px;
-  /* right: 0px; */
   right: ${({ $deviceType }) => ($deviceType === 'mobile' ? -10 : 10)}px;
   flex-direction: column;
   justify-content: center;
@@ -95,6 +92,7 @@ const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   ${fontStyle(14, 100)}
+
   &:hover {
     background-color: var(--nav-Dropdown-hover);
   }

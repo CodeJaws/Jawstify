@@ -5,6 +5,7 @@ import logoText from '@/public/assets/images/title.png';
 import logoImage from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';

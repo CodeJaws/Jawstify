@@ -1,4 +1,6 @@
 import api from '@/apis/api';
+import FormInput from '@/components/Input/FormInput';
+import Button from '@/components/common/Button/Button';
 import {
   EQUAL_NOW_PWD_ERROR,
   NEW_PWD_EIGHT_ERROR,
@@ -9,11 +11,10 @@ import {
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
-import FormInput from '../Input/FormInput';
-import Button from '../common/Button/Button';
 
 interface FormProps {
   password: string;
@@ -137,6 +138,7 @@ const StyledContainer = styled.div`
 
 const StyledTitle = styled.p`
   ${fontStyle(24, 700)}
+
   ${onMobile} {
     font-size: 2rem;
   }

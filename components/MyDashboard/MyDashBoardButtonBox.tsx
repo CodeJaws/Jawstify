@@ -1,12 +1,12 @@
 import Modal from '@/components/Modal/Modal';
+import DashBoardAddButton from '@/components/common/Button/DashBoardAddButton';
+import DashBoardButton from '@/components/common/Button/DashBoardButton';
+import PaginationButton from '@/components/common/Button/PaginationButton';
 import useMyDashBoardButtonBox from '@/hooks/useMyDashboardButtonBox';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
+
 import styled from 'styled-components';
-import DashBoardAddButton from '../common/Button/DashBoardAddButton';
-import DashBoardButton from '../common/Button/DashBoardButton';
-import PaginationButton from '../common/Button/PaginationButton';
 
 export interface MyDashBoardButtonBoxProps {
   resetToFirst: boolean;
@@ -73,6 +73,7 @@ const ButtonBoxWrapper = styled.div`
   gap: 12px;
   width: 1023px;
   height: 100%;
+
   ${onTablet} {
     padding-bottom: 10px;
     grid-template-columns: 1fr 1fr;
@@ -80,6 +81,7 @@ const ButtonBoxWrapper = styled.div`
     width: 504px;
     height: 100%;
   }
+
   ${onMobile} {
     padding-bottom: 8px;
     grid-template-columns: 1fr;
@@ -96,10 +98,12 @@ const PaginationWrapper = styled.div`
   gap: 14px;
   width: 1023px;
   padding-bottom: 44px;
+
   ${onTablet} {
     width: 504px;
     padding-bottom: 40px;
   }
+
   ${onMobile} {
     gap: 12px;
     width: 260px;
@@ -110,6 +114,7 @@ const PaginationWrapper = styled.div`
 const PaginationPage = styled.div`
   color: var(--content-main);
   ${fontStyle(14, 400)}
+
   ${onMobile} {
     font-size: 12px;
   }

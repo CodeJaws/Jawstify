@@ -1,6 +1,3 @@
-import { GetServerSideProps } from 'next';
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 import API from '@/apis/api';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import DashboardEdit from '@/components/Edit/DashboardEdit';
@@ -14,8 +11,12 @@ import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
+
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
 
 interface BoardEditProps {
   dashboardId: number;
@@ -122,6 +123,7 @@ const StyledInWrapper = styled.div`
     left: 160px;
     width: calc(100% - 160px);
   }
+
   ${onMobile} {
     padding-left: 12px;
     padding-top: 16px;
@@ -137,6 +139,7 @@ const StyledRouterButton = styled.button`
   background-position: 0px 50%;
   padding-left: 20px;
   color: var(--content-main);
+
   ${onMobile} {
     font-size: 1.4rem;
   }

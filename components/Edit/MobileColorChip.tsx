@@ -1,15 +1,15 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-
-import { onMobile } from '@/styles/mediaQuery';
+import Blue from '@/public/assets/icons/BlueEllipse.svg';
+import Check from '@/public/assets/icons/Check.svg';
 import Green from '@/public/assets/icons/GreenEllipse.svg';
 import Orange from '@/public/assets/icons/OrangeEllipse.svg';
 import Pink from '@/public/assets/icons/PinkEllipse.svg';
-import Blue from '@/public/assets/icons/BlueEllipse.svg';
 import Purple from '@/public/assets/icons/PurpleEllipse.svg';
-import Check from '@/public/assets/icons/Check.svg';
+import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const ColorEllipse = [
   { id: 0, src: Green, alt: '녹색 원', color: COLORS.GREEN_7A },
@@ -88,6 +88,7 @@ const StyledCheckImage = styled(Image)`
 const StyledImage = styled(Image)`
   width: 30px;
   height: 30px;
+
   ${onMobile} {
     width: 28px;
     height: 28px;

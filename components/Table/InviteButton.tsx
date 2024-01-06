@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-
+import addBoxWhite from '@/public/assets/icons/AddBoxWhite.svg';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import addBoxWhite from '@/public/assets/icons/AddBoxWhite.svg';
 import { ButtonOnClickProps } from '@/types/button';
+
+import Image from 'next/image';
+import styled from 'styled-components';
 
 interface ButtonProps extends ButtonOnClickProps {
   text: string;
@@ -43,7 +43,6 @@ const StyledButton = styled.button<{ $hasItems: boolean }>`
   }
   ${onMobile} {
     ${({ $hasItems }) => $hasItems && 'position: absolute;'}
-
     right: 0;
     top: 44px;
   }

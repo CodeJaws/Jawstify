@@ -1,5 +1,6 @@
 import API from '@/apis/api';
 import { InviteDashBoardProps } from '@/components/Table/InviteDashBoard';
+
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 interface GetInvitationListProps {

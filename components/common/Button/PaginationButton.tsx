@@ -1,14 +1,12 @@
 import leftPage from '@/public/assets/icons/leftPage.svg';
-import rightPage from '@/public/assets/icons/rightPage.svg';
 import lightLeftPage from '@/public/assets/icons/lightLeftPage.svg';
 import lightRightPage from '@/public/assets/icons/lightRightPage.svg';
+import rightPage from '@/public/assets/icons/rightPage.svg';
+import { onMobile } from '@/styles/mediaQuery';
+import { localStorageGetItem } from '@/utils/localStorage';
+
 import Image from 'next/image';
 import styled from 'styled-components';
-import { onMobile } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
-import useTheme from '@/hooks/useTheme';
-import { theme } from '@/styles/theme';
-import { localStorageGetItem } from '@/utils/localStorage';
 
 interface PaginationButtonProps {
   active: boolean;
@@ -16,7 +14,15 @@ interface PaginationButtonProps {
   onClick: () => void;
 }
 
-const choosePaginationImage = ({ direction, active, themeMode }: { direction: 'left' | 'right'; active: boolean, themeMode: string }) => {
+const choosePaginationImage = ({
+  direction,
+  active,
+  themeMode,
+}: {
+  direction: 'left' | 'right';
+  active: boolean;
+  themeMode: string;
+}) => {
   if (themeMode == 'light') {
     if (active && direction === 'left') return leftPage;
     else if (active && direction === 'right') return rightPage;
@@ -32,7 +38,7 @@ const choosePaginationImage = ({ direction, active, themeMode }: { direction: 'l
 
 function PaginationButton({ active, direction, onClick }: PaginationButtonProps) {
   const themeMode = localStorageGetItem('theme') as string;
-  const selectedImg = choosePaginationImage({ direction, active ,themeMode});
+  const selectedImg = choosePaginationImage({ direction, active, themeMode });
   const imgAlt = direction === 'left' ? '왼쪽화살표' : '오른쪽화살표';
 
   return (

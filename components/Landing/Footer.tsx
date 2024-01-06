@@ -1,30 +1,31 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import styled from 'styled-components';
-import facebookIcon from '@/public/assets/icons/facebookIcon.svg'
-import instagramIcon from '@/public/assets/icons/instagramIcon.svg'
-import emailIcon from '@/public/assets/icons/emailIcon.svg'
+import emailIcon from '@/public/assets/icons/emailIcon.svg';
+import facebookIcon from '@/public/assets/icons/facebookIcon.svg';
+import instagramIcon from '@/public/assets/icons/instagramIcon.svg';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { onTablet, onPc, onMobile } from '@/styles/mediaQuery';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import styled from 'styled-components';
 
 function Footer() {
-  return(
+  return (
     <StyledFooterContainer>
       <StyledCopyright>©codeit - 2023</StyledCopyright>
       <StyledLinkContainer>
-        <StyledLink href='/'>Privacy Policy</StyledLink>
-        <StyledLink href='/'>FAQ</StyledLink>
+        <StyledLink href="/">Privacy Policy</StyledLink>
+        <StyledLink href="/">FAQ</StyledLink>
       </StyledLinkContainer>
       <StyledSNSContainer>
-        <Link href='/'>
-          <Image width={20} height={20} src={emailIcon} alt='이메일로 이동' />
+        <Link href="/">
+          <Image width={20} height={20} src={emailIcon} alt="이메일로 이동" />
         </Link>
-        <Link href='https://www.facebook.com'>
-          <Image width={20} height={20} src={facebookIcon} alt='페이스북으로 이동' />
+        <Link href="https://www.facebook.com">
+          <Image width={20} height={20} src={facebookIcon} alt="페이스북으로 이동" />
         </Link>
-        <Link href='https://www.instagram.com'>
-          <Image width={20} height={20} src={instagramIcon} alt='인스타그램으로 이동' />
+        <Link href="https://www.instagram.com">
+          <Image width={20} height={20} src={instagramIcon} alt="인스타그램으로 이동" />
         </Link>
       </StyledSNSContainer>
     </StyledFooterContainer>
@@ -84,4 +85,3 @@ const StyledSNSContainer = styled.div`
   align-items: center;
   gap: 20px;
 `;
-

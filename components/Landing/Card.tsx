@@ -1,11 +1,12 @@
-import Image, { StaticImageData } from 'next/image';
-import styled, { css } from 'styled-components';
 import cardImg1 from '@/public/assets/images/landing4.png';
 import cardImg2 from '@/public/assets/images/landing5.png';
 import cardImg3 from '@/public/assets/images/landing6.png';
-import { COLORS } from '@/styles/palettes';
 import { fontStyle } from '@/styles/fontStyle';
-import { onTablet, onPc } from '@/styles/mediaQuery';
+import { onPc, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+
+import Image, { StaticImageData } from 'next/image';
+import styled, { css } from 'styled-components';
 
 interface CardContainerProps {
   cardImg: StaticImageData;

@@ -1,8 +1,8 @@
 import plus from '@/public/assets/icons/plus.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
+
 import Image from 'next/image';
 import styled from 'styled-components';
 

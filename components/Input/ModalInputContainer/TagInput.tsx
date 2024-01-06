@@ -1,10 +1,11 @@
 import ContentChip from '@/components/Chip/ContentChip';
+import { StyledLabel } from '@/components/Input/Input.style';
 import { TAG_COLOR } from '@/constants/ModalInput';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+
 import { ChangeEvent, KeyboardEvent, MouseEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { StyledLabel } from '../Input.style';
 
 export interface TagProps {
   inputValue?: string;
@@ -64,8 +65,8 @@ function TagInput({ label = '태그', onChange, defaultValue: defaultTagStringLi
 
   useEffect(() => {
     if (defaultTagStringList) {
-      const formmatedTags = getFormattedTagEl() as Tag[];
-      setTags(formmatedTags);
+      const formatTags = getFormattedTagEl() as Tag[];
+      setTags(formatTags);
     }
   }, []);
 

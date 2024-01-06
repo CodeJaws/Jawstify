@@ -2,8 +2,8 @@ import crown from '@/public/assets/icons/crown.svg';
 import rightPage from '@/public/assets/icons/rightPage.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -91,6 +91,7 @@ const StyledInDiv = styled.div`
   align-items: center;
   gap: 8px;
 `;
+
 const CrownImage = styled(Image)`
   width: 20px;
   height: 16px;
@@ -103,10 +104,7 @@ const CrownImage = styled(Image)`
     height: 12px;
   }
 `;
-const StyledCircleImage = styled(Image)`
-  width: 8px;
-  height: 8px;
-`;
+
 const StyledPageImage = styled(Image)`
   color: var(--button-color);
   width: 18px;

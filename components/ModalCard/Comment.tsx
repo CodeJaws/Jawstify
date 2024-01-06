@@ -1,3 +1,4 @@
+import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import useComment from '@/hooks/useComment';
 import useUser from '@/hooks/useUser';
 import DefaultImg from '@/public/assets/images/jaws.png';
@@ -5,10 +6,10 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import dateTimeFormat from '@/utils/dateTimeFormat';
+
 import Image from 'next/image';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
-import BasicInput from '../Input/ModalInputContainer/BasicInput';
 
 function Comment() {
   const { user } = useUser();
@@ -137,6 +138,7 @@ const StyledInCommentWrapper = styled.div`
 
 const StyledImage = styled(Image)`
   border-radius: 20px;
+
   ${onMobile} {
     width: 26px;
     height: 26px;
@@ -170,6 +172,7 @@ const StyledButtonInWrapper = styled.div`
 const StyledButton = styled.button`
   padding: 0;
   ${fontStyle(12, 400)}
+
   ${onMobile} {
     font-size: 1rem;
   }
@@ -184,30 +187,29 @@ const StyledInComment = styled.div`
 
 const StyledUser = styled.p`
   ${fontStyle(14, 600)}
+  color: var(--content-main);
 
   ${onMobile} {
     font-size: 1.2rem;
   }
-
-  color: var(--content-main);
 `;
 
 const StyledDate = styled.p`
   ${fontStyle(12, 400)}
+  color: ${COLORS.GRAY_9F};
 
   ${onMobile} {
     font-size: 1rem;
   }
-
-  color: ${COLORS.GRAY_9F};
 `;
 
 const StyledComment = styled.p`
   ${fontStyle(14, 400)}
+  color: ${COLORS.GRAY_9F};
+
   ${onMobile} {
     font-size: 1.2rem;
   }
-  color: ${COLORS.GRAY_9F};
 `;
 
 const StyledInputWrapper = styled.div`

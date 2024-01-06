@@ -1,12 +1,12 @@
-import Image from 'next/image';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
-import { css, styled } from 'styled-components';
-
 import Add from '@/public/assets/icons/Add.svg';
 import Edit from '@/public/assets/icons/EditImage.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
+import Image from 'next/image';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
+import { css, styled } from 'styled-components';
 
 interface Props {
   type: 'modal' | 'profile';

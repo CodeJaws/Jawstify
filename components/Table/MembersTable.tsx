@@ -1,16 +1,16 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-
 import API from '@/apis/api';
+import Button from '@/components/common/Button/Button';
+import PaginationButton from '@/components/common/Button/PaginationButton';
 import usePagination from '@/hooks/usePagination';
 import DefaultImage from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { MemberType } from '@/types/apiType';
+
+import Image from 'next/image';
 import { useState } from 'react';
-import Button from '../common/Button/Button';
-import PaginationButton from '../common/Button/PaginationButton';
+import styled from 'styled-components';
 
 interface MembersTableProps {
   dashboardId: number;
@@ -23,12 +23,10 @@ interface TableProps {
   refreshPagination: () => void;
 }
 
-/** 구성원 컴포넌트에서 하나의 줄을 의미합니다. */
 function Table({ item, refresh, refreshPagination }: TableProps) {
   const { isOwner, nickname, profileImageUrl } = item;
   let buttonName = '삭제';
 
-  /** 구성원 삭제 */
   const handleDelete = async () => {
     if (confirm(`정말 ${nickname}멤버를 삭제하시겠습니까?`)) {
       try {
@@ -111,7 +109,7 @@ function MembersTable({ dashboardId, refresh }: MembersTableProps) {
       {showItems.map((item, index) => (
         <div key={item.id}>
           <Table item={item as MemberType} refresh={refresh} refreshPagination={refreshPagination} />
-          {showItems.length - 1 !== index && <StyledSeperator></StyledSeperator>}
+          {showItems.length - 1 !== index && <StyledSeparator />}
         </div>
       ))}
     </StyledContainer>
@@ -136,8 +134,6 @@ const StyledContainer = styled.div`
   }
 
   ${onMobile} {
-    /* width: 284px; */
-    /* height: 337px; */
     width: 100%;
     height: auto;
   }
@@ -151,10 +147,8 @@ const StyledNameText = styled.p`
   color: ${COLORS.GRAY_9F};
   ${fontStyle(16, 400)};
   margin-top: 27px;
-  
 
   margin-left: 28px;
-  /* margin-top: 14px; */
   margin-bottom: 8px;
 
   ${onMobile} {
@@ -252,7 +246,7 @@ const StyledMemberBoxImageWrapper = styled.div`
   }
 `;
 
-const StyledSeperator = styled.div`
+const StyledSeparator = styled.div`
   width: 100%;
   height: 0;
   flex-shrink: 0;

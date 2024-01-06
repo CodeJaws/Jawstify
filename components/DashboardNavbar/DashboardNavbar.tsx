@@ -1,15 +1,9 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
-
-import crown from '@/public/assets/icons/crown.svg';
-import invite from '@/public/assets/icons/invite.svg';
-import setting from '@/public/assets/icons/setting.svg';
-import { fontStyle } from '@/styles/fontStyle';
-import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-
 import API from '@/apis/api';
+import Button from '@/components/DashboardNavbar/Button';
+import DarkModeToggleButton from '@/components/DashboardNavbar/DarkModeToggleButton';
+import Members, { MemberType } from '@/components/DashboardNavbar/Members';
+import Profile from '@/components/DashboardNavbar/Profile';
+import Modal from '@/components/Modal/Modal';
 import {
   ALREADY_INVITE_ERROR,
   INVALID_EMAIL_ERROR,
@@ -17,13 +11,18 @@ import {
   NO_DASHBOARD_ERROR,
   NO_USER_ERROR,
 } from '@/constants/ApiError';
+import crown from '@/public/assets/icons/crown.svg';
+import invite from '@/public/assets/icons/invite.svg';
+import setting from '@/public/assets/icons/setting.svg';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { GetDashboardDetailedItem } from '@/types/api';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Modal from '../Modal/Modal';
-import Button from './Button';
-import DarkModeToggleButton from './DarkModeToggleButton';
-import Members, { MemberType } from './Members';
-import Profile from './Profile';
+import styled from 'styled-components';
 
 interface DashboardNavbarProps {
   members?: MemberType[];
@@ -50,7 +49,6 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refr
   const inviteFetch = async () => {
     if (!dashboard) return;
 
-    //  백엔드에서 API 해결해줘야하는 코드 - 원래 막혀있었는데 언제 다시 뚫렸네요 - 시작
     try {
       const { invitations } = await API.dashboard.loadInviteDashboard({
         dashboardId: Number(dashboard.id),
@@ -66,7 +64,6 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refr
       alert(e.data.message);
       return;
     }
-    //  백엔드에서 API 해결해줘야하는 코드 - 원래 막혀있었는데 언제 다시 뚫렸네요 - 끝
 
     try {
       await API.dashboard.inviteDashboard({
@@ -137,7 +134,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refr
               </Button>
             </StyledButtonWrapper>
             {members && totalMembers ? <Members members={members} totalMembers={totalMembers} /> : null}
-            <StyledSeperatorWrapper></StyledSeperatorWrapper>
+            <StyledSeparatorWrapper />
           </>
         ) : null}
         <DarkModeToggleButton />
@@ -153,24 +150,26 @@ const StyledTitleContainer = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-
   margin-left: 340px;
+
   ${onTablet} {
     margin-left: 200px;
   }
+
   ${onMobile} {
     margin-left: 91px;
+
     h3 {
       ${fontStyle(18, 700)}
     }
   }
+
   h3 {
     color: var(--content-main);
     ${fontStyle(20, 700)}
   }
 `;
 
-/** 구분좌 */
 const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
   position: fixed;
   top: 0;
@@ -181,7 +180,6 @@ const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
   border-bottom: var(--nav-border);
   background-color: var(--nav-bg);
   z-index: 2;
-
   justify-content: ${({ $isMyDashboard }) => ($isMyDashboard ? 'space-between' : 'flex-end')};
 
   ${onPc} {
@@ -214,6 +212,7 @@ const StyledButtonWrapper = styled.div`
   ${onPc} {
     gap: 16px;
   }
+
   ${onTablet} {
     gap: 12px;
   }
@@ -223,7 +222,7 @@ const StyledButtonWrapper = styled.div`
   }
 `;
 
-const StyledSeperatorWrapper = styled.div`
+const StyledSeparatorWrapper = styled.div`
   position: relative;
   height: 38px;
   flex-shrink: 0;
@@ -233,9 +232,11 @@ const StyledSeperatorWrapper = styled.div`
   ${onPc} {
     margin-right: 23px;
   }
+
   ${onTablet} {
     margin-right: 24px;
   }
+
   ${onMobile} {
     margin-right: 12px;
   }

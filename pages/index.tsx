@@ -1,9 +1,10 @@
-import Nav from '@/components/Landing/Nav';
-import HeroSection from '@/components/Landing/Hero';
-import PointSection from '@/components/Landing/Point';
 import CardSection from '@/components/Landing/Card';
 import Footer from '@/components/Landing/Footer';
+import HeroSection from '@/components/Landing/Hero';
+import Nav from '@/components/Landing/Nav';
+import PointSection from '@/components/Landing/Point';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
+
 import { Helmet } from 'react-helmet';
 
 function Landing() {

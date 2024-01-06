@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type ThemeKey = 'light' | 'dark';
 
@@ -24,12 +24,12 @@ const useTheme = (): ReturnType => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("theme", themeMode);
+    localStorage.setItem('theme', themeMode);
     document.body.dataset.theme = themeMode;
   }, [themeMode]);
 
   const toggleThemeMode = useCallback(() => {
-    setThemeMode((prev) => (prev === "light" ? "dark" : "light"));
+    setThemeMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   }, []);
 
   return { themeMode, isDarkMode, setThemeMode, toggleThemeMode };

@@ -1,13 +1,13 @@
 import API from '@/apis/api';
+import AddImageButton from '@/components/AddImageButton/AddImageButton';
+import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import Button from '@/components/common/Button/Button';
 import { IMG_URL_ERROR, NICKNAME_ERROR, NICKNAME_IMG_ERROR } from '@/constants/ErrorMsg';
+import useUserData from '@/hooks/global/useUserData';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
+
 import { Dispatch, SetStateAction, useState } from 'react';
 import { styled } from 'styled-components';
-import AddImageButton from '../AddImageButton/AddImageButton';
-import BasicInput from '../Input/ModalInputContainer/BasicInput';
-import Button from '../common/Button/Button';
-import useUserData from '@/hooks/global/useUserData';
 
 interface Props {
   email: string;
@@ -116,7 +116,6 @@ const StyledContainer = styled.div`
   gap: 16px;
   border-radius: 8px;
   background: var(--content-color);
-  
 
   ${onTablet} {
     width: 100%;

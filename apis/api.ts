@@ -1,5 +1,6 @@
+import { request } from '@/apis/axios';
 import * as T from '@/types/api';
-import { request } from './axios';
+
 /** AUTH
  * @param login 로그인
  * @param changePassword 비밀번호 변경

@@ -8,7 +8,6 @@ import useColumnId from '@/hooks/ModalCard/useColumnId';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import Check from '@/public/assets/icons/GrayCheck.svg';
 import DefaultImg from '@/public/assets/images/jaws.png';
-import { COLORS } from '@/styles/palettes';
 
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -118,7 +117,6 @@ const StyledWrapper = styled.div`
 
 const StyledInWrapper = styled.div`
   background: var(--input--bg);
-
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -131,6 +129,7 @@ const StyledButton = styled.button`
   gap: 6px;
   padding: 0.5rem;
   width: 100%;
+
   &:hover {
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.08);

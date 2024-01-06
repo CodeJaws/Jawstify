@@ -1,14 +1,14 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-
+import DashboardDropdown from '@/components/DashboardNavbar/DashboardDropdown';
 import useUserData from '@/hooks/global/useUserData';
 import useDeviceType from '@/hooks/useDeviceType';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { UserType } from '@/types/apiType';
+
+import Image from 'next/image';
 import { FocusEvent, useEffect, useState } from 'react';
-import DashboardDropdown from './DashboardDropdown';
+import styled from 'styled-components';
 
 function Profile() {
   const { user } = useUserData();

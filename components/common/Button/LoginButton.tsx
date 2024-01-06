@@ -1,8 +1,9 @@
-import styled, { css } from 'styled-components';
-import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
+
+import styled, { css } from 'styled-components';
 
 interface LoginButtonProps extends ButtonOnClickProps {
   active?: boolean;
@@ -54,9 +55,11 @@ const StyledButton = styled.button<{ $active: boolean; $usingType: string; $marg
       width: 280px;
       height: 50px;
       ${fontStyle(18, 500)};
+
       ${onTablet} {
         font-size: 1.6rem;
       }
+
       ${onMobile} {
         font-size: 1.4rem;
         width: 235px;

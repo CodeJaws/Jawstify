@@ -1,3 +1,4 @@
+import ContentChip from '@/components/Chip/ContentChip';
 import useCardId from '@/hooks/ModalCard/useCardId';
 import useCardOpen from '@/hooks/ModalCard/useCardOpen';
 import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
@@ -7,14 +8,13 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import dateFormat from '@/utils/dateFormat';
+
 import Image from 'next/image';
 import styled from 'styled-components';
-import ContentChip from '../Chip/ContentChip';
 
 interface Props {
   cardInfoData: { dashboardId: number; cardId: number };
   title: string;
-  // description: string;
   tags: string[];
   dueDate: string;
   assignee: {
@@ -120,7 +120,6 @@ const StyledContainer = styled.div`
 
   ${onPc} {
     width: 314px;
-
     padding: 20px;
     gap: 12px;
   }

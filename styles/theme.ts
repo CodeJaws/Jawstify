@@ -1,5 +1,5 @@
+import { COLORS } from '@/styles/palettes';
 import { css } from 'styled-components';
-import { COLORS } from './palettes';
 
 export const theme = css`
   body {
@@ -26,13 +26,13 @@ export const theme = css`
     --nav-imgBorder: 2px solid ${COLORS.WHITE_FF};
     --nav-Dropdown-bg: ${COLORS.WHITE_FF};
     --nav-Dropdown-border: 1px solid ${COLORS.GRAY_D9};
-    --nav-Dropdown-hover: #F1EFFD;
+    --nav-Dropdown-hover: #f1effd;
     --nav-Dropdown-color: ${COLORS.BLACK_17};
 
     // sidebar
     --sidebar-border: 1px solid ${COLORS.GRAY_D9};
     --sidebar-bg: ${COLORS.WHITE_FF};
-    --sidebar-hover: #F1EFFD;
+    --sidebar-hover: #f1effd;
 
     --content-color: ${COLORS.WHITE_FF};
     --content-back: #fafafa;
@@ -53,7 +53,7 @@ export const theme = css`
     --button-bg: ${COLORS.WHITE_FF};
     --button-color: ${COLORS.BLACK_33};
     --button-border: 1px solid ${COLORS.GRAY_D9};
-    --button-hover: #F1EFFD;
+    --button-hover: #f1effd;
 
     --modal-bg: ${COLORS.WHITE_FF};
     --modal-border: 1px solid transparent;
@@ -62,7 +62,6 @@ export const theme = css`
     --invite-title: ${COLORS.BLACK_33};
 
     --columns-border-right: 0.0625rem solid #d3d0d0;
-
   }
 
   body[data-theme='dark'] {
@@ -74,10 +73,10 @@ export const theme = css`
     --bg-footer: ${COLORS.BLACK_17};
 
     --text-main: ${COLORS.GRAY_EE};
-    --text-second: ${COLORS.GRAY_9F};;
+    --text-second: ${COLORS.GRAY_9F};
     --text-third: ${COLORS.WHITE_FF};
 
-    --nav-bg : ${COLORS.BLACK_17};
+    --nav-bg: ${COLORS.BLACK_17};
     --nav-border: 1px solid #555555;
     --nav-imgBorder: 2px solid ${COLORS.GRAY_D9};
     --nav-Dropdown-bg: ${COLORS.BLACK_17};
@@ -118,5 +117,4 @@ export const theme = css`
 
     --columns-border-right: 0.0625rem solid ${COLORS.BLACK_4B};
   }
-
 `;
