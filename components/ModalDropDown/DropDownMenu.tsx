@@ -1,16 +1,10 @@
 import StatusChip from '@/components/Chip/StatusChip';
-import useImgSrc from '@/hooks/DropDown/useImgSrc';
-import useInputData from '@/hooks/DropDown/useInputData';
-import useManager from '@/hooks/DropDown/useManager';
-import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
-import useCardData from '@/hooks/ModalCard/useCardData';
-import useColumnId from '@/hooks/ModalCard/useColumnId';
-import useDashBoard from '@/hooks/ModalCard/useDashBoard';
+import useDropDown from '@/hooks/DropDown/useDropDownMenu';
 import Check from '@/public/assets/icons/GrayCheck.svg';
 import DefaultImg from '@/public/assets/images/jaws.png';
 
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { styled } from 'styled-components';
 
 interface DropDownMenuProps {
@@ -26,36 +20,7 @@ interface DropDownMenuProps {
 }
 
 function DropDownMenu({ type, isOpen, filterData, setIsOpen }: DropDownMenuProps) {
-  const [isCheck, setIsCheck] = useState(0);
-  const { setManager } = useManager();
-  const { setStatus } = useSelectStatus();
-  const { setInputData } = useInputData();
-  const { setImgSrc } = useImgSrc();
-  const { tasks } = useDashBoard();
-  const { setColumnId } = useColumnId();
-  const { cardData } = useCardData();
-
-  const handleCheck = (id: number, content: string) => {
-    setColumnId(id);
-    setIsCheck(id);
-    setIsOpen((prev) => !prev);
-
-    setStatus(content);
-  };
-
-  const handleCheckName = (id: number, content: string, imgSrc: string) => {
-    setManager(id);
-    setIsOpen((prev) => !prev);
-    setInputData(content);
-    setImgSrc(imgSrc);
-  };
-
-  const filterColumnId = tasks.data.filter((val) => val.id === cardData.columnId)[0]?.id;
-
-  useEffect(() => {
-    setColumnId(filterColumnId);
-    setManager(cardData.assignee.id);
-  }, [cardData.assignee.id, filterColumnId, setColumnId, setManager]);
+  const { handleCheck, handleCheckName, isCheck, tasks } = useDropDown({ setIsOpen });
 
   return (
     <StyledContainer $isOpen={isOpen}>
