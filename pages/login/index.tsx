@@ -10,11 +10,12 @@ import mainLogo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 
 function Login() {
   useRedirectByLogin();
@@ -109,6 +110,7 @@ export const StyledLogoContainer = styled(Link)`
   flex-direction: column;
   align-items: center;
   gap: 22px;
+
   ${onMobile} {
     gap: 18px;
   }
@@ -131,6 +133,7 @@ export const StyledLogoText = styled(Image)`
 export const StyledDescription = styled.h5`
   ${fontStyle(20, 500)};
   margin-top: -13px;
+
   ${onMobile} {
     margin-top: -7px;
   }

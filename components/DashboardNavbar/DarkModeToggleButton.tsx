@@ -1,8 +1,9 @@
-import { styled } from 'styled-components';
-import sunIcon from '@/public/assets/icons/sun.svg';
-import moonIcon from '@/public/assets/icons/moon.svg';
 import useTheme from '@/hooks/useTheme';
+import moonIcon from '@/public/assets/icons/moon.svg';
+import sunIcon from '@/public/assets/icons/sun.svg';
+
 import Image from 'next/image';
+import { styled } from 'styled-components';
 
 function DarkModeToggleButton() {
   const { themeMode, toggleThemeMode } = useTheme();
@@ -35,5 +36,3 @@ const StyledThemeModeIcon = styled(Image)`
   margin-right: 10px;
   cursor: pointer;
 `;
-
-// const StyledThemebutton = styled(button)

@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-
 import btn from '@/public/assets/icons/AddBoxWhite.svg';
 import dark from '@/public/assets/icons/BlueEllipse.svg';
 import light from '@/public/assets/icons/PurpleEllipse.svg';
+
 import Image from 'next/image';
+import { useState } from 'react';
+import styled from 'styled-components';
 
 function DarkmodeButton() {
   const [isDarkmode, setIsDarkmode] = useState(false);
@@ -31,15 +31,18 @@ const StyledContainer = styled.div<{ $isDarkmode: boolean }>`
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   position: relative;
+
   svg > circle {
     fill: ${({ $isDarkmode }) => ($isDarkmode ? '#fff;' : '#000;')};
   }
+
   .button {
     position: absolute;
     top: 3px;
     left: ${({ $isDarkmode }) => ($isDarkmode ? '3px;' : '42px;')};
     transition: all 0.3s ease-in-out;
   }
+
   .dark-icon {
     position: absolute;
     top: 5px;
@@ -47,6 +50,7 @@ const StyledContainer = styled.div<{ $isDarkmode: boolean }>`
     visibility: ${({ $isDarkmode }) => ($isDarkmode ? 'hidden;' : 'visible;')};
     transition: all 0.3s ease-in-out;
   }
+
   .sun-icon {
     position: absolute;
     top: 5px;

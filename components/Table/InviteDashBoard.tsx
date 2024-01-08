@@ -1,3 +1,4 @@
+import TwinButton from '@/components/common/Button/TwinButton';
 import useDeviceType from '@/hooks/useDeviceType';
 import useInviteDashBoard from '@/hooks/useInviteDashBoard';
 import search from '@/public/assets/icons/Search.svg';
@@ -5,10 +6,10 @@ import NoContent from '@/public/assets/images/NoContent.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
-import TwinButton from '../common/Button/TwinButton';
 
 export interface InviteDashBoardProps {
   refresh: () => void;
@@ -141,12 +142,15 @@ export default InviteDashBoard;
 const Div = styled.div`
   height: 430px;
   overflow-x: hidden;
+
   ${onMobile} {
     height: 700px;
   }
+
   &::-webkit-scrollbar {
     width: 8px;
   }
+
   &::-webkit-scrollbar-thumb {
     height: 30%;
     border: 1px solid ${COLORS.BLACK_17};
@@ -165,6 +169,7 @@ const StyledDiv = styled.div<{ $data: any }>`
     width: 504px;
     height: 592px;
   }
+
   ${onMobile} {
     width: 260px;
     height: 836px;
@@ -174,9 +179,11 @@ const StyledDiv = styled.div<{ $data: any }>`
     Object.keys($data).length == 0 &&
     css`
       height: 400px;
+
       ${onTablet} {
         height: 400px;
       }
+
       ${onMobile} {
         height: 400px;
       }
@@ -187,6 +194,7 @@ const StyledP = styled.p`
   color: var(--content-main);
   padding: 32px 0 0 28px;
   ${fontStyle(24, 700)};
+
   ${onMobile} {
     padding: 24px 0 0 16px;
     font-size: 20px;
@@ -210,6 +218,7 @@ const StyledInputDiv = styled.div`
     width: 448px;
     height: 40px;
   }
+
   ${onMobile} {
     margin: 20px 16px 15px;
     width: 228px;
@@ -228,6 +237,7 @@ const StyledInput = styled.input`
     width: 390px;
     height: 35px;
   }
+
   ${onMobile} {
     width: 180px;
     height: 32px;
@@ -239,6 +249,7 @@ const StyledSearchImage = styled(Image)`
   width: 24px;
   height: 24px;
   margin-left: 16px;
+
   ${onMobile} {
     margin-left: 12px;
     width: 22px;
@@ -251,9 +262,11 @@ const StyledWrapper = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   padding: 31px 0 14px 28px;
+
   ${onTablet} {
     grid-template-columns: 1fr 0.7fr 1fr;
   }
+
   ${onMobile} {
     display: flex;
     flex-direction: column;
@@ -271,9 +284,11 @@ const StyleListWrapper = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   padding: 20px 0 20px 28px;
+
   ${onTablet} {
     grid-template-columns: 1fr 0.7fr 1fr;
   }
+
   ${onMobile} {
     display: flex;
     flex-direction: column;
@@ -339,6 +354,7 @@ const NoContentContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 24px;
+
   ${onMobile} {
     padding-bottom: 96px;
     gap: 16px;
@@ -348,6 +364,7 @@ const NoContentContainer = styled.div`
 const NoContentImage = styled(Image)`
   width: 100px;
   height: 100px;
+
   ${onMobile} {
     width: 60px;
     height: 60px;
@@ -357,6 +374,7 @@ const NoContentImage = styled(Image)`
 const NoContentDiv = styled.div`
   color: ${COLORS.GRAY_9F};
   ${fontStyle(18, 400)}
+
   ${onMobile} {
     font-size: 14px;
   }

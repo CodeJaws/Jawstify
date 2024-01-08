@@ -1,13 +1,14 @@
 import API from '@/apis/api';
 import { DashboardProps } from '@/components/Sidebar/Dashboard';
 import { DashboardType } from '@/types/apiType';
+
 import { useEffect, useRef, useState } from 'react';
 
 function useSidebarDashboard({ refreshToggle, refresh }: DashboardProps) {
   const [dataSource, setDataSource] = useState<DashboardType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [dashboardPage, setDashboardPage] = useState(2);
-  const [totlaCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const dashboardContainerRef = useRef<HTMLDivElement>(null);
 
   const getItems = async () => {
@@ -17,7 +18,7 @@ function useSidebarDashboard({ refreshToggle, refresh }: DashboardProps) {
   };
 
   const fetchHasMore = () => {
-    if (dataSource.length < totlaCount) {
+    if (dataSource.length < totalCount) {
       if (dataSource.length !== 0) {
         handleLoadMore(dashboardPage);
       }

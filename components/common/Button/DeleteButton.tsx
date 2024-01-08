@@ -2,6 +2,7 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
+
 import styled from 'styled-components';
 
 function DeleteButton({ onClick }: ButtonOnClickProps) {

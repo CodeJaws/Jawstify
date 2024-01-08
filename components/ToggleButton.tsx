@@ -1,17 +1,18 @@
-import { ChangeEvent, useState } from 'react';
-import { styled } from 'styled-components';
 import { COLORS } from '@/styles/palettes';
+
+import { useState } from 'react';
+import { styled } from 'styled-components';
 
 function ToggleSwitch() {
   const [checked, setChecked] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = () => {
     setChecked((prev) => !prev);
-  }
+  };
 
   return (
     <StyledLabel>
-      <StyledInput checked={checked} type='checkbox' onChange={handleChange} />
+      <StyledInput checked={checked} type="checkbox" onChange={handleChange} />
       <StyledSwitch />
     </StyledLabel>
   );

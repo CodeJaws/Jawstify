@@ -1,11 +1,18 @@
+import {
+  StyledErrorText,
+  StyledInput,
+  StyledInputContainer,
+  StyledLabel,
+  VioletStar,
+} from '@/components/Input/Input.style';
 import Button from '@/components/common/Button/Button';
 import { NO_VALUE_ERROR } from '@/constants/SignValidate';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel, VioletStar } from '../Input.style';
 
 interface Props {
   label: string;

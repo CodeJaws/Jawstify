@@ -3,6 +3,7 @@ import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import dateTimeFormat from '@/utils/dateTimeFormat';
+
 import Image from 'next/image';
 import styled from 'styled-components';
 

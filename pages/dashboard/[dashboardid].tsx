@@ -7,10 +7,11 @@ import useDashboard from '@/hooks/useDashboard';
 import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
 import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import { onPc, onTablet } from '@/styles/mediaQuery';
+
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
-import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
 
 interface DashBoardIDProps {
   dashboardId: number;
@@ -69,7 +70,6 @@ const StyledContainer = styled.div`
 const StyledWrapper = styled.div`
   width: -webkit-fill-available;
   position: absolute;
-
   top: 70px;
   left: 67px;
 

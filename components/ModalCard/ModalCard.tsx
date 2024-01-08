@@ -1,16 +1,15 @@
-import DefaultImg from '@/public/assets/images/jaws.png';
+import ContentChip from '@/components/Chip/ContentChip';
+import StatusChip from '@/components/Chip/StatusChip';
+import Comment from '@/components/ModalCard/Comment';
+import Manager from '@/components/ModalCard/Manager';
+import ModalButton from '@/components/ModalCard/ModalButton';
+import useModalCard from '@/hooks/ModalCard/useModalCard';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import { styled } from 'styled-components';
-import ContentChip from '../Chip/ContentChip';
-import StatusChip from '../Chip/StatusChip';
-
-import useModalCard from '@/hooks/ModalCard/useModalCard';
-import Comment from './Comment';
-import Manager from './Manager';
-import ModalButton from './ModalButton';
 
 function ModalCard() {
   const { cardData, description, deviceType, imageUrl, title, status } = useModalCard();
@@ -92,6 +91,7 @@ const StyledContainer = styled.div`
     max-height: 708px;
     padding: 25px 15px;
     overflow-y: scroll;
+
     &::-webkit-scrollbar {
       width: 2px;
     }
@@ -124,6 +124,7 @@ const StyledLeftContainer = styled.div`
 
 const StyledTitle = styled.p`
   ${fontStyle(24, 700)}
+
   ${onMobile} {
     font-size: 2rem;
   }
@@ -133,6 +134,7 @@ const StyledTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+
   ${onMobile} {
     margin-top: 7px;
     gap: 16px;
@@ -165,6 +167,7 @@ const StyledContent = styled.div`
 
 const StyledImage = styled(Image)`
   object-fit: contain;
+
   ${onTablet} {
     width: 420px;
     height: 245px;
@@ -179,6 +182,7 @@ const StyledImage = styled(Image)`
 const StyledDivision = styled.div`
   height: 22px;
   border: 1px solid ${COLORS.GRAY_D9};
+
   ${onMobile} {
     height: 20px;
   }

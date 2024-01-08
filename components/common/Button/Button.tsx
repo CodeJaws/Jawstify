@@ -1,6 +1,7 @@
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
+
 import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -55,6 +56,7 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string }>`
       width: 120px;
       height: 48px;
       font-size: 1.6rem;
+
       ${onMobile} {
         width: 138px;
         height: 42px;

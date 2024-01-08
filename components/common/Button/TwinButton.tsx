@@ -1,5 +1,6 @@
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import { MouseEvent, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -75,6 +76,7 @@ const StyledButton = styled.button<{ $isViolet: boolean; $size: string; $backgro
   color: ${({ $isViolet }) => ($isViolet ? `${COLORS.WHITE_FF}` : `${COLORS.VIOLET_55}`)};
   font-weight: 500;
   font-size: 1.4rem;
+
   ${onTablet} {
     width: ${({ $size }) => ($size === 'small' ? '72px' : '')};
     height: ${({ $size }) => ($size === 'small' ? '30px' : '')};

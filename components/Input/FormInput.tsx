@@ -1,11 +1,12 @@
+import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel } from '@/components/Input/Input.style';
 import { DEFAULT_PLACEHOLDER } from '@/constants/SignValidate';
 import eyeOff from '@/public/assets/icons/eyeoff.svg';
 import eyeOn from '@/public/assets/icons/eyeon.svg';
+
 import Image from 'next/image';
 import { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import styled from 'styled-components';
-import { StyledErrorText, StyledInput, StyledInputContainer, StyledLabel } from './Input.style';
 
 // 아래 4개의 이외의 경우 Input 사용 시 Basic Input 사용
 // Login, SignForm에 쓰이는 Input들
@@ -53,7 +54,7 @@ function FormInput({ label = '', placeholder, errorMessage = '', register }: Pro
         placeholder={placeholder || PLACEHOLDER[label]}
         $error={hasError}
         {...register}
-        autoComplete='off'
+        autoComplete="off"
       />
       {isPassword && (
         <StyledEyeButton onClick={handleVisibility} type="button">

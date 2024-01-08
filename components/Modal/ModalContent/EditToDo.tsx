@@ -7,6 +7,7 @@ import TwinButton from '@/components/common/Button/TwinButton';
 import useEditTodo from '@/hooks/ModalCard/useEditTodo';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
+
 import { useEffect } from 'react';
 import styled from 'styled-components';
 

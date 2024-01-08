@@ -1,7 +1,6 @@
 import DropDown from '@/components/ModalDropDown/DropDown';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
 import { ModalDropdownProps } from '@/types/dropdown';
 
 import { styled } from 'styled-components';

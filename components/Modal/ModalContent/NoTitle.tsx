@@ -1,10 +1,11 @@
+import { StyledContainer } from '@/components/Modal/ModalContent/Basic';
+import { StyledTwinButton } from '@/components/Modal/ModalContent/CreateToDo';
 import Button from '@/components/common/Button/Button';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
+
 import styled from 'styled-components';
-import { StyledContainer } from './Basic';
-import { StyledTwinButton } from './CreateToDo';
 
 interface Props extends ModalCommonProps {
   description: string;
@@ -48,6 +49,7 @@ const StyledDescription = styled.h5`
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+
   ${onMobile} {
     justify-content: center;
   }

@@ -1,7 +1,8 @@
 import API from '@/apis/api';
-import { useEffect, useState } from 'react';
 import { GetDashboardDetailedItem, GetMembersInDashboardItem } from '@/types/api';
+
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 type MemberType = GetMembersInDashboardItem['members'][0];
 

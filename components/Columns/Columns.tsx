@@ -1,11 +1,12 @@
 import API from '@/apis/api';
 import Column from '@/components/Columns/Column';
+import Modal from '@/components/Modal/Modal';
 import ColumnAddButton from '@/components/common/Button/ColumnAddButton';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 import { GetColumnListProps } from '@/types/api';
+
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Modal from '../Modal/Modal';
 
 interface ColumnProps {
   id: number;

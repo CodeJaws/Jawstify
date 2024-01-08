@@ -1,5 +1,6 @@
 import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
@@ -9,12 +10,12 @@ const GoogleLoginButton = () => {
   const handleGoogleLogin = async (googleUserInfo: { email: string; sub: string; name: string; picture: string }) => {
     const googleLoginEmail = googleUserInfo.email;
     const googleLoginPwd = googleUserInfo.sub; // 유저별 개인 코드
-    const goooleUserName = googleUserInfo.name;
+    const googleUserName = googleUserInfo.name;
     const googleProfileImg = googleUserInfo.picture;
     const googleSignUpValues: SignUpFormValue = {
       email: googleLoginEmail,
       password: googleLoginPwd,
-      nickname: goooleUserName,
+      nickname: googleUserName,
     };
     try {
       await handleSignUp(googleSignUpValues);
@@ -40,8 +41,8 @@ const GoogleLoginButton = () => {
           }),
       );
 
-  function dataURLtoFile(dataurl: any, filename: any) {
-    var arr = dataurl.split(','),
+  function dataURLtoFile(dataUrl: any, filename: any) {
+    var arr = dataUrl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
       bstr = atob(arr[1]),
       n = bstr.length,

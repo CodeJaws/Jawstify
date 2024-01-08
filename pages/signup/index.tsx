@@ -9,12 +9,13 @@ import mainLogoText from '@/public/assets/images/title.png';
 import mainLogo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
+import * as L from '../login';
+
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import * as L from '../login';
-import { Helmet } from 'react-helmet';
 
 function SignUp() {
   useRedirectByLogin();

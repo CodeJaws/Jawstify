@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import styled from 'styled-components';
 import pointImg1 from '@/public/assets/images/landing2.png';
 import pointImg2 from '@/public/assets/images/landing3.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { COLORS } from '@/styles/palettes';
+
+import Image from 'next/image';
+import styled from 'styled-components';
 
 function PointSection() {
   return (

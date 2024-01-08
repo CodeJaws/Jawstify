@@ -1,7 +1,8 @@
 import API from '@/apis/api';
-import { useEffect, useState } from 'react';
+import useUserData from '@/hooks/global/useUserData';
 import { UserType } from '@/types/apiType';
-import useUserData from './global/useUserData';
+
+import { useEffect, useState } from 'react';
 
 function useUser() {
   const { setUser: setUserData } = useUserData();

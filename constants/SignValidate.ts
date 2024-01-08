@@ -1,8 +1,6 @@
-// 이메일 형식 검사 (정규식)
 export const EMAIL_VALIDATE_PATTERN =
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-// 비밀번호 형식 검사 (정규식)
 export const PWD_VALIDATE_PATTERN = /[a-zA-Z]/g && /\d/g;
 
 export const NO_VALUE_ERROR = '값을 입력해 주세요.';

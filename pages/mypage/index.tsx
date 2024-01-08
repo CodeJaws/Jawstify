@@ -7,6 +7,7 @@ import useRedirectByLogin from '@/hooks/useRedirectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -79,6 +80,7 @@ const StyledInWrapper = styled.div`
     left: 160px;
     width: calc(100% - 160px);
   }
+
   ${onMobile} {
     left: 66px;
     width: calc(100% - 66px);

@@ -1,6 +1,7 @@
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import styled from 'styled-components';
 

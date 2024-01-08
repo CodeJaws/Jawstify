@@ -1,6 +1,5 @@
 import { COLORS } from '@/styles/palettes';
 
-// <-- Modal Input -->
 export const TAG_COLOR = [
   [COLORS.ORANGE_F9, COLORS.ORANGE_D5],
   [COLORS.GREEN_E7, COLORS.GREEN_86],

@@ -1,18 +1,18 @@
+import Basic from '@/components/Modal/ModalContent/Basic';
+import CreateDashboard from '@/components/Modal/ModalContent/CreateDashboard';
+import CreateToDo from '@/components/Modal/ModalContent/CreateToDo';
+import EditToDo from '@/components/Modal/ModalContent/EditToDo';
+import ManageColumn from '@/components/Modal/ModalContent/ManageColumn';
+import NoTitle from '@/components/Modal/ModalContent/NoTitle';
+import ModalCard from '@/components/ModalCard/ModalCard';
 import { INIT_BASIC, INIT_EDIT_TODO, INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { ModalCommonProps } from '@/types/modal';
+
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-
-import ModalCard from '../ModalCard/ModalCard';
-import Basic from './ModalContent/Basic';
-import CreateDashboard from './ModalContent/CreateDashboard';
-import CreateToDo from './ModalContent/CreateToDo';
-import EditToDo from './ModalContent/EditToDo';
-import ManageColumn from './ModalContent/ManageColumn';
-import NoTitle from './ModalContent/NoTitle';
 
 interface Props extends ModalCommonProps {
   title: '' | '새로운 대시보드' | '카드' | '할 일 생성' | '할 일 수정' | '새 컬럼 생성' | '컬럼 관리' | '초대하기';
@@ -39,7 +39,7 @@ function Modal({
   const isTightVersion = title == '할 일 생성' || title === '할 일 수정';
 
   const setModalInputValue = (values = {}) => {
-    setValue(values); // value = modal에 입력된 input value들의 집합
+    setValue(values);
   };
 
   useEffect(() => {
@@ -154,6 +154,7 @@ const StyledModalContainer = styled.div<{ $isTightVersion: boolean }>`
 const StyledTitle = styled.h3`
   color: var(--content-main);
   ${fontStyle(24, 700)}
+
   ${onMobile} {
     ${fontStyle(20, 700)}
   }

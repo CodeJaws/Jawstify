@@ -1,18 +1,8 @@
-import Image from 'next/image';
-import styled from 'styled-components';
-import { useState } from 'react';
-
-import { fontStyle } from '@/styles/fontStyle';
-import { COLORS } from '@/styles/palettes';
-import { onMobile, onTablet } from '@/styles/mediaQuery';
-import usePagination from '@/hooks/usePagination';
-import PaginationButton from '../common/Button/PaginationButton';
-import Button from '../common/Button/Button';
-import InviteButton from './InviteButton';
-import { InvitationType } from '@/types/apiType';
-import NoItem from '@/public/assets/images/noItem.png';
-import Modal from '../Modal/Modal';
 import API from '@/apis/api';
+import Modal from '@/components/Modal/Modal';
+import InviteButton from '@/components/Table/InviteButton';
+import Button from '@/components/common/Button/Button';
+import PaginationButton from '@/components/common/Button/PaginationButton';
 import {
   ABORT_INVITE_AUTH_ERROR,
   ALREADY_INVITE_ERROR,
@@ -22,6 +12,16 @@ import {
   NO_EXIST_INVITE_ERROR,
   NO_USER_ERROR,
 } from '@/constants/ApiError';
+import usePagination from '@/hooks/usePagination';
+import NoItem from '@/public/assets/images/noItem.png';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { InvitationType } from '@/types/apiType';
+
+import Image from 'next/image';
+import { useState } from 'react';
+import styled from 'styled-components';
 
 interface TablePaginationProps {
   dashboardId: number;
@@ -99,9 +99,7 @@ function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps
   const setModalValue = (values: any) => {
     setEmail(values['이메일']);
   };
-  /** 초대하기 버튼 클릭 시 동작 */
   const handleInvite = async () => {
-    // API 수정 끝나면 삭제될 함수 - 이미 초대 보낸 아이디가 있을 시 API 요청 보내지 않는 logic
     for (let i = 0; i < allItems.length; i++) {
       const check = allItems[i];
       if ('invitee' in check && check.invitee.email === email) {
@@ -179,7 +177,7 @@ function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps
                 dashboardId={Number(dashboardId)}
                 refreshPagination={refreshPagination}
               />
-              {showItems.length - 1 !== index && <StyledSeperator></StyledSeperator>}
+              {showItems.length - 1 !== index && <StyledSeparator />}
             </div>
           ))}
         </>
@@ -212,9 +210,7 @@ const StyledContainer = styled.div`
   background-color: var(--content-color);
   margin-bottom: 40px;
   border: var(--content-border);
-  color: var(--content-second)
-
-  ${onTablet} {
+  color: var(--content-second) ${onTablet} {
     width: 100%;
     margin-bottom: 48px;
   }
@@ -229,9 +225,7 @@ const StyledContainer = styled.div`
 const StyledNameText = styled.p`
   color: var(--content-second);
   ${fontStyle(16, 400)};
-
   margin-left: 28px;
-  /* margin-top: 14px; */
   margin-bottom: 24px;
 
   ${onMobile} {
@@ -251,6 +245,7 @@ const StyledTopWrapper = styled.div`
     color: var(--content-main);
     ${fontStyle(24, 700)};
   }
+
   margin-top: 26px;
 
   ${onMobile} {
@@ -266,7 +261,7 @@ const StyledPaginationWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  
+
   div {
     display: flex;
     justify-content: center;
@@ -319,7 +314,7 @@ const StyledMemberBoxProfileWrapper = styled.div`
   }
 `;
 
-const StyledSeperator = styled.div`
+const StyledSeparator = styled.div`
   width: 100%;
   height: 0;
   flex-shrink: 0;
@@ -344,6 +339,7 @@ const StyledNoItemTitleWrapper = styled.div`
     margin-top: 30px;
     margin-left: 20px;
   }
+
   h1 {
     ${fontStyle(24, 700)}
 
@@ -357,6 +353,7 @@ const StyledNoItemInWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   p {
     margin-bottom: 10px;
     color: ${COLORS.GRAY_9F};

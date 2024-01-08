@@ -3,6 +3,7 @@ import crown from '@/public/assets/icons/crown.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import InfiniteScroll from 'react-infinite-scroller';

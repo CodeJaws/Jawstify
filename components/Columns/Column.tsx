@@ -1,4 +1,8 @@
 import { default as API, default as api } from '@/apis/api';
+import CountChip from '@/components/Chip/CountChip';
+import Card from '@/components/Columns/Card';
+import Modal from '@/components/Modal/Modal';
+import AddButton from '@/components/common/Button/AddButton';
 import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
 import useRefresh from '@/hooks/useRefresh';
 import BlueEllipse from '@/public/assets/icons/BlueEllipse.svg';
@@ -6,14 +10,11 @@ import setting from '@/public/assets/icons/setting.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
+
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
-import CountChip from '../Chip/CountChip';
-import Modal from '../Modal/Modal';
-import AddButton from '../common/Button/AddButton';
-import Card from './Card';
 
 interface Props extends GetColumnListProps {
   columnId: number;
@@ -40,7 +41,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
   // 무한스크롤로 카드 리스트 가져오기
   const fetchHasMore = () => {
     if (cardListInfos.cursorId !== 0) {
-      loadColunCardList();
+      loadColumCardList();
     } else {
       setHasMore(false);
     }
@@ -61,7 +62,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
-  const loadColunCardList = async () => {
+  const loadColumCardList = async () => {
     const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
     setColumnCardList((prev) => [...prev, ...res.cards]);
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });

@@ -1,13 +1,8 @@
-import { COLORS } from '@/styles/palettes';
-import styled from 'styled-components';
-import ColorChip from '../Chip/ColorChip';
-import { fontStyle } from '@/styles/fontStyle';
-import { useEffect, useState } from 'react';
-import BasicInput from '../Input/ModalInputContainer/BasicInput';
-import Button from '../common/Button/Button';
-import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { DashboardType } from '@/types/apiType';
 import API from '@/apis/api';
+import ColorChip from '@/components/Chip/ColorChip';
+import MobileColor from '@/components/Edit/MobileColorChip';
+import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
+import Button from '@/components/common/Button/Button';
 import {
   INVALID_COLOR_FORMAT_ERROR,
   NO_AUTH_CORRECT_DASHBOARD_ERROR,
@@ -15,7 +10,13 @@ import {
   NO_DASHBOARD_ERROR,
 } from '@/constants/ApiError';
 import useDeviceType from '@/hooks/useDeviceType';
-import MobileColor from './MobileColorChip';
+import { fontStyle } from '@/styles/fontStyle';
+import { onMobile, onTablet } from '@/styles/mediaQuery';
+import { COLORS } from '@/styles/palettes';
+import { DashboardType } from '@/types/apiType';
+
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 interface DashboardEditProps {
   dashboardData: DashboardType;
@@ -24,14 +25,6 @@ interface DashboardEditProps {
 
 type ColorMap = {
   [key: string]: string;
-};
-
-const colorObj: ColorMap = {
-  '녹색 원': COLORS.GREEN_7A,
-  '보라색 원': COLORS.PURPLE_76,
-  '오렌지 원': COLORS.ORANGE_FF,
-  '하늘색 원': COLORS.BLUE_76,
-  '핑크색 원': COLORS.PINK_E8,
 };
 
 function DashboardEdit({ dashboardData, refresh }: DashboardEditProps) {
@@ -131,7 +124,8 @@ const StyledContainer = styled.div`
   border-radius: 8px;
   background: var(--content-color);
   border: var(--content-border);
-  
+  padding: 0 28px;
+
   ${onTablet} {
     width: 100%;
   }
@@ -139,8 +133,6 @@ const StyledContainer = styled.div`
   ${onMobile} {
     width: 100%;
   }
-
-  padding: 0 28px;
 `;
 
 const StyledTitleWrapper = styled.div`
@@ -154,12 +146,12 @@ const StyledTitleWrapper = styled.div`
     ${fontStyle(20, 700)};
     color: var(--content-main);
   }
-
 `;
 
 const StyledMainWrapper = styled.div`
   margin-top: 37px;
   margin-bottom: 24px;
+
   h3 {
     color: ${COLORS.BLACK_33};
     ${fontStyle(18, 500)};
@@ -171,9 +163,9 @@ const StyledButton = styled(Button)`
   position: absolute;
   width: 84px;
   height: 32px;
-
   bottom: 28px;
   right: 28px;
+
   ${onMobile} {
     height: 28px;
     bottom: 21px;

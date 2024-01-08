@@ -1,6 +1,7 @@
 import API from '@/apis/api';
+
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface useRedirectByDashboardIdProps {
   dashboardId: number;

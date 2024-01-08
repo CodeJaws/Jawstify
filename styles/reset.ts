@@ -1,5 +1,6 @@
+import { COLORS } from '@/styles/palettes';
+
 import { css } from 'styled-components';
-import { COLORS } from './palettes';
 
 export const reset = css`
   @font-face {
