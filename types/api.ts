@@ -499,3 +499,9 @@ export type ProfileImgUploadProps = FormData;
 export interface ProfileImgUploadItem {
   profileImageUrl: string;
 }
+
+export interface ApiErrorResponse {
+  data?: {
+    message?: string;
+  };
+}
