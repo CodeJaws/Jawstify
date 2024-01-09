@@ -1,64 +1,18 @@
 import StatusChip from '@/components/Chip/StatusChip';
 import DropDownMenu from '@/components/ModalDropDown/DropDownMenu';
 import { DefaultImg } from '@/constants/ModalInput';
-import useGetMember from '@/hooks/DropDown/useGetMember';
-import useImgSrc from '@/hooks/DropDown/useImgSrc';
-import useInputData from '@/hooks/DropDown/useInputData';
-import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
-import useCardData from '@/hooks/ModalCard/useCardData';
+import useDropDown from '@/hooks/DropDown/useDropDown';
 import Arrow from '@/public/assets/icons/ArrowDropdown.svg';
 import { COLORS } from '@/styles/palettes';
 import { ModalDropdownProps } from '@/types/dropdown';
 
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { css, styled } from 'styled-components';
 
 function DropDown({ type, onChange }: ModalDropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const { status } = useSelectStatus();
-  const { inputData, setInputData } = useInputData();
-  const { imgSrc, setImgSrc } = useImgSrc();
-  const { members } = useGetMember();
-  const { cardData } = useCardData();
-
-  const openMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const openDropDown = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputData(e.currentTarget.value);
-    if (inputData) {
-      setImgSrc('');
-    }
-    setIsOpen(true);
-  };
-
-  const handleBlur = () => {
-    setIsOpen(false);
-  };
-
-  const filterData = members.members.filter((manager) => {
-    if (inputData) {
-      return manager.nickname.toLowerCase().includes(inputData.toLowerCase());
-    } else {
-      return manager.nickname.toLowerCase();
-    }
+  const { filterData, handleBlur, imgSrc, inputData, isOpen, openDropDown, openMenu, setIsOpen, status } = useDropDown({
+    onChange,
   });
-
-  useEffect(() => {
-    onChange('상태', status);
-  }, [onChange, status]);
-
-  useEffect(() => {
-    onChange('담당자', inputData);
-  }, [inputData, onChange]);
-
-  useEffect(() => {
-    setInputData(cardData.assignee.nickname);
-
-    setImgSrc(cardData.assignee.profileImageUrl);
-  }, [setInputData, setImgSrc, cardData.assignee.nickname, cardData.assignee.profileImageUrl]);
 
   return (
     <>
