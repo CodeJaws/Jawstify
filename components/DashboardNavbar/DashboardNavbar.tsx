@@ -11,6 +11,7 @@ import {
   NO_DASHBOARD_ERROR,
   NO_USER_ERROR,
 } from '@/constants/ApiError';
+import useDashboardNavbar from '@/hooks/DashboardNavbar/useDashboardNavbar';
 import crown from '@/public/assets/icons/crown.svg';
 import invite from '@/public/assets/icons/invite.svg';
 import setting from '@/public/assets/icons/setting.svg';
@@ -29,76 +30,13 @@ interface DashboardNavbarProps {
   totalMembers?: number;
   dashboard?: GetDashboardDetailedItem;
   isMyDashboard: boolean;
-  refreshInvite?: () => void;
 }
 
-function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard, refreshInvite }: DashboardNavbarProps) {
-  const router = useRouter();
-  const dashboardTitle = isMyDashboard
-    ? '내 대시보드'
-    : router.pathname === '/mypage'
-      ? '계정관리'
-      : dashboard
-        ? dashboard.title
-        : '';
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [email, setEmail] = useState('');
-
-  const setModalValue = (values: any) => setEmail(values['이메일']);
-
-  const inviteFetch = async () => {
-    if (!dashboard) return;
-
-    try {
-      const { invitations } = await API.dashboard.loadInviteDashboard({
-        dashboardId: Number(dashboard.id),
-        size: 100,
-      });
-      for (let i = 0; i < invitations.length; i++) {
-        if (email === invitations[i].invitee.email) {
-          alert(ALREADY_INVITE_ERROR);
-          return;
-        }
-      }
-    } catch (e: any) {
-      alert(e.data.message);
-      return;
-    }
-
-    try {
-      await API.dashboard.inviteDashboard({
-        dashboardId: Number(dashboard.id),
-        email,
-      });
-      if (refreshInvite) {
-        refreshInvite();
-      }
-
-      alert('성공적으로 초대하기 메세지를 보냈습니다.');
-    } catch (e: any) {
-      switch (e.data.message) {
-        case INVALID_EMAIL_ERROR:
-          alert(INVALID_EMAIL_ERROR);
-          break;
-        case INVITE_AUTH_ERROR:
-          alert(INVITE_AUTH_ERROR);
-          break;
-        case NO_DASHBOARD_ERROR:
-          alert(NO_DASHBOARD_ERROR);
-          break;
-        case NO_USER_ERROR:
-          alert(NO_USER_ERROR);
-          break;
-        case ALREADY_INVITE_ERROR:
-          alert(ALREADY_INVITE_ERROR);
-          break;
-        default:
-          alert(e.data.message);
-      }
-    } finally {
-      setIsModalOpen(false);
-    }
-  };
+function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: DashboardNavbarProps) {
+  const { isModalOpen, inviteFetch, setModalValue, setIsModalOpen, dashboardTitle } = useDashboardNavbar({
+    isMyDashboard,
+    dashboard,
+  });
 
   return (
     <StyledContainer $isMyDashboard={isMyDashboard}>
