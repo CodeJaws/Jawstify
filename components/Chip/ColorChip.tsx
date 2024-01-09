@@ -1,4 +1,5 @@
-import useColorChip, { ColorEllipse } from '@/hooks/useColorChip';
+import { ColorEllipse } from '@/constants/ColorEllipse';
+import useColorChip from '@/hooks/Chip/useColorChip';
 import Check from '@/public/assets/icons/Check.svg';
 import { onMobile } from '@/styles/mediaQuery';
 
