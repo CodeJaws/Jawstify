@@ -1,8 +1,8 @@
 import API from '@/apis/api';
 import { IMG_URL_ERROR, NICKNAME_ERROR, NICKNAME_IMG_ERROR } from '@/constants/ErrorMsg';
+import useUserData from '@/hooks/global/useUserData';
 
 import { useState } from 'react';
-import useUserData from '../global/useUserData';
 
 interface Props {
   nickname: string;

@@ -1,11 +1,12 @@
+import useImgSrc from '@/hooks/DropDown/useImgSrc';
+import useInputData from '@/hooks/DropDown/useInputData';
+import useManager from '@/hooks/DropDown/useManager';
+import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
+import useCardData from '@/hooks/ModalCard/useCardData';
+import useColumnId from '@/hooks/ModalCard/useColumnId';
+import useDashBoard from '@/hooks/ModalCard/useDashBoard';
+
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import useCardData from '../ModalCard/useCardData';
-import useColumnId from '../ModalCard/useColumnId';
-import useDashBoard from '../ModalCard/useDashBoard';
-import useImgSrc from './useImgSrc';
-import useInputData from './useInputData';
-import useManager from './useManager';
-import useSelectStatus from './useSelectStatus';
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
