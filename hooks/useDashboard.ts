@@ -1,51 +1,62 @@
-import API from '@/apis/api';
-import { GetDashboardDetailedItem, GetMembersInDashboardItem } from '@/types/api';
-
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
-type MemberType = GetMembersInDashboardItem['members'][0];
+import API from '@/apis/api';
+import { ApiErrorResponse } from '@/types/api';
 
 interface useDashboardProps {
   dashboardId: number;
-  refreshToggle?: boolean;
 }
 
-const useDashboard = ({ dashboardId, refreshToggle }: useDashboardProps) => {
+const useDashboard = ({ dashboardId }: useDashboardProps) => {
   const router = useRouter();
-  const [members, setMembers] = useState<MemberType[]>([]);
-  const [totalMembers, setTotalMembers] = useState(0);
-  const [dashboardData, setDashboardData] = useState<GetDashboardDetailedItem>({
-    id: 0,
-    title: '',
-    color: '',
-    createdAt: '',
-    updatedAt: '',
-    createdByMe: false,
-    userId: 0,
+
+  const {
+    data: dashboardData,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ['dashboard', dashboardId],
+    queryFn: async () => {
+      const dashboardDetailedData = await API.dashboard.getDashboardDetailed({ dashboardId: Number(dashboardId) });
+      return dashboardDetailedData;
+    },
   });
 
-  const dashboardFetch = async () => {
-    try {
-      const dashboardDetailedData = await API.dashboard.getDashboardDetailed({ dashboardId: Number(dashboardId) }); // 현제 대시보드의 상세 정보
-      const membersInDashboardData = await API.members.getMembersInDashboard({ dashboardId: Number(dashboardId) }); // 대시보드 멤버들의 정보
-      setMembers(membersInDashboardData.members);
-      setTotalMembers(membersInDashboardData.totalCount);
-      setDashboardData(dashboardDetailedData);
-    } catch (e: any) {
-      console.log(e);
-      if (e.data.message === '대시보드의 멤버가 아닙니다.' || e.data.message === '대시보드가 존재하지 않습니다.') {
-        alert('잘못된 접근입니다!');
-        router.push('/mydashboard');
-      }
+  const { data: membersInDashboardData } = useQuery({
+    queryKey: ['members', dashboardId],
+    queryFn: async () => {
+      const membersData = await API.members.getMembersInDashboard({ dashboardId: Number(dashboardId) });
+      return membersData;
+    },
+  });
+
+  if (error) {
+    const apiError = error as ApiErrorResponse;
+    console.log(error);
+    if (
+      apiError.data?.message === '대시보드의 멤버가 아닙니다.' ||
+      apiError.data?.message === '대시보드가 존재하지 않습니다.'
+    ) {
+      alert('잘못된 접근입니다!');
+      router.push('/mydashboard');
     }
+  }
+
+  return {
+    totalMembers: membersInDashboardData?.totalCount || 0,
+    members: membersInDashboardData?.members || [],
+    dashboardData: dashboardData || {
+      id: 0,
+      title: '',
+      color: '',
+      createdAt: '',
+      updatedAt: '',
+      createdByMe: false,
+      userId: 0,
+    },
+    isLoading,
   };
-
-  useEffect(() => {
-    dashboardFetch();
-  }, [dashboardId, refreshToggle]);
-
-  return { totalMembers, members, dashboardData };
 };
 
 export default useDashboard;
