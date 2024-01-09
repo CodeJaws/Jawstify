@@ -1,12 +1,13 @@
+import Image from 'next/image';
+import { Dispatch, SetStateAction } from 'react';
+import { css, styled } from 'styled-components';
+
+import useAddImageButton from '@/hooks/useAddImageButton';
 import Add from '@/public/assets/icons/Add.svg';
 import Edit from '@/public/assets/icons/EditImage.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-
-import Image from 'next/image';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
-import { css, styled } from 'styled-components';
 
 interface Props {
   type: 'modal' | 'profile';
@@ -17,24 +18,7 @@ interface Props {
 }
 
 function AddImageButton({ type, image, previewImage, setPreviewImage, setImage }: Props) {
-  const imgSrc = previewImage as string;
-  const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-
-    if (file) {
-      setImage(file as File);
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  useEffect(() => {
-    setPreviewImage(image);
-  }, [image, setPreviewImage]);
+  const { imgSrc, handleImageSelect } = useAddImageButton({ image, previewImage, setPreviewImage, setImage });
 
   return (
     <StyledContainer $type={type}>
