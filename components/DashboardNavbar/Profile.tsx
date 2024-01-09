@@ -1,44 +1,14 @@
+import Image from 'next/image';
+import styled from 'styled-components';
+
 import DashboardDropdown from '@/components/DashboardNavbar/DashboardDropdown';
-import useUserData from '@/hooks/global/useUserData';
-import useDeviceType from '@/hooks/useDeviceType';
+import useProfile from '@/hooks/DashboardNavbar/useProfile';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { UserType } from '@/types/apiType';
-
-import Image from 'next/image';
-import { FocusEvent, useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 function Profile() {
-  const { user } = useUserData();
-
-  const [showUser, setShowUser] = useState<UserType>({
-    createdAt: '',
-    email: '',
-    id: 0,
-    nickname: '',
-    profileImageUrl: null,
-    updatedAt: '',
-  });
-  const { nickname, profileImageUrl } = showUser;
-  const deviceType = useDeviceType();
-
-  const [isDropdown, setIsDropdown] = useState(false);
-
-  const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
-    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-      setIsDropdown(false);
-    }
-  };
-
-  const handleClickDropdown = () => {
-    setIsDropdown((prev) => !prev);
-  };
-
-  useEffect(() => {
-    setShowUser(user);
-  }, [user]);
+  const { handleBlur, handleClickDropdown, profileImageUrl, nickname, deviceType, isDropdown } = useProfile();
 
   return (
     <>
