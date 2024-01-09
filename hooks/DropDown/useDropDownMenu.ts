@@ -11,7 +11,7 @@ interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-function useDropDown({ setIsOpen }: Props) {
+function useDropDownMenu({ setIsOpen }: Props) {
   const [isCheck, setIsCheck] = useState(0);
   const { setManager } = useManager();
   const { setStatus } = useSelectStatus();
@@ -45,4 +45,4 @@ function useDropDown({ setIsOpen }: Props) {
   return { isCheck, handleCheck, handleCheckName, tasks };
 }
 
-export default useDropDown;
+export default useDropDownMenu;

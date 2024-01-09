@@ -1,5 +1,5 @@
 import StatusChip from '@/components/Chip/StatusChip';
-import useDropDown from '@/hooks/DropDown/useDropDownMenu';
+import useDropDownMenu from '@/hooks/DropDown/useDropDownMenu';
 import Check from '@/public/assets/icons/GrayCheck.svg';
 import DefaultImg from '@/public/assets/images/jaws.png';
 
@@ -20,7 +20,7 @@ interface DropDownMenuProps {
 }
 
 function DropDownMenu({ type, isOpen, filterData, setIsOpen }: DropDownMenuProps) {
-  const { handleCheck, handleCheckName, isCheck, tasks } = useDropDown({ setIsOpen });
+  const { handleCheck, handleCheckName, isCheck, tasks } = useDropDownMenu({ setIsOpen });
 
   return (
     <StyledContainer $isOpen={isOpen}>
