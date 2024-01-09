@@ -2,7 +2,7 @@ import Modal from '@/components/Modal/Modal';
 import DashBoardAddButton from '@/components/common/Button/DashBoardAddButton';
 import DashBoardButton from '@/components/common/Button/DashBoardButton';
 import PaginationButton from '@/components/common/Button/PaginationButton';
-import useMyDashBoardButtonBox from '@/hooks/useMyDashboardButtonBox';
+import useMyDashBoardButtonBox from '@/hooks/Dashboard/useMyDashboardButtonBox';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 

@@ -1,7 +1,7 @@
 import API from '@/apis/api';
 import { MyDashBoardButtonBoxProps } from '@/components/MyDashboard/MyDashBoardButtonBox';
 import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
-import usePagination from '@/hooks/usePagination';
+import usePagination from '@/hooks/Common/usePagination';
 import { DashboardType } from '@/types/apiType';
 
 import { useState } from 'react';

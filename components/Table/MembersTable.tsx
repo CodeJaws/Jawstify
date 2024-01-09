@@ -1,7 +1,7 @@
 import API from '@/apis/api';
 import Button from '@/components/common/Button/Button';
 import PaginationButton from '@/components/common/Button/PaginationButton';
-import usePagination from '@/hooks/usePagination';
+import usePagination from '@/hooks/Common/usePagination';
 import DefaultImage from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';

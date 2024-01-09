@@ -2,7 +2,7 @@ import api from '@/apis/api';
 import API from '@/apis/api';
 import { ColumnProps } from '@/components/Columns/Column';
 import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
-import { GetCardDetailsItem } from '@/types/api';
+import { CheckCardListItem, GetCardDetailsItem } from '@/types/api';
 import { useState } from 'react';
 
 function useColumns({ title: defaultTitle, columnId, dashboardId, applyColumnDelete }: ColumnProps) {
@@ -37,17 +37,19 @@ function useColumns({ title: defaultTitle, columnId, dashboardId, applyColumnDel
     }
   };
 
-  // 대시보드 첫 실행시 처음 보여지는 데이터 불러오기 (with no cursor Id)
-  const firstColumnDataFetch = async () => {
-    const res = await API.cards.checkCardList({ columnId, size: 14 });
-    setColumnCardList(res.cards);
-    setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
-  };
-
   // 무한 스크롤 시 추가로 카드 데이터 가져오기 (with prior saved cursor Id )
-  const loadColumCardList = async () => {
-    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
-    setColumnCardList((prev) => [...prev, ...res.cards]);
+  const loadColumCardList = async (isFirstFetch = false) => {
+    let res: CheckCardListItem;
+
+    if (isFirstFetch) {
+      // 대시보드 첫 실행시 처음 보여지는 데이터 불러오기 (with no cursor Id)
+      res = await API.cards.checkCardList({ columnId, size: 14 });
+      setColumnCardList(res.cards);
+    } else {
+      res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 14 });
+      setColumnCardList((prev) => [...prev, ...res.cards]);
+    }
+
     setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
   };
 
@@ -76,8 +78,8 @@ function useColumns({ title: defaultTitle, columnId, dashboardId, applyColumnDel
     cardListInfos,
     columnCardList,
     hasMore,
+    loadColumCardList,
     fetchMoreCards,
-    firstColumnDataFetch,
     handleColumnDelete,
     handleManageColumnSubmit,
     setManageColModalVals,

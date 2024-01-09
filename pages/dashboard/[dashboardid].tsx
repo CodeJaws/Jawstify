@@ -3,9 +3,9 @@ import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import Modal from '@/components/Modal/Modal';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useCardOpen from '@/hooks/ModalCard/useCardOpen';
-import useDashboard from '@/hooks/useDashboard';
-import useRedirectByDashboardId from '@/hooks/useRedirectByDashboardId';
-import useRedirectByLogin from '@/hooks/useRedirectByLogin';
+import useDashboard from '@/hooks/Dashboard/useDashboard';
+import useRedirectByDashboardId from '@/hooks/Dashboard/useRedirectByDashboardId';
+import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 
 import { GetServerSideProps } from 'next';

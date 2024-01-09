@@ -4,7 +4,7 @@ import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
 import useManager from '@/hooks/DropDown/useManager';
-import useUser from '@/hooks/useUser';
+import useUser from '@/hooks/global/useUser';
 import API from '@/apis/api';
 import axios from 'axios';
 import { CreateCardProps } from '@/types/api';

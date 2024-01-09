@@ -1,6 +1,6 @@
 import ContentChip from '@/components/Chip/ContentChip';
 import { StyledLabel } from '@/components/Input/Input.style';
-import useTagInput from '@/hooks/useTagInput';
+import useTagInput from '@/hooks/Common/useTagInput';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import { MouseEvent } from 'react';

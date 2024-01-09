@@ -3,7 +3,7 @@ import { localStorageSetItem } from '@/utils/localStorage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FieldValues, Path, UseFormGetValues } from 'react-hook-form';
-import useUserData from './global/useUserData';
+import useUserData from '../global/useUserData';
 import * as C from '@/constants/SignValidate';
 
 export interface LoginFormValue {
