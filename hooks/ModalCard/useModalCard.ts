@@ -1,13 +1,14 @@
 import API from '@/apis/api';
+import useGetMember from '@/hooks/DropDown/useGetMember';
+import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
+import useCardData from '@/hooks/ModalCard/useCardData';
+import useCardId from '@/hooks/ModalCard/useCardId';
+import useDashBoard from '@/hooks/ModalCard/useDashBoard';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
+import useDeviceType from '@/hooks/useDeviceType';
+import useRefresh from '@/hooks/useRefresh';
+
 import { useCallback, useEffect } from 'react';
-import useGetMember from '../DropDown/useGetMember';
-import useSelectStatus from '../DropDown/useSelectStatus';
-import useDeviceType from '../useDeviceType';
-import useRefresh from '../useRefresh';
-import useCardData from './useCardData';
-import useCardId from './useCardId';
-import useDashBoard from './useDashBoard';
-import useDashBoardId from './useDashBoardId';
 
 function useModalCard() {
   const { cardData, setCardData } = useCardData();
