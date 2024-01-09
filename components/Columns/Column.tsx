@@ -2,8 +2,8 @@ import CountChip from '@/components/Chip/CountChip';
 import Card from '@/components/Columns/Card';
 import Modal from '@/components/Modal/Modal';
 import AddButton from '@/components/common/Button/AddButton';
-import useColumns from '@/hooks/useColumn';
-import useRefresh from '@/hooks/useRefresh';
+import useColumns from '@/hooks/Dashboard/useColumn';
+import useRefresh from '@/hooks/Common/useRefresh';
 import BlueEllipse from '@/public/assets/icons/BlueEllipse.svg';
 import setting from '@/public/assets/icons/setting.svg';
 import { fontStyle } from '@/styles/fontStyle';
@@ -30,15 +30,15 @@ function Column({ title, columnId, dashboardId, applyColumnDelete }: ColumnProps
     cardListInfos,
     columnCardList,
     hasMore,
+    loadColumCardList,
     fetchMoreCards,
-    firstColumnDataFetch,
     handleColumnDelete,
     handleManageColumnSubmit,
     setManageColModalVals,
   } = useColumns({ title, columnId, dashboardId, applyColumnDelete });
 
   useEffect(() => {
-    firstColumnDataFetch();
+    loadColumCardList(true);
   }, [columnId, refresh]);
 
   return (
@@ -69,7 +69,7 @@ function Column({ title, columnId, dashboardId, applyColumnDelete }: ColumnProps
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
             onOkClick={() => {
-              firstColumnDataFetch(); // createToDo 모달에서 필요한 api 요청 처리
+              loadColumCardList(true); // createToDo 모달에서 필요한 api 요청 처리
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
           />
@@ -92,7 +92,7 @@ function Column({ title, columnId, dashboardId, applyColumnDelete }: ColumnProps
               hasMore={hasMore}
               useWindow={false}
               initialLoad={false}
-              style={{ display: 'flex', flexDirection: 'column', gap: '.6875rem' }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
             >
               {columnCardList.map((card) => (
                 <ul key={card.id}>
