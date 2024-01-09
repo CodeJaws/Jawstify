@@ -37,14 +37,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function BoardEdit({ dashboardId }: BoardEditProps) {
-  useRedirectByDashboardId({ dashboardId });
+  // useRedirectByDashboardId({ dashboardId });
   useRedirectByLogin();
 
   const router = useRouter();
   const [refreshToggle, setRefreshToggle] = useState(false);
-  const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });
+  const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
   const [inviteRefresh, setInviteRefresh] = useState(false);
-  const refreshInvite = () => setInviteRefresh((prev) => !prev);
   const backHome = () => router.back();
 
   const refresh = () => setRefreshToggle((prev) => !prev);
@@ -78,7 +77,6 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
           totalMembers={totalMembers}
           dashboard={dashboardData}
           isMyDashboard={false}
-          refreshInvite={refreshInvite}
         />
         <Sidebar refreshToggle={refreshToggle} refresh={refresh} />
         <StyledWrapper>
