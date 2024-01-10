@@ -5,9 +5,8 @@ import useCardData from '@/hooks/ModalCard/useCardData';
 import useCardId from '@/hooks/ModalCard/useCardId';
 import useDashBoard from '@/hooks/ModalCard/useDashBoard';
 import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
-import useDeviceType from '@/hooks/useDeviceType';
-import useRefresh from '@/hooks/useRefresh';
-
+import useDeviceType from '@/hooks/Common/useDeviceType';
+import useRefresh from '@/hooks/Common/useRefresh';
 import { useCallback, useEffect } from 'react';
 
 function useModalCard() {
