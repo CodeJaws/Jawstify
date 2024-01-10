@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       {/* <!-- Google tag (gtag.js) --> */}
-      <Script async src={`https://www.googletagmanager.com/gtag/js?id=G-Y1EXPY413V`} />
+      <Script async src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
