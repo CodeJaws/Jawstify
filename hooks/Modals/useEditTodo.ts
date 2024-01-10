@@ -6,9 +6,9 @@ import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
 import useManager from '../DropDown/useManager';
 import useModalOpen from '../DropDown/useModalOpen';
 import useSelectStatus from '../DropDown/useSelectStatus';
-import useRefresh from '../useRefresh';
-import useCardData from './useCardData';
-import useColumnId from './useColumnId';
+import useRefresh from '../Common/useRefresh';
+import useCardData from '../ModalCard/useCardData';
+import useColumnId from '../ModalCard/useColumnId';
 
 function useEditTodo() {
   const [image, setImage] = useState<File>();

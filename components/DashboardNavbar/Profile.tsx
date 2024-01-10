@@ -1,6 +1,6 @@
 import DashboardDropdown from '@/components/DashboardNavbar/DashboardDropdown';
 import useUserData from '@/hooks/global/useUserData';
-import useDeviceType from '@/hooks/useDeviceType';
+import useDeviceType from '@/hooks/Common/useDeviceType';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';

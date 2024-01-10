@@ -27,7 +27,7 @@ function Columns({ dashboardId }: GetColumnListProps) {
   };
 
   // 컬럼 목록 조회
-  const getColumnListFunc = async (dashboardId: number) => {
+  const getColumnList = async (dashboardId: number) => {
     if (Number.isNaN(dashboardId)) return;
     const res = await API.columns.getColumnList({ dashboardId });
     const columns = res?.data;
@@ -36,22 +36,22 @@ function Columns({ dashboardId }: GetColumnListProps) {
     setColumns(columns);
   };
 
+  // 새 컬럼 추가하기
+  const createColumn = async (title: string, dashboardId: number) => {
+    await API.columns.createColumn({
+      title: title,
+      dashboardId: dashboardId,
+    });
+    await getColumnList(dashboardId);
+  };
+
   const handleClickCreateModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsOpen(true);
   };
 
-  // 새 컬럼 추가하기
-  const createColumnFunc = async (title: string, dashboardId: number) => {
-    await API.columns.createColumn({
-      title: title,
-      dashboardId: dashboardId,
-    });
-    await getColumnListFunc(dashboardId);
-  };
-
   useEffect(() => {
-    getColumnListFunc(dashboardId);
+    getColumnList(dashboardId);
   }, [dashboardId]);
 
   return (
@@ -66,7 +66,7 @@ function Columns({ dashboardId }: GetColumnListProps) {
                     title={column.title}
                     columnId={column.id}
                     dashboardId={dashboardId}
-                    applyColumnDelete={getColumnListFunc}
+                    applyColumnDelete={getColumnList}
                   />
                 </li>
               </ul>
@@ -84,7 +84,7 @@ function Columns({ dashboardId }: GetColumnListProps) {
               setIsOpen(false);
             }}
             onOkClick={async () => {
-              createColumnFunc(value.이름, dashboardId);
+              createColumn(value.이름, dashboardId);
               setIsOpen(false);
             }}
           />

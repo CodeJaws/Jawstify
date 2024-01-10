@@ -9,7 +9,7 @@ import {
   NO_CONTENT_FOR_CORRECTION_ERROR,
   NO_DASHBOARD_ERROR,
 } from '@/constants/ApiError';
-import useDeviceType from '@/hooks/useDeviceType';
+import useDeviceType from '@/hooks/Common/useDeviceType';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

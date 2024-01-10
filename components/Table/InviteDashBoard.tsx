@@ -1,6 +1,6 @@
 import TwinButton from '@/components/common/Button/TwinButton';
-import useDeviceType from '@/hooks/useDeviceType';
-import useInviteDashBoard from '@/hooks/useInviteDashBoard';
+import useDeviceType from '@/hooks/Common/useDeviceType';
+import useInviteDashBoard from '@/hooks/Dashboard/useInviteDashBoard';
 import search from '@/public/assets/icons/Search.svg';
 import NoContent from '@/public/assets/images/NoContent.png';
 import { fontStyle } from '@/styles/fontStyle';
