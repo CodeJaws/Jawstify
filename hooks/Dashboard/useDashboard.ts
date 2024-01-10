@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
-import API from '@/apis/api';
 import { ApiErrorResponse } from '@/types/apiType';
+import useGetDashboardDetailed from '@/apis/dashboard/useGetDashboardDetailed';
+import useGetMembersInDashboard from '@/apis/members/useGetMembersInDashboard';
 
 interface useDashboardProps {
   dashboardId: number;
@@ -11,29 +11,12 @@ interface useDashboardProps {
 const useDashboard = ({ dashboardId }: useDashboardProps) => {
   const router = useRouter();
 
-  const {
-    data: dashboardData,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ['dashboard', dashboardId],
-    queryFn: async () => {
-      const dashboardDetailedData = await API.dashboard.getDashboardDetailed({ dashboardId: Number(dashboardId) });
-      return dashboardDetailedData;
-    },
-  });
+  const { data: dashboardData, error: dashboardError, isLoading } = useGetDashboardDetailed({ dashboardId });
+  const { data: membersInDashboardData, error: MembersError } = useGetMembersInDashboard({ dashboardId });
 
-  const { data: membersInDashboardData } = useQuery({
-    queryKey: ['members', dashboardId],
-    queryFn: async () => {
-      const membersData = await API.members.getMembersInDashboard({ dashboardId: Number(dashboardId) });
-      return membersData;
-    },
-  });
-
+  const error = MembersError || dashboardError;
   if (error) {
     const apiError = error as ApiErrorResponse;
-    console.log(error);
     if (
       apiError.data?.message === '대시보드의 멤버가 아닙니다.' ||
       apiError.data?.message === '대시보드가 존재하지 않습니다.'

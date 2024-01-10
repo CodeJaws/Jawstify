@@ -1,4 +1,4 @@
-import useTheme from '@/hooks/useTheme';
+import useTheme from '@/hooks/Common/useTheme';
 import moonIcon from '@/public/assets/icons/moon.svg';
 import sunIcon from '@/public/assets/icons/sun.svg';
 import logoText from '@/public/assets/images/title.png';

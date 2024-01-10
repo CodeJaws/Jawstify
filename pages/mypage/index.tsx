@@ -3,7 +3,7 @@ import PasswordManagerBox from '@/components/MyPage/PasswordManagerBox';
 import ProfileBox from '@/components/MyPage/ProfileBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useUserData from '@/hooks/global/useUserData';
-import useRedirectByLogin from '@/hooks/useRedirectByLogin';
+import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';

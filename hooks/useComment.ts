@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useCardData from './ModalCard/useCardData';
 import useCardId from './ModalCard/useCardId';
 import useDashBoardId from './ModalCard/useDashBoardId';
-import useRefresh from './useRefresh';
+import useRefresh from './Common/useRefresh';
 
 interface Props {
   id: number;
