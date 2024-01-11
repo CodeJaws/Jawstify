@@ -94,8 +94,8 @@ const columns = {
   correctColumn: async ({ columnId, title }: T.CorrectColumnProps) =>
     await request.put(`columns/${columnId}`, { title }),
   deleteColumn: async ({ columnId }: T.DeleteColumnProps) => await request.delete(`columns/${columnId}`),
-  uploadCardImage: async ({ columnId, image }: T.UploadCardImageProps) =>
-    await request.post<T.UploadCardImageItem>(`columns/${columnId}/card-image`, { image }),
+  uploadCardImage: async ({ columnId, formData }: T.UploadCardImageProps) =>
+    await request.post<T.UploadCardImageItem>(`columns/${columnId}/card-image`, formData),
 };
 
 /** CARDS

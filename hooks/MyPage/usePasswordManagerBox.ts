@@ -9,6 +9,7 @@ import {
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 
 interface FormProps {
   password: string;
@@ -42,7 +43,9 @@ function usePasswordManagerBox() {
     const password = formValues.password;
     const newPassword = formValues.newPassword;
     try {
-      await api.auth.changePassword({ password, newPassword }).then(() => alert('비밀번호 변경 완료 🔑'));
+      await api.auth
+        .changePassword({ password, newPassword })
+        .then(() => toast.custom('비밀번호 변경 완료', { icon: '🔑' }));
       resetField('password');
       resetField('newPassword');
       resetField('newPasswordCheck');
@@ -64,6 +67,7 @@ function usePasswordManagerBox() {
           setError('newPassword', { message: EQUAL_NOW_PWD_ERROR });
           break;
         default:
+          toast.error('비밀번호 변경 에러가 발생 했습니다');
           break;
       }
     }

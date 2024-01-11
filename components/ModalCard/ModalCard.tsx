@@ -12,20 +12,20 @@ import Image from 'next/image';
 import { styled } from 'styled-components';
 
 function ModalCard() {
-  const { cardData, description, deviceType, imageUrl, title, status } = useModalCard();
+  const { cardData, deviceType, status } = useModalCard();
 
   return (
     <StyledContainer>
       <StyledLeftContainer>
         {deviceType === 'mobile' && <ModalButton />}
         <StyledTitleWrapper>
-          <StyledTitle>{title}</StyledTitle>
+          <StyledTitle>{cardData?.title}</StyledTitle>
           {deviceType === 'mobile' && <Manager />}
           <StyledTag>
             <StatusChip content={status} />
             <StyledDivision />
             <StyledColorChipWrapper>
-              {cardData.tags.map((val) => (
+              {cardData?.tags.map((val) => (
                 <ContentChip
                   key={val}
                   text={val.substring(0, val.indexOf('/'))}
@@ -38,7 +38,7 @@ function ModalCard() {
         </StyledTitleWrapper>
         <StyledContentWrapper>
           <StyledContent>
-            {description.split('\n').map((val) => {
+            {cardData?.description.split('\n').map((val) => {
               return (
                 <div key={val}>
                   {val}
@@ -47,7 +47,7 @@ function ModalCard() {
               );
             })}
           </StyledContent>
-          {imageUrl && <StyledImage width={450} height={262} src={imageUrl} alt="카드 이미지" />}
+          {cardData?.imageUrl && <StyledImage width={450} height={262} src={cardData?.imageUrl} alt="카드 이미지" />}
         </StyledContentWrapper>
         <Comment />
       </StyledLeftContainer>
