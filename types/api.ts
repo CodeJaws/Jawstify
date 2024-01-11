@@ -499,3 +499,8 @@ export type ProfileImgUploadProps = FormData;
 export interface ProfileImgUploadItem {
   profileImageUrl: string;
 }
+
+export interface ErrorProps {
+  data: { message: string };
+  status: number;
+}
