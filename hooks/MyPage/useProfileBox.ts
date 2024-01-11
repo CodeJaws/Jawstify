@@ -1,79 +1,69 @@
 import API from '@/apis/api';
-import { IMG_URL_ERROR, NICKNAME_ERROR, NICKNAME_IMG_ERROR } from '@/constants/ErrorMsg';
 import useUserData from '@/hooks/global/useUserData';
+import { ErrorProps } from '@/types/api';
+import { useMutation } from '@tanstack/react-query';
 
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   nickname: string;
+  profileImageUrl?: string;
+}
+
+interface formProps {
+  formData: FormData;
 }
 
 function useProfileBox({ nickname }: Props) {
   const { setUser, user } = useUserData();
   const [image, setImage] = useState<File>();
-  const [errorMsg, setErrorMsg] = useState('');
+
+  const changeNickNameMutation = useMutation({
+    mutationFn: async ({ nickname }: Props) => {
+      await API.users.correctMyInfo({ nickname });
+    },
+    onSuccess: () => {
+      user.nickname = nickname;
+      setUser(user);
+      toast.success('프로필 업데이트 완료');
+    },
+    onError: (error: ErrorProps) => {
+      toast.error(error.data.message);
+    },
+  });
+
+  const changeImgMutation = useMutation({
+    mutationFn: async ({ formData }: formProps) => {
+      const res = await API.users.profileImgUpload(formData);
+      return res.profileImageUrl;
+    },
+    onSuccess: (profileImageUrl) => {
+      changeNickNameMutation.mutate({ nickname, profileImageUrl });
+      user.profileImageUrl = profileImageUrl;
+      user.nickname = nickname;
+      setUser(user);
+    },
+    onError: (error: ErrorProps) => {
+      toast.error(error.data.message);
+    },
+  });
 
   const changeProfile = async () => {
     if (!image) {
-      try {
-        await API.users.correctMyInfo({ nickname });
-        alert('프로필 업데이트 완료 🍀');
-        user.nickname = nickname;
-        setUser(user);
-      } catch (e: any) {
-        switch (e.data.message) {
-          case NICKNAME_ERROR:
-            setErrorMsg(NICKNAME_ERROR);
-            break;
-          case NICKNAME_IMG_ERROR:
-            setErrorMsg(NICKNAME_IMG_ERROR);
-            break;
-          case IMG_URL_ERROR:
-            setErrorMsg(IMG_URL_ERROR);
-            break;
-          default:
-            setErrorMsg(e.data.message);
-            break;
-        }
-      }
-
-      return;
+      changeNickNameMutation.mutate({ nickname });
     } else {
       const formData = new FormData();
       formData.append('image', image);
-
       if (image.type !== 'image/svg+xml') {
-        const response = await API.users.profileImgUpload(formData);
-        const { profileImageUrl } = response;
-        try {
-          await API.users.correctMyInfo({ profileImageUrl, nickname });
-          alert('프로필 업데이트 완료 🍀');
-          user.profileImageUrl = profileImageUrl;
-          user.nickname = nickname;
-          setUser(user);
-        } catch (e: any) {
-          switch (e.data.message) {
-            case NICKNAME_ERROR:
-              setErrorMsg(NICKNAME_ERROR);
-              break;
-            case NICKNAME_IMG_ERROR:
-              setErrorMsg(NICKNAME_IMG_ERROR);
-              break;
-            case IMG_URL_ERROR:
-              setErrorMsg(IMG_URL_ERROR);
-              break;
-            default:
-              setErrorMsg(e.data.message);
-              break;
-          }
-        }
+        changeImgMutation.mutate({ formData });
       } else {
-        alert('형식에 맞는 이미지만 사용가능합니다.');
+        toast.error('형식에 맞는 이미지만 사용가능합니다.');
       }
     }
   };
 
-  return { setImage, errorMsg, changeProfile };
+  return { setImage, changeProfile };
 }
 
 export default useProfileBox;
