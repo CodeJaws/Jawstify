@@ -21,7 +21,7 @@ function Comment() {
     isUpdateMap,
     isOpenComment,
     handleUpdateInputChange,
-    handleUpdateButtonClick,
+    updateComment,
     handleChange,
     submitComment,
     deleteComment,
@@ -38,11 +38,11 @@ function Comment() {
           handleChange(value);
         }}
         onButtonClick={() => {
-          submitComment();
+          submitComment.mutate();
         }}
       />
 
-      {comment.length === 0 ? (
+      {comment?.length === 0 ? (
         <></>
       ) : (
         <StyledCommentWrapper ref={CommentWrapperRef}>
@@ -63,12 +63,12 @@ function Comment() {
                   {isUpdateMap[val.id] ? (
                     <StyledInputWrapper>
                       <StyledInput
-                        value={updatedCommentMap[val.id] || val.content}
+                        value={updatedCommentMap[val.id]}
                         onChange={(e) => handleUpdateInputChange(val.id, e)}
                         placeholder="수정할 내용을 입력하세요."
                       />
                       <StyledButtonInWrapper>
-                        <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
+                        <StyledButton onClick={() => updateComment.mutate(val.id)}>완료</StyledButton>
                         <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
                       </StyledButtonInWrapper>
                     </StyledInputWrapper>
@@ -78,7 +78,7 @@ function Comment() {
                   {!isUpdateMap[val.id] && val.author.id === user?.id && (
                     <StyledButtonWrapper>
                       <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
-                      <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
+                      <StyledButton onClick={() => deleteComment.mutate(val.id)}>삭제</StyledButton>
                     </StyledButtonWrapper>
                   )}
                 </StyledCommentContent>
