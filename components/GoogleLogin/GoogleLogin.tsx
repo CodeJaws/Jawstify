@@ -1,4 +1,4 @@
-import useAuth, { SignUpFormValue } from '@/hooks/useAuth';
+import useAuth, { SignUpFormValue } from '@/hooks/Auth/useAuth';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 import axios from 'axios';

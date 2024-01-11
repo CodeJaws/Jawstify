@@ -1,6 +1,6 @@
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import useComment from '@/hooks/useComment';
-import useUser from '@/hooks/useUser';
+import useUser from '@/hooks/global/useUser';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';

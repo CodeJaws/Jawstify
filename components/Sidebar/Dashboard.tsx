@@ -1,4 +1,4 @@
-import useSidebarDashboard from '@/hooks/UseSidebarDashboard';
+import useSidebarDashboard from '@/hooks/Dashboard/UseSidebarDashboard';
 import crown from '@/public/assets/icons/crown.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';

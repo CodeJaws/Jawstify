@@ -2,8 +2,8 @@ import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import MyDashBoardButtonBox from '@/components/MyDashboard/MyDashBoardButtonBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDashBoard from '@/components/Table/InviteDashBoard';
-import useMyDashboard from '@/hooks/useMyDashboard';
-import useRedirectByLogin from '@/hooks/useRedirectByLogin';
+import useMyDashboard from '@/hooks/Dashboard/useMyDashboard';
+import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 
 import { Helmet } from 'react-helmet';

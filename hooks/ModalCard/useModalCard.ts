@@ -1,8 +1,8 @@
 import API from '@/apis/api';
+import useDeviceType from '@/hooks/Common/useDeviceType';
 import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
 import useCardId from '@/hooks/ModalCard/useCardId';
 import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
-import useDeviceType from '@/hooks/useDeviceType';
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect } from 'react';

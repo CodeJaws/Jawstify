@@ -12,7 +12,7 @@ import {
   NO_EXIST_INVITE_ERROR,
   NO_USER_ERROR,
 } from '@/constants/ApiError';
-import usePagination from '@/hooks/usePagination';
+import usePagination from '@/hooks/Common/usePagination';
 import NoItem from '@/public/assets/images/noItem.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';

@@ -2,16 +2,16 @@ import API from '@/apis/api';
 import { useCallback, useState } from 'react';
 
 import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
+import useRefresh from '@/hooks/Common/useRefresh';
+import useCardId from '@/hooks/ModalCard/useCardId';
+import useColumnId from '@/hooks/ModalCard/useColumnId';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
 import { GetCardDetailsItem, UploadCardImageProps } from '@/types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import useManager from '../DropDown/useManager';
 import useModalOpen from '../DropDown/useModalOpen';
 import useSelectStatus from '../DropDown/useSelectStatus';
-import useRefresh from '../useRefresh';
-import useCardId from './useCardId';
-import useColumnId from './useColumnId';
-import useDashBoardId from './useDashBoardId';
 
 interface Props {
   imageUrl?: string;

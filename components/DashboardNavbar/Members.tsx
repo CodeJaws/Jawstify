@@ -1,4 +1,4 @@
-import useDeviceType from '@/hooks/useDeviceType';
+import useDeviceType from '@/hooks/Common/useDeviceType';
 import DefaultProfile from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';

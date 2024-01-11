@@ -1,91 +1,44 @@
-import { default as API, default as api } from '@/apis/api';
 import CountChip from '@/components/Chip/CountChip';
 import Card from '@/components/Columns/Card';
 import Modal from '@/components/Modal/Modal';
 import AddButton from '@/components/common/Button/AddButton';
-import { INIT_MANAGE_COLUMN } from '@/constants/InitialModalValues';
-import useRefresh from '@/hooks/useRefresh';
+import useColumns from '@/hooks/Dashboard/useColumn';
+import useRefresh from '@/hooks/Common/useRefresh';
 import BlueEllipse from '@/public/assets/icons/BlueEllipse.svg';
 import setting from '@/public/assets/icons/setting.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { GetCardDetailsItem, GetColumnListProps } from '@/types/api';
-
+import { GetColumnListProps } from '@/types/api';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 
-interface Props extends GetColumnListProps {
+export interface ColumnProps extends GetColumnListProps {
   columnId: number;
   title: string;
   applyColumnDelete: (dashboardId: number) => Promise<void>;
 }
 
-function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete }: Props) {
-  const [columnCardList, setColumnCardList] = useState<GetCardDetailsItem[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState({
-    manageColumn: false,
-    createToDo: false,
-  });
-  const [cardListInfos, setCardListInfos] = useState({
-    title: defaultTitle,
-    totalCount: 0,
-    cursorId: 0,
-  });
-  const [manageColModalVals, setManageColModalVals] = useState<typeof INIT_MANAGE_COLUMN>(INIT_MANAGE_COLUMN);
-
+function Column({ title, columnId, dashboardId, applyColumnDelete }: ColumnProps) {
   const { refresh } = useRefresh();
 
-  // 무한스크롤로 카드 리스트 가져오기
-  const fetchHasMore = () => {
-    if (cardListInfos.cursorId !== 0) {
-      loadColumCardList();
-    } else {
-      setHasMore(false);
-    }
-  };
-
-  // 모달 open 여부 관리
-  const handleModalsOpen = (type: 'manageColumn' | 'createToDo') => {
-    if (type === 'manageColumn') {
-      setIsModalOpen({ ...isModalOpen, manageColumn: true });
-    } else if (type === 'createToDo') {
-      setIsModalOpen({ ...isModalOpen, createToDo: true });
-    }
-  };
-
-  const firstFetch = async () => {
-    const res = await API.cards.checkCardList({ columnId, size: 14 });
-    setColumnCardList(res.cards);
-    setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
-  };
-
-  const loadColumCardList = async () => {
-    const res = await API.cards.checkCardList({ columnId, cursorId: cardListInfos.cursorId, size: 10 });
-    setColumnCardList((prev) => [...prev, ...res.cards]);
-    setCardListInfos({ ...cardListInfos, totalCount: res.totalCount, cursorId: Number(res.cursorId) });
-  };
-
-  const handleColumnDelete = async () => {
-    if (window.confirm(`${cardListInfos.title} 컬럼을 정말 삭제하시겠습니까?`)) {
-      const res = await api.columns.deleteColumn({ columnId: columnId });
-      await applyColumnDelete(dashboardId);
-    }
-    return;
-  };
-
-  const handleManageColumnSubmit = async () => {
-    const response = (await api.columns.correctColumn({
-      columnId: Number(columnId),
-      title: manageColModalVals.이름,
-    })) as { title: '' };
-    setCardListInfos({ ...cardListInfos, title: response.title });
-  };
+  const {
+    isColumnModalOpen: isModalOpen,
+    setIsColumnModalOpen: setIsModalOpen,
+    handleColumnModalsOpen: handleModalsOpen,
+    cardListInfos,
+    columnCardList,
+    hasMore,
+    loadColumCardList,
+    fetchMoreCards,
+    handleColumnDelete,
+    handleManageColumnSubmit,
+    setManageColModalVals,
+  } = useColumns({ title, columnId, dashboardId, applyColumnDelete });
 
   useEffect(() => {
-    firstFetch();
+    loadColumCardList(true);
   }, [columnId, refresh]);
 
   return (
@@ -116,7 +69,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
             onOkClick={() => {
-              firstFetch(); // createToDo 모달에서 필요한 api 요청 처리
+              loadColumCardList(true); // createToDo 모달에서 필요한 api 요청 처리
               setIsModalOpen({ ...isModalOpen, createToDo: false });
             }}
           />
@@ -135,7 +88,7 @@ function Column({ title: defaultTitle, columnId, dashboardId, applyColumnDelete 
           <StyledDiv $length={columnCardList.length}>
             <InfiniteScroll
               pageStart={0}
-              loadMore={fetchHasMore}
+              loadMore={fetchMoreCards}
               hasMore={hasMore}
               useWindow={false}
               initialLoad={false}
