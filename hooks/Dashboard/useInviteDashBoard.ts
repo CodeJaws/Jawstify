@@ -30,7 +30,7 @@ export interface GetAcceptProps {
   accept: boolean;
 }
 
-function useInviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
+function useInviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
   const [dataSource, setDataSource] = useState<GetInvitationListProps[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [searchText, setSearchText] = useState('');
@@ -67,7 +67,6 @@ function useInviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
     await API.invitations.responseInvitation({ invitationId: acceptid, inviteAccepted: accept });
     setDataSource(dataSource.filter((item) => item.id !== acceptid));
     if (accept === true) {
-      refresh();
       refreshToFirst();
     } else {
       if (InviteContainerRef.current) {
@@ -105,7 +104,7 @@ function useInviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
       InviteContainerRef.current.scrollTop = 0;
       setHasMore((prev) => !prev);
     }
-  }, [refresh]);
+  }, []);
 
   return {
     dataSource,

@@ -21,14 +21,10 @@ function MyDashBoard() {
       </Helmet>
       <StyledContainer>
         <DashboardNavbar isMyDashboard={true} />
-        <Sidebar refresh={refresh} />
+        <Sidebar />
         <StyledWrapper>
-          <MyDashBoardButtonBox
-            resetToFirst={resetToFirst}
-            refresh={refresh}
-            refreshPaginationToggle={refreshPaginationToggle}
-          />
-          <InviteDashBoard refresh={refresh} refreshToFirst={refreshToFirst} />
+          <MyDashBoardButtonBox resetToFirst={resetToFirst} />
+          <InviteDashBoard refreshToFirst={refreshToFirst} />
         </StyledWrapper>
       </StyledContainer>
     </>
