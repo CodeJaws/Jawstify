@@ -1,30 +1,38 @@
-import useCardData from '@/hooks/ModalCard/useCardData';
+import useCardId from '@/hooks/ModalCard/useCardId';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
+import { GetCardDetailsItem } from '@/types/api';
 import dateTimeFormat from '@/utils/dateTimeFormat';
+import { useQueryClient } from '@tanstack/react-query';
 
 import Image from 'next/image';
 import styled from 'styled-components';
 
 function Manager() {
-  const { cardData } = useCardData();
-  const { dueDate } = cardData;
-  const { nickname, profileImageUrl } = cardData.assignee;
-
+  const { cardId } = useCardId();
+  const queryClient = useQueryClient();
+  const cardData = queryClient.getQueryData(['card', cardId]);
+  const card = cardData as GetCardDetailsItem;
   return (
     <StyledContainer>
       <StyledInManagerWrapper>
         <StyledManagerWrapper>
           <StyledManager>담당자</StyledManager>
           <StyledManagerProfile>
-            <StyledImage width={34} height={34} sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필 이미지" />
-            <StyledManagerName>{nickname}</StyledManagerName>
+            <StyledImage
+              width={34}
+              height={34}
+              sizes="100%"
+              src={card?.assignee.profileImageUrl || DefaultImg}
+              alt="프로필 이미지"
+            />
+            <StyledManagerName>{card?.assignee.nickname}</StyledManagerName>
           </StyledManagerProfile>
         </StyledManagerWrapper>
         <StyledDeadLineWrapper>
           <StyledDeadLineName>마감일</StyledDeadLineName>
-          <StyledDeadLine>{dateTimeFormat(dueDate)}</StyledDeadLine>
+          <StyledDeadLine>{dateTimeFormat(card?.dueDate)}</StyledDeadLine>
         </StyledDeadLineWrapper>
       </StyledInManagerWrapper>
     </StyledContainer>

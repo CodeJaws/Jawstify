@@ -1,24 +1,36 @@
 import API from '@/apis/api';
-import axios from 'axios';
 import { useCallback, useState } from 'react';
 
 import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
+import useRefresh from '@/hooks/Common/useRefresh';
+import useCardId from '@/hooks/ModalCard/useCardId';
+import useColumnId from '@/hooks/ModalCard/useColumnId';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
+import { GetCardDetailsItem, UploadCardImageProps } from '@/types/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
 import useManager from '../DropDown/useManager';
 import useModalOpen from '../DropDown/useModalOpen';
 import useSelectStatus from '../DropDown/useSelectStatus';
-import useRefresh from '../Common/useRefresh';
-import useCardData from '../ModalCard/useCardData';
-import useColumnId from '../ModalCard/useColumnId';
+
+interface Props {
+  imageUrl?: string;
+}
 
 function useEditTodo() {
   const [image, setImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
-  const { cardData } = useCardData();
   const { columnId } = useColumnId();
   const { manager } = useManager();
   const { status } = useSelectStatus();
-  const { refresh, setRefresh } = useRefresh();
   const { setIsModalOpen } = useModalOpen();
+  const { cardId: cdId } = useCardId();
+  const { dashboardId } = useDashBoardId();
+  const { refresh, setRefresh } = useRefresh();
+
+  const queryClient = useQueryClient();
+  const card = queryClient.getQueryData(['card', cdId]);
+  const cardData = card as GetCardDetailsItem;
 
   const splitTag = cardData.tags.map((tag) => tag.split('/'));
 
@@ -54,33 +66,40 @@ function useEditTodo() {
     [values],
   );
 
+  const correctCard = useMutation({
+    mutationFn: async ({ imageUrl }: Props) => {
+      await API.cards.correctCard({ cardId, columnId, assigneeUserId, title, description, dueDate, tags, imageUrl });
+    },
+    onSuccess: () => {
+      // TODO: setRefresh 추후 삭제예정
+      setRefresh(!refresh);
+      toast.success('할 일 수정완료');
+    },
+    onError: () => toast.error('할 일 수정실패'),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['card', cardId] });
+      queryClient.invalidateQueries({ queryKey: ['dashBoard', dashboardId] });
+    },
+  });
+
+  const correctCardImg = useMutation({
+    mutationFn: async ({ columnId, formData }: UploadCardImageProps) => {
+      const res = await API.columns.uploadCardImage({ columnId, formData });
+      return res.imageUrl;
+    },
+    onSuccess: (imageUrl) => {
+      correctCard.mutate({ imageUrl });
+    },
+    onError: () => toast.error('이미지 업로드 실패'),
+  });
+
   const changeProfile = async () => {
     if (!image) {
-      await API.cards
-        .correctCard({ cardId, columnId, assigneeUserId, title, description, dueDate, tags, imageUrl })
-        .then(() => alert('할 일 수정완료 🍀'));
-      setRefresh(!refresh);
+      correctCard.mutate({ imageUrl });
     } else {
       const formData = new FormData();
       formData.append('image', image);
-
-      const response = await axios.post(
-        `https://sp-taskify-api.vercel.app/1-4/columns/${columnId}/card-image`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            withCredentials: true,
-          },
-        },
-      );
-      const { imageUrl } = response.data;
-
-      await API.cards
-        .correctCard({ cardId, columnId, assigneeUserId, title, description, dueDate, tags, imageUrl })
-        .then(() => alert('할 일 수정완료 🍀'));
-      setRefresh(!refresh);
+      correctCardImg.mutate({ columnId, formData });
     }
     setIsModalOpen(false);
   };

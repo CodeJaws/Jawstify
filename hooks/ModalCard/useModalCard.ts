@@ -1,50 +1,48 @@
 import API from '@/apis/api';
-import useGetMember from '@/hooks/DropDown/useGetMember';
-import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
-import useCardData from '@/hooks/ModalCard/useCardData';
-import useCardId from '@/hooks/ModalCard/useCardId';
-import useDashBoard from '@/hooks/ModalCard/useDashBoard';
-import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
 import useDeviceType from '@/hooks/Common/useDeviceType';
-import useRefresh from '@/hooks/Common/useRefresh';
-import { useCallback, useEffect } from 'react';
+import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
+import useCardId from '@/hooks/ModalCard/useCardId';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
+import { useQuery } from '@tanstack/react-query';
+
+import { useEffect } from 'react';
 
 function useModalCard() {
-  const { cardData, setCardData } = useCardData();
-  const { setTasks } = useDashBoard();
-  const { setMembers } = useGetMember();
   const { setStatus } = useSelectStatus();
-  const { cardId, setCardId } = useCardId();
+  const { cardId } = useCardId();
   const { dashboardId } = useDashBoardId();
-  const { refresh } = useRefresh();
-  const { tasks } = useDashBoard();
   const deviceType = useDeviceType();
 
-  const getDetailCardData = useCallback(async () => {
-    const getCards = await API.cards.getCardDetails({ cardId });
-    const dashBoard = await API.columns.getColumnList({ dashboardId });
-    const getMember = await API.members.getMembersInDashboard({ dashboardId });
+  const { data: cardData } = useQuery({
+    queryKey: ['card', cardId],
+    queryFn: async () => {
+      return await API.cards.getCardDetails({ cardId });
+    },
+    enabled: !!cardId,
+  });
+  const { data: dashBoard } = useQuery({
+    queryKey: ['dashBoard', dashboardId],
+    queryFn: async () => {
+      return await API.columns.getColumnList({ dashboardId });
+    },
+    enabled: !!dashboardId,
+  });
+  const { data: member } = useQuery({
+    queryKey: ['member'],
+    queryFn: async () => {
+      return await API.members.getMembersInDashboard({ dashboardId });
+    },
+    enabled: !!dashboardId,
+  });
 
-    setCardData(getCards);
-    setCardId(Number(cardId));
-    setTasks(dashBoard);
-    setMembers(getMember);
-  }, [cardId, dashboardId, setCardData, setCardId, setMembers, setTasks]);
-
-  const { title, description, imageUrl } = cardData;
-
-  const filterColumn = tasks.data.filter((val) => val.id === cardData.columnId);
-  const status = filterColumn[0].title;
-
-  useEffect(() => {
-    getDetailCardData();
-  }, [refresh, getDetailCardData]);
+  const filterColumn = dashBoard?.data.filter((val) => val.id === cardData?.columnId);
+  const status = filterColumn ? filterColumn[0]?.title : '';
 
   useEffect(() => {
     setStatus(status);
   }, [setStatus, status]);
 
-  return { deviceType, title, cardData, description, imageUrl, status };
+  return { deviceType, cardData, status };
 }
 
 export default useModalCard;

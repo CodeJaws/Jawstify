@@ -16,7 +16,7 @@ interface Props {
 }
 
 function ProfileBox({ email, nickname, profileImg, setNickName, setPreviewImage }: Props) {
-  const { changeProfile, errorMsg, setImage } = useProfileBox({ nickname });
+  const { changeProfile, setImage } = useProfileBox({ nickname });
 
   return (
     <StyledContainer>
@@ -29,12 +29,7 @@ function ProfileBox({ email, nickname, profileImg, setNickName, setPreviewImage 
       />
       <StyledWrapper>
         <BasicInput label="이메일" inputValue={email} disabled />
-        <BasicInput
-          label="닉네임"
-          inputValue={nickname}
-          onChange={(label, value) => setNickName(value)}
-          errorMessage={errorMsg}
-        />
+        <BasicInput label="닉네임" inputValue={nickname} onChange={(label, value) => setNickName(value)} />
         <StyledButton text={'저장'} size={'small'} isViolet={true} onClick={changeProfile} />
       </StyledWrapper>
     </StyledContainer>
