@@ -1,9 +1,10 @@
-import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
 import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
-import useCardData from '@/hooks/ModalCard/useCardData';
+import { GetCardDetailsItem, GetMembersInDashboardItem } from '@/types/api';
+import { useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
+import useCardId from '../ModalCard/useCardId';
 
 interface Props {
   onChange: (inputLabel: string, inputValue: string) => void;
@@ -14,8 +15,14 @@ function useDropDown({ onChange }: Props) {
   const { status } = useSelectStatus();
   const { inputData, setInputData } = useInputData();
   const { imgSrc, setImgSrc } = useImgSrc();
-  const { members } = useGetMember();
-  const { cardData } = useCardData();
+  const { cardId } = useCardId();
+
+  const queryClient = useQueryClient();
+
+  const card = queryClient.getQueryData(['card', cardId]);
+  const cardData = card as GetCardDetailsItem;
+  const member = queryClient.getQueryData(['member']);
+  const members = member as GetMembersInDashboardItem;
 
   const openMenu = () => {
     setIsOpen((prev) => !prev);
@@ -33,7 +40,7 @@ function useDropDown({ onChange }: Props) {
     setIsOpen(false);
   };
 
-  const filterData = members.members.filter((manager) => {
+  const filterData = members?.members.filter((manager) => {
     if (inputData) {
       return manager.nickname.toLowerCase().includes(inputData.toLowerCase());
     } else {
@@ -51,7 +58,6 @@ function useDropDown({ onChange }: Props) {
 
   useEffect(() => {
     setInputData(cardData.assignee.nickname);
-
     setImgSrc(cardData.assignee.profileImageUrl);
   }, [setInputData, setImgSrc, cardData.assignee.nickname, cardData.assignee.profileImageUrl]);
 
