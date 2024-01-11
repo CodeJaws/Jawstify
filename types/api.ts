@@ -173,11 +173,11 @@ export interface DeleteColumnProps {
 
 export interface UploadCardImageProps {
   columnId: number;
-  image: string;
+  formData: FormData;
 }
 
 export interface UploadCardImageItem {
-  image: string;
+  imageUrl: string;
 }
 
 export interface CreateCommentProps {
@@ -498,6 +498,10 @@ export type ProfileImgUploadProps = FormData;
 
 export interface ProfileImgUploadItem {
   profileImageUrl: string;
+}
+
+export interface formProps {
+  formData: FormData;
 }
 
 export interface ErrorProps {
