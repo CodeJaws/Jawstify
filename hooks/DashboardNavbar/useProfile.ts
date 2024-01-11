@@ -1,7 +1,7 @@
 import { FocusEvent, useEffect, useState } from 'react';
 import useUserData from '../global/useUserData';
 import { UserType } from '@/types/apiType';
-import useDeviceType from '../useDeviceType';
+import useDeviceType from '@/hooks/Common/useDeviceType';
 
 function useProfile() {
   const { user } = useUserData();
