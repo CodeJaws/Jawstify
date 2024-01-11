@@ -10,13 +10,11 @@ import styled from 'styled-components';
 
 export interface MyDashBoardButtonBoxProps {
   resetToFirst: boolean;
-  refresh: () => void;
-  refreshPaginationToggle: boolean;
 }
 
-function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }: MyDashBoardButtonBoxProps) {
-  const { setIsOpen, showItems, totalPages, pageNum, handlePagination, isOpen, setModalValue, handleCreate } =
-    useMyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle });
+function MyDashBoardButtonBox({ resetToFirst }: MyDashBoardButtonBoxProps) {
+  const { setIsOpen, allItems, totalPages, pageNum, handlePageNum, isOpen, setModalValue, handleCreate } =
+    useMyDashBoardButtonBox({ resetToFirst });
 
   return (
     <div>
@@ -26,7 +24,7 @@ function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }
             setIsOpen(true);
           }}
         />
-        {showItems.map((item) => (
+        {allItems.map((item) => (
           <div key={item.id}>
             <DashBoardButton
               text={item.title as string}
@@ -43,8 +41,8 @@ function MyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }
           {totalPages} 페이지 중 {pageNum}
         </PaginationPage>
         <PaginationInWrapper>
-          <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
-          <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePagination(1)} />
+          <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePageNum(-1)} />
+          <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePageNum(1)} />
         </PaginationInWrapper>
       </PaginationWrapper>
       {isOpen && (

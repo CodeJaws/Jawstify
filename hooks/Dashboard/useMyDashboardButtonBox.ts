@@ -7,7 +7,7 @@ import { DashboardType } from '@/types/apiType';
 import { useState } from 'react';
 
 interface usePaginationProps {
-  handlePagination: (val: number) => void;
+  handlePageNum: (val: number) => void;
   pageNum: number;
   allItems: DashboardType[];
   totalPages: number;
@@ -15,12 +15,10 @@ interface usePaginationProps {
 
 const LIMIT = 5;
 
-function useMyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggle }: MyDashBoardButtonBoxProps) {
-  const { handlePagination, pageNum, allItems, totalPages } = usePagination({
-    size: 10,
-    showItemNum: LIMIT,
+function useMyDashBoardButtonBox({ resetToFirst }: MyDashBoardButtonBoxProps) {
+  const { handlePageNum, pageNum, allItems, totalPages } = usePagination({
+    size: LIMIT,
     type: 'dashboard',
-    refreshPaginationToggle,
     resetToFirst,
   }) as usePaginationProps;
   const [isOpen, setIsOpen] = useState(false);
@@ -30,17 +28,14 @@ function useMyDashBoardButtonBox({ resetToFirst, refresh, refreshPaginationToggl
     setValues(values); // value = modal에 입력된 input value들의 집합
   };
 
-  const showItems = allItems.slice((pageNum - 1) * LIMIT, (pageNum - 1) * LIMIT + LIMIT);
-
   const handleCreate = async () => {
     try {
       await API.dashboard.createDashboard({ title: values['대시보드 이름'], color: values.색상 });
-      refresh();
     } catch (error) {
       console.error(error);
     }
   };
-  return { setIsOpen, showItems, totalPages, pageNum, handlePagination, isOpen, setModalValue, handleCreate };
+  return { setIsOpen, allItems, totalPages, pageNum, handlePageNum, isOpen, setModalValue, handleCreate };
 }
 
 export default useMyDashBoardButtonBox;
