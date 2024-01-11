@@ -1,40 +1,22 @@
 import { useState } from 'react';
 
-import API from '@/apis/api';
-import { ApiErrorResponse } from '@/types/apiType';
-import { InvitationType } from '@/types/apiType';
-import { useMutation } from '@tanstack/react-query';
+import { useInviteDashboard } from '@/apis/hooks/dashboard';
 
 interface useInviteDetailsTableProps {
   allItems: any;
-  SHOW_ITEMS_SIZE: number;
-  pageNum: number;
   dashboardId: number;
 }
 
-function useInviteDetailsTable({ allItems, SHOW_ITEMS_SIZE, pageNum, dashboardId }: useInviteDetailsTableProps) {
+function useInviteDetailsTable({ allItems, dashboardId }: useInviteDetailsTableProps) {
   const tableTitle = '초대 내역';
   const tableSubTitle = '이메일';
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState('');
 
-  const setModalValue = (values: any) => {
-    setEmail(values['이메일']);
-  };
+  const setModalValue = (values: any) => setEmail(values['이메일']);
 
-  const inviteMutation = useMutation({
-    mutationFn: ({ dashboardId, email }: { dashboardId: number; email: string }) =>
-      API.dashboard.inviteDashboard({
-        dashboardId,
-        email,
-      }),
-    onSuccess: () => {
-      alert('성공적으로 초대하기 메세지를 보냈습니다');
-      setIsModalOpen(false);
-    },
-    onError: (error: ApiErrorResponse) => alert(error.data?.message),
-  });
+  const { mutate: inviteDashboardMutate, isPending, isError, error, isSuccess } = useInviteDashboard();
 
   const handleInvite = async () => {
     for (let i = 0; i < allItems.length; i++) {
@@ -44,15 +26,16 @@ function useInviteDetailsTable({ allItems, SHOW_ITEMS_SIZE, pageNum, dashboardId
         return;
       }
     }
-    await inviteMutation.mutateAsync({ dashboardId, email });
+
+    await inviteDashboardMutate({ dashboardId, email });
+    if (!isPending) {
+      setIsModalOpen(false);
+    } else {
+      alert(error?.data?.message);
+    }
   };
 
-  const showItems: InvitationType[] = allItems.slice(
-    (pageNum - 1) * SHOW_ITEMS_SIZE,
-    (pageNum - 1) * SHOW_ITEMS_SIZE + SHOW_ITEMS_SIZE,
-  );
-
-  return { isModalOpen, showItems, setIsModalOpen, tableTitle, tableSubTitle, handleInvite, setModalValue };
+  return { isModalOpen, setIsModalOpen, tableTitle, tableSubTitle, handleInvite, setModalValue };
 }
 
 export default useInviteDetailsTable;

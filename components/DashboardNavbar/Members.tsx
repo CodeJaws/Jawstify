@@ -1,26 +1,23 @@
-import useDeviceType from '@/hooks/useDeviceType';
+import Image from 'next/image';
+import styled from 'styled-components';
+
+import useMembers from '@/hooks/DashboardNavbar/useMembers';
 import DefaultProfile from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { GetMembersInDashboardItem } from '@/types/api';
-import { createSlicedMembers } from '@/utils/createSlicedMembers';
-
-import Image from 'next/image';
-import styled from 'styled-components';
 
 export type MemberType = GetMembersInDashboardItem['members'][0];
 
-interface MembersProps {
+export interface MembersProps {
   members: MemberType[];
   totalMembers: number;
 }
 
 function Members({ members, totalMembers }: MembersProps) {
-  const deviceType = useDeviceType();
-  let showMembers = createSlicedMembers({ members, deviceType });
-  const checkMemberLength = (deviceType === 'pc' && totalMembers > 4) || (deviceType !== 'pc' && totalMembers > 2);
-
+  const { showMembers, checkMemberLength } = useMembers({ members, totalMembers });
   if (totalMembers === 0) return null;
+
   return (
     <StyledContainer $cnt={totalMembers}>
       {showMembers.map((member, idx) => (

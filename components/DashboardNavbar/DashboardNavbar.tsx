@@ -1,16 +1,12 @@
-import API from '@/apis/api';
+import Image from 'next/image';
+import Link from 'next/link';
+import styled from 'styled-components';
+
 import Button from '@/components/DashboardNavbar/Button';
 import DarkModeToggleButton from '@/components/DashboardNavbar/DarkModeToggleButton';
 import Members, { MemberType } from '@/components/DashboardNavbar/Members';
 import Profile from '@/components/DashboardNavbar/Profile';
 import Modal from '@/components/Modal/Modal';
-import {
-  ALREADY_INVITE_ERROR,
-  INVALID_EMAIL_ERROR,
-  INVITE_AUTH_ERROR,
-  NO_DASHBOARD_ERROR,
-  NO_USER_ERROR,
-} from '@/constants/ApiError';
 import useDashboardNavbar from '@/hooks/DashboardNavbar/useDashboardNavbar';
 import crown from '@/public/assets/icons/crown.svg';
 import invite from '@/public/assets/icons/invite.svg';
@@ -18,12 +14,6 @@ import setting from '@/public/assets/icons/setting.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { GetDashboardDetailedItem } from '@/types/api';
-
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import styled from 'styled-components';
 
 interface DashboardNavbarProps {
   members?: MemberType[];
@@ -50,6 +40,7 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
           }}
         />
       )}
+
       <StyledTitleContainer>
         <h3>{dashboardTitle}</h3>
         {!isMyDashboard && dashboard && dashboard.createdByMe && (

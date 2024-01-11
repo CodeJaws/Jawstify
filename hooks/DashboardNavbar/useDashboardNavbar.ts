@@ -1,16 +1,10 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { ApiErrorResponse, GetDashboardDetailedItem } from '@/types/api';
+import { GetDashboardDetailedItem } from '@/types/api';
 import API from '@/apis/api';
-import {
-  ALREADY_INVITE_ERROR,
-  INVALID_EMAIL_ERROR,
-  INVITE_AUTH_ERROR,
-  NO_DASHBOARD_ERROR,
-  NO_USER_ERROR,
-} from '@/constants/ApiError';
-import { useMutation } from '@tanstack/react-query';
+import { ALREADY_INVITE_ERROR } from '@/constants/ApiError';
+import { useInviteDashboard } from '@/apis/hooks/dashboard';
 
 interface useDashboardNavbarProps {
   isMyDashboard: boolean;
@@ -32,18 +26,7 @@ function useDashboardNavbar({ isMyDashboard, dashboard }: useDashboardNavbarProp
 
   const setModalValue = (values: any) => setEmail(values['이메일']);
 
-  const inviteMutation = useMutation({
-    mutationFn: (newEmail: string) =>
-      API.dashboard.inviteDashboard({
-        dashboardId: Number(dashboard?.id),
-        email: newEmail,
-      }),
-    onSuccess: () => {
-      alert('성공적으로 초대하기 메세지를 보냈습니다.');
-      setIsModalOpen(false);
-    },
-    onError: (error: ApiErrorResponse) => alert(error.data?.message),
-  });
+  const { mutate: inviteDashboardMutate, isPending, isError, error, isSuccess } = useInviteDashboard();
 
   const inviteFetch = async () => {
     if (!dashboard) return;
@@ -53,6 +36,7 @@ function useDashboardNavbar({ isMyDashboard, dashboard }: useDashboardNavbarProp
         dashboardId: Number(dashboard.id),
         size: 100,
       });
+
       for (let i = 0; i < invitations.length; i++) {
         if (email === invitations[i].invitee.email) {
           alert(ALREADY_INVITE_ERROR);
@@ -60,7 +44,12 @@ function useDashboardNavbar({ isMyDashboard, dashboard }: useDashboardNavbarProp
         }
       }
 
-      await inviteMutation.mutateAsync(email);
+      await inviteDashboardMutate({ dashboardId: dashboard.id, email });
+      if (!isPending) {
+        setIsModalOpen(false);
+      } else {
+        alert(error?.data?.message);
+      }
     } catch (e: any) {
       alert(e.data.message);
       return;

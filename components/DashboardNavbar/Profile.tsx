@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import DashboardDropdown from '@/components/DashboardNavbar/DashboardDropdown';
 import useProfile from '@/hooks/DashboardNavbar/useProfile';
+import DashboardDropdown from '@/components/DashboardNavbar/DashboardDropdown';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
@@ -11,17 +11,15 @@ function Profile() {
   const { handleBlur, handleClickDropdown, profileImageUrl, nickname, deviceType, isDropdown } = useProfile();
 
   return (
-    <>
-      <StyledContainer onBlur={(e) => handleBlur(e)}>
-        <StyledButton onMouseDown={handleClickDropdown}>
-          <StyledImageWrapper>
-            <StyledImage fill sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필" />
-          </StyledImageWrapper>
-          <StyledNameWrapper>{nickname}</StyledNameWrapper>
-        </StyledButton>
-        <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
-      </StyledContainer>
-    </>
+    <StyledContainer onBlur={(e) => handleBlur(e)}>
+      <StyledButton onMouseDown={handleClickDropdown}>
+        <StyledImageWrapper>
+          <StyledImage fill sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필" />
+        </StyledImageWrapper>
+        <StyledNameWrapper>{nickname}</StyledNameWrapper>
+      </StyledButton>
+      <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
+    </StyledContainer>
   );
 }
 

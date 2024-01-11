@@ -1,24 +1,21 @@
-import API from '@/apis/api';
+import styled from 'styled-components';
+
 import ColorChip from '@/components/Chip/ColorChip';
 import MobileColor from '@/components/Edit/MobileColorChip';
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import Button from '@/components/common/Button/Button';
-
 import useDashboardEdit from '@/hooks/Edit/useDashboardEdit';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { DashboardType } from '@/types/apiType';
 
-import styled from 'styled-components';
-
 interface DashboardEditProps {
   dashboardData: DashboardType;
-  refresh: () => void;
 }
 
-function DashboardEdit({ dashboardData, refresh }: DashboardEditProps) {
-  const { handleChange, deviceType, values, handleSubmit } = useDashboardEdit({ dashboardData, refresh });
+function DashboardEdit({ dashboardData }: DashboardEditProps) {
+  const { handleChange, deviceType, values, handleSubmit } = useDashboardEdit({ dashboardData });
 
   return (
     <StyledContainer>

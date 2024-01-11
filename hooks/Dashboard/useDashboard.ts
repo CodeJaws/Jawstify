@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 
 import { ApiErrorResponse } from '@/types/apiType';
-import useGetDashboardDetailed from '@/apis/dashboard/useGetDashboardDetailed';
-import useGetMembersInDashboard from '@/apis/members/useGetMembersInDashboard';
+import { useGetDashboardDetailed } from '@/apis/hooks/dashboard';
+import { useGetMembersInDashboard } from '@/apis/hooks/members';
 
 interface useDashboardProps {
   dashboardId: number;

@@ -1,21 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import useDeviceType from '../useDeviceType';
-import API from '@/apis/api';
+import useDeviceType from '@/hooks/Common/useDeviceType';
 import { DashboardType } from '@/types/apiType';
-import {
-  INVALID_COLOR_FORMAT_ERROR,
-  NO_AUTH_CORRECT_DASHBOARD_ERROR,
-  NO_CONTENT_FOR_CORRECTION_ERROR,
-  NO_DASHBOARD_ERROR,
-} from '@/constants/ApiError';
+import { useCorrectDashboard } from '@/apis/hooks/dashboard';
 
 interface useDashboardEditProps {
   dashboardData: DashboardType;
-  refresh: () => void;
 }
 
-function useDashboardEdit({ dashboardData, refresh }: useDashboardEditProps) {
+function useDashboardEdit({ dashboardData }: useDashboardEditProps) {
   const [values, setValues] = useState({
     '대시보드 이름': dashboardData.title,
     색상: dashboardData.color,
@@ -28,6 +21,7 @@ function useDashboardEdit({ dashboardData, refresh }: useDashboardEditProps) {
     });
   };
 
+  const { mutate: correctDashboardMutate } = useCorrectDashboard({ dashboardId: dashboardData.id });
   const handleSubmit = async () => {
     if (values['대시보드 이름'].length > 10) {
       alert('10글자 이하로 작성해주세요.');
@@ -36,34 +30,12 @@ function useDashboardEdit({ dashboardData, refresh }: useDashboardEditProps) {
       alert('값을 입력해주세요.');
       return;
     }
-    try {
-      await API.dashboard.correctDashboard({
-        dashboardId: Number(dashboardData.id),
-        title: values['대시보드 이름'],
-        color: values['색상'],
-      });
 
-      alert('변경 성공!');
-      refresh();
-    } catch (e: any) {
-      switch (e.data.message) {
-        case INVALID_COLOR_FORMAT_ERROR:
-          alert(INVALID_COLOR_FORMAT_ERROR);
-          break;
-        case NO_AUTH_CORRECT_DASHBOARD_ERROR:
-          alert(NO_AUTH_CORRECT_DASHBOARD_ERROR);
-          break;
-        case NO_CONTENT_FOR_CORRECTION_ERROR:
-          alert(NO_CONTENT_FOR_CORRECTION_ERROR);
-          break;
-        case NO_DASHBOARD_ERROR:
-          alert(NO_DASHBOARD_ERROR);
-          break;
-        default:
-          alert(e.data.message);
-          break;
-      }
-    }
+    await correctDashboardMutate({
+      dashboardId: Number(dashboardData.id),
+      title: values['대시보드 이름'],
+      color: values['색상'],
+    });
   };
 
   useEffect(() => {
