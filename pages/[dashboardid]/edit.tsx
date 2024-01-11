@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
-import API from '@/apis/api';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import DashboardEdit from '@/components/Edit/DashboardEdit';
 import Sidebar from '@/components/Sidebar/Sidebar';
@@ -37,12 +36,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function BoardEdit({ dashboardId }: BoardEditProps) {
-  // useRedirectByDashboardId({ dashboardId });
   useRedirectByLogin();
 
   const router = useRouter();
   const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
-  const [inviteRefresh, setInviteRefresh] = useState(false);
   const backHome = () => router.back();
 
   const { mutate: deleteDashboardMutate, isPending, isError, error } = useDeleteDashboard();
