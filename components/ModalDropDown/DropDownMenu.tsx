@@ -27,7 +27,7 @@ function DropDownMenu({ type, isOpen, filterData, setIsOpen }: DropDownMenuProps
       <StyledWrapper>
         {type === 'status' ? (
           <StyledInWrapper>
-            {tasks.data.map((val) => (
+            {tasks?.data.map((val) => (
               <StyledButton key={val.id} onMouseDown={() => handleCheck(val.id, val.title)}>
                 {isCheck === val.id ? <Image width={22} height={22} src={Check} alt="체크 이미지" /> : <StyledBlank />}
                 <StatusChip content={val.title} />

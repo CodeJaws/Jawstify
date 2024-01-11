@@ -1,6 +1,6 @@
 import API from '@/apis/api';
 import useUserData from '@/hooks/global/useUserData';
-import { ErrorProps } from '@/types/api';
+import { ErrorProps, formProps } from '@/types/api';
 import { useMutation } from '@tanstack/react-query';
 
 import { useState } from 'react';
@@ -9,10 +9,6 @@ import { toast } from 'react-hot-toast';
 interface Props {
   nickname: string;
   profileImageUrl?: string;
-}
-
-interface formProps {
-  formData: FormData;
 }
 
 function useProfileBox({ nickname }: Props) {
