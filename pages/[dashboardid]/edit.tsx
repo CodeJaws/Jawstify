@@ -1,4 +1,9 @@
-import API from '@/apis/api';
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
+
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import DashboardEdit from '@/components/Edit/DashboardEdit';
 import Sidebar from '@/components/Sidebar/Sidebar';
@@ -6,17 +11,11 @@ import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
 import MembersTable from '@/components/Table/MembersTable';
 import DeleteButton from '@/components/common/Button/DeleteButton';
 import useDashboard from '@/hooks/Dashboard/useDashboard';
-import useRedirectByDashboardId from '@/hooks/Dashboard/useRedirectByDashboardId';
 import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-
-import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
+import { useDeleteDashboard } from '@/apis/hooks/dashboard';
 
 interface BoardEditProps {
   dashboardId: number;
@@ -37,33 +36,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function BoardEdit({ dashboardId }: BoardEditProps) {
-  useRedirectByDashboardId({ dashboardId });
   useRedirectByLogin();
 
   const router = useRouter();
-  const [refreshToggle, setRefreshToggle] = useState(false);
-  const { members, totalMembers, dashboardData } = useDashboard({ dashboardId, refreshToggle });
-  const [inviteRefresh, setInviteRefresh] = useState(false);
-  const refreshInvite = () => setInviteRefresh((prev) => !prev);
+  const { members, totalMembers, dashboardData } = useDashboard({ dashboardId });
   const backHome = () => router.back();
 
-  const refresh = () => setRefreshToggle((prev) => !prev);
+  const { mutate: deleteDashboardMutate, isPending, isError, error } = useDeleteDashboard();
 
   const deleteDashboard = async () => {
     if (confirm('정말 대시보드를 삭제하시겠습니까?')) {
-      try {
-        await API.dashboard.deleteDashboard({ dashboardId: Number(dashboardId) });
-        router.push('/mydashboard');
-      } catch (e: any) {
-        switch (e.data.message) {
-          case '대시보드 삭제 권한이 없습니다.':
-            alert('대시보드 삭제 권한이 없습니다.');
-            break;
-          case '대시보드가 존재하지 않습니다.':
-            alert('대시보드가 존재하지 않습니다.');
-            break;
-        }
-      }
+      await deleteDashboardMutate({ dashboardId });
     }
   };
 
@@ -78,18 +61,17 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
           totalMembers={totalMembers}
           dashboard={dashboardData}
           isMyDashboard={false}
-          refreshInvite={refreshInvite}
         />
-        <Sidebar refreshToggle={refreshToggle} refresh={refresh} />
+        <Sidebar />
         <StyledWrapper>
           <StyledInWrapper>
             <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>
             <StyledMainWrapper>
-              <DashboardEdit dashboardData={dashboardData} refresh={refresh} />
+              <DashboardEdit dashboardData={dashboardData} />
               <StyledMainInWrapper>
-                <MembersTable dashboardId={Number(dashboardId)} refresh={refresh} />
+                <MembersTable dashboardId={Number(dashboardId)} />
               </StyledMainInWrapper>
-              <InviteDetailsTable dashboardId={Number(dashboardId)} inviteRefresh={inviteRefresh} />
+              <InviteDetailsTable dashboardId={Number(dashboardId)} />
               <DeleteButton onClick={deleteDashboard} />
             </StyledMainWrapper>
           </StyledInWrapper>

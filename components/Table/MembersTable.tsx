@@ -1,3 +1,7 @@
+import Image from 'next/image';
+import { useState } from 'react';
+import styled from 'styled-components';
+
 import API from '@/apis/api';
 import Button from '@/components/common/Button/Button';
 import PaginationButton from '@/components/common/Button/PaginationButton';
@@ -7,47 +11,32 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { MemberType } from '@/types/apiType';
-
-import Image from 'next/image';
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useDeleteMemberInDashboard } from '@/apis/hooks/members';
 
 interface MembersTableProps {
   dashboardId: number;
-  refresh: () => void;
 }
 
 interface TableProps {
   item: MemberType;
-  refresh: () => void;
-  refreshPagination: () => void;
+  pageNum: number;
 }
 
-function Table({ item, refresh, refreshPagination }: TableProps) {
+function Table({ item, pageNum }: TableProps) {
   const { isOwner, nickname, profileImageUrl } = item;
   let buttonName = '삭제';
 
+  const {
+    mutate: deleteMemberInDashboardMutate,
+    isPending,
+    isError,
+    error,
+    isSuccess,
+  } = useDeleteMemberInDashboard({ pageNum });
+
   const handleDelete = async () => {
     if (confirm(`정말 ${nickname}멤버를 삭제하시겠습니까?`)) {
-      try {
-        await API.members.deleteMemberInDashboard({ memberId: Number(item.id) });
-        refresh();
-        refreshPagination();
-      } catch (e: any) {
-        switch (e.data.message) {
-          case '대시보드 삭제 권한이 없습니다.':
-            alert('대시보드 삭제 권한이 없습니다.');
-            break;
-          case '대시보드가 존재하지 않습니다.':
-            alert('대시보드가 존재하지 않습니다.');
-            break;
-          case '대시보드의 멤버가 아닙니다.':
-            alert('대시보드의 멤버가 아닙니다.');
-            break;
-          default:
-            alert(e.data.message);
-        }
-      }
+      await deleteMemberInDashboardMutate({ memberId: item.id });
     }
   };
 
@@ -66,7 +55,7 @@ function Table({ item, refresh, refreshPagination }: TableProps) {
   );
 }
 
-function MembersTable({ dashboardId, refresh }: MembersTableProps) {
+function MembersTable({ dashboardId }: MembersTableProps) {
   /**
    * @param handlePagination 페이지네이션 OnClick 동작 함수
    * @param pageNum 현재 페이지 넘버
@@ -74,22 +63,17 @@ function MembersTable({ dashboardId, refresh }: MembersTableProps) {
    * @param totalPages 총 페이지 수
    * @param totalCount 전체 아이템 수 - API에서 받아올 수 있습니다.
    */
-  const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
-  const refreshPagination = () => setRefreshPaginationToggle((prev) => !prev);
 
-  const SHOW_ITEMS_SIZE = 4;
-  const { handlePagination, pageNum, totalPages, allItems } = usePagination({
-    size: 10,
-    showItemNum: SHOW_ITEMS_SIZE,
+  const { handlePageNum, pageNum, totalPages, allItems } = usePagination({
+    size: 4,
     type: 'members',
     dashboardId,
-    refreshPaginationToggle,
   });
 
   const tableTitle = '구성원';
   const tableSubTitle = '이름';
 
-  const showItems = allItems.slice((pageNum - 1) * SHOW_ITEMS_SIZE, (pageNum - 1) * SHOW_ITEMS_SIZE + SHOW_ITEMS_SIZE);
+  if (!allItems) return null;
 
   return (
     <StyledContainer>
@@ -100,16 +84,16 @@ function MembersTable({ dashboardId, refresh }: MembersTableProps) {
             {totalPages} 페이지 중 {pageNum}
           </div>
           <div>
-            <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
-            <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePagination(1)} />
+            <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePageNum(-1)} />
+            <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePageNum(1)} />
           </div>
         </StyledPaginationWrapper>
       </StyledTopWrapper>
       <StyledNameText>{tableSubTitle}</StyledNameText>
-      {showItems.map((item, index) => (
+      {allItems.map((item, index) => (
         <div key={item.id}>
-          <Table item={item as MemberType} refresh={refresh} refreshPagination={refreshPagination} />
-          {showItems.length - 1 !== index && <StyledSeparator />}
+          <Table item={item as MemberType} pageNum={pageNum} />
+          {allItems.length - 1 !== index && <StyledSeparator />}
         </div>
       ))}
     </StyledContainer>

@@ -1,63 +1,32 @@
-import API from '@/apis/api';
+import Image from 'next/image';
+import styled from 'styled-components';
+
 import Modal from '@/components/Modal/Modal';
 import InviteButton from '@/components/Table/InviteButton';
 import Button from '@/components/common/Button/Button';
 import PaginationButton from '@/components/common/Button/PaginationButton';
-import {
-  ABORT_INVITE_AUTH_ERROR,
-  ALREADY_INVITE_ERROR,
-  INVALID_EMAIL_ERROR,
-  INVITE_AUTH_ERROR,
-  NO_DASHBOARD_ERROR,
-  NO_EXIST_INVITE_ERROR,
-  NO_USER_ERROR,
-} from '@/constants/ApiError';
+import useInviteDetailsTable from '@/hooks/Edit/useInviteDetailsTable';
 import usePagination from '@/hooks/Common/usePagination';
 import NoItem from '@/public/assets/images/noItem.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
-import { InvitationType } from '@/types/apiType';
-
-import Image from 'next/image';
-import { useState } from 'react';
-import styled from 'styled-components';
-
-interface TablePaginationProps {
-  dashboardId: number;
-  inviteRefresh: boolean;
-}
+import { DashboardIdType, InvitationType } from '@/types/apiType';
+import { useAbortInviteDashboard } from '@/apis/hooks/dashboard';
 
 interface TableProps {
   item: InvitationType;
   dashboardId: number;
-  refreshPagination: () => void;
 }
 
-const SHOW_ITEMS_SIZE = 5;
-
 /** 초대 내역 컴포넌트에서 하나의 줄을 의미합니다. */
-function Table({ item, dashboardId, refreshPagination }: TableProps) {
+function Table({ item, dashboardId }: TableProps) {
   const { email } = item.invitee;
   let buttonName = '취소';
+  const { mutate: abortInviteDashboardMutate, isPending, isError, error } = useAbortInviteDashboard();
 
   const handleDelete = async () => {
-    try {
-      await API.dashboard.abortInviteDashboard({ dashboardId, invitationId: Number(item.id) });
-      refreshPagination();
-    } catch (e: any) {
-      switch (e.data.message) {
-        case ABORT_INVITE_AUTH_ERROR:
-          alert(ABORT_INVITE_AUTH_ERROR);
-          break;
-        case NO_DASHBOARD_ERROR:
-          alert(NO_DASHBOARD_ERROR);
-          break;
-        case NO_EXIST_INVITE_ERROR:
-          alert(NO_EXIST_INVITE_ERROR);
-          break;
-      }
-    }
+    await abortInviteDashboardMutate({ dashboardId, invitationId: Number(item.id) });
   };
 
   return (
@@ -70,10 +39,7 @@ function Table({ item, dashboardId, refreshPagination }: TableProps) {
   );
 }
 
-function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps) {
-  const [refreshPaginationToggle, setRefreshPaginationToggle] = useState(false);
-  const refreshPagination = () => setRefreshPaginationToggle((prev) => !prev);
-
+function InviteDetailsTable({ dashboardId }: DashboardIdType) {
   /**
    * @param handlePagination 페이지네이션 OnClick 동작 함수
    * @param pageNum 현재 페이지 넘버
@@ -81,65 +47,18 @@ function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps
    * @param totalPages 총 페이지 수
    * @param totalCount 전체 아이템 수 - API에서 받아올 수 있습니다.
    */
-  const { handlePagination, pageNum, totalPages, allItems } = usePagination({
-    size: 20,
-    showItemNum: SHOW_ITEMS_SIZE,
+  const { handlePageNum, pageNum, totalPages, allItems } = usePagination({
+    size: 5,
     type: 'invitationDetails',
     dashboardId,
-    refreshPaginationToggle,
-    inviteRefresh,
   });
+  const { isModalOpen, setIsModalOpen, tableTitle, tableSubTitle, handleInvite, setModalValue } = useInviteDetailsTable(
+    {
+      allItems,
+      dashboardId,
+    },
+  );
 
-  const tableTitle = '초대 내역';
-  const tableSubTitle = '이메일';
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [email, setEmail] = useState('');
-
-  const setModalValue = (values: any) => {
-    setEmail(values['이메일']);
-  };
-  const handleInvite = async () => {
-    for (let i = 0; i < allItems.length; i++) {
-      const check = allItems[i];
-      if ('invitee' in check && check.invitee.email === email) {
-        alert('이미 초대하신 멤버입니다.');
-        return;
-      }
-    }
-
-    try {
-      await API.dashboard.inviteDashboard({
-        dashboardId: Number(dashboardId),
-        email,
-      });
-      refreshPagination();
-      alert('성공적으로 초대하기 메세지를 보냈습니다');
-      setIsModalOpen(false);
-    } catch (e: any) {
-      switch (e.data.message) {
-        case INVALID_EMAIL_ERROR:
-          alert(INVALID_EMAIL_ERROR);
-          break;
-        case INVITE_AUTH_ERROR:
-          alert(INVITE_AUTH_ERROR);
-          break;
-        case NO_DASHBOARD_ERROR:
-          alert(NO_DASHBOARD_ERROR);
-          break;
-        case NO_USER_ERROR:
-          alert(NO_USER_ERROR);
-          break;
-        case ALREADY_INVITE_ERROR:
-          alert(ALREADY_INVITE_ERROR);
-          break;
-        default:
-          alert(e.data.message);
-      }
-    }
-  };
-
-  const showItems = allItems.slice((pageNum - 1) * SHOW_ITEMS_SIZE, (pageNum - 1) * SHOW_ITEMS_SIZE + SHOW_ITEMS_SIZE);
   return (
     <StyledContainer>
       {isModalOpen && (
@@ -150,7 +69,7 @@ function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps
           onCancelClick={() => setIsModalOpen(false)}
         />
       )}
-      {showItems.length > 0 ? (
+      {allItems.length > 0 ? (
         <>
           <StyledTopWrapper>
             <h1>{tableTitle}</h1>
@@ -159,25 +78,17 @@ function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps
                 {totalPages} 페이지 중 {pageNum}
               </div>
               <div>
-                <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePagination(-1)} />
-                <PaginationButton
-                  active={pageNum !== totalPages}
-                  direction="right"
-                  onClick={() => handlePagination(1)}
-                />
+                <PaginationButton active={pageNum !== 1} direction="left" onClick={() => handlePageNum(-1)} />
+                <PaginationButton active={pageNum !== totalPages} direction="right" onClick={() => handlePageNum(1)} />
               </div>
-              <InviteButton text="초대하기" onClick={() => setIsModalOpen(true)} hasItems={showItems.length !== 0} />
+              <InviteButton text="초대하기" onClick={() => setIsModalOpen(true)} hasItems={allItems.length !== 0} />
             </StyledPaginationWrapper>
           </StyledTopWrapper>
           <StyledNameText>{tableSubTitle}</StyledNameText>
-          {showItems.map((item, index) => (
+          {allItems.map((item, index) => (
             <div key={item.id}>
-              <Table
-                item={item as InvitationType}
-                dashboardId={Number(dashboardId)}
-                refreshPagination={refreshPagination}
-              />
-              {showItems.length - 1 !== index && <StyledSeparator />}
+              <Table item={item as InvitationType} dashboardId={Number(dashboardId)} />
+              {allItems.length - 1 !== index && <StyledSeparator />}
             </div>
           ))}
         </>
@@ -189,7 +100,7 @@ function InviteDetailsTable({ dashboardId, inviteRefresh }: TablePaginationProps
           <StyledNoItemInWrapper>
             <StyledImage src={NoItem} priority alt="초대 내역 없음" />
             <p>초대 내역이 존재하지 않습니다.</p>
-            <InviteButton text="초대하기" onClick={() => setIsModalOpen(true)} hasItems={showItems.length !== 0} />
+            <InviteButton text="초대하기" onClick={() => setIsModalOpen(true)} hasItems={allItems.length !== 0} />
           </StyledNoItemInWrapper>
         </StyledNoItemWrapper>
       )}

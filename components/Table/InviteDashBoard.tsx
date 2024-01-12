@@ -12,11 +12,10 @@ import InfiniteScroll from 'react-infinite-scroller';
 import styled, { css } from 'styled-components';
 
 export interface InviteDashBoardProps {
-  refresh: () => void;
   refreshToFirst: () => void;
 }
 
-function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
+function InviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
   const windowSize = useDeviceType();
   const width = windowSize === 'pc' || windowSize === 'tablet';
   const {
@@ -28,7 +27,7 @@ function InviteDashBoard({ refresh, refreshToFirst }: InviteDashBoardProps) {
     fetchHasMore,
     hasMore,
     handleAccept,
-  } = useInviteDashBoard({ refresh, refreshToFirst });
+  } = useInviteDashBoard({ refreshToFirst });
 
   return (
     <StyledDiv $data={dataSource}>

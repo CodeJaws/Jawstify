@@ -1,57 +1,25 @@
+import Image from 'next/image';
+import styled from 'styled-components';
+
+import useProfile from '@/hooks/DashboardNavbar/useProfile';
 import DashboardDropdown from '@/components/DashboardNavbar/DashboardDropdown';
-import useUserData from '@/hooks/global/useUserData';
-import useDeviceType from '@/hooks/Common/useDeviceType';
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
-import { UserType } from '@/types/apiType';
-
-import Image from 'next/image';
-import { FocusEvent, useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 function Profile() {
-  const { user } = useUserData();
-
-  const [showUser, setShowUser] = useState<UserType>({
-    createdAt: '',
-    email: '',
-    id: 0,
-    nickname: '',
-    profileImageUrl: null,
-    updatedAt: '',
-  });
-  const { nickname, profileImageUrl } = showUser;
-  const deviceType = useDeviceType();
-
-  const [isDropdown, setIsDropdown] = useState(false);
-
-  const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
-    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-      setIsDropdown(false);
-    }
-  };
-
-  const handleClickDropdown = () => {
-    setIsDropdown((prev) => !prev);
-  };
-
-  useEffect(() => {
-    setShowUser(user);
-  }, [user]);
+  const { handleBlur, handleClickDropdown, profileImageUrl, nickname, deviceType, isDropdown } = useProfile();
 
   return (
-    <>
-      <StyledContainer onBlur={(e) => handleBlur(e)}>
-        <StyledButton onMouseDown={handleClickDropdown}>
-          <StyledImageWrapper>
-            <StyledImage fill sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필" />
-          </StyledImageWrapper>
-          <StyledNameWrapper>{nickname}</StyledNameWrapper>
-        </StyledButton>
-        <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
-      </StyledContainer>
-    </>
+    <StyledContainer onBlur={(e) => handleBlur(e)}>
+      <StyledButton onMouseDown={handleClickDropdown}>
+        <StyledImageWrapper>
+          <StyledImage fill sizes="100%" src={profileImageUrl || DefaultImg} alt="프로필" />
+        </StyledImageWrapper>
+        <StyledNameWrapper>{nickname}</StyledNameWrapper>
+      </StyledButton>
+      <DashboardDropdown deviceType={deviceType} isOpen={isDropdown} />
+    </StyledContainer>
   );
 }
 
