@@ -1,21 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
-import {
-  ApiErrorResponse,
-  DashboardBasicInfoType,
-  DashboardIdType,
-  EmailType,
-  PaginationType,
-  ReactQueryReturnType,
-} from '@/types/apiType';
+import { DashboardBasicInfoType, DashboardIdType, EmailType, PaginationType } from '@/types/apiType';
 import { request } from '@/apis/axios';
 import {
+  ErrorProps,
   GetDashboardDetailedItem,
   GetDashboardListItem,
   GetDashboardListProps,
   LoadInviteDashboardItem,
 } from '@/types/api';
-import { useRouter } from 'next/router';
+import { handleReactQueryError } from '@/lib/toast';
 
 /** 대시보드 초대 취소 */
 export const useAbortInviteDashboard = () => {
@@ -28,7 +23,7 @@ export const useAbortInviteDashboard = () => {
       queryClient.invalidateQueries({ queryKey: ['invitedMembersInDashboard'] });
       alert('취소 성공');
     },
-    onError: (error: ApiErrorResponse) => alert(error.data?.message),
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
 
   return { mutate, isPending, isError, error };
@@ -49,7 +44,7 @@ export const useCorrectDashboard = ({ dashboardId }: DashboardIdType) => {
       alert('변경 성공');
       router.push('/mydashboard');
     },
-    onError: (error: ApiErrorResponse) => alert(error.data?.message),
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
 
   return { mutate, isPending, isError, error };
@@ -64,33 +59,28 @@ export const useDeleteDashboard = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inviteItem'] });
     },
-    onError: (error: ApiErrorResponse) => alert(error.data?.message),
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
 
   return { mutate, isPending, isError, error };
 };
 
 /** 대시보드 상세 조회 */
-export const useGetDashboardDetailed = ({
-  dashboardId,
-}: DashboardIdType): ReactQueryReturnType<GetDashboardDetailedItem> => {
-  const { data, error, isLoading } = useQuery({
+export const useGetDashboardDetailed = ({ dashboardId }: DashboardIdType) => {
+  const { data, error, isLoading, isError } = useQuery({
     queryKey: ['dashboardDetailed', dashboardId],
     queryFn: async () => {
       return await request.get<GetDashboardDetailedItem>(`dashboards/${dashboardId}`);
     },
   });
-  if (error) {
-    const errorData = error as ApiErrorResponse;
-    alert(errorData.data?.message);
-  }
+  if (isError) handleReactQueryError(error as unknown as ErrorProps);
 
   return { data, error, isLoading };
 };
 
 /** 대시보드 목록 조회 */
 export const useGetDashboardList = ({ navigationMethod, cursorId, page = 1, size = 10 }: GetDashboardListProps) => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, isError } = useQuery({
     queryKey: ['dashboardList', page],
     queryFn: async () =>
       await request.get<GetDashboardListItem>(
@@ -99,6 +89,7 @@ export const useGetDashboardList = ({ navigationMethod, cursorId, page = 1, size
         }&page=${page}&size=${size}`,
       ),
   });
+  if (isError) handleReactQueryError(error as unknown as ErrorProps);
 
   return { data, error, isLoading };
 };
@@ -107,14 +98,14 @@ export const useGetDashboardList = ({ navigationMethod, cursorId, page = 1, size
 export const useInviteDashboard = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, isError, error, isSuccess } = useMutation({
+  const { mutate, isPending, isError, error, isSuccess, context, data, failureReason } = useMutation({
     mutationFn: ({ dashboardId, email }: DashboardIdType & EmailType) =>
       request.post(`dashboards/${dashboardId}/invitations`, { email }),
     onSuccess: () => {
       alert('성공적으로 초대하기 메세지를 보냈습니다');
       queryClient.invalidateQueries({ queryKey: ['invitedMembersInDashboard'] });
     },
-    onError: (error: ApiErrorResponse) => alert(error.data?.message),
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
 
   return { mutate, isPending, isError, error, isSuccess };
@@ -122,11 +113,12 @@ export const useInviteDashboard = () => {
 
 /** 대시보드 초대 불러오기 */
 export const useLoadInviteDashboard = ({ size = 20, page = 1, dashboardId }: DashboardIdType & PaginationType) => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, isError } = useQuery({
     queryKey: ['invitedMembersInDashboard', page],
     queryFn: async () =>
       await request.get<LoadInviteDashboardItem>(`dashboards/${dashboardId}/invitations?page=${page}&size=${size}`),
   });
+  if (isError) handleReactQueryError(error as unknown as ErrorProps);
 
   return { data, error, isLoading };
 };
