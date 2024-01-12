@@ -500,12 +500,6 @@ export interface ProfileImgUploadItem {
   profileImageUrl: string;
 }
 
-export interface ApiErrorResponse {
-  data?: {
-    message?: string;
-  };
-}
-
 export interface formProps {
   formData: FormData;
 }
