@@ -47,8 +47,6 @@ function useDashboardNavbar({ isMyDashboard, dashboard }: useDashboardNavbarProp
       await inviteDashboardMutate({ dashboardId: dashboard.id, email });
       if (!isPending) {
         setIsModalOpen(false);
-      } else {
-        alert(error?.data?.message);
       }
     } catch (e: any) {
       alert(e.data.message);
