@@ -1,3 +1,4 @@
+import { CreateDashboardProps } from './../../types/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
@@ -11,6 +12,23 @@ import {
   LoadInviteDashboardItem,
 } from '@/types/api';
 import { handleReactQueryError } from '@/lib/toast';
+
+/** 대시보드 생성 */
+export const useCreateDashboard = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: ({ title, color }: CreateDashboardProps) => request.post('dashboards', { title, color }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['inviteItem'] });
+      // 여기에 대시보드 생성시 invalidateQueries를 추가하면 될 것 같네요
+      console.log('대시보드 생성 완료');
+    },
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
+  });
+
+  return { mutate, isPending, isError, error };
+};
 
 /** 대시보드 초대 취소 */
 export const useAbortInviteDashboard = () => {
