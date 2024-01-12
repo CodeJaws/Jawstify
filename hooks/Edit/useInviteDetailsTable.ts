@@ -30,8 +30,6 @@ function useInviteDetailsTable({ allItems, dashboardId }: useInviteDetailsTableP
     await inviteDashboardMutate({ dashboardId, email });
     if (!isPending) {
       setIsModalOpen(false);
-    } else {
-      alert(error?.data?.message);
     }
   };
 
