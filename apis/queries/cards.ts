@@ -1,3 +1,7 @@
+import useCardId from '@/hooks/ModalCard/useCardId';
+import { useQuery } from '@tanstack/react-query';
+import API from '../api';
+
 /** 카드 생성 */
 export const useCreateCard = () => {};
 
@@ -8,4 +12,15 @@ export const useCheckCardList = () => {};
 export const useCorrectCard = () => {};
 
 /** 카드 상세 조회 */
-export const useGetCardDetails = () => {};
+export const useGetCardDetails = () => {
+  const { cardId } = useCardId();
+  const { data: cardData } = useQuery({
+    queryKey: ['card', cardId],
+    queryFn: async () => {
+      return await API.cards.getCardDetails({ cardId });
+    },
+    enabled: !!cardId,
+  });
+
+  return { cardData };
+};
