@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
+import { useCorrectDashboard } from '@/apis/queries/dashboard';
 import useDeviceType from '@/hooks/Common/useDeviceType';
 import { DashboardType } from '@/types/apiType';
-import { useCorrectDashboard } from '@/apis/hooks/dashboard';
 
 interface useDashboardEditProps {
   dashboardData: DashboardType;

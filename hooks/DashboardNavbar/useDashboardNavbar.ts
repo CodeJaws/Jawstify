@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { GetDashboardDetailedItem } from '@/types/api';
 import API from '@/apis/api';
+import { useInviteDashboard } from '@/apis/queries/dashboard';
 import { ALREADY_INVITE_ERROR } from '@/constants/ApiError';
-import { useInviteDashboard } from '@/apis/hooks/dashboard';
+import { GetDashboardDetailedItem } from '@/types/api';
 
 interface useDashboardNavbarProps {
   isMyDashboard: boolean;
