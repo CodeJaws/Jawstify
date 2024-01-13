@@ -1,8 +1,7 @@
 import Image from 'next/image';
-import { useState } from 'react';
 import styled from 'styled-components';
 
-import API from '@/apis/api';
+import { useDeleteMemberInDashboard } from '@/apis/queries/members';
 import Button from '@/components/common/Button/Button';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import usePagination from '@/hooks/Common/usePagination';
@@ -11,7 +10,6 @@ import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { MemberType } from '@/types/apiType';
-import { useDeleteMemberInDashboard } from '@/apis/hooks/members';
 
 interface MembersTableProps {
   dashboardId: number;

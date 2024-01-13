@@ -1,21 +1,20 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
+import { useDeleteDashboard } from '@/apis/queries/dashboard';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import DashboardEdit from '@/components/Edit/DashboardEdit';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDetailsTable from '@/components/Table/InviteDetailsTable';
 import MembersTable from '@/components/Table/MembersTable';
 import DeleteButton from '@/components/common/Button/DeleteButton';
-import useDashboard from '@/hooks/Dashboard/useDashboard';
 import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
+import useDashboard from '@/hooks/Dashboard/useDashboard';
 import BackImg from '@/public/assets/icons/LeftArrow.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-import { useDeleteDashboard } from '@/apis/hooks/dashboard';
 
 interface BoardEditProps {
   dashboardId: number;
