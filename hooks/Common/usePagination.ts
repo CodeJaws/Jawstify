@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useGetDashboardList } from '@/apis/hooks/dashboard';
-import { useLoadInviteDashboard } from '@/apis/hooks/dashboard';
-import { useGetMembersInDashboard } from '@/apis/hooks/members';
+import { useGetDashboardList, useLoadInviteDashboard } from '@/apis/queries/dashboard';
+import { useGetMembersInDashboard } from '@/apis/queries/members';
 import { GetDashboardListItem, GetMembersInDashboardItem, LoadInviteDashboardItem } from '@/types/api';
 import { DashboardType, InvitationType, MemberType } from '@/types/apiType';
-import useGetQueryData from '@/apis/hooks/common/useGetQueryData';
 
 type AllItemTypes = DashboardType[] | MemberType[] | InvitationType[];
 

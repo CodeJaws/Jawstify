@@ -1,6 +1,7 @@
 import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
-import useComment from '@/hooks/useComment';
 import useUser from '@/hooks/global/useUser';
+import useComment from '@/hooks/useComment';
+
 import DefaultImg from '@/public/assets/images/jaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
@@ -21,7 +22,7 @@ function Comment() {
     isUpdateMap,
     isOpenComment,
     handleUpdateInputChange,
-    updateComment,
+    handleUpdateButtonClick,
     handleChange,
     submitComment,
     deleteComment,
@@ -38,11 +39,11 @@ function Comment() {
           handleChange(value);
         }}
         onButtonClick={() => {
-          submitComment.mutate();
+          submitComment();
         }}
       />
 
-      {comment?.length === 0 ? (
+      {comment.length === 0 ? (
         <></>
       ) : (
         <StyledCommentWrapper ref={CommentWrapperRef}>
@@ -63,12 +64,12 @@ function Comment() {
                   {isUpdateMap[val.id] ? (
                     <StyledInputWrapper>
                       <StyledInput
-                        value={updatedCommentMap[val.id]}
+                        value={updatedCommentMap[val.id] || val.content}
                         onChange={(e) => handleUpdateInputChange(val.id, e)}
                         placeholder="수정할 내용을 입력하세요."
                       />
                       <StyledButtonInWrapper>
-                        <StyledButton onClick={() => updateComment.mutate(val.id)}>완료</StyledButton>
+                        <StyledButton onClick={() => handleUpdateButtonClick(val.id)}>완료</StyledButton>
                         <StyledButton onClick={() => isOpenComment(val.id)}>취소</StyledButton>
                       </StyledButtonInWrapper>
                     </StyledInputWrapper>
@@ -78,7 +79,7 @@ function Comment() {
                   {!isUpdateMap[val.id] && val.author.id === user?.id && (
                     <StyledButtonWrapper>
                       <StyledButton onClick={() => isOpenComment(val.id)}>수정</StyledButton>
-                      <StyledButton onClick={() => deleteComment.mutate(val.id)}>삭제</StyledButton>
+                      <StyledButton onClick={() => deleteComment(val.id)}>삭제</StyledButton>
                     </StyledButtonWrapper>
                   )}
                 </StyledCommentContent>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useInviteDashboard } from '@/apis/hooks/dashboard';
+import { useInviteDashboard } from '@/apis/queries/dashboard';
 
 interface useInviteDetailsTableProps {
   allItems: any;
