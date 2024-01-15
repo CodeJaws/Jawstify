@@ -25,7 +25,7 @@ function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<LoginFormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
+  } = useForm<LoginFormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onBlur' });
 
   const { isBtnActive, onLoginSubmit, alertMessage, handleChange, isModalOpen, setIsModalOpen } = useAuth(getValues, [
     'email',
