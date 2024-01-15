@@ -28,6 +28,7 @@ export const useCreateColumn = () => {
 export const useGetColumnList = () => {
   const { dashboardId } = useDashBoardId();
   const { data: dashBoard } = useQuery({
+    // TODO: queryKey: ['dashBoard', dashboardId]로 바꿔야 함.
     queryKey: ['dashBoard', dashboardId],
     queryFn: async () => {
       return await API.columns.getColumnList({ dashboardId });
