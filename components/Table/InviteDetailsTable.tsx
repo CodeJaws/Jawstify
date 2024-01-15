@@ -1,18 +1,18 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import { useAbortInviteDashboard } from '@/apis/queries/dashboard';
 import Modal from '@/components/Modal/Modal';
 import InviteButton from '@/components/Table/InviteButton';
 import Button from '@/components/common/Button/Button';
 import PaginationButton from '@/components/common/Button/PaginationButton';
-import useInviteDetailsTable from '@/hooks/Edit/useInviteDetailsTable';
 import usePagination from '@/hooks/Common/usePagination';
+import useInviteDetailsTable from '@/hooks/Edit/useInviteDetailsTable';
 import NoItem from '@/public/assets/images/noItem.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { DashboardIdType, InvitationType } from '@/types/apiType';
-import { useAbortInviteDashboard } from '@/apis/hooks/dashboard';
 
 interface TableProps {
   item: InvitationType;

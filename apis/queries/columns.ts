@@ -28,7 +28,7 @@ export const useCreateColumn = () => {
 export const useGetColumnList = () => {
   const { dashboardId } = useDashBoardId();
   const { data: dashBoard } = useQuery({
-    queryKey: ['columnList', dashboardId],
+    queryKey: ['dashBoard', dashboardId],
     queryFn: async () => {
       return await API.columns.getColumnList({ dashboardId });
     },

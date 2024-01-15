@@ -1,39 +1,21 @@
-import API from '@/apis/api';
+import { useGetCardDetails } from '@/apis/queries/cards';
+import { useGetColumnList } from '@/apis/queries/columns';
+import { useGetMembersInDashboard } from '@/apis/queries/members';
 import useDeviceType from '@/hooks/Common/useDeviceType';
 import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
-import useCardId from '@/hooks/ModalCard/useCardId';
-import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
-import { useQuery } from '@tanstack/react-query';
 
 import { useEffect } from 'react';
+import useDashBoardId from './useDashBoardId';
 
 function useModalCard() {
   const { setStatus } = useSelectStatus();
-  const { cardId } = useCardId();
   const { dashboardId } = useDashBoardId();
+
   const deviceType = useDeviceType();
 
-  const { data: cardData } = useQuery({
-    queryKey: ['card', cardId],
-    queryFn: async () => {
-      return await API.cards.getCardDetails({ cardId });
-    },
-    enabled: !!cardId,
-  });
-  const { data: dashBoard } = useQuery({
-    queryKey: ['dashBoard', dashboardId],
-    queryFn: async () => {
-      return await API.columns.getColumnList({ dashboardId });
-    },
-    enabled: !!dashboardId,
-  });
-  const { data: member } = useQuery({
-    queryKey: ['member'],
-    queryFn: async () => {
-      return await API.members.getMembersInDashboard({ dashboardId });
-    },
-    enabled: !!dashboardId,
-  });
+  const { cardData } = useGetCardDetails();
+  const { dashBoard } = useGetColumnList();
+  const { data } = useGetMembersInDashboard({ dashboardId });
 
   const filterColumn = dashBoard?.data.filter((val) => val.id === cardData?.columnId);
   const status = filterColumn ? filterColumn[0]?.title : '';

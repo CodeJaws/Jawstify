@@ -77,10 +77,9 @@ export const useCorrectCard = () => {
 /** 카드 상세 조회 */
 export const useGetCardDetails = () => {
   const { cardId } = useCardId();
-  const { columnId } = useColumnId();
-
   const { data: cardData } = useQuery({
-    queryKey: ['card', columnId, cardId],
+    //TODO: queryKey: ['card', columnId, cardId]로 바꾸기
+    queryKey: ['card', cardId],
     queryFn: async () => {
       return await API.cards.getCardDetails({ cardId });
     },
