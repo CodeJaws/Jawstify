@@ -14,11 +14,10 @@ export const useLogin = () => {
     mutationFn: ({ email, password }: LoginProps) => {
       return request.post(`auth/login`, { email, password });
     },
-    onSuccess: () => {
-      // user별로 세분화시키기
+    onSuccess: (data) => {
+      // TODO: user별로 쿼리 키 세분화하기
       queryClient.invalidateQueries({ queryKey: ['loginData'] });
-      alert('로그인 성공!');
-      router.push('mydashboard');
+      queryClient.setQueryData(['loginData'], data);
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });

@@ -7,6 +7,8 @@ import useUserData from '../global/useUserData';
 import * as C from '@/constants/SignValidate';
 import { useLogin } from '@/apis/queries/auth';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { LoginItem } from '@/types/api';
+import useDidMountEffect from '../Common/useDidMountEffect';
 
 export interface LoginFormValue {
   email?: string;
@@ -57,8 +59,7 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
   const { mutate: Login, error } = useLogin();
 
   const queryClient = useQueryClient();
-
-  const member = queryClient.getQueryData(['loginData']);
+  const loginResponse = queryClient.getQueryData(['loginData']) as LoginItem;
 
   const validateBtnActivation = () => {
     if (inputValues === undefined || getValues === undefined) return;
@@ -104,12 +105,6 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
 
   const handleLogin = async (email: string, password: string) => {
     await Login({ email, password });
-
-    const response = await api.auth.login({ email, password });
-
-    localStorageSetItem('accessToken', response.accessToken);
-    await setUser(response.user);
-    response.accessToken && router.push('mydashboard');
   };
 
   const handleSignUp = async (data: SignUpFormValue) => {
@@ -124,6 +119,18 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
     if (alertMessage.serverMessage) setIsModalOpen(true);
     else setIsModalOpen(false);
   }, [alertMessage.serverMessage]);
+
+  useEffect(() => {
+    const setUserData = async () => {
+      await setUser(loginResponse.user);
+    };
+    if (loginResponse?.accessToken) {
+      console.log(loginResponse?.accessToken);
+      localStorageSetItem('accessToken', loginResponse?.accessToken);
+      setUserData();
+      loginResponse.accessToken && router.push('mydashboard');
+    }
+  }, [loginResponse]);
 
   return {
     onLoginSubmit,

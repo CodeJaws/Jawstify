@@ -60,14 +60,14 @@ const GoogleLoginButton = () => {
 
       const formData = new FormData();
       formData.append('image', fileData);
-      const response = await axios.post(`https://sp-taskify-api.vercel.app/1-4/users/me/image`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          withCredentials: true,
-        },
-      });
-      const { imageUrl } = response.data;
+      // const response = await axios.post(`https://sp-taskify-api.vercel.app/1-4/users/me/image`, formData, {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data',
+      //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      //     withCredentials: true,
+      //   },
+      // });
+      // const { imageUrl } = response.data;
     });
   };
 
