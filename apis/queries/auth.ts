@@ -10,7 +10,7 @@ export const useLogin = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { mutate, isPending, isError, error, data } = useMutation({
+  const { mutate, isPending, isError, error } = useMutation({
     mutationFn: ({ email, password }: LoginProps) => {
       return request.post(`auth/login`, { email, password });
     },
@@ -23,7 +23,7 @@ export const useLogin = () => {
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
 
-  return { mutate, isPending, isError, error, data };
+  return { mutate, isPending, isError, error };
 };
 
 /** 비밀번호 변경 */

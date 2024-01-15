@@ -6,6 +6,7 @@ import { FieldValues, Path, UseFormGetValues } from 'react-hook-form';
 import useUserData from '../global/useUserData';
 import * as C from '@/constants/SignValidate';
 import { useLogin } from '@/apis/queries/auth';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export interface LoginFormValue {
   email?: string;
@@ -53,7 +54,11 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
 
   const router = useRouter();
   const { setUser } = useUserData();
-  const { mutate: Login, isPending, isError, error, data: loginResponse } = useLogin();
+  const { mutate: Login, error } = useLogin();
+
+  const queryClient = useQueryClient();
+
+  const member = queryClient.getQueryData(['loginData']);
 
   const validateBtnActivation = () => {
     if (inputValues === undefined || getValues === undefined) return;
@@ -98,15 +103,7 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
   };
 
   const handleLogin = async (email: string, password: string) => {
-    await Login(
-      { email, password },
-      {
-        onSettled: () => {
-          console.log(isPending);
-          console.log(loginResponse);
-        },
-      },
-    );
+    await Login({ email, password });
 
     const response = await api.auth.login({ email, password });
 
