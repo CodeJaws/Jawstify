@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { FieldValues, Path, UseFormGetValues } from 'react-hook-form';
 import useUserData from '../global/useUserData';
 import * as C from '@/constants/SignValidate';
+import { useLogin } from '@/apis/queries/auth';
 
 export interface LoginFormValue {
   email?: string;
@@ -50,6 +51,10 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
+  const router = useRouter();
+  const { setUser } = useUserData();
+  const { mutate: Login, isPending, isError, error, data: loginResponse } = useLogin();
+
   const validateBtnActivation = () => {
     if (inputValues === undefined || getValues === undefined) return;
     if (inputValues.every((value) => getValues(value))) setIsBtnActive(true);
@@ -64,9 +69,6 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
     validateBtnActivation();
     initServerAlertMessage();
   };
-
-  const router = useRouter();
-  const { setUser } = useUserData();
 
   const onLoginSubmit = async (data: LoginFormValue) => {
     try {
@@ -96,7 +98,18 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
   };
 
   const handleLogin = async (email: string, password: string) => {
+    await Login(
+      { email, password },
+      {
+        onSettled: () => {
+          console.log(isPending);
+          console.log(loginResponse);
+        },
+      },
+    );
+
     const response = await api.auth.login({ email, password });
+
     localStorageSetItem('accessToken', response.accessToken);
     await setUser(response.user);
     response.accessToken && router.push('mydashboard');
