@@ -15,7 +15,6 @@ export const useLogin = () => {
       return request.post(`auth/login`, { email, password });
     },
     onSuccess: (data) => {
-      // TODO: user별로 쿼리 키 세분화하기
       queryClient.invalidateQueries({ queryKey: ['loginData'] });
       queryClient.setQueryData(['loginData'], data);
     },
