@@ -163,9 +163,3 @@ const StyledBottomText = styled.h5`
   text-align: center;
   ${fontStyle(16, 400)}
 `;
-
-export const StyledServerErrorText = styled.p`
-  color: ${COLORS.RED_D6};
-  ${fontStyle(14, 400)};
-  margin-top: -10px;
-`;
