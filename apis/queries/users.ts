@@ -14,10 +14,12 @@ export const useSignup = (email: string) => {
       queryClient.invalidateQueries({ queryKey: ['signUpData', email] });
       console.log('회원가입 완료!');
     },
-    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
 
-  return { mutate, isPending, isError, error };
+  const errorObj = error as unknown as ErrorProps;
+  const errorMessage = errorObj?.data?.message;
+
+  return { mutate, isPending, isError, errorMessage };
 };
 
 /** 내 정보 조회 */
