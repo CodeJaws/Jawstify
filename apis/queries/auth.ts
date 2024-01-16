@@ -19,10 +19,12 @@ export const useLogin = () => {
       queryClient.invalidateQueries({ queryKey: ['loginData'] });
       queryClient.setQueryData(['loginData'], data);
     },
-    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
 
-  return { mutate, isPending, isError, error };
+  const errorObj = error as unknown as ErrorProps;
+  const errorMessage = errorObj?.data?.message;
+
+  return { mutate, isPending, isError, errorMessage };
 };
 
 /** 비밀번호 변경 */
