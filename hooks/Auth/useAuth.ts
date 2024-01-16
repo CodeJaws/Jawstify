@@ -57,11 +57,10 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
   const router = useRouter();
   const { setUser } = useUserData();
   const { mutate: Login, errorMessage: loginErrorMsg } = useLogin();
-  const { mutate: SignUp, errorMessage: signUpErrorMsg } = useSignup('email');
+  const { mutate: SignUp, errorMessage: signUpErrorMsg } = useSignup();
 
   const queryClient = useQueryClient();
   const loginResponse = queryClient.getQueryData(['loginData']) as LoginItem;
-  // const signUpResponse = queryClient.getQueryData(['signUpData']) as SignupItem;
 
   const validateBtnActivation = () => {
     if (inputValues === undefined || getValues === undefined) return;
