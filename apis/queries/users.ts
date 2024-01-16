@@ -5,14 +5,13 @@ import { request } from '../axios';
 import { handleReactQueryError } from '@/lib/toast';
 
 /** 회원가입 */
-export const useSignup = (email: string) => {
+export const useSignup = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: (body: SignupProps) => request.post('users', body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['signUpData', email] });
-      console.log('회원가입 완료!');
+      queryClient.invalidateQueries({ queryKey: ['signUpData'] });
     },
   });
 
