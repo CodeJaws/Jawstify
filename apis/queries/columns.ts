@@ -7,10 +7,8 @@ import { handleReactQueryError } from '@/lib/toast';
 import useColumnId from '@/hooks/ModalCard/useColumnId';
 
 /** 컬럼 생성 */
-export const useCreateColumn = () => {
+export const useCreateColumn = (dashboardId: number) => {
   const queryClient = useQueryClient();
-
-  const { dashboardId } = useDashBoardId();
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: (body: CreateColumnProps) => request.post('columns', body),
@@ -25,17 +23,19 @@ export const useCreateColumn = () => {
 };
 
 /** 컬럼 목록 조회 */
-export const useGetColumnList = () => {
-  const { dashboardId } = useDashBoardId();
-  const { data: dashBoard } = useQuery({
-    // TODO: queryKey: ['dashBoard', dashboardId]로 바꿔야 함.
-    queryKey: ['dashBoard', dashboardId],
+export const useGetColumnList = (dashboardId: number) => {
+  const {
+    data: dashBoardColumnData,
+    isFetched,
+    isSuccess,
+  } = useQuery({
+    queryKey: ['columnList', dashboardId],
     queryFn: async () => {
       return await API.columns.getColumnList({ dashboardId });
     },
     enabled: !!dashboardId,
   });
-  return { dashBoard };
+  return { dashBoardColumnData, isFetched, isSuccess };
 };
 
 /** 컬럼 수정 */
@@ -49,7 +49,6 @@ export const useCorrectColumn = () => {
     mutationFn: ({ columnId, title }: CorrectColumnProps) => request.put(`columns/${columnId}`, { title }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['columnList', dashboardId, columnId] });
-      console.log('컬럼 수정 완료');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -67,7 +66,6 @@ export const useDeleteColumn = () => {
     mutationFn: ({ columnId }: DeleteColumnProps) => request.delete(`columns/${columnId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['columnList', dashboardId] });
-      console.log('컬럼 삭제 완료');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
