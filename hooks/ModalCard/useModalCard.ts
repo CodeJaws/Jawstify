@@ -14,10 +14,10 @@ function useModalCard() {
   const deviceType = useDeviceType();
 
   const { cardData } = useGetCardDetails();
-  const { dashBoard } = useGetColumnList();
+  const { dashBoardColumnData } = useGetColumnList(dashboardId);
   const { data } = useGetMembersInDashboard({ dashboardId });
 
-  const filterColumn = dashBoard?.data.filter((val) => val.id === cardData?.columnId);
+  const filterColumn = dashBoardColumnData?.data.filter((val) => val.id === cardData?.columnId);
   const status = filterColumn ? filterColumn[0]?.title : '';
 
   useEffect(() => {

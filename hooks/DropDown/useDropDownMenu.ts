@@ -49,8 +49,8 @@ function useDropDownMenu({ setIsOpen }: Props) {
 
   useEffect(() => {
     setColumnId(filterColumnId);
-    setManager(cardData.assignee.id);
-  }, [cardData.assignee.id, filterColumnId, setColumnId, setManager]);
+    setManager(cardData?.assignee.id);
+  }, [cardData?.assignee.id, filterColumnId, setColumnId, setManager]);
 
   return { isCheck, handleCheck, handleCheckName, tasks };
 }
