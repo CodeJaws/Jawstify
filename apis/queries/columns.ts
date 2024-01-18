@@ -14,7 +14,6 @@ export const useCreateColumn = (dashboardId: number) => {
     mutationFn: (body: CreateColumnProps) => request.post('columns', body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['columnList', dashboardId] });
-      console.log('컬럼 생성 완료');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });

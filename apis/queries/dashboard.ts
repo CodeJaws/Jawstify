@@ -22,7 +22,6 @@ export const useCreateDashboard = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inviteItem'] });
       // 여기에 대시보드 생성시 invalidateQueries를 추가하면 될 것 같네요
-      console.log('대시보드 생성 완료');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });

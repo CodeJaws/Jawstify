@@ -24,7 +24,6 @@ export const useCreateCard = () => {
     mutationFn: (body: CreateCardProps) => request.post('cards', body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['card', columnId] });
-      console.log('카드 생성 완료');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -66,7 +65,6 @@ export const useCorrectCard = () => {
     // mutationFn: API.cards.correctCard({})
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['card', columnId, cardId] });
-      console.log('카드 수정 완료');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -98,7 +96,6 @@ export const useDeleteCard = () => {
     mutationFn: ({ cardId }: DeleteCardProps) => request.delete(`cards/${cardId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['card', columnId] });
-      console.log('카드 삭제 완료');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });

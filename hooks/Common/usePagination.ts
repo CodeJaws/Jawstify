@@ -98,7 +98,6 @@ const usePagination = ({ size, type, dashboardId }: usePaginationProps): usePagi
     }
   }, [memberData, inviteData, dashboardData]);
 
-  console.log('멤버데이터', memberData);
   return { handlePageNum, pageNum, totalPages, allItems };
 };
 
