@@ -25,7 +25,7 @@ function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<LoginFormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onChange' });
+  } = useForm<LoginFormValue>({ mode: 'onBlur', shouldFocusError: true, reValidateMode: 'onBlur' });
 
   const { isBtnActive, onLoginSubmit, alertMessage, handleChange, isModalOpen, setIsModalOpen } = useAuth(getValues, [
     'email',
@@ -162,10 +162,4 @@ const StyledBottomText = styled.h5`
   color: var(--content-main);
   text-align: center;
   ${fontStyle(16, 400)}
-`;
-
-export const StyledServerErrorText = styled.p`
-  color: ${COLORS.RED_D6};
-  ${fontStyle(14, 400)};
-  margin-top: -10px;
 `;

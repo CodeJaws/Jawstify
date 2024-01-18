@@ -25,7 +25,7 @@ const GoogleLoginButton = () => {
       await handleLogin(googleLoginEmail, googleLoginPwd);
     }
 
-    handleProfileImgUpload(googleProfileImg);
+    // handleProfileImgUpload(googleProfileImg);
   };
 
   const toDataURL = (url: string) =>

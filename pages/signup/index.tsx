@@ -10,7 +10,6 @@ import mainLogo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 import * as L from '../login';
-
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { Helmet } from 'react-helmet';
@@ -63,11 +62,8 @@ function SignUp() {
                 pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
                 onChange: handleChange,
               })}
-              errorMessage={errors?.email?.message}
+              errorMessage={errors?.email?.message || alertMessage?.serverMessage}
             />
-            {alertMessage.serverMessage && (
-              <L.StyledServerErrorText>{alertMessage.serverMessage}</L.StyledServerErrorText>
-            )}
             <FormInput
               label="닉네임"
               register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
@@ -180,6 +176,8 @@ const StyledText = styled.h5`
   ${fontStyle(16, 400)}
 `;
 
-const StyledAgreeNotCheckedText = styled(L.StyledServerErrorText)`
-  margin-top: -15px;
+export const StyledAgreeNotCheckedText = styled.p`
+  color: ${COLORS.RED_D6};
+  ${fontStyle(14, 400)};
+  margin-top: -10px;
 `;

@@ -1,20 +1,82 @@
+import { handleReactQueryError } from '@/lib/toast';
+import {
+  CheckCardListProps,
+  CorrectCardProps,
+  CreateCardProps,
+  CreateColumnProps,
+  CreateDashboardProps,
+  DeleteCardProps,
+  GetCardDetailsProps,
+} from '@/types/api';
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { ErrorProps } from '@/types/api';
+import { request } from '../axios';
 import useCardId from '@/hooks/ModalCard/useCardId';
-import { useQuery } from '@tanstack/react-query';
 import API from '../api';
+import useColumnId from '@/hooks/ModalCard/useColumnId';
 
 /** 카드 생성 */
-export const useCreateCard = () => {};
+export const useCreateCard = () => {
+  const queryClient = useQueryClient();
+  const { columnId } = useColumnId();
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: (body: CreateCardProps) => request.post('cards', body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['card', columnId] });
+    },
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
+  });
+
+  return { mutate, isPending, isError, error };
+};
 
 /** 카드 목록 조회 */
-export const useCheckCardList = () => {};
+export const useCheckCardList = ({ size, cursorId, columnId }: CheckCardListProps) => {
+  const { data: columnCardList } = useQuery({
+    queryKey: ['card', columnId],
+    queryFn: async () => {
+      return await API.cards.checkCardList({ size, cursorId, columnId });
+    },
+    // enabled: !!cardId,
+  });
+
+  return { columnCardList };
+};
 
 /** 카드 수정 */
-export const useCorrectCard = () => {};
+export const useCorrectCard = () => {
+  const queryClient = useQueryClient();
+  const { cardId } = useCardId();
+  const { columnId } = useColumnId();
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: ({ cardId, columnId, assigneeUserId, title, description, dueDate, tags, imageUrl }: CorrectCardProps) =>
+      request.put(`cards/${cardId}`, {
+        cardId,
+        columnId,
+        assigneeUserId,
+        title,
+        description,
+        dueDate,
+        tags,
+        imageUrl,
+      }),
+    // mutationFn: API.cards.correctCard({})
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['card', columnId, cardId] });
+    },
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
+  });
+
+  return { mutate, isPending, isError, error };
+};
 
 /** 카드 상세 조회 */
 export const useGetCardDetails = () => {
   const { cardId } = useCardId();
   const { data: cardData } = useQuery({
+    //TODO: queryKey: ['card', columnId, cardId]로 바꾸기
     queryKey: ['card', cardId],
     queryFn: async () => {
       return await API.cards.getCardDetails({ cardId });
@@ -23,4 +85,20 @@ export const useGetCardDetails = () => {
   });
 
   return { cardData };
+};
+
+/** 카드 삭제 */
+export const useDeleteCard = () => {
+  const queryClient = useQueryClient();
+  const { columnId } = useColumnId();
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: ({ cardId }: DeleteCardProps) => request.delete(`cards/${cardId}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['card', columnId] });
+    },
+    onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
+  });
+
+  return { mutate, isPending, isError, error };
 };

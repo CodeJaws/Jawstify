@@ -57,9 +57,9 @@ function useDropDown({ onChange }: Props) {
   }, [inputData, onChange]);
 
   useEffect(() => {
-    setInputData(cardData.assignee.nickname);
-    setImgSrc(cardData.assignee.profileImageUrl);
-  }, [setInputData, setImgSrc, cardData.assignee.nickname, cardData.assignee.profileImageUrl]);
+    setInputData(cardData?.assignee.nickname);
+    setImgSrc(cardData?.assignee.profileImageUrl);
+  }, [setInputData, setImgSrc, cardData?.assignee.nickname, cardData?.assignee.profileImageUrl]);
 
   return { isOpen, handleBlur, openMenu, setIsOpen, inputData, openDropDown, filterData, status, imgSrc };
 }

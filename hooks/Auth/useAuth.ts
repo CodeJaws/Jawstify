@@ -5,6 +5,10 @@ import { useEffect, useState } from 'react';
 import { FieldValues, Path, UseFormGetValues } from 'react-hook-form';
 import useUserData from '../global/useUserData';
 import * as C from '@/constants/SignValidate';
+import { useLogin } from '@/apis/queries/auth';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { LoginItem, SignupItem } from '@/types/api';
+import { useSignup } from '@/apis/queries/users';
 
 export interface LoginFormValue {
   email?: string;
@@ -50,6 +54,14 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
+  const router = useRouter();
+  const { setUser } = useUserData();
+  const { mutate: Login, errorMessage: loginErrorMsg } = useLogin();
+  const { mutate: SignUp, errorMessage: signUpErrorMsg } = useSignup();
+
+  const queryClient = useQueryClient();
+  const loginResponse = queryClient.getQueryData(['loginData']) as LoginItem;
+
   const validateBtnActivation = () => {
     if (inputValues === undefined || getValues === undefined) return;
     if (inputValues.every((value) => getValues(value))) setIsBtnActive(true);
@@ -65,16 +77,13 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
     initServerAlertMessage();
   };
 
-  const router = useRouter();
-  const { setUser } = useUserData();
-
   const onLoginSubmit = async (data: LoginFormValue) => {
     try {
       await handleLogin(data.email as string, data.password as string);
-      throw Error;
+      if (loginErrorMsg) throw Error;
     } catch (e: any) {
       setIsModalOpen(true);
-      setAlertMessage({ ...alertMessage, serverMessage: e?.data?.message });
+      setAlertMessage({ ...alertMessage, serverMessage: loginErrorMsg });
     }
   };
 
@@ -88,22 +97,28 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
 
     try {
       await handleSignUp(data);
-      setAlertMessage({ ...alertMessage, serverMessage: C.SIGNUP_SUCCESS_MSG });
+      if (signUpErrorMsg) throw Error;
     } catch (e: any) {
       setIsModalOpen(true);
-      setAlertMessage({ ...alertMessage, serverMessage: e?.data?.message });
+      setAlertMessage({ ...alertMessage, serverMessage: signUpErrorMsg });
+      return;
     }
+    setAlertMessage({ ...alertMessage, serverMessage: C.SIGNUP_SUCCESS_MSG });
   };
 
   const handleLogin = async (email: string, password: string) => {
-    const response = await api.auth.login({ email, password });
-    localStorageSetItem('accessToken', response.accessToken);
-    await setUser(response.user);
-    response.accessToken && router.push('mydashboard');
+    await Login({ email, password });
+
+    if (loginResponse?.accessToken) {
+      localStorageSetItem('accessToken', loginResponse?.accessToken);
+      await setUser(loginResponse.user);
+      alert(`${loginResponse.user.nickname}님 환영합니다!`);
+      router.push('mydashboard');
+    }
   };
 
   const handleSignUp = async (data: SignUpFormValue) => {
-    const response = await api.users.signup({
+    await SignUp({
       email: data.email as string,
       nickname: data.nickname as string,
       password: data.password as string,
