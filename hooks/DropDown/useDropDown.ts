@@ -21,7 +21,7 @@ function useDropDown({ onChange }: Props) {
 
   const card = queryClient.getQueryData(['card', cardId]);
   const cardData = card as GetCardDetailsItem;
-  const member = queryClient.getQueryData(['member']);
+  const member = queryClient.getQueryData(['membersInDashboard', 1]);
   const members = member as GetMembersInDashboardItem;
 
   const openMenu = () => {
@@ -54,7 +54,7 @@ function useDropDown({ onChange }: Props) {
 
   useEffect(() => {
     onChange('담당자', inputData);
-  }, [inputData, onChange]);
+  }, [inputData]);
 
   useEffect(() => {
     setInputData(cardData?.assignee.nickname);
