@@ -246,11 +246,6 @@ const StyledNoItemTitleWrapper = styled.div`
   top: 33.5px;
   left: 28px;
 
-  ${onMobile} {
-    margin-top: 30px;
-    margin-left: 20px;
-  }
-
   h1 {
     ${fontStyle(24, 700)}
 

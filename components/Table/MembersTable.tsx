@@ -106,6 +106,8 @@ const StyledContainer = styled.div`
   width: 620px;
   flex-shrink: 0;
 
+  overflow: hidden;
+
   height: 404px;
   border-radius: 8px;
   background: var(--content-color);

@@ -127,10 +127,20 @@ const StyledRouterButton = styled.button`
 `;
 
 const StyledMainWrapper = styled.div`
+  width: 620px;
   margin-top: 25px;
   gap: 12px;
+
+  ${onMobile} {
+    width: 100%;
+  }
 `;
 
 const StyledMainInWrapper = styled.div`
+  width: 620px;
   margin: 12px 0px;
+
+  ${onMobile} {
+    width: 100%;
+  }
 `;
