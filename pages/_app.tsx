@@ -41,7 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <GlobalStyles />
         <Component {...pageProps} />
         <Toaster containerStyle={{ fontSize: '1.5rem', fontWeight: '600' }} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <div style={{ fontSize: '1.5rem' }}>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </div>
       </QueryClientProvider>
     </>
   );
