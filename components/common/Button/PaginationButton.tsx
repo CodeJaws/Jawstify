@@ -1,12 +1,8 @@
-import leftPage from '@/public/assets/icons/leftPage.svg';
-import lightLeftPage from '@/public/assets/icons/lightLeftPage.svg';
-import lightRightPage from '@/public/assets/icons/lightRightPage.svg';
-import rightPage from '@/public/assets/icons/rightPage.svg';
-import { onMobile } from '@/styles/mediaQuery';
-import { localStorageGetItem } from '@/utils/localStorage';
-
 import Image from 'next/image';
 import styled from 'styled-components';
+
+import { onMobile } from '@/styles/mediaQuery';
+import { localStorageGetItem } from '@/utils/localStorage';
 
 interface PaginationButtonProps {
   active: boolean;
@@ -14,7 +10,7 @@ interface PaginationButtonProps {
   onClick: () => void;
 }
 
-const choosePaginationImage = ({
+const determineImageSource = ({
   direction,
   active,
   themeMode,
@@ -23,28 +19,34 @@ const choosePaginationImage = ({
   active: boolean;
   themeMode: string;
 }) => {
-  if (themeMode == 'light') {
-    if (active && direction === 'left') return leftPage;
-    else if (active && direction === 'right') return rightPage;
-    else if (!active && direction === 'left') return lightLeftPage;
-    else if (!active && direction === 'right') return lightRightPage;
+  const isLightTheme = themeMode === 'light';
+  const isActiveLeft = active && direction === 'left';
+  const isActiveRight = active && direction === 'right';
+
+  if (isLightTheme) {
+    if (isActiveLeft) return '/assets/icons/leftPage.svg';
+    else if (isActiveRight) return '/assets/icons/rightPage.svg';
+    else if (!active && direction === 'left') return '/assets/icons/lightLeftPage.svg';
+    else if (!active && direction === 'right') return '/assets/icons/lightRightPage.svg';
   } else {
-    if (active && direction === 'left') return lightLeftPage;
-    else if (active && direction === 'right') return lightRightPage;
-    else if (!active && direction === 'left') return leftPage;
-    else if (!active && direction === 'right') return rightPage;
+    if (isActiveLeft) return '/assets/icons/lightLeftPage.svg';
+    else if (isActiveRight) return '/assets/icons/lightRightPage.svg';
+    else if (!active && direction === 'left') return '/assets/icons/leftPage.svg';
+    else if (!active && direction === 'right') return '/assets/icons/rightPage.svg';
   }
+
+  return '';
 };
 
 function PaginationButton({ active, direction, onClick }: PaginationButtonProps) {
   const themeMode = localStorageGetItem('theme') as string;
-  const selectedImg = choosePaginationImage({ direction, active, themeMode });
+  const imgSrc = determineImageSource({ direction, active, themeMode });
   const imgAlt = direction === 'left' ? '왼쪽화살표' : '오른쪽화살표';
 
   return (
     <StyledDiv onClick={onClick}>
       <StyledPageButton $direction={direction}>
-        <StyledPageImage src={selectedImg} alt={imgAlt} />
+        <StyledPageImage src={imgSrc} alt={imgAlt} width={40} height={40} priority />
       </StyledPageButton>
     </StyledDiv>
   );
