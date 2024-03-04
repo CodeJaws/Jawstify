@@ -1,9 +1,9 @@
+import styled, { css } from 'styled-components';
+
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 import { ButtonOnClickProps } from '@/types/button';
-
-import styled, { css } from 'styled-components';
 
 interface LoginButtonProps extends ButtonOnClickProps {
   active?: boolean;
@@ -15,18 +15,16 @@ interface LoginButtonProps extends ButtonOnClickProps {
 
 function LoginButton({ active = false, usingType, onClick, text, type = 'button', margin = '0px' }: LoginButtonProps) {
   return (
-    <>
-      <StyledButton
-        $usingType={usingType}
-        type={type}
-        disabled={active ? false : true}
-        $active={active}
-        $margin={margin}
-        onClick={onClick}
-      >
-        {text}
-      </StyledButton>
-    </>
+    <StyledButton
+      $usingType={usingType}
+      type={type}
+      disabled={active ? false : true}
+      $active={active}
+      $margin={margin}
+      onClick={onClick}
+    >
+      {text}
+    </StyledButton>
   );
 }
 
