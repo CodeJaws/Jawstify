@@ -20,19 +20,17 @@ const determineImageSource = ({
   themeMode: string;
 }) => {
   const isLightTheme = themeMode === 'light';
-  const isActiveLeft = active && direction === 'left';
-  const isActiveRight = active && direction === 'right';
 
   if (isLightTheme) {
-    if (isActiveLeft) return '/assets/icons/leftPage.svg';
-    else if (isActiveRight) return '/assets/icons/rightPage.svg';
-    else if (!active && direction === 'left') return '/assets/icons/lightLeftPage.svg';
-    else if (!active && direction === 'right') return '/assets/icons/lightRightPage.svg';
+    if (active && direction === 'left') return '/assets/icons/leftPage.svg';
+    if (active && direction === 'right') return '/assets/icons/rightPage.svg';
+    if (!active && direction === 'left') return '/assets/icons/lightLeftPage.svg';
+    if (!active && direction === 'right') return '/assets/icons/lightRightPage.svg';
   } else {
-    if (isActiveLeft) return '/assets/icons/lightLeftPage.svg';
-    else if (isActiveRight) return '/assets/icons/lightRightPage.svg';
-    else if (!active && direction === 'left') return '/assets/icons/leftPage.svg';
-    else if (!active && direction === 'right') return '/assets/icons/rightPage.svg';
+    if (active && direction === 'left') return '/assets/icons/lightLeftPage.svg';
+    if (active && direction === 'right') return '/assets/icons/lightRightPage.svg';
+    if (!active && direction === 'left') return '/assets/icons/leftPage.svg';
+    if (!active && direction === 'right') return '/assets/icons/rightPage.svg';
   }
 
   return '';
@@ -44,19 +42,13 @@ function PaginationButton({ active, direction, onClick }: PaginationButtonProps)
   const imgAlt = direction === 'left' ? '왼쪽화살표' : '오른쪽화살표';
 
   return (
-    <StyledDiv onClick={onClick}>
-      <StyledPageButton $direction={direction}>
-        <StyledPageImage src={imgSrc} alt={imgAlt} width={40} height={40} priority />
-      </StyledPageButton>
-    </StyledDiv>
+    <StyledPageButton $direction={direction} onClick={onClick}>
+      <Image src={imgSrc} alt={imgAlt} width={16} height={16} priority />
+    </StyledPageButton>
   );
 }
 
 export default PaginationButton;
-
-const StyledDiv = styled.div`
-  display: flex;
-`;
 
 const StyledPageButton = styled.button<{ $direction: string }>`
   width: 40px;
@@ -73,9 +65,4 @@ const StyledPageButton = styled.button<{ $direction: string }>`
     width: 36px;
     height: 36px;
   }
-`;
-
-const StyledPageImage = styled(Image)`
-  width: 16px;
-  height: 16px;
 `;

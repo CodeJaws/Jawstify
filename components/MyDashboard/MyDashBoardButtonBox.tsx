@@ -16,6 +16,7 @@ function MyDashBoardButtonBox({ resetToFirst }: MyDashBoardButtonBoxProps) {
   const { setIsOpen, allItems, totalPages, pageNum, handlePageNum, isOpen, setModalValue, handleCreate } =
     useMyDashBoardButtonBox({ resetToFirst });
 
+  if (!pageNum || !totalPages) return null;
   return (
     <div>
       <ButtonBoxWrapper>
