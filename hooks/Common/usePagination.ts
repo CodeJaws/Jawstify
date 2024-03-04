@@ -66,6 +66,7 @@ const usePagination = ({ size, type, dashboardId }: usePaginationProps): usePagi
   } = useGetDashboardList({
     navigationMethod: 'pagination',
     page: pageNum,
+    size: 5,
   });
 
   const memberFetch = useCallback((memberData: GetMembersInDashboardItem) => {

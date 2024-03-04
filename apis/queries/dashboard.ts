@@ -134,6 +134,7 @@ export const useLoadInviteDashboard = ({ size = 20, page = 1, dashboardId }: Das
     queryKey: ['invitedMembersInDashboard', page],
     queryFn: async () =>
       await request.get<LoadInviteDashboardItem>(`dashboards/${dashboardId}/invitations?page=${page}&size=${size}`),
+    enabled: !!dashboardId,
   });
   if (isError) handleReactQueryError(error as unknown as ErrorProps);
 

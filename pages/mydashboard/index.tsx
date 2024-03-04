@@ -12,7 +12,7 @@ import styled from 'styled-components';
 function MyDashBoard() {
   useRedirectByLogin();
 
-  const { refresh, resetToFirst, refreshPaginationToggle, refreshToFirst } = useMyDashboard();
+  const { resetToFirst, refreshToFirst } = useMyDashboard();
 
   return (
     <>

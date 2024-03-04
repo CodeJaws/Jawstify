@@ -31,6 +31,7 @@ export const useGetMembersInDashboard = ({ size = 20, page = 1, dashboardId }: D
         `members?dashboardId=${dashboardId}&page=${page}&size=${size}`,
       );
     },
+    enabled: !!dashboardId,
   });
   if (isError) handleReactQueryError(error as unknown as ErrorProps);
 
