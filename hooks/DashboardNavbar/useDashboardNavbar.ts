@@ -50,7 +50,7 @@ function useDashboardNavbar({ isMyDashboard, dashboard }: useDashboardNavbarProp
         setIsModalOpen(false);
       }
     } catch (e: any) {
-      alert(e.data.message);
+      toast.error(e.data.message);
       return;
     }
   };
