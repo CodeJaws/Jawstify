@@ -1,6 +1,6 @@
+import { CreateDashboardProps } from '@/types/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { CreateDashboardProps } from './../../types/api';
 
 import { request } from '@/apis/axios';
 import { handleReactQueryError } from '@/lib/toast';

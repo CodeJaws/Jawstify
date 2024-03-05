@@ -1,19 +1,10 @@
-import { handleReactQueryError } from '@/lib/toast';
-import {
-  CheckCardListProps,
-  CorrectCardProps,
-  CreateCardProps,
-  CreateColumnProps,
-  CreateDashboardProps,
-  DeleteCardProps,
-  GetCardDetailsProps,
-} from '@/types/api';
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
-import { ErrorProps } from '@/types/api';
-import { request } from '../axios';
+import API from '@/apis/api';
+import { request } from '@/apis/axios';
 import useCardId from '@/hooks/ModalCard/useCardId';
-import API from '../api';
 import useColumnId from '@/hooks/ModalCard/useColumnId';
+import { handleReactQueryError } from '@/lib/toast';
+import { CheckCardListProps, CorrectCardProps, CreateCardProps, DeleteCardProps, ErrorProps } from '@/types/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 /** 카드 생성 */
 export const useCreateCard = () => {

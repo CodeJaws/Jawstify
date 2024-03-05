@@ -2,13 +2,13 @@ import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
 import useManager from '@/hooks/DropDown/useManager';
 import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
+import useCardId from '@/hooks/ModalCard/useCardId';
 import useColumnId from '@/hooks/ModalCard/useColumnId';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
 import { GetCardDetailsItem, GetColumnListItem } from '@/types/api';
-import { useQueryClient } from '@tanstack/react-query';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import useCardId from '../ModalCard/useCardId';
-import useDashBoardId from '../ModalCard/useDashBoardId';
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>;

@@ -1,11 +1,12 @@
 import API from '@/apis/api';
+import useRefresh from '@/hooks/Common/useRefresh';
+import useCardId from '@/hooks/ModalCard/useCardId';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
 import { GetCardDetailsItem } from '@/types/api';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import useRefresh from './Common/useRefresh';
-import useCardId from './ModalCard/useCardId';
-import useDashBoardId from './ModalCard/useDashBoardId';
 
 interface Props {
   id: number;
