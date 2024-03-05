@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 import Modal from '@/components/Modal/Modal';
 import DashBoardAddButton from '@/components/common/Button/DashBoardAddButton';
 import DashBoardButton from '@/components/common/Button/DashBoardButton';
@@ -5,8 +7,6 @@ import PaginationButton from '@/components/common/Button/PaginationButton';
 import useMyDashBoardButtonBox from '@/hooks/Dashboard/useMyDashboardButtonBox';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
-
-import styled from 'styled-components';
 
 export interface MyDashBoardButtonBoxProps {
   resetToFirst: boolean;
@@ -16,23 +16,14 @@ function MyDashBoardButtonBox({ resetToFirst }: MyDashBoardButtonBoxProps) {
   const { setIsOpen, allItems, totalPages, pageNum, handlePageNum, isOpen, setModalValue, handleCreate } =
     useMyDashBoardButtonBox({ resetToFirst });
 
+  if (!pageNum || !totalPages) return null;
   return (
     <div>
       <ButtonBoxWrapper>
-        <DashBoardAddButton
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        />
+        <DashBoardAddButton onClick={() => setIsOpen(true)} />
         {allItems.map((item) => (
           <div key={item.id}>
-            <DashBoardButton
-              text={item.title as string}
-              color={item.color}
-              king={item.createdByMe}
-              onClick={() => {}}
-              id={item.id}
-            />
+            <DashBoardButton text={item.title as string} color={item.color} king={item.createdByMe} id={item.id} />
           </div>
         ))}
       </ButtonBoxWrapper>
