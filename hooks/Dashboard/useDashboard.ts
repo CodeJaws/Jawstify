@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useGetDashboardDetailed } from '@/apis/queries/dashboard';
 import { useGetMembersInDashboard } from '@/apis/queries/members';
 import { ApiErrorResponse } from '@/types/apiType';
+import { toast } from 'react-hot-toast';
 
 interface useDashboardProps {
   dashboardId: number;
@@ -21,7 +22,7 @@ const useDashboard = ({ dashboardId }: useDashboardProps) => {
       apiError.data?.message === '대시보드의 멤버가 아닙니다.' ||
       apiError.data?.message === '대시보드가 존재하지 않습니다.'
     ) {
-      alert('잘못된 접근입니다!');
+      toast.error('잘못된 접근입니다!');
       router.push('/mydashboard');
     }
   }

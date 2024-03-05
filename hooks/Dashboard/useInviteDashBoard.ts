@@ -2,6 +2,7 @@ import API from '@/apis/api';
 import { InviteDashBoardProps } from '@/components/Table/InviteDashBoard';
 
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 interface GetInvitationListProps {
   id: number;
@@ -85,7 +86,7 @@ function useInviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
       setDataSource(searchItem.invitations);
       setCursor(searchItem.cursorId as number);
     } else {
-      alert('검색된 데이터가 없습니다.');
+      toast('검색된 데이터가 없습니다.', { icon: '❌' });
       getItems();
       setSearchText('');
     }
