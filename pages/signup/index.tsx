@@ -5,11 +5,12 @@ import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useAuth, { SignUpFormValue } from '@/hooks/Auth/useAuth';
 import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
+import * as L from '@/pages/login';
 import mainLogoText from '@/public/assets/images/title.png';
 import mainLogo from '@/public/assets/images/transJaws.png';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
-import * as L from '../login';
+
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { Helmet } from 'react-helmet';

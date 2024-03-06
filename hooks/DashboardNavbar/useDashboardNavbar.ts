@@ -5,6 +5,7 @@ import API from '@/apis/api';
 import { useInviteDashboard } from '@/apis/queries/dashboard';
 import { ALREADY_INVITE_ERROR } from '@/constants/ApiError';
 import { GetDashboardDetailedItem } from '@/types/api';
+import { toast } from 'react-hot-toast';
 
 interface useDashboardNavbarProps {
   isMyDashboard: boolean;
@@ -39,7 +40,7 @@ function useDashboardNavbar({ isMyDashboard, dashboard }: useDashboardNavbarProp
 
       for (let i = 0; i < invitations.length; i++) {
         if (email === invitations[i].invitee.email) {
-          alert(ALREADY_INVITE_ERROR);
+          toast.error(ALREADY_INVITE_ERROR);
           return;
         }
       }
@@ -49,7 +50,7 @@ function useDashboardNavbar({ isMyDashboard, dashboard }: useDashboardNavbarProp
         setIsModalOpen(false);
       }
     } catch (e: any) {
-      alert(e.data.message);
+      toast.error(e.data.message);
       return;
     }
   };

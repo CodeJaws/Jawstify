@@ -1,8 +1,6 @@
-import useColumnId from '@/hooks/ModalCard/useColumnId';
+import { request } from '@/apis/axios';
 import { ErrorProps, SignupProps } from '@/types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { request } from '../axios';
-import { handleReactQueryError } from '@/lib/toast';
 
 /** 회원가입 */
 export const useSignup = () => {

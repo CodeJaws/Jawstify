@@ -1,16 +1,16 @@
+import { default as API, default as api } from '@/apis/api';
+import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
+import { CreateToDoProps } from '@/components/Modal/ModalContent/CreateToDo';
 import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
-import { useEffect, useState } from 'react';
 import useGetMember from '@/hooks/DropDown/useGetMember';
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
 import useManager from '@/hooks/DropDown/useManager';
 import useUser from '@/hooks/global/useUser';
-import API from '@/apis/api';
-import axios from 'axios';
 import { CreateCardProps } from '@/types/api';
-import api from '@/apis/api';
-import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
-import { CreateToDoProps } from '@/components/Modal/ModalContent/CreateToDo';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 function useCreateToDo({ dashboardInfos, onOkClick }: CreateToDoProps) {
   const [image, setImage] = useState<File>();
@@ -78,7 +78,7 @@ function useCreateToDo({ dashboardInfos, onOkClick }: CreateToDoProps) {
     if (values.마감일) body['dueDate'] = values.마감일;
     if (formatTagData) body['tags'] = formatTagData;
 
-    const response = await api.cards.createCard(body).catch((error) => alert(error.data.message));
+    const response = await api.cards.createCard(body).catch((error) => toast.error(error.data.message));
     setIsLoading(false);
 
     if (response) onOkClick();

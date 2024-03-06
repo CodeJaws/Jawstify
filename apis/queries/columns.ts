@@ -1,10 +1,10 @@
-import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import API from '../api';
-import { request } from '../axios';
-import { CorrectColumnProps, CreateCardProps, CreateColumnProps, DeleteColumnProps, ErrorProps } from '@/types/api';
-import { handleReactQueryError } from '@/lib/toast';
+import API from '@/apis/api';
+import { request } from '@/apis/axios';
 import useColumnId from '@/hooks/ModalCard/useColumnId';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
+import { handleReactQueryError } from '@/lib/toast';
+import { CorrectColumnProps, CreateColumnProps, DeleteColumnProps, ErrorProps } from '@/types/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 /** 컬럼 생성 */
 export const useCreateColumn = (dashboardId: number) => {
