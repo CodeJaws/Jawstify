@@ -4,6 +4,7 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-hot-toast';
 
 const GoogleLoginButton = () => {
   const { handleLogin, handleSignUp } = useAuth();
@@ -84,7 +85,7 @@ const GoogleLoginButton = () => {
             handleGoogleLogin(decodedUserInfo);
           }}
           onError={() => {
-            alert('구글 로그인 중 에러가 발생했습니다. 이메일로 다시 로그인 해주세요');
+            toast.error('구글 로그인 중 에러가 발생했습니다. 이메일로 다시 로그인 해주세요');
           }}
         />
       </GoogleOAuthProvider>

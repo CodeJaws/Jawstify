@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useInviteDashboard } from '@/apis/queries/dashboard';
+import { toast } from 'react-hot-toast';
 
 interface useInviteDetailsTableProps {
   allItems: any;
@@ -22,7 +23,7 @@ function useInviteDetailsTable({ allItems, dashboardId }: useInviteDetailsTableP
     for (let i = 0; i < allItems.length; i++) {
       const check = allItems[i];
       if ('invitee' in check && check.invitee.email === email) {
-        alert('이미 초대하신 멤버입니다.');
+        toast.error('이미 초대하신 멤버입니다.');
         return;
       }
     }

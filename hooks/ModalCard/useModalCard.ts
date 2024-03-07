@@ -3,9 +3,9 @@ import { useGetColumnList } from '@/apis/queries/columns';
 import { useGetMembersInDashboard } from '@/apis/queries/members';
 import useDeviceType from '@/hooks/Common/useDeviceType';
 import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
+import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
 
 import { useEffect } from 'react';
-import useDashBoardId from './useDashBoardId';
 
 function useModalCard() {
   const { setStatus } = useSelectStatus();

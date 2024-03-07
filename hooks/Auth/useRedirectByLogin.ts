@@ -3,6 +3,7 @@ import { getCookie } from 'cookies-next';
 
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
 const useRedirectByLogin = () => {
   const router = useRouter();
@@ -23,13 +24,13 @@ const useRedirectByLogin = () => {
         case '/login':
         case '/signup':
           if (await checkLoggedIn()) {
-            alert('이미 로그인한 상태입니다.');
+            toast('이미 로그인한 상태입니다.', { icon: '🦈' });
             router.push('/mydashboard');
           }
           break;
         default:
           if (!(await checkLoggedIn())) {
-            alert('로그인 후 이용해주세요.');
+            toast.error('로그인 후 이용해주세요.');
             router.push('/');
           }
       }

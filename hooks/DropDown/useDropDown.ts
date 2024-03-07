@@ -1,10 +1,11 @@
 import useImgSrc from '@/hooks/DropDown/useImgSrc';
 import useInputData from '@/hooks/DropDown/useInputData';
 import useSelectStatus from '@/hooks/DropDown/useSelectStatus';
+import useCardId from '@/hooks/ModalCard/useCardId';
 import { GetCardDetailsItem, GetMembersInDashboardItem } from '@/types/api';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
-import useCardId from '../ModalCard/useCardId';
 
 interface Props {
   onChange: (inputLabel: string, inputValue: string) => void;

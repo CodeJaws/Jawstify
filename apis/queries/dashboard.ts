@@ -1,9 +1,10 @@
-import { CreateDashboardProps } from './../../types/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { DashboardBasicInfoType, DashboardIdType, EmailType, PaginationType } from '@/types/apiType';
 import { request } from '@/apis/axios';
+import { CreateDashboardProps } from '@/types/api';
+import { handleReactQueryError } from '@/lib/toast';
 import {
   ErrorProps,
   GetDashboardDetailedItem,
@@ -11,8 +12,8 @@ import {
   GetDashboardListProps,
   LoadInviteDashboardItem,
 } from '@/types/api';
-import { handleReactQueryError } from '@/lib/toast';
 import { QUERY_KEYS } from '@/constants/QueryKey';
+import { DashboardBasicInfoType, DashboardIdType, EmailType, PaginationType } from '@/types/apiType';
 
 /** 대시보드 생성 */
 export const useCreateDashboard = () => {
@@ -39,7 +40,7 @@ export const useAbortInviteDashboard = () => {
       request.delete(`dashboards/${dashboardId}/invitations/${invitationId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.invitedMembersInDashboard] });
-      alert('취소 성공');
+      toast.success('취소 성공');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -59,7 +60,7 @@ export const useCorrectDashboard = ({ dashboardId }: DashboardIdType) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.dashboardDetailed, dashboardId] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.inviteItem] });
-      alert('변경 성공');
+      toast.success('변경 성공');
       router.push('/mydashboard');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
@@ -120,8 +121,8 @@ export const useInviteDashboard = () => {
     mutationFn: ({ dashboardId, email }: DashboardIdType & EmailType) =>
       request.post(`dashboards/${dashboardId}/invitations`, { email }),
     onSuccess: () => {
-      alert('성공적으로 초대하기 메세지를 보냈습니다');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.invitedMembersInDashboard] });
+      toast.success('성공적으로 초대하기 메세지를 보냈습니다');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });

@@ -1,4 +1,4 @@
-import { GetDashboardDetailedItem, GetMembersInDashboardItem, LoadInviteDashboardItem, LoginItem } from './api';
+import { GetMembersInDashboardItem, LoadInviteDashboardItem, LoginItem } from '@/types/api';
 
 /** 구성원의 속성 타입 */
 export type MemberType = GetMembersInDashboardItem['members'][0];
