@@ -11,6 +11,7 @@ import { CreateCardProps } from '@/types/api';
 import api from '@/apis/api';
 import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
 import { CreateToDoProps } from '@/components/Modal/ModalContent/CreateToDo';
+import { getCookie } from 'cookies-next';
 
 function useCreateToDo({ dashboardInfos, onOkClick }: CreateToDoProps) {
   const [image, setImage] = useState<File>();
@@ -45,7 +46,7 @@ function useCreateToDo({ dashboardInfos, onOkClick }: CreateToDoProps) {
         .post(`https://sp-taskify-api.vercel.app/1-4/columns/${dashboardInfos.columnId}/card-image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            Authorization: `Bearer ${getCookie('accessToken')}`,
             withCredentials: true,
           },
         })

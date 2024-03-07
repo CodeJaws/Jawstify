@@ -2,6 +2,7 @@ import useAuth, { SignUpFormValue } from '@/hooks/Auth/useAuth';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 import axios from 'axios';
+import { getCookie } from 'cookies-next';
 import { jwtDecode } from 'jwt-decode';
 
 const GoogleLoginButton = () => {
@@ -63,7 +64,7 @@ const GoogleLoginButton = () => {
       const response = await axios.post(`https://sp-taskify-api.vercel.app/1-4/users/me/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${getCookie('accessToken')}`,
           withCredentials: true,
         },
       });

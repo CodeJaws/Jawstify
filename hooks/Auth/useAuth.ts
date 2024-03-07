@@ -1,13 +1,13 @@
-import api from '@/apis/api';
-import { localStorageSetItem } from '@/utils/localStorage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { FieldValues, Path, UseFormGetValues } from 'react-hook-form';
+import { setCookie } from 'cookies-next';
+
 import useUserData from '../global/useUserData';
 import * as C from '@/constants/SignValidate';
 import { useLogin } from '@/apis/queries/auth';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { LoginItem, SignupItem } from '@/types/api';
+import { LoginItem } from '@/types/api';
 import { useSignup } from '@/apis/queries/users';
 
 export interface LoginFormValue {
@@ -110,7 +110,7 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
     await Login({ email, password });
 
     if (loginResponse?.accessToken) {
-      localStorageSetItem('accessToken', loginResponse?.accessToken);
+      await setCookie('accessToken', loginResponse?.accessToken);
       await setUser(loginResponse.user);
       alert(`${loginResponse.user.nickname}님 환영합니다!`);
       router.push('mydashboard');
