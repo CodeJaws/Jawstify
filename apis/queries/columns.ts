@@ -5,6 +5,7 @@ import { request } from '../axios';
 import { CorrectColumnProps, CreateCardProps, CreateColumnProps, DeleteColumnProps, ErrorProps } from '@/types/api';
 import { handleReactQueryError } from '@/lib/toast';
 import useColumnId from '@/hooks/ModalCard/useColumnId';
+import { QUERY_KEYS } from '@/constants/QueryKey';
 
 /** 컬럼 생성 */
 export const useCreateColumn = (dashboardId: number) => {
@@ -13,7 +14,7 @@ export const useCreateColumn = (dashboardId: number) => {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: (body: CreateColumnProps) => request.post('columns', body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['columnList', dashboardId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.columnList, dashboardId] });
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -28,7 +29,7 @@ export const useGetColumnList = (dashboardId: number) => {
     isFetched,
     isSuccess,
   } = useQuery({
-    queryKey: ['columnList', dashboardId],
+    queryKey: [QUERY_KEYS.columnList, dashboardId],
     queryFn: async () => {
       return await API.columns.getColumnList({ dashboardId });
     },
@@ -47,7 +48,7 @@ export const useCorrectColumn = () => {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: ({ columnId, title }: CorrectColumnProps) => request.put(`columns/${columnId}`, { title }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['columnList', dashboardId, columnId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.columnList, dashboardId, columnId] });
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -64,7 +65,7 @@ export const useDeleteColumn = () => {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: ({ columnId }: DeleteColumnProps) => request.delete(`columns/${columnId}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['columnList', dashboardId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.columnList, dashboardId] });
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });

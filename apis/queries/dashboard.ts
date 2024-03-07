@@ -12,6 +12,7 @@ import {
   LoadInviteDashboardItem,
 } from '@/types/api';
 import { handleReactQueryError } from '@/lib/toast';
+import { QUERY_KEYS } from '@/constants/QueryKey';
 
 /** 대시보드 생성 */
 export const useCreateDashboard = () => {
@@ -20,7 +21,7 @@ export const useCreateDashboard = () => {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: ({ title, color }: CreateDashboardProps) => request.post('dashboards', { title, color }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['inviteItem'] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.inviteItem] });
       // 여기에 대시보드 생성시 invalidateQueries를 추가하면 될 것 같네요
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
@@ -37,7 +38,7 @@ export const useAbortInviteDashboard = () => {
     mutationFn: ({ dashboardId, invitationId }: DashboardIdType & { invitationId: number }) =>
       request.delete(`dashboards/${dashboardId}/invitations/${invitationId}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['invitedMembersInDashboard'] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.invitedMembersInDashboard] });
       alert('취소 성공');
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
@@ -56,8 +57,8 @@ export const useCorrectDashboard = ({ dashboardId }: DashboardIdType) => {
       return request.put(`dashboards/${dashboardId}`, { title, color });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['dashboardDetailed', dashboardId] });
-      queryClient.invalidateQueries({ queryKey: ['inviteItem'] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.dashboardDetailed, dashboardId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.inviteItem] });
       alert('변경 성공');
       router.push('/mydashboard');
     },
@@ -74,7 +75,7 @@ export const useDeleteDashboard = () => {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: ({ dashboardId }: DashboardIdType) => request.delete(`dashboards/${dashboardId}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['inviteItem'] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.inviteItem] });
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -85,7 +86,7 @@ export const useDeleteDashboard = () => {
 /** 대시보드 상세 조회 */
 export const useGetDashboardDetailed = ({ dashboardId }: DashboardIdType) => {
   const { data, error, isLoading, isError } = useQuery({
-    queryKey: ['dashboardDetailed', dashboardId],
+    queryKey: [QUERY_KEYS.dashboardDetailed, dashboardId],
     queryFn: async () => {
       return await request.get<GetDashboardDetailedItem>(`dashboards/${dashboardId}`);
     },
@@ -98,7 +99,7 @@ export const useGetDashboardDetailed = ({ dashboardId }: DashboardIdType) => {
 /** 대시보드 목록 조회 */
 export const useGetDashboardList = ({ navigationMethod, cursorId, page = 1, size = 10 }: GetDashboardListProps) => {
   const { data, error, isLoading, isError } = useQuery({
-    queryKey: ['dashboardList', page],
+    queryKey: [QUERY_KEYS.dashboardList, page],
     queryFn: async () =>
       await request.get<GetDashboardListItem>(
         `dashboards?navigationMethod=${navigationMethod}${
@@ -120,7 +121,7 @@ export const useInviteDashboard = () => {
       request.post(`dashboards/${dashboardId}/invitations`, { email }),
     onSuccess: () => {
       alert('성공적으로 초대하기 메세지를 보냈습니다');
-      queryClient.invalidateQueries({ queryKey: ['invitedMembersInDashboard'] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.invitedMembersInDashboard] });
     },
     onError: (error) => handleReactQueryError(error as unknown as ErrorProps),
   });
@@ -131,7 +132,7 @@ export const useInviteDashboard = () => {
 /** 대시보드 초대 불러오기 */
 export const useLoadInviteDashboard = ({ size = 20, page = 1, dashboardId }: DashboardIdType & PaginationType) => {
   const { data, error, isLoading, isError } = useQuery({
-    queryKey: ['invitedMembersInDashboard', page],
+    queryKey: [QUERY_KEYS.invitedMembersInDashboard, page],
     queryFn: async () =>
       await request.get<LoadInviteDashboardItem>(`dashboards/${dashboardId}/invitations?page=${page}&size=${size}`),
     enabled: !!dashboardId,

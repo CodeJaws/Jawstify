@@ -1,9 +1,9 @@
-import { handleReactQueryError } from '@/lib/toast';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ErrorProps } from '@/types/api';
 import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { request } from '../axios';
-import { LoginProps } from '@/types/api';
+import { QUERY_KEYS } from '@/constants/QueryKey';
+import { ErrorProps, LoginProps } from '@/types/api';
 
 /** 로그인 */
 export const useLogin = () => {
@@ -15,8 +15,8 @@ export const useLogin = () => {
       return request.post(`auth/login`, { email, password });
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['loginData'] });
-      queryClient.setQueryData(['loginData'], data);
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.loginData] });
+      queryClient.setQueryData([QUERY_KEYS.loginData], data);
     },
   });
 

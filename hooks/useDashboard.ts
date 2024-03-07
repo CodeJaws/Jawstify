@@ -1,5 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/QueryKey';
 import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
 
 import API from '@/apis/api';
 import { ApiErrorResponse } from '@/types/apiType';
@@ -16,7 +17,7 @@ const useDashboard = ({ dashboardId }: useDashboardProps) => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['dashboard', dashboardId],
+    queryKey: [QUERY_KEYS.dashboard, dashboardId],
     queryFn: async () => {
       const dashboardDetailedData = await API.dashboard.getDashboardDetailed({ dashboardId: Number(dashboardId) });
       return dashboardDetailedData;
@@ -24,7 +25,7 @@ const useDashboard = ({ dashboardId }: useDashboardProps) => {
   });
 
   const { data: membersInDashboardData } = useQuery({
-    queryKey: ['members', dashboardId],
+    queryKey: [QUERY_KEYS.members, dashboardId],
     queryFn: async () => {
       const membersData = await API.members.getMembersInDashboard({ dashboardId: Number(dashboardId) });
       return membersData;

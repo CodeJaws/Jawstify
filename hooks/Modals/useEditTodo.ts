@@ -1,3 +1,4 @@
+import { QUERY_KEYS } from '@/constants/QueryKey';
 import API from '@/apis/api';
 import { useCallback, useState } from 'react';
 
@@ -77,8 +78,8 @@ function useEditTodo() {
     },
     onError: () => toast.error('할 일 수정실패'),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['card', cardId] });
-      queryClient.invalidateQueries({ queryKey: ['dashBoard', dashboardId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.card, cardId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.dashboard, dashboardId] });
     },
   });
 
