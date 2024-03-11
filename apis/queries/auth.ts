@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { request } from '../axios';
+import { request } from '@/apis/axios';
 import { QUERY_KEYS } from '@/constants/QueryKey';
 import { ErrorProps, LoginProps } from '@/types/api';
 
