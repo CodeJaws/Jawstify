@@ -1,14 +1,14 @@
-import { useLogin } from '@/apis/queries/auth';
-import { useSignup } from '@/apis/queries/users';
-import * as C from '@/constants/SignValidate';
-import useUserData from '@/hooks/global/useUserData';
-import { LoginItem } from '@/types/api';
-import { localStorageSetItem } from '@/utils/localStorage';
-
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { setCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { FieldValues, Path, UseFormGetValues } from 'react-hook-form';
+
+import { LoginItem } from '@/types/api';
+import * as C from '@/constants/SignValidate';
+import { useLogin } from '@/apis/queries/auth';
+import useUserData from '../global/useUserData';
+import { useSignup } from '@/apis/queries/users';
 
 export interface LoginFormValue {
   email?: string;
@@ -110,7 +110,7 @@ const useAuth = <T extends FieldValues>(getValues?: UseFormGetValues<T>, inputVa
     await Login({ email, password });
 
     if (loginResponse?.accessToken) {
-      localStorageSetItem('accessToken', loginResponse?.accessToken);
+      await setCookie('accessToken', loginResponse?.accessToken);
       await setUser(loginResponse.user);
       alert(`${loginResponse.user.nickname}님 환영합니다!`);
       router.push('mydashboard');

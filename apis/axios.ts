@@ -1,13 +1,12 @@
-import { localStorageGetItem } from '@/utils/localStorage';
-
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { getCookie } from 'cookies-next';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app/1-4/';
 
 axios.defaults.baseURL = BASE_URL;
 
 axios.interceptors.request.use((config) => {
-  const accessToken = localStorageGetItem('accessToken');
+  const accessToken = getCookie('accessToken');
   if (accessToken) {
     if (config.data instanceof FormData) {
       config.headers['Content-Type'] = 'multipart/form-data';

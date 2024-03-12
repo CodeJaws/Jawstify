@@ -1,5 +1,5 @@
 import API from '@/apis/api';
-import { localStorageGetItem } from '@/utils/localStorage';
+import { getCookie } from 'cookies-next';
 
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 const useRedirectByLogin = () => {
   const router = useRouter();
   const checkLoggedIn = async () => {
-    if (!localStorageGetItem('accessToken')) return false;
+    if (!getCookie('accessToken')) return false;
     try {
       await API.users.getMyInfo();
       return true;

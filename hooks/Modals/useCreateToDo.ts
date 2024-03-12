@@ -1,16 +1,18 @@
-import { default as API, default as api } from '@/apis/api';
-import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
-import { CreateToDoProps } from '@/components/Modal/ModalContent/CreateToDo';
-import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
-import useGetMember from '@/hooks/DropDown/useGetMember';
-import useImgSrc from '@/hooks/DropDown/useImgSrc';
-import useInputData from '@/hooks/DropDown/useInputData';
-import useManager from '@/hooks/DropDown/useManager';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { getCookie } from 'cookies-next';
+import { useEffect, useState } from 'react';
+
 import useUser from '@/hooks/global/useUser';
 import { CreateCardProps } from '@/types/api';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import useImgSrc from '@/hooks/DropDown/useImgSrc';
+import useManager from '@/hooks/DropDown/useManager';
+import useInputData from '@/hooks/DropDown/useInputData';
+import useGetMember from '@/hooks/DropDown/useGetMember';
+import { default as API, default as api } from '@/apis/api';
+import { INIT_CREATE_TODO } from '@/constants/InitialModalValues';
+import { CreateToDoProps } from '@/components/Modal/ModalContent/CreateToDo';
+import { Tag, TagProps } from '@/components/Input/ModalInputContainer/TagInput';
 
 function useCreateToDo({ dashboardInfos, onOkClick }: CreateToDoProps) {
   const [image, setImage] = useState<File>();
@@ -45,7 +47,7 @@ function useCreateToDo({ dashboardInfos, onOkClick }: CreateToDoProps) {
         .post(`https://sp-taskify-api.vercel.app/1-4/columns/${dashboardInfos.columnId}/card-image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            Authorization: `Bearer ${getCookie('accessToken')}`,
             withCredentials: true,
           },
         })

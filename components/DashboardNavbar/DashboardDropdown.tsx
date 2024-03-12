@@ -3,6 +3,7 @@ import LogoutImage from '@/public/assets/icons/Logout.svg';
 import UserImage from '@/public/assets/icons/User.svg';
 import { fontStyle } from '@/styles/fontStyle';
 import { localStorageClear } from '@/utils/localStorage';
+import { deleteCookie } from 'cookies-next';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,6 +17,7 @@ interface DashboardDropdownProps {
 function DashboardDropdown({ deviceType, isOpen }: DashboardDropdownProps) {
   const logout = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
+      deleteCookie('accessToken');
       localStorageClear();
     }
   };

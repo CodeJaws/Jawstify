@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/inline-script-id */
 import * as gtag from '@/lib/gtag';
 import GlobalStyles from '@/styles/GlobalStyles';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import type { AppProps } from 'next/app';
@@ -39,12 +39,14 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       />
       <QueryClientProvider client={queryClient}>
-        <GlobalStyles />
-        <Component {...pageProps} />
-        <Toaster containerStyle={{ fontSize: '1.5rem', fontWeight: '600' }} />
-        <div style={{ fontSize: '1.5rem' }}>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </div>
+        <HydrationBoundary>
+          <GlobalStyles />
+          <Component {...pageProps} />
+          <Toaster containerStyle={{ fontSize: '1.5rem', fontWeight: '600' }} />
+          <div style={{ fontSize: '1.5rem' }}>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </div>
+        </HydrationBoundary>
       </QueryClientProvider>
     </>
   );

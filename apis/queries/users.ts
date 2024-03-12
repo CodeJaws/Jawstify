@@ -1,6 +1,8 @@
-import { request } from '@/apis/axios';
-import { ErrorProps, SignupProps } from '@/types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { request } from '@/apis/axios';
+import { QUERY_KEYS } from '@/constants/QueryKey';
+import { ErrorProps, SignupProps } from '@/types/api';
 
 /** 회원가입 */
 export const useSignup = () => {
@@ -9,7 +11,7 @@ export const useSignup = () => {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: (body: SignupProps) => request.post('users', body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['signUpData'] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.signUpData] });
     },
   });
 
