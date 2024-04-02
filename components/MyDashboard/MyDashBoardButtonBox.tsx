@@ -18,7 +18,7 @@ function MyDashBoardButtonBox({ resetToFirst }: MyDashBoardButtonBoxProps) {
 
   if (!pageNum || !totalPages) return null;
   return (
-    <div>
+    <article>
       <ButtonBoxWrapper>
         <DashBoardAddButton onClick={() => setIsOpen(true)} />
         {allItems.map((item) => (
@@ -49,7 +49,7 @@ function MyDashBoardButtonBox({ resetToFirst }: MyDashBoardButtonBoxProps) {
           }}
         />
       )}
-    </div>
+    </article>
   );
 }
 

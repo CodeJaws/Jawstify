@@ -76,7 +76,7 @@ function Sidebar({ boardId, refreshToggle, refresh }: SidebarProps) {
 
 export default Sidebar;
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.aside`
   position: fixed;
   z-index: 10;
   display: flex;

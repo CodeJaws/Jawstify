@@ -28,7 +28,7 @@ function NotFound() {
 
 export default NotFound;
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.main`
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -37,16 +37,16 @@ const StyledContainer = styled.div`
   background: ${COLORS.VIOLET_55};
 `;
 
+const Styled404Text = styled.h1`
+  ${fontStyle(250, 800)}
+`;
+
 const Styled404Image = styled(Image)`
   position: absolute;
   margin-bottom: 120px;
 `;
 
-const Styled404Text = styled.h1`
-  ${fontStyle(250, 800)}
-`;
-
-const StyledText = styled.h1`
+const StyledText = styled.h2`
   ${fontStyle(40, 600)}
   margin-bottom: 30px;
 `;

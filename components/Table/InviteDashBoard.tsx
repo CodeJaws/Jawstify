@@ -30,10 +30,10 @@ function InviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
   } = useInviteDashBoard({ refreshToFirst });
 
   return (
-    <StyledDiv $data={dataSource}>
+    <StyledArticle $data={dataSource}>
       <StyledP>초대받은 대시보드</StyledP>
       {dataSource.length !== 0 ? (
-        <div>
+        <section>
           <form>
             <StyledInputDiv>
               <label htmlFor="search">
@@ -100,18 +100,16 @@ function InviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
                         <StyleListWrapper>
                           <StyledListInWrapper>{item.dashboard.title}</StyledListInWrapper>
                           <StyledListInWrapper>{item.inviter.nickname}</StyledListInWrapper>
-                          <StyledListInWrapper>
-                            <TwinButton
-                              text1="수락"
-                              text2="거절"
-                              isViolet={true}
-                              size="small"
-                              className="temp2"
-                              leftViolet={true}
-                              onLeftClick={() => handleAccept({ acceptid: item.id, accept: true })}
-                              onRightClick={() => handleAccept({ acceptid: item.id, accept: false })}
-                            />
-                          </StyledListInWrapper>
+                          <TwinButton
+                            text1="수락"
+                            text2="거절"
+                            isViolet={true}
+                            size="small"
+                            className="temp2"
+                            leftViolet={true}
+                            onLeftClick={() => handleAccept({ acceptid: item.id, accept: true })}
+                            onRightClick={() => handleAccept({ acceptid: item.id, accept: false })}
+                          />
                         </StyleListWrapper>
                       )}
                       <StyledHr />
@@ -123,7 +121,7 @@ function InviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
               )}
             </InfiniteScroll>
           </Div>
-        </div>
+        </section>
       ) : (
         <>
           <NoContentContainer>
@@ -132,13 +130,13 @@ function InviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
           </NoContentContainer>
         </>
       )}
-    </StyledDiv>
+    </StyledArticle>
   );
 }
 
 export default InviteDashBoard;
 
-const Div = styled.div`
+const Div = styled.section`
   height: 430px;
   overflow-x: hidden;
 
@@ -157,7 +155,7 @@ const Div = styled.div`
   }
 `;
 
-const StyledDiv = styled.div<{ $data: any }>`
+const StyledArticle = styled.article<{ $data: any }>`
   width: 1023px;
   height: 630px;
   border-radius: 8px;
@@ -272,7 +270,7 @@ const StyledWrapper = styled.div`
     width: 23%;
   }
 `;
-const StyledInWrapper = styled.div`
+const StyledInWrapper = styled.p`
   width: 100%;
   color: ${COLORS.GRAY_9F};
   ${fontStyle(16, 400)};
@@ -294,7 +292,7 @@ const StyleListWrapper = styled.div`
     width: 70%;
   }
 `;
-const StyledListInWrapper = styled.div`
+const StyledListInWrapper = styled.p`
   float: left;
   width: 100%;
   color: var(--content-main);

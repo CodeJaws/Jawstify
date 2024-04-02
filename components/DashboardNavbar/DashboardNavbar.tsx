@@ -30,17 +30,6 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
 
   return (
     <StyledContainer $isMyDashboard={isMyDashboard}>
-      {isModalOpen && (
-        <Modal
-          title="초대하기"
-          getValue={setModalValue}
-          onCancelClick={() => setIsModalOpen(false)}
-          onOkClick={() => {
-            inviteFetch();
-          }}
-        />
-      )}
-
       <StyledTitleContainer>
         <h3>{dashboardTitle}</h3>
         {!isMyDashboard && dashboard && dashboard.createdByMe && (
@@ -69,6 +58,16 @@ function DashboardNavbar({ members, totalMembers, isMyDashboard, dashboard }: Da
         <DarkModeToggleButton />
         <Profile />
       </StyledWrapper>
+      {isModalOpen && (
+        <Modal
+          title="초대하기"
+          getValue={setModalValue}
+          onCancelClick={() => setIsModalOpen(false)}
+          onOkClick={() => {
+            inviteFetch();
+          }}
+        />
+      )}
     </StyledContainer>
   );
 }
@@ -99,7 +98,7 @@ const StyledTitleContainer = styled.div`
   }
 `;
 
-const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
+const StyledContainer = styled.nav<{ $isMyDashboard: boolean }>`
   position: fixed;
   top: 0;
   width: 100%;
@@ -127,7 +126,7 @@ const StyledContainer = styled.div<{ $isMyDashboard: boolean }>`
   }
 `;
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.main`
   position: relative;
   display: flex;
   align-items: center;
