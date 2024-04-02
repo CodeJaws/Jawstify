@@ -1,6 +1,6 @@
 import { METADATA } from '@/constants/Metadata';
+import type { Metadata } from 'next';
 
-import { Metadata } from 'next';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -9,6 +9,34 @@ const themeInitializerScript = `
         document.body.dataset.theme = window.localStorage.getItem("theme") || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? "dark" : "light");
       })();
   `;
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://taskify4.vercel.app/'),
+  title: METADATA.TITLE,
+  description: METADATA.DESCRIPTION,
+  openGraph: {
+    title: METADATA.TITLE,
+    description: METADATA.DESCRIPTION,
+    url: METADATA.URL,
+    siteName: METADATA.TITLE,
+    images: [
+      {
+        url: METADATA.IMAGE,
+        width: 388,
+        height: 388,
+      },
+    ],
+    locale: METADATA.LOCALE,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: METADATA.TITLE,
+    description: METADATA.DESCRIPTION,
+    site: METADATA.URL,
+    images: [METADATA.IMAGE],
+  },
+};
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -21,6 +49,7 @@ class MyDocument extends Document {
         });
 
       const initialProps = await Document.getInitialProps(ctx);
+
       return {
         ...initialProps,
         styles: (
@@ -35,32 +64,11 @@ class MyDocument extends Document {
     }
   }
 
-  metadata: Metadata = {
-    metadataBase: new URL('https://taskify3.vercel.app/'),
-    title: METADATA.title,
-    description: METADATA.description,
-    openGraph: {
-      title: METADATA.title,
-      description: METADATA.description,
-      url: METADATA.url,
-      siteName: METADATA.title,
-      images: [
-        {
-          url: METADATA.image,
-          width: 388,
-          height: 388,
-        },
-      ],
-      locale: METADATA.locale,
-      type: 'website',
-    },
-  };
-
   render() {
     return (
       <Html lang="ko">
         <Head>
-          <link rel="icon" href={METADATA.image} sizes="any" />
+          <link rel="icon" href={METADATA.IMAGE} sizes="any" />
         </Head>
         <body>
           <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />

@@ -1,9 +1,10 @@
 import mainLogo from '@/public/assets/images/jaws.png';
 
 export const METADATA = {
-  title: 'Jawstify',
-  description: '일정관리 조습니다🦈',
-  url: 'https://taskify4.vercel.app/',
-  image: mainLogo.src,
-  locale: 'ko_KR',
+  TITLE: 'Jawstify',
+  DESCRIPTION: '일정관리 조습니다🦈',
+  URL: 'https://taskify4.vercel.app/',
+  IMAGE: mainLogo.src,
+  LOCALE: 'ko_KR',
+  TYPE: 'website',
 };
