@@ -5,7 +5,7 @@ import { css } from 'styled-components';
 export const reset = css`
   @font-face {
     font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    src: url('@/fonts/Pretendard-Regular.woff') format('woff');
     font-style: normal;
   }
 
