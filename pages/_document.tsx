@@ -1,5 +1,4 @@
 import { METADATA } from '@/constants/Metadata';
-import type { Metadata } from 'next';
 
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
@@ -9,34 +8,6 @@ const themeInitializerScript = `
         document.body.dataset.theme = window.localStorage.getItem("theme") || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? "dark" : "light");
       })();
   `;
-
-export const metadata: Metadata = {
-  metadataBase: new URL('https://taskify4.vercel.app/'),
-  title: METADATA.TITLE,
-  description: METADATA.DESCRIPTION,
-  openGraph: {
-    title: METADATA.TITLE,
-    description: METADATA.DESCRIPTION,
-    url: METADATA.URL,
-    siteName: METADATA.TITLE,
-    images: [
-      {
-        url: METADATA.IMAGE,
-        width: 388,
-        height: 388,
-      },
-    ],
-    locale: METADATA.LOCALE,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: METADATA.TITLE,
-    description: METADATA.DESCRIPTION,
-    site: METADATA.URL,
-    images: [METADATA.IMAGE],
-  },
-};
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -68,7 +39,18 @@ class MyDocument extends Document {
     return (
       <Html lang="ko">
         <Head>
+          <title>Jawstify</title>
           <link rel="icon" href={METADATA.IMAGE} sizes="any" />
+          <meta property="og:title" content={METADATA.TITLE} />
+          <meta property="og:url" content={METADATA.URL} />
+          <meta property="og:image" content={METADATA.IMAGE} />
+          <meta property="og:description" content={METADATA.DESCRIPTION} />
+          <meta name="twitter:card" content="summary" />
+          <meta property="twitter:domain" content={METADATA.DOMAIN} />
+          <meta property="twitter:url" content={METADATA.URL} />
+          <meta name="twitter:title" content={METADATA.TITLE} />
+          <meta name="twitter:description" content={METADATA.DESCRIPTION} />
+          <meta name="twitter:image" content={METADATA.IMAGE} />
         </Head>
         <body>
           <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />

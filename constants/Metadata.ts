@@ -7,4 +7,5 @@ export const METADATA = {
   IMAGE: mainLogo.src,
   LOCALE: 'ko_KR',
   TYPE: 'website',
+  DOMAIN: 'taskify4.vercel.app',
 };
