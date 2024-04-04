@@ -5,24 +5,18 @@ import { COLORS } from '@/styles/palettes';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Helmet } from 'react-helmet';
 import { styled } from 'styled-components';
 
 function NotFound() {
   const router = useRouter();
   const back = router.back;
   return (
-    <>
-      <Helmet>
-        <title>404 - Jawstify</title>
-      </Helmet>
-      <StyledContainer>
-        <Styled404Text>404</Styled404Text>
-        <Styled404Image width={200} height={200} src={DefaultImg} alt="crying emoji" />
-        <StyledText>조습니다... 잘못 들어오셨습니다 🦈</StyledText>
-        <Button text="뒤로가기" size="large" onClick={back}></Button>
-      </StyledContainer>
-    </>
+    <StyledContainer>
+      <Styled404Text>404</Styled404Text>
+      <Styled404Image width={200} height={200} src={DefaultImg} alt="crying emoji" />
+      <StyledText>조습니다... 잘못 들어오셨습니다 🦈</StyledText>
+      <Button text="뒤로가기" size="large" onClick={back}></Button>
+    </StyledContainer>
   );
 }
 

@@ -2,15 +2,14 @@ import Columns from '@/components/Columns/Columns';
 import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import Modal from '@/components/Modal/Modal';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import useCardOpen from '@/hooks/ModalCard/useCardOpen';
+import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
 import useDashboard from '@/hooks/Dashboard/useDashboard';
 import useRedirectByDashboardId from '@/hooks/Dashboard/useRedirectByDashboardId';
-import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
+import useCardOpen from '@/hooks/ModalCard/useCardOpen';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 interface DashBoardIDProps {
@@ -41,9 +40,6 @@ function DashBoardID({ dashboardId }: DashBoardIDProps) {
 
   return (
     <>
-      <Helmet>
-        <title>{`${dashboardData.title} - Jawstify`}</title>
-      </Helmet>
       <StyledContainer>
         <Sidebar boardId={Number(dashboardId)} refresh={refresh} />
         <DashboardNavbar
