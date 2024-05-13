@@ -1,8 +1,8 @@
 import useTheme from '@/hooks/Common/useTheme';
 import moonIcon from '@/public/assets/icons/moon.svg';
 import sunIcon from '@/public/assets/icons/sun.svg';
-import logoText from '@/public/assets/images/title.png';
-import logoImage from '@/public/assets/images/transJaws.png';
+import logoText from '@/public/assets/images/title.avif';
+import logoImage from '@/public/assets/images/transJaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 

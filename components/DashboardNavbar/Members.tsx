@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import useMembers from '@/hooks/DashboardNavbar/useMembers';
-import DefaultProfile from '@/public/assets/images/jaws.png';
+import DefaultProfile from '@/public/assets/images/jaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { GetMembersInDashboardItem } from '@/types/api';

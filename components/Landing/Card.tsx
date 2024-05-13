@@ -1,6 +1,6 @@
-import cardImg1 from '@/public/assets/images/landing4.png';
-import cardImg2 from '@/public/assets/images/landing5.png';
-import cardImg3 from '@/public/assets/images/landing6.png';
+import cardImg1 from '@/public/assets/images/landing4.avif';
+import cardImg2 from '@/public/assets/images/landing5.avif';
+import cardImg3 from '@/public/assets/images/landing6.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

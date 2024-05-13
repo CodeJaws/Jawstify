@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 import { useDeleteDashboard } from '@/apis/queries/dashboard';
@@ -50,33 +49,23 @@ function BoardEdit({ dashboardId }: BoardEditProps) {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>대시보드 수정 - Jawstify</title>
-      </Helmet>
-      <StyledContainer>
-        <DashboardNavbar
-          members={members}
-          totalMembers={totalMembers}
-          dashboard={dashboardData}
-          isMyDashboard={false}
-        />
-        <Sidebar />
-        <StyledWrapper>
-          <StyledInWrapper>
-            <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>
-            <StyledMainWrapper>
-              <DashboardEdit dashboardData={dashboardData} />
-              <StyledMainInWrapper>
-                <MembersTable dashboardId={Number(dashboardId)} />
-              </StyledMainInWrapper>
-              <InviteDetailsTable dashboardId={Number(dashboardId)} />
-              <DeleteButton onClick={deleteDashboard} />
-            </StyledMainWrapper>
-          </StyledInWrapper>
-        </StyledWrapper>
-      </StyledContainer>
-    </>
+    <StyledContainer>
+      <DashboardNavbar members={members} totalMembers={totalMembers} dashboard={dashboardData} isMyDashboard={false} />
+      <Sidebar />
+      <StyledWrapper>
+        <StyledInWrapper>
+          <StyledRouterButton onClick={backHome}>돌아가기</StyledRouterButton>
+          <StyledMainWrapper>
+            <DashboardEdit dashboardData={dashboardData} />
+            <StyledMainInWrapper>
+              <MembersTable dashboardId={Number(dashboardId)} />
+            </StyledMainInWrapper>
+            <InviteDetailsTable dashboardId={Number(dashboardId)} />
+            <DeleteButton onClick={deleteDashboard} />
+          </StyledMainWrapper>
+        </StyledInWrapper>
+      </StyledWrapper>
+    </StyledContainer>
   );
 }
 

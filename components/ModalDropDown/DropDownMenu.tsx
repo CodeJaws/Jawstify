@@ -1,7 +1,7 @@
 import StatusChip from '@/components/Chip/StatusChip';
 import useDropDownMenu from '@/hooks/DropDown/useDropDownMenu';
 import Check from '@/public/assets/icons/GrayCheck.svg';
-import DefaultImg from '@/public/assets/images/jaws.png';
+import DefaultImg from '@/public/assets/images/jaws.avif';
 
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';

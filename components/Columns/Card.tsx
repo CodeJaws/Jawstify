@@ -3,7 +3,7 @@ import useCardId from '@/hooks/ModalCard/useCardId';
 import useCardOpen from '@/hooks/ModalCard/useCardOpen';
 import useDashBoardId from '@/hooks/ModalCard/useDashBoardId';
 import calendar from '@/public/assets/icons/calendar.svg';
-import DefaultImg from '@/public/assets/images/jaws.png';
+import DefaultImg from '@/public/assets/images/jaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

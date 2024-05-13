@@ -1,5 +1,5 @@
 import LoginButton from '@/components/common/Button/LoginButton';
-import HeroImg from '@/public/assets/images/landing1.png';
+import HeroImg from '@/public/assets/images/landing1.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

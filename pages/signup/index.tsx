@@ -6,14 +6,13 @@ import * as C from '@/constants/SignValidate';
 import useAuth, { SignUpFormValue } from '@/hooks/Auth/useAuth';
 import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
 import * as L from '@/pages/login';
-import mainLogoText from '@/public/assets/images/title.png';
-import mainLogo from '@/public/assets/images/transJaws.png';
+import mainLogoText from '@/public/assets/images/title.avif';
+import mainLogo from '@/public/assets/images/transJaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
-import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -43,86 +42,81 @@ function SignUp() {
   passwordRef.current = getValues('password');
 
   return (
-    <>
-      <Helmet>
-        <title>회원가입 - Jawstify</title>
-      </Helmet>
-      <StyledContainer>
-        <L.StyledLogoContainer href={'/'}>
-          <L.StyledLogoImg src={mainLogo} height={190} width={190} alt="메인 로고" />
-          <L.StyledLogoText src={mainLogoText} height={55} width={240} alt="메인 로고 텍스트" />
-          <L.StyledDescription>첫 방문 조습니다!</L.StyledDescription>
-        </L.StyledLogoContainer>
+    <StyledContainer>
+      <L.StyledLogoContainer href={'/'}>
+        <L.StyledLogoImg src={mainLogo} height={190} width={190} alt="메인 로고" />
+        <L.StyledLogoText src={mainLogoText} height={55} width={240} alt="메인 로고 텍스트" />
+        <L.StyledDescription>첫 방문 조습니다!</L.StyledDescription>
+      </L.StyledLogoContainer>
 
-        <StyledForm2 onSubmit={handleSubmit(onSignUpSubmit)}>
-          <StyledFormInputContainer>
-            <FormInput
-              label="이메일"
-              register={register('email', {
-                required: C.NO_VALUE_ERROR,
-                pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
-                onChange: handleChange,
-              })}
-              errorMessage={errors?.email?.message || alertMessage?.serverMessage}
-            />
-            <FormInput
-              label="닉네임"
-              register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
-              errorMessage={errors?.nickname?.message}
-            />
-          </StyledFormInputContainer>
+      <StyledForm2 onSubmit={handleSubmit(onSignUpSubmit)}>
+        <StyledFormInputContainer>
           <FormInput
-            label="비밀번호"
-            register={register('password', {
+            label="이메일"
+            register={register('email', {
               required: C.NO_VALUE_ERROR,
-              pattern: { value: C.PWD_VALIDATE_PATTERN, message: C.PWD_ERROR.FORMAT_ERROR },
-              minLength: { value: 8, message: C.PWD_ERROR.MIN_LENGTH_ERROR },
+              pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
               onChange: handleChange,
             })}
-            errorMessage={errors?.password?.message}
+            errorMessage={errors?.email?.message || alertMessage?.serverMessage}
           />
           <FormInput
-            label="비밀번호 확인"
-            register={register('pwdcheck', {
-              required: C.NO_VALUE_ERROR,
-              validate: { pwdNotSame: (value) => value === passwordRef.current || C.PWD_CHECK_ERROR.PWD_NOT_SAME },
-              onChange: handleChange,
-            })}
-            errorMessage={errors?.pwdcheck?.message}
+            label="닉네임"
+            register={register('nickname', { required: C.NO_VALUE_ERROR, onChange: handleChange })}
+            errorMessage={errors?.nickname?.message}
           />
-          <StyledCheckBoxContainer>
-            <StyledCheckBox
-              type="checkbox"
-              checked={isAgreeChecked}
-              onChange={() => {
-                setIsAgreeChecked((prev) => !prev);
-              }}
-            />
-            <StyledText>이용약관 조습니다.</StyledText>
-          </StyledCheckBoxContainer>
-          {!isAgreeChecked && <StyledAgreeNotCheckedText>{alertMessage.noCheck}</StyledAgreeNotCheckedText>}
-          <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit" margin="-3px 0 0" />
-        </StyledForm2>
-        <GoogleLoginButton />
-
-        <StyledBottomTextContainer>
-          <StyledText>
-            이미 가입하셨나요? <L.StyledLink href="/login">로그인하러 가기</L.StyledLink>
-          </StyledText>
-        </StyledBottomTextContainer>
-        {isModalOpen && (
-          <Modal
-            isSingleButton
-            title=""
-            description={alertMessage.serverMessage}
-            onOkClick={() => {
-              setIsModalOpen(false);
-              if (alertMessage.serverMessage === C.SIGNUP_SUCCESS_MSG) router.push('/login');
+        </StyledFormInputContainer>
+        <FormInput
+          label="비밀번호"
+          register={register('password', {
+            required: C.NO_VALUE_ERROR,
+            pattern: { value: C.PWD_VALIDATE_PATTERN, message: C.PWD_ERROR.FORMAT_ERROR },
+            minLength: { value: 8, message: C.PWD_ERROR.MIN_LENGTH_ERROR },
+            onChange: handleChange,
+          })}
+          errorMessage={errors?.password?.message}
+        />
+        <FormInput
+          label="비밀번호 확인"
+          register={register('pwdcheck', {
+            required: C.NO_VALUE_ERROR,
+            validate: { pwdNotSame: (value) => value === passwordRef.current || C.PWD_CHECK_ERROR.PWD_NOT_SAME },
+            onChange: handleChange,
+          })}
+          errorMessage={errors?.pwdcheck?.message}
+        />
+        <StyledCheckBoxContainer>
+          <StyledCheckBox
+            type="checkbox"
+            checked={isAgreeChecked}
+            onChange={() => {
+              setIsAgreeChecked((prev) => !prev);
             }}
           />
-        )}
-      </StyledContainer>
-    </>
+          <StyledText>이용약관 조습니다.</StyledText>
+        </StyledCheckBoxContainer>
+        {!isAgreeChecked && <StyledAgreeNotCheckedText>{alertMessage.noCheck}</StyledAgreeNotCheckedText>}
+        <LoginButton active={isBtnActive} usingType="login" text="회원가입" type="submit" margin="-3px 0 0" />
+      </StyledForm2>
+      <GoogleLoginButton />
+
+      <StyledBottomTextContainer>
+        <StyledText>
+          이미 가입하셨나요? <L.StyledLink href="/login">로그인하러 가기</L.StyledLink>
+        </StyledText>
+      </StyledBottomTextContainer>
+      {isModalOpen && (
+        <Modal
+          isSingleButton
+          title=""
+          description={alertMessage.serverMessage}
+          onOkClick={() => {
+            setIsModalOpen(false);
+            if (alertMessage.serverMessage === C.SIGNUP_SUCCESS_MSG) router.push('/login');
+          }}
+        />
+      )}
+    </StyledContainer>
   );
 }
 

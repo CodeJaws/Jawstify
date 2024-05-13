@@ -5,15 +5,14 @@ import LoginButton from '@/components/common/Button/LoginButton';
 import * as C from '@/constants/SignValidate';
 import useAuth, { LoginFormValue } from '@/hooks/Auth/useAuth';
 import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
-import mainLogoText from '@/public/assets/images/title.png';
-import mainLogo from '@/public/assets/images/transJaws.png';
+import mainLogoText from '@/public/assets/images/title.avif';
+import mainLogo from '@/public/assets/images/transJaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -33,62 +32,57 @@ function Login() {
   ]);
 
   return (
-    <>
-      <Helmet>
-        <title>로그인 - Jawstify</title>
-      </Helmet>
-      <StyledContainer>
-        <StyledLogoContainer href={'/'}>
-          <StyledLogoImg src={mainLogo} height={190} width={190} alt="메인 로고" />
-          <StyledLogoText src={mainLogoText} height={55} width={240} alt="메인 로고 텍스트" />
-          <StyledDescription>오늘도 만나서 조습니다!</StyledDescription>
-        </StyledLogoContainer>
+    <StyledContainer>
+      <StyledLogoContainer href={'/'}>
+        <StyledLogoImg src={mainLogo} height={190} width={190} alt="메인 로고" />
+        <StyledLogoText src={mainLogoText} height={55} width={240} alt="메인 로고 텍스트" />
+        <StyledDescription>오늘도 만나서 조습니다!</StyledDescription>
+      </StyledLogoContainer>
 
-        <StyledForm onSubmit={handleSubmit(onLoginSubmit)}>
-          <FormInput
-            label="이메일"
-            register={register('email', {
-              required: C.NO_VALUE_ERROR,
-              pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
-              onChange: handleChange,
-            })}
-            errorMessage={errors?.email?.message}
-          />
-          <FormInput
-            label="비밀번호"
-            register={register('password', {
-              required: C.NO_VALUE_ERROR,
-              onChange: handleChange,
-            })}
-            errorMessage={errors?.password?.message}
-          />
-          <LoginButton
-            active={isBtnActive}
-            usingType="login"
-            text="로그인"
-            type="submit"
-            margin="7px 0 -15px "
-          ></LoginButton>
-        </StyledForm>
-        <GoogleLoginButton />
+      <StyledForm onSubmit={handleSubmit(onLoginSubmit)}>
+        <FormInput
+          label="이메일"
+          register={register('email', {
+            required: C.NO_VALUE_ERROR,
+            pattern: { value: C.EMAIL_VALIDATE_PATTERN, message: C.EMAIL_ERROR.FORMAT_ERROR },
+            onChange: handleChange,
+          })}
+          errorMessage={errors?.email?.message}
+        />
+        <FormInput
+          label="비밀번호"
+          register={register('password', {
+            required: C.NO_VALUE_ERROR,
+            onChange: handleChange,
+          })}
+          errorMessage={errors?.password?.message}
+        />
+        <LoginButton
+          active={isBtnActive}
+          usingType="login"
+          text="로그인"
+          type="submit"
+          margin="7px 0 -15px "
+        ></LoginButton>
+      </StyledForm>
+      <GoogleLoginButton />
 
-        <StyledBottomTextContainer>
-          <StyledBottomText>
-            회원이 아니신가요? <StyledLink href="/signup">회원가입 하기</StyledLink>
-          </StyledBottomText>
-        </StyledBottomTextContainer>
-        {isModalOpen && (
-          <Modal
-            isSingleButton
-            title=""
-            description={alertMessage.serverMessage}
-            onOkClick={() => {
-              setIsModalOpen(false);
-            }}
-          />
-        )}
-      </StyledContainer>
-    </>
+      <StyledBottomTextContainer>
+        <StyledBottomText>
+          회원이 아니신가요? <StyledLink href="/signup">회원가입 하기</StyledLink>
+        </StyledBottomText>
+      </StyledBottomTextContainer>
+      {isModalOpen && (
+        <Modal
+          isSingleButton
+          title=""
+          description={alertMessage.serverMessage}
+          onOkClick={() => {
+            setIsModalOpen(false);
+          }}
+        />
+      )}
+    </StyledContainer>
   );
 }
 

@@ -75,7 +75,7 @@ const StyledDashboardGroupContainer = styled.div`
   }
 `;
 
-const StyledTitleWrapper = styled.div`
+const StyledTitleWrapper = styled.p`
   color: ${COLORS.GRAY_78};
   margin-left: 16px;
   overflow-x: hidden;

@@ -3,8 +3,8 @@ import Modal from '@/components/Modal/Modal';
 import Dashboard from '@/components/Sidebar/Dashboard';
 import { INIT_CREATE_DASHBOARD } from '@/constants/InitialModalValues';
 import AddBox from '@/public/assets/icons/invite.svg';
-import LogoTitle from '@/public/assets/images/title.png';
-import Logo from '@/public/assets/images/transJaws.png';
+import LogoTitle from '@/public/assets/images/title.avif';
+import Logo from '@/public/assets/images/transJaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -76,7 +76,7 @@ function Sidebar({ boardId, refreshToggle, refresh }: SidebarProps) {
 
 export default Sidebar;
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.aside`
   position: fixed;
   z-index: 10;
   display: flex;

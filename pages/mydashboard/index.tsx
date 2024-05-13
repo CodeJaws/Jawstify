@@ -2,11 +2,10 @@ import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar';
 import MyDashBoardButtonBox from '@/components/MyDashboard/MyDashBoardButtonBox';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import InviteDashBoard from '@/components/Table/InviteDashBoard';
-import useMyDashboard from '@/hooks/Dashboard/useMyDashboard';
 import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
+import useMyDashboard from '@/hooks/Dashboard/useMyDashboard';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 
-import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 function MyDashBoard() {
@@ -16,30 +15,19 @@ function MyDashBoard() {
 
   return (
     <>
-      <Helmet>
-        <title>내 대시보드 - Jawstify</title>
-      </Helmet>
-      <StyledContainer>
-        <DashboardNavbar isMyDashboard={true} />
-        <Sidebar />
-        <StyledWrapper>
-          <MyDashBoardButtonBox resetToFirst={resetToFirst} />
-          <InviteDashBoard refreshToFirst={refreshToFirst} />
-        </StyledWrapper>
-      </StyledContainer>
+      <DashboardNavbar isMyDashboard={true} />
+      <Sidebar />
+      <StyledWrapper>
+        <MyDashBoardButtonBox resetToFirst={resetToFirst} />
+        <InviteDashBoard refreshToFirst={refreshToFirst} />
+      </StyledWrapper>
     </>
   );
 }
 
 export default MyDashBoard;
 
-const StyledContainer = styled.div`
-  background: var(--content-back);
-  width: 100%;
-  height: 100vh;
-`;
-
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.main`
   position: absolute;
   top: 70px;
   left: 300px;
