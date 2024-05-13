@@ -2,8 +2,8 @@ import CountChip from '@/components/Chip/CountChip';
 import Card from '@/components/Columns/Card';
 import Modal from '@/components/Modal/Modal';
 import AddButton from '@/components/common/Button/AddButton';
-import useColumns from '@/hooks/Dashboard/useColumn';
 import useRefresh from '@/hooks/Common/useRefresh';
+import useColumns from '@/hooks/Dashboard/useColumn';
 import BlueEllipse from '@/public/assets/icons/BlueEllipse.svg';
 import setting from '@/public/assets/icons/setting.svg';
 import { fontStyle } from '@/styles/fontStyle';
@@ -39,7 +39,7 @@ function Column({ title, columnId, dashboardId, applyColumnDelete }: ColumnProps
 
   useEffect(() => {
     loadColumCardList(true);
-  }, [columnId, refresh]);
+  }, [columnId, refresh, loadColumCardList]);
 
   return (
     <>
