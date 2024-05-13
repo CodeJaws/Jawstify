@@ -6,8 +6,8 @@ import * as C from '@/constants/SignValidate';
 import useAuth, { SignUpFormValue } from '@/hooks/Auth/useAuth';
 import useRedirectByLogin from '@/hooks/Auth/useRedirectByLogin';
 import * as L from '@/pages/login';
-import mainLogoText from '@/public/assets/images/title.png';
-import mainLogo from '@/public/assets/images/transJaws.png';
+import mainLogoText from '@/public/assets/images/title.avif';
+import mainLogo from '@/public/assets/images/transJaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 

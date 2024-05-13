@@ -8,7 +8,7 @@ import Button from '@/components/common/Button/Button';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import usePagination from '@/hooks/Common/usePagination';
 import useInviteDetailsTable from '@/hooks/Edit/useInviteDetailsTable';
-import NoItem from '@/public/assets/images/noItem.png';
+import NoItem from '@/public/assets/images/NoContent.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

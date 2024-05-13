@@ -5,7 +5,7 @@ import { useDeleteMemberInDashboard } from '@/apis/queries/members';
 import Button from '@/components/common/Button/Button';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import usePagination from '@/hooks/Common/usePagination';
-import DefaultImage from '@/public/assets/images/jaws.png';
+import DefaultImage from '@/public/assets/images/jaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

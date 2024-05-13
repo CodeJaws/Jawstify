@@ -1,4 +1,4 @@
-import mainLogo from '@/public/assets/images/jaws.png';
+import mainLogo from '@/public/assets/images/jaws.avif';
 
 export const METADATA = {
   TITLE: 'Jawstify',

@@ -28,6 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {/* <!-- Google tag (gtag.js) --> */}
       <Head>
         <title>Jawstify</title>
+        <link rel="preload" fetchPriority="high" as="image" href="/static/images/NoContent.avif" />
         <link rel="icon" href={METADATA.IMAGE} sizes="any" />
         <meta property="og:title" content={METADATA.TITLE} />
         <meta property="og:url" content={METADATA.URL} />

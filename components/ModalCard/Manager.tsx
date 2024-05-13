@@ -1,5 +1,5 @@
 import useCardId from '@/hooks/ModalCard/useCardId';
-import DefaultImg from '@/public/assets/images/jaws.png';
+import DefaultImg from '@/public/assets/images/jaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile } from '@/styles/mediaQuery';
 import { GetCardDetailsItem } from '@/types/api';

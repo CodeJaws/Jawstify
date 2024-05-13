@@ -2,7 +2,7 @@ import TwinButton from '@/components/common/Button/TwinButton';
 import useDeviceType from '@/hooks/Common/useDeviceType';
 import useInviteDashBoard from '@/hooks/Dashboard/useInviteDashBoard';
 import search from '@/public/assets/icons/Search.svg';
-import NoContent from '@/public/assets/images/NoContent.png';
+import NoContent from '@/public/assets/images/NoContent.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';
@@ -125,7 +125,7 @@ function InviteDashBoard({ refreshToFirst }: InviteDashBoardProps) {
       ) : (
         <>
           <NoContentContainer>
-            <NoContentImage src={NoContent} alt="없는컨텐츠" />
+            <NoContentImage priority width={100} height={100} src={NoContent} alt="없는컨텐츠" />
             <NoContentDiv>아직 초대받은 대시보드가 없어요</NoContentDiv>
           </NoContentContainer>
         </>

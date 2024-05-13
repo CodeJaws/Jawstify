@@ -2,7 +2,7 @@ import BasicInput from '@/components/Input/ModalInputContainer/BasicInput';
 import useUser from '@/hooks/global/useUser';
 import useComment from '@/hooks/useComment';
 
-import DefaultImg from '@/public/assets/images/jaws.png';
+import DefaultImg from '@/public/assets/images/jaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onTablet } from '@/styles/mediaQuery';
 import { COLORS } from '@/styles/palettes';

@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button/Button';
-import DefaultImg from '@/public/assets/images/jaws.png';
+import DefaultImg from '@/public/assets/images/jaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { COLORS } from '@/styles/palettes';
 

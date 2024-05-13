@@ -1,5 +1,5 @@
-import pointImg1 from '@/public/assets/images/landing2.png';
-import pointImg2 from '@/public/assets/images/landing3.png';
+import pointImg1 from '@/public/assets/images/landing2.avif';
+import pointImg2 from '@/public/assets/images/landing3.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 

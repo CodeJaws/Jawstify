@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import useProfile from '@/hooks/DashboardNavbar/useProfile';
 import DashboardDropdown from '@/components/DashboardNavbar/DashboardDropdown';
-import DefaultImg from '@/public/assets/images/jaws.png';
+import useProfile from '@/hooks/DashboardNavbar/useProfile';
+import DefaultImg from '@/public/assets/images/jaws.avif';
 import { fontStyle } from '@/styles/fontStyle';
 import { onMobile, onPc, onTablet } from '@/styles/mediaQuery';
 
